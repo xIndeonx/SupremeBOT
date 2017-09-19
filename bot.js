@@ -29,10 +29,12 @@ client.on('message', message => {
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'shutdown')) {
     if (message.author.id !== settings.ownerid) return;
-      message.channel.send('Shutting down...');
+      message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
       client.destroy((err) => {
         console.log(err);
       });
+      //var result = exec('pm2 stop bot.js');
+      //result();
   }
 });
 
