@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
 const embed = new Discord.RichEmbed();
+const music = require('discord.js-music-v11');
  
 client.on('ready', () => {
   console.log('Bot ready.');
@@ -19,6 +20,9 @@ client.on('message', message => {
 
 //bot token login
 client.login(settings.token);
+
+//music bot
+music(client);
 
 //voice channel join & leave
 client.on('message', message => {
@@ -43,18 +47,6 @@ client.on('message', message => {
     if(message.member.voiceChannel) {
       message.member.voiceChannel.leave();
       message.channel.send('I have successfully disconnected from the channel!');
-    }
-  }
-});
-
-//play local music file in voice channel
-client.on('message', message => {
-  if (message.content.startsWith(settings.prefix + 'play')) {
-    if (message.member.voiceChannel) {
-      connection.playFile('C:\Users\Fabio\Music\GetRenai.mp3');
-    }
-    else {
-      message.channel.send("Error");
     }
   }
 });
