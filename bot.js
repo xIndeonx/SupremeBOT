@@ -87,3 +87,14 @@ client.on('message', function(message) {
     message.channel.send(embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png'));
 }
 });
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'shutdown')) {
+    if(message.member.hasPermission("ADMINISTRATOR", true)) {
+      message.channel.send('Shutting down...');
+      client.destroy((err) => {
+        console.log(err);
+      });
+    }
+  }
+});
