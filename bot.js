@@ -28,7 +28,7 @@ music(client, {
   maxQueueSize: 100,
   clearInvoker: false,
   anyoneCanSkip: false,
-  volume: 2
+  volume: 8
 });
 
 //voice channel join & leave
