@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const settings = require('./settings.json');
 const embed = new Discord.RichEmbed();
 const music = require('discord.js-music-v11');
+const Manager = new Discord.ShardingManager('./bot.js', {totalShards: "auto", token: settings.token});
  
 client.on('ready',() => {
   console.log('Bot ready.');
@@ -16,12 +17,28 @@ client.on('ready',() => {
 //bot token login
 client.login(settings.token);
 
+//shards
+//Manager.spawn();
+
 //restart command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'restart')) {
     if (message.author.id !== settings.ownerid) return;
       message.channel.send('Restarting...');
       process.exit();
+  }
+});
+
+//shutdown command
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'shutdown')) {
+    if (message.author.id !== settings.ownerid) return;
+      message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
+      client.destroy((err) => {
+        console.log(err);
+      });
+      //var result = exec('pm2 stop bot.js');
+      //result();
   }
 });
 
@@ -75,7 +92,7 @@ client.on('guildMemberAdd', member => {
 //ping command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'ping')) {
-    message.channel.send('PONG!' + ' `' + client.ping.toString() + 'ms`');
+    message.channel.send('**PONG**' + ' `' + client.ping.toString() + 'ms`');
   }
 });
 
