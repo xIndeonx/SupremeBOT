@@ -71,7 +71,17 @@ client.on('guildMemberAdd', member => {
 //vn command
 client.on('message', function(message) {
   if(message.content.startsWith(settings.prefix + 'vn')) {
+    embed.setTitle('Vape Nation');
     embed.setColor('#29ff00');
     message.channel.send(embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg'));
+}
+});
+
+//ziit command
+client.on('message', function(message) {
+  if(message.content.startsWith(settings.prefix + 'ziit')) {
+    embed.setTitle('Die Uhrzeit');
+    embed.setColor('BLACK')
+    message.channel.send(embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png'));
 }
 });
