@@ -22,7 +22,9 @@ client.on('message', message => {
 client.login(settings.token);
 
 //music bot
-music(client);
+music(client, {
+  prefix: '.'
+});
 
 //voice channel join & leave
 client.on('message', message => {
