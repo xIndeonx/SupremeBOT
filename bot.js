@@ -4,11 +4,13 @@ const settings = require('./settings.json');
 const embed = new Discord.RichEmbed();
 const music = require('discord.js-music-v11');
  
-client.on('ready', () => {
+client.on('ready',() => {
   console.log('Bot ready.');
   client.user.setGame('Work in Progress');
   client.user.setStatus("dnd");
-  //client.user.send('Bot successfully initialized.');
+  const channel = client.channels.get(settings.channel);
+  if (!channel) return;
+  channel.send('Bot successfully initialized.');
 });
  
 //ping command
