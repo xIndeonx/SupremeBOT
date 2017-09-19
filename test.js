@@ -23,7 +23,12 @@ client.login(settings.token);
 
 //music bot
 music(client, {
-  prefix: '.'
+  prefix: '.',
+  global: false,
+  maxQueueSize: 100,
+  clearInvoker: false,
+  anyoneCanSkip: false,
+  volume: 1
 });
 
 //voice channel join & leave
