@@ -81,7 +81,7 @@ client.on('message', function(message) {
 client.on('message', function(message) {
   if(message.content.startsWith(settings.prefix + 'ziit')) {
     embed.setTitle('Die Uhrzeit');
-    embed.setColor('BLACK')
+    embed.setColor('BLACK');
     message.channel.send(embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png'));
 }
 });
