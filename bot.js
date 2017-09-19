@@ -37,7 +37,7 @@ client.on('message', message => {
   // we ignore it
   if (!message.guild) return;
 
-  if (message.content.startsWith(settings.prefix + 'join')) {
+  if (message.content.startsWith(settings.prefix + 'vcjoin')) {
     // Only try to join the sender's voice channel if they are in one themselves
     if (message.member.voiceChannel) {
       message.member.voiceChannel.join()
@@ -50,7 +50,7 @@ client.on('message', message => {
     }
   }
 
-  if (message.content.startsWith(settings.prefix + 'leave')) {
+  if (message.content.startsWith(settings.prefix + 'vcleave')) {
     if(message.member.voiceChannel) {
       message.member.voiceChannel.leave();
       message.channel.send('I have successfully disconnected from the channel!');
