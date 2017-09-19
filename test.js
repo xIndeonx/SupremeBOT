@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const prefix = '.'
 const token = '<token here>'
+const embed = new Discord.RichEmbed();
  
 client.on('ready', () => {
   console.log('Bot ready.');
@@ -15,14 +16,6 @@ client.on('message', message => {
   if (message.content.startsWith(prefix + 'ping')) {
     message.channel.send('PONG!');
   }
-});
-
-//vn command
-client.on('message', function(message) {
-  if(message.content === '.vn') {
-    embed.setColor('#29ff00');
-    message.channel.send(embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg'));
-}
 });
 
 //bot token login
@@ -59,7 +52,7 @@ client.on('message', message => {
 client.on('message', message => {
   if (message.content.startsWith(prefix + 'play')) {
     if (message.member.voiceChannel) {
-      connection.playFile('C:\Users\Fabio\Music\GetRenai.mp3');
+      connection.playFile('<path here>');
     }
     else {
       message.channel.send("Error");
@@ -68,10 +61,18 @@ client.on('message', message => {
 });
 
 client.on('guildMemberAdd', member => {
-  // Send the message to a designated channel on a server:
+  // Send the message to a designated channel on a server
   const channel = member.guild.channels.find('name', 'ext-logs');
   // Do nothing if the channel wasn't found on this server
   if (!channel) return;
   // Send the message, mentioning the member
   channel.send(`Welcome to the server, ${member}`);
+});
+
+//vn command
+client.on('message', function(message) {
+  if(message.content.startsWith(prefix + 'vn')) {
+    embed.setColor('#29ff00');
+    message.channel.send(embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg'));
+}
 });
