@@ -28,7 +28,7 @@ music(client, {
   maxQueueSize: 100,
   clearInvoker: false,
   anyoneCanSkip: false,
-  volume: 1
+  volume: 2
 });
 
 //voice channel join & leave
@@ -58,6 +58,7 @@ client.on('message', message => {
   }
 });
 
+//message on member join
 client.on('guildMemberAdd', member => {
   // Send the message to a designated channel on a server
   const channel = member.guild.channels.find('name', 'ext-logs');
