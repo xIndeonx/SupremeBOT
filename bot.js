@@ -109,3 +109,10 @@ client.on('message', function(message) {
     message.channel.send(embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png'));
 }
 });
+
+//help command
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'help')) {
+    message.channel.send('Help page is being worked on.');
+  }
+});
