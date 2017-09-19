@@ -17,6 +17,14 @@ client.on('message', message => {
   }
 });
 
+//vn command
+client.on('message', function(message) {
+  if(message.content === '.vn') {
+    embed.setColor('#29ff00');
+    message.channel.send(embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg'));
+}
+});
+
 //bot token login
 client.login(token);
 
