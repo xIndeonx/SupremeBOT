@@ -19,22 +19,20 @@ client.login(settings.token);
 //restart command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'restart')) {
-    if(message.member.hasPermission("ADMINISTRATOR", true)) {
+    if (message.author.id !== settings.ownerid) return;
       message.channel.send('Restarting...');
       process.exit();
-    }
   }
 });
 
 //shutdown command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'shutdown')) {
-    if(message.member.hasPermission("ADMINISTRATOR", true)) {
+    if (message.author.id !== settings.ownerid) return;
       message.channel.send('Shutting down...');
       client.destroy((err) => {
         console.log(err);
       });
-    }
   }
 });
 
