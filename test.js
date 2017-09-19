@@ -1,9 +1,10 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const prefix = '.'
+const token = '<token here>'
  
 client.on('ready', () => {
-  console.log('I am ready!');
+  console.log('Bot ready.');
   client.user.setGame('Work in Progress');
   client.user.setStatus("dnd");
   //client.user.send('Bot successfully initialized.');
@@ -17,7 +18,7 @@ client.on('message', message => {
 });
 
 //bot token login
-client.login('<token here>');
+client.login(token);
 
 //voice channel join & leave
 client.on('message', message => {
@@ -58,21 +59,11 @@ client.on('message', message => {
   }
 });
 
-/*client.on('message', function(message) {
-  if (message.content.startsWith(prefix + 'ziit')) {
-    client.sendFile(message, './vapenation.jpg', 'vapenation.jpg', null, (err, m) => {
-          if (err) console.log(err);
-    });
-  }
-});*/
-
-/*
-client.on('message', message => {
-  if (message.content.startsWith(prefix + 'shutdown')) {
-    message.channel.send('Shutting down...');
-    client.destroy((err) => {
-      console.log(err);
-    });
-  }
+client.on('guildMemberAdd', member => {
+  // Send the message to a designated channel on a server:
+  const channel = member.guild.channels.find('name', 'ext-logs');
+  // Do nothing if the channel wasn't found on this server
+  if (!channel) return;
+  // Send the message, mentioning the member
+  channel.send(`Welcome to the server, ${member}`);
 });
-*/
