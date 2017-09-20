@@ -23,7 +23,7 @@ client.login(settings.token);
 //restart command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'restart')) {
-    if (message.author.id !== settings.ownerid) return;
+    if ((message.author.id !== settings.ownerid) || (message.author.id !== settings.lucasid)) return;
       message.channel.send('Restarting...');
       process.exit();
   }
@@ -32,13 +32,12 @@ client.on('message', message => {
 //shutdown command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'shutdown')) {
-    if (message.author.id !== settings.ownerid) return;
+    if ((message.author.id !== settings.ownerid) || (message.author.id !== settings.lucasid)) return;
       message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
       client.destroy((err) => {
         console.log(err);
       });
-      //var result = exec('pm2 stop bot.js');
-      //result();
+      exec('pm2 stop bot.js');
   }
 });
 
@@ -118,5 +117,80 @@ client.on('message', function(message) {
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'help')) {
     message.channel.send('Help page is being worked on.');
+  }
+});
+
+/*
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'test')) {
+    if (message.author.id !== settings.ownerid) return;
+    console.log(settings.ownerid);
+  }
+});
+*/
+
+client.on('message', message => {
+  if (message.content === '1=0') {
+    message.channel.send('1=0');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + '1')) {
+    message.channel.send('1=0');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'alina')) {
+    message.channel.send('Daddy?');
+  }
+});
+
+client.on('message', message => {
+  if ((message.content.startsWith(settings.prefix + 'andy')) || (message.content.startsWith(settings.prefix + 'andi'))) {
+    message.channel.send('De Andi füut sech elei in Bärn');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'autismus')) {
+    message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'autist')) {
+    message.channel.send('Wüki?!?!?');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'baumi')) {
+    message.channel.send('Try using `.baumi1`, `.baumi2`, `.baumi3`, or `.baumi4`!');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'baumi1')) {
+    message.channel.send("Cha de Alain scho d'Uhr lese?");
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'baumi2')) {
+    message.channel.send('Wetsch es Zäpfli?');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'baumi3')) {
+    message.channel.send('Lucas, ab id Duschi');
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'baumi4')) {
+    message.channel.send('Chopf im Sofa');
   }
 });
