@@ -1,9 +1,9 @@
-exports.TOKEN = 'MzU5NjY4NjIxOTg5MTE3OTUz.DKKXAw.rXTNd7PK3g1tNnjbYOOTZqmxBCg';
+exports.TOKEN = '';
 
 exports.PREFIX = '.';
 
-exports.CHANNEL = '360070371715710976';
+exports.CHANNEL = '';
 
-exports.OWNERID = '318765117674225665';
+exports.OWNERID = '';
 
-exports.LUCASID = '282905905585192961';
+exports.LUCASID = '';
