@@ -94,6 +94,49 @@ client.on('guildMemberAdd', member => {
   channel.send(`Welcome to the server, ${member}`);
 });
 
+//setGame command
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'setGame')) {
+    if ((message.author.id === settings.ownerid) || (message.author.id === settings.lucasid)) {
+      var input = message.content;
+      var clientInput = input.substr(9);
+      client.user.setPresence({ game: { name: clientInput, type: 0 } });
+    } else {
+      message.channel.send('You are not authorized to use this command.');
+    }
+  }
+});
+
+//setAvatar command
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'setAvatar')) {
+    if ((message.author.id === settings.ownerid) || (message.author.id === settings.lucasid)) {
+      var input = message.content;
+      var clientInput = input.substr(11);
+      client.user.setAvatar(clientInput);
+    } else {
+      message.channel.send('You are not authorized to use this command.');
+    }
+  }
+});
+
+//setStatus command
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'setStatus')) {
+    if ((message.author.id === settings.ownerid) || (message.author.id === settings.lucasid)) {
+      var input = message.content;
+      var clientInput = input.substr(11);
+      if(clientInput === ('dnd') || ('online') || ('idle') || ('invisible')){
+        client.user.setStatus(clientInput);
+      } else {
+        message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
+      }
+    } else {
+      message.channel.send('You are not authorized to use this command.');
+    }
+  }
+});
+
 //ping command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'ping')) {
@@ -236,7 +279,9 @@ client.on('message', message => {
 
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'danke')) {
-    message.channel.send('Danke [Insert picture here]');
+    embed.setTitle('Merci viu mol');
+    embed.setColor('#001fff');
+    message.channel.send(embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg'));
   }
 });
 
@@ -465,21 +510,5 @@ client.on('message', message => {
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'zoel')) {
     message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
-  }
-});
-
-client.on('message', message => {
-  if (message.content.startsWith(settings.prefix + 'setGame')) {
-    var input = message.content;
-    var clientInput = input.substr(9);
-    client.user.setPresence({ game: { name: clientInput, type: 0 } });
-  }
-});
-
-client.on('message', message => {
-  if (message.content.startsWith(settings.prefix + 'setAvatar')) {
-    var input = message.content;
-    var clientInput = input.substr(11);
-    client.user.setAvatar(clientInput);
   }
 });
