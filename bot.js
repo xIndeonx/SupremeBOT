@@ -167,8 +167,8 @@ client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'echo')) {
     var input = message.content;
     var clientInput = input.substr(6);
-    message.delete(1000);
-    setTimeout(function(){ message.channel.send(clientInput); }, 2000);
+    message.delete(200);
+    setTimeout(function(){ message.channel.send(clientInput); }, 300);
   }
 });
 
