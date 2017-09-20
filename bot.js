@@ -84,6 +84,8 @@ client.on('message', function(message) {
     if(message.member.voiceChannel) {
       message.member.voiceChannel.leave();
       message.channel.send('I have successfully disconnected from the channel!');
+    } else {
+      message.channel.send('You are not in a voice channel!');
     }
   }
 });
@@ -135,7 +137,7 @@ client.on('message', async message => {
       } else {
           serverQueue.songs.push(song);
           console.log(serverQueue.songs);
-          return message.channel.send(`**${song.title}** has been added to the queue!`);
+          return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
       }
 
       return;
@@ -143,12 +145,14 @@ client.on('message', async message => {
       if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!');
       if (!serverQueue) return message.channel.send('There is nothing playing that I could skip for you.');
       serverQueue.connection.dispatcher.end();
+      message.channel.send('Skipping...');
       return;
   } else if (message.content.startsWith(`${PREFIX}stop`)) {
       if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!');
       if (!serverQueue) return message.channel.send('There is nothing playing that I could stop for you.');
       serverQueue.songs = [];
       serverQueue.connection.dispatcher.end();
+      message.channel.send('Successfully stopped.');
       return;
   }
 
