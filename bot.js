@@ -467,3 +467,19 @@ client.on('message', message => {
     message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
   }
 });
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'setGame')) {
+    var input = message.content;
+    var clientInput = input.substr(9);
+    client.user.setPresence({ game: { name: clientInput, type: 0 } });
+  }
+});
+
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'setAvatar')) {
+    var input = message.content;
+    var clientInput = input.substr(11);
+    client.user.setAvatar(clientInput);
+  }
+});
