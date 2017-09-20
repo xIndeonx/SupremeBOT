@@ -179,17 +179,6 @@ client.on('message', message => {
   }
 });
 
-/*
-//test
-client.on('message', message => {
-  if (message.content.startsWith(settings.prefix + 'test')) {
-    if (message.author.id !== settings.ownerid) return;
-      //console.log(settings.ownerid);
-      message.channel.send('test');
-  }
-});
-*/
-
 //more commands
 client.on('message', message => {
   if (message.content === '1=0') {
