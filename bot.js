@@ -137,19 +137,6 @@ client.on('message', message => {
   }
 });
 
-//Echo command
-client.on('message', message => {
-  if (message.content.startsWith(settings.prefix + 'echo')) {
-    if ((message.author.id === settings.ownerid) || (message.author.id === settings.lucasid)) {
-      var input = message.content;
-      var clientInput = input.substr(6);
-      message.channel.send(clientInput);
-    } else {
-      message.channel.send('You are not authorized to use this command.');
-    }
-  }
-});
-
 //ping command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'ping')) {
@@ -173,6 +160,15 @@ client.on('message', function(message) {
     embed.setColor('BLACK');
     message.channel.send(embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png'));
 }
+});
+
+//echo command
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'echo')) {
+    var input = message.content;
+    var clientInput = input.substr(6);
+    message.channel.send(clientInput);
+  }
 });
 
 //help command
