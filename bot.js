@@ -137,6 +137,19 @@ client.on('message', message => {
   }
 });
 
+//Echo command
+client.on('message', message => {
+  if (message.content.startsWith(settings.prefix + 'echo')) {
+    if ((message.author.id === settings.ownerid) || (message.author.id === settings.lucasid)) {
+      var input = message.content;
+      var clientInput = input.substr(6);
+      message.channel.send(clientInput);
+    } else {
+      message.channel.send('You are not authorized to use this command.');
+    }
+  }
+});
+
 //ping command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'ping')) {
