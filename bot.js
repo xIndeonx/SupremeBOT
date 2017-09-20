@@ -185,7 +185,7 @@ client.on('message', message => {
 
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'baumi3')) {
-    message.channel.send('Lucas, ab id Duschi');
+    message.channel.send('<@'+settings.lucasid+'>, ab id Duschi');
   }
 });
 
