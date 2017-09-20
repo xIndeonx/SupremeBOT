@@ -23,21 +23,27 @@ client.login(settings.token);
 //restart command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'restart')) {
-    if ((message.author.id !== settings.ownerid) || (message.author.id !== settings.lucasid)) return;
+    if ((message.author.id === settings.ownerid) || (message.author.id === settings.lucasid)) {
       message.channel.send('Restarting...');
       process.exit();
+    } else {
+      message.channel.send('You are not authorized to use this command.');
+    }
   }
 });
 
 //shutdown command
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'shutdown')) {
-    if ((message.author.id !== settings.ownerid) || (message.author.id !== settings.lucasid)) return;
+    if ((message.author.id === settings.ownerid) || (message.author.id === settings.lucasid)) {
       message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
       client.destroy((err) => {
         console.log(err);
       });
       exec('pm2 stop bot.js');
+    } else {
+      message.channel.send('You are not authorized to use this command.');
+    }
   }
 });
 
@@ -106,7 +112,7 @@ client.on('message', function(message) {
 
 //ziit command
 client.on('message', function(message) {
-  if(message.content === 'ziit') {
+  if(message.content === '.ziit') {
     embed.setTitle('Die Uhrzeit');
     embed.setColor('BLACK');
     message.channel.send(embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png'));
@@ -121,14 +127,17 @@ client.on('message', message => {
 });
 
 /*
+//test
 client.on('message', message => {
   if (message.content.startsWith(settings.prefix + 'test')) {
     if (message.author.id !== settings.ownerid) return;
-    console.log(settings.ownerid);
+      //console.log(settings.ownerid);
+      message.channel.send('test');
   }
 });
 */
 
+//more commands
 client.on('message', message => {
   if (message.content === '1=0') {
     message.channel.send('1=0');
@@ -208,7 +217,7 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-  if (message.content === 'claudio') {
+  if (message.content === '.claudio') {
     message.channel.send('De Clö isch immer am schaffe.');
   }
 });
@@ -250,7 +259,7 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-  if (message.content === 'fabio') {
+  if (message.content === '.fabio') {
     message.channel.send('De Vabio isch en chline Memer.');
   }
 });
@@ -286,7 +295,7 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-  if (message.content === 'ich') {
+  if (message.content === '.ich') {
     message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
   }
 });
@@ -340,7 +349,7 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-  if (message.content === 'jesus') {
+  if (message.content === '.jesus') {
     message.channel.send('**IN THE NAAAAME OF JESUS!!!!!!**');
   }
 });
@@ -358,7 +367,7 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-  if (message.content === 'kadder') {
+  if (message.content === '.kadder') {
     message.channel.send('Ich ha gern Klobürschtene.');
   }
 });
@@ -370,7 +379,7 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-  if (message.content === 'lucas') {
+  if (message.content === '.lucas') {
     message.channel.send('Dr Luckckas verdient viu a dr HSR.');
   }
 });
