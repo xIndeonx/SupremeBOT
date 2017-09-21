@@ -6,7 +6,6 @@ const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
 
 const queue = new Map();
-//const Manager = new Discord.ShardingManager('./bot.js', {totalShards: "auto", token: settings.token});
 
 client.on('warn', console.warn);
 
@@ -14,22 +13,19 @@ client.on('error', console.error);
 
 client.on('ready',() => {
   console.log('Bot ready.');
-  client.user.setGame('Work in Progress');
   client.user.setStatus("dnd");
+  client.user.setGame('Work in Progress');
   const channel = client.channels.get(CHANNEL);
   if (!channel) return;
   channel.send('Bot successfully initialized.');
 });
 
-client.on('disconnect', () => console.log('Bot has disconnected!'));
+client.on('disconnect', () => console.log('Bot has disconnected...'));
 
-client.on('reconnecting', () => console.log('Bot is reconnecting!'));
+client.on('reconnecting', () => console.log('Bot is reconnecting...'));
 
 //bot token login
 client.login(TOKEN);
-
-//shards
-//Manager.spawn();
 
 //restart command
 client.on('message', function(message) {
