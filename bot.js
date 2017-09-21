@@ -56,35 +56,6 @@ client.on('message', function(message) {
   }
 });
 
-//voice channel join & leave
-client.on('message', function(message) {
-  // Voice only works in guilds, if the message does not come from a guild,
-  // we ignore it
-  if (!message.guild) return;
-
-  if (message.content.startsWith(`${PREFIX}vcjoin`)) {
-    // Only try to join the sender's voice channel if they are in one themselves
-    if (message.member.voiceChannel) {
-      message.member.voiceChannel.join()
-        .then(connection => { // Connection is an instance of VoiceConnection
-          message.channel.send('I have successfully connected to the channel!');
-        })
-        .catch(console.log);
-    } else {
-      message.channel.send('You need to join a voice channel first!');
-    }
-  }
-
-  if (message.content.startsWith(`${PREFIX}vcleave`)) {
-    if (message.member.voiceChannel) {
-      message.member.voiceChannel.leave();
-      message.channel.send('I have successfully disconnected from the channel!');
-    } else {
-      message.channel.send('You are not in a voice channel!');
-    }
-  }
-});
-
 //music stuff
 client.on('message', async message => {
   if (message.author.bot) return;
@@ -133,7 +104,7 @@ client.on('message', async message => {
       } else {
           serverQueue.songs.push(song);
           console.log(serverQueue.songs);
-          return message.channel.send(`:soon: **${song.title}** has been added to the queue!`);
+          return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
       }
 
       return;
