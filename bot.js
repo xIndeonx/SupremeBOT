@@ -76,7 +76,7 @@ client.on('message', function(message) {
   }
 
   if (message.content.startsWith(`${PREFIX}vcleave`)) {
-    if(message.member.voiceChannel) {
+    if (message.member.voiceChannel) {
       message.member.voiceChannel.leave();
       message.channel.send('I have successfully disconnected from the channel!');
     } else {
@@ -176,7 +176,7 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
       }
       return message.channel.send(':bangbang: **There is nothing playing.**');
   } else if (message.content.startsWith(`${PREFIX}resume`)) {
-      if(serverQueue && !serverQueue.playing) {
+      if (serverQueue && !serverQueue.playing) {
         serverQueue.playing = true;
         serverQueue.connection.dispatcher.resume();
         return message.channel.send(':arrow_forward: **Successfully resumed.**');
