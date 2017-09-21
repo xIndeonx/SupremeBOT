@@ -166,7 +166,7 @@ client.on('message', async message => {
 __**Queue:**__
 ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n')}
 
-:notes: **Now playing:** ${serverQueue.songs[0].title}
+:notes: Now playing: **${serverQueue.songs[0].title}**
       `);
   } else if (message.content.startsWith(`${PREFIX}pause`)) {
       if (serverQueue && serverQueue.playing) {
@@ -274,7 +274,7 @@ client.on('message', function(message) {
 
 //vn command
 client.on('message', function(message) {
-  if(message.content.startsWith(`${PREFIX}vn`)) {
+  if (message.content.startsWith(`${PREFIX}vn`)) {
     embed.setTitle('Vape Nation');
     embed.setColor('#29ff00');
     embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
@@ -284,12 +284,12 @@ client.on('message', function(message) {
 
 //ziit command
 client.on('message', function(message) {
-  if(message.content.startsWith(`${PREFIX}ziit`)) {
+  if (message.content === '.ziit') {
     embed.setTitle('Die Uhrzeit');
     embed.setColor('BLACK');
     embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
     message.channel.send({ embed });
-}
+  }
 });
 
 //echo command
