@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const embed = new Discord.RichEmbed();
-
-const { Client } = require('discord.js');
+const { Client, Util } = require('discord.js');
 const { TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID } = require('./config');
 const ytdl = require('ytdl-core');
+const embed = new Discord.RichEmbed();
 
 const queue = new Map();
 //const Manager = new Discord.ShardingManager('./bot.js', {totalShards: "auto", token: settings.token});
@@ -22,7 +21,7 @@ client.on('ready',() => {
   channel.send('Bot successfully initialized.');
 });
 
-client.on('disconnect', () => console.log('Bot has disconnected from the channel!'));
+client.on('disconnect', () => console.log('Bot has disconnected!'));
 
 client.on('reconnecting', () => console.log('Bot is reconnecting!'));
 
@@ -99,18 +98,18 @@ client.on('message', async message => {
 
   if (message.content.startsWith(`${PREFIX}play`)) {
       const voiceChannel = message.member.voiceChannel;
-      if (!voiceChannel) return message.channel.send('I\'m sorry but you need to be in a voice channel to play music!');
+      if (!voiceChannel) return message.channel.send(':bangbang: **You need to be in a voice channel to play music!**');
       const permissions = voiceChannel.permissionsFor(message.client.user);
       if (!permissions.has('CONNECT')) {
-          return message.channel.send('I cannot connect to your voice channel!');
+          return message.channel.send(':bangbang: **Cannot connect to your voice channel!**');
       }
       if (!permissions.has('SPEAK')) {
-          return message.channel.send('I cannot speak in your voice channel!');
+          return message.channel.send(':bangbang: **Cannot speak in your voice channel!**');
       }
 
       const songInfo = await ytdl.getInfo(args[1]);
       const song = {
-          title: songInfo.title,
+          title: Util.escapeMarkdown(songInfo.title),
           url: songInfo.video_url
       };
       if (!serverQueue) {
@@ -131,30 +130,62 @@ client.on('message', async message => {
               queueConstruct.connection = connection;
               play(message.guild, queueConstruct.songs[0]);
           } catch (error) {
-              console.error(`I could not join the voice channel: ${error}`);
+              console.error(`:bangbang: **Could not join the voice channel:** ${error}`);
               queue.delete(message.guild.id);
-              return message.channel.send(`I could not join the voice channel: ${error}`);
+              return message.channel.send(`:bangbang: **Could not join the voice channel:** ${error}`);
           }
       } else {
           serverQueue.songs.push(song);
           console.log(serverQueue.songs);
-          return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
+          return message.channel.send(`:soon: **${song.title}** has been added to the queue!`);
       }
 
       return;
   } else if (message.content.startsWith(`${PREFIX}skip`)) {
-      if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!');
-      if (!serverQueue) return message.channel.send('There is nothing playing that I could skip for you.');
+      if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
+      if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       serverQueue.connection.dispatcher.end();
-      message.channel.send('Skipping...');
+      message.channel.send(':track_next: **Skipping...**');
       return;
   } else if (message.content.startsWith(`${PREFIX}stop`)) {
-      if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!');
-      if (!serverQueue) return message.channel.send('There is nothing playing that I could stop for you.');
+      if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
+      if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       serverQueue.songs = [];
       serverQueue.connection.dispatcher.end();
-      message.channel.send('Successfully stopped.');
+      message.channel.send(':stop_button: **Successfully stopped.**');
       return;
+  } else if (message.content.startsWith(`${PREFIX}volume`)) {
+      if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
+      if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
+      if (!args[1]) return message.channel.send(`:loud_sound: The current volume is: **${serverQueue.volume}**.`);
+      serverQueue.volume = args[1];
+      serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
+      return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
+  } else if (message.content.startsWith(`${PREFIX}np`)) {
+      if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
+      return message.channel.send(`:notes: Now playing: **${serverQueue.songs[0].title}**`);
+  } else if (message.content.startsWith(`${PREFIX}queue`)) {
+      if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
+      return message.channel.send(`
+__**Queue:**__
+${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n')}
+
+:notes: **Now playing:** ${serverQueue.songs[0].title}
+      `);
+  } else if (message.content.startsWith(`${PREFIX}pause`)) {
+      if (serverQueue && serverQueue.playing) {
+        serverQueue.playing = false;
+        serverQueue.connection.dispatcher.pause();
+        return message.channel.send(':pause_button: **Successfully paused.**');
+      }
+      return message.channel.send(':bangbang: **There is nothing playing.**');
+  } else if (message.content.startsWith(`${PREFIX}resume`)) {
+      if(serverQueue && !serverQueue.playing) {
+        serverQueue.playing = true;
+        serverQueue.connection.dispatcher.resume();
+        return message.channel.send(':arrow_forward: **Successfully resumed.**');
+      }
+      return message.channel.send(':bangbang: **There is nothing playing.**');
   }
 
   return;
@@ -178,6 +209,8 @@ function play(guild, song) {
       })
       .on('error', error => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+  serverQueue.textChannel.send(`:play_pause: **Started playing:** **${song.title}**`);
 }
 
 //message on member join
@@ -254,7 +287,7 @@ client.on('message', function(message) {
 
 //ziit command
 client.on('message', function(message) {
-  if(message.content === '.ziit') {
+  if(message.content.startsWith(`${PREFIX}ziit`)) {
     embed.setTitle('Die Uhrzeit');
     embed.setColor('BLACK');
     message.channel.send(embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png'));
