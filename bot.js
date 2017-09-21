@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({ disableEveryone: true });
 const { Client, Util } = require('discord.js');
+const client = new Discord.Client({ disableEveryone: true });
 const { TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID } = require('./config');
 const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
@@ -281,7 +281,7 @@ client.on('message', function(message) {
   if(message.content.startsWith(`${PREFIX}vn`)) {
     embed.setTitle('Vape Nation');
     embed.setColor('#29ff00');
-    embed.setImage("https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg");
+    embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
     message.channel.send({ embed });
 }
 });
@@ -291,7 +291,7 @@ client.on('message', function(message) {
   if(message.content.startsWith(`${PREFIX}ziit`)) {
     embed.setTitle('Die Uhrzeit');
     embed.setColor('BLACK');
-    embed.setImage("http://www.odenssnus.eu/public/img/user/1026.png");
+    embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
     message.channel.send({ embed });
 }
 });
