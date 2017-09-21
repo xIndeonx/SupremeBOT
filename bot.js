@@ -88,7 +88,7 @@ client.on('message', function(message) {
     }
   }
 });
-/*
+
 //music stuff
 client.on('message', async message => {
   if (message.author.bot) return;
@@ -189,7 +189,7 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
   }
 
   return;
-});*/
+});
 
 function play(guild, song) {
   const serverQueue = queue.get(guild.id);
@@ -282,7 +282,7 @@ client.on('message', function(message) {
     embed.setTitle('Vape Nation');
     embed.setColor('#29ff00');
     embed.setImage("https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg");
-    message.channel.send({embed});
+    message.channel.send({ embed });
 }
 });
 
@@ -292,7 +292,7 @@ client.on('message', function(message) {
     embed.setTitle('Die Uhrzeit');
     embed.setColor('BLACK');
     embed.setImage("http://www.odenssnus.eu/public/img/user/1026.png");
-    message.channel.send({embed});
+    message.channel.send({ embed });
 }
 });
 
