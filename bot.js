@@ -529,6 +529,12 @@ client.on('message', function(message) {
 });
 
 client.on('message', function(message) {
+  if (message.content.startsWith(`${PREFIX}lucas3`)) {
+    message.channel.send('ICH chan auto fahre');
+  }
+});
+
+client.on('message', function(message) {
   if (message.content.startsWith(`${PREFIX}mila`)) {
     message.channel.send('__**ACHT**__');
   }
