@@ -27,35 +27,6 @@ client.on('reconnecting', () => console.log('Bot is reconnecting...'));
 //bot token login
 client.login(TOKEN);
 
-//restart command
-client.on('message', function(message) {
-  if (message.author.bot) return;
-  if (message.content.startsWith(`${PREFIX}restart`)) {
-    if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-      message.channel.send('Restarting...');
-      process.exit();
-    } else {
-      message.channel.send('You are not authorized to use this command.');
-    }
-  }
-});
-
-//shutdown command
-client.on('message', function(message) {
-  if (message.author.bot) return;
-  if (message.content.startsWith(`${PREFIX}shutdown`)) {
-    if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-      message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
-      client.destroy((err) => {
-        console.log(err);
-      });
-      exec('pm2 stop bot.js');
-    } else {
-      message.channel.send('You are not authorized to use this command.');
-    }
-  }
-});
-
 //music stuff
 client.on('message', async message => {
   if (message.author.bot) return;
@@ -201,409 +172,171 @@ client.on('message', function(message) {
     } else {
       message.channel.send('You are not authorized to use this command.');
     }
-  }
-});
-
-//setAvatar command
-client.on('message', function(message) {
-  if (message.author.bot) return;
-  if (message.content.startsWith(`${PREFIX}setAvatar`)) {
-    if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-      var input = message.content;
-      var clientInput = input.substr(11);
-      client.user.setAvatar(clientInput);
-    } else {
-      message.channel.send('You are not authorized to use this command.');
-    }
-  }
-});
-
-//setStatus command
-client.on('message', function(message) {
-  if (message.author.bot) return;
-  if (message.content.startsWith(`${PREFIX}setStatus`)) {
-    if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-      var input = message.content;
-      var clientInput = input.substr(11);
-      if(clientInput === ('dnd') || ('online') || ('idle') || ('invisible')){
-        client.user.setStatus(clientInput);
+  } else if (message.content.startsWith(`${PREFIX}setAvatar`)) {
+      if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        var input = message.content;
+        var clientInput = input.substr(11);
+        client.user.setAvatar(clientInput);
       } else {
-        message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
-      }
-    } else {
-      message.channel.send('You are not authorized to use this command.');
+        message.channel.send('You are not authorized to use this command.');
     }
-  }
-});
-
-//ping command
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}ping`)) {
-    message.channel.send('**PONG**' + ' `' + client.ping.toString() + 'ms`');
-  }
-});
-
-//vn command
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}vn`)) {
-    embed.setTitle('Vape Nation');
-    embed.setColor('#29ff00');
-    embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
-    message.channel.send({ embed });
-}
-});
-
-//ziit command
-client.on('message', function(message) {
-  if (message.content === '.ziit') {
-    embed.setTitle('Die Uhrzeit');
-    embed.setColor('BLACK');
-    embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
-    message.channel.send({ embed });
-  }
-});
-
-//echo command
-client.on('message', function(message) {
-  if (message.author.bot) return;
-  if (message.content.startsWith(`${PREFIX}echo`)) {
-    var input = message.content;
-    var clientInput = input.substr(6);
-    message.delete(200);
-    setTimeout(function(){ message.channel.send(clientInput); }, 300);
-  }
-});
-
-//help command
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}help`)) {
-    message.channel.send('Help page is being worked on.');
-  }
-});
-
-//more commands
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}1=0`)) {
-    message.channel.send('1=0');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}alina`)) {
-    message.channel.send('Daddy?');
-  }
-});
-
-client.on('message', function(message) {
-  if ((message.content.startsWith(`${PREFIX}andy`)) || (message.content.startsWith(`${PREFIX}andi`))) {
-    message.channel.send('De Andi füut sech elei in Bärn.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}autismus`)) {
-    message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}autist`)) {
-    message.channel.send('Wüki?!?!?');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content === '.baumi') {
-    message.channel.send('Try using `.baumi1`, `.baumi2`, `.baumi3`, or `.baumi4`!');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}baumi1`)) {
-    message.channel.send("Cha de Alain scho d'Uhr lese?");
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}baumi2`)) {
-    message.channel.send('Wetsch es Zäpfli?');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}baumi3`)) {
-    message.channel.send('<@'+LUCASID+'>, ab id Duschi');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}baumi4`)) {
-    message.channel.send('Chopf im Sofa.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}bitte`)) {
-    message.channel.send('**NEI**');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}boogeyman`)) {
-    message.channel.send('Kuka pelkää musta miestä?');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content === '.claudio') {
-    message.channel.send('De Clö isch immer am schaffe.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}claudiolino`)) {
-    message.channel.send('Clö, bitte, stfu.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}clö`)) {
-    message.channel.send('Ich ha gseit **NEI**.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}danke`)) {
-    embed.setTitle('Merci viu mol');
-    embed.setColor('#001fff');
-    message.channel.send(embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg'));
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}dinimom`)) {
-    message.channel.send('WÜKI?!?!?!??');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}doni`)) {
-    message.channel.send('Heb fressi oder ich küss dich.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}eis`)) {
-    message.channel.send('isch keis.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content === '.fabio') {
-    message.channel.send('De Vabio isch en chline Memer.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}fabio2`)) {
-    message.channel.send('Wie isch d\'Matur? - Isch fein gsi.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}fabiocsgo`)) {
-    message.channel.send('High risk - no reward.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}fige`)) {
-    message.channel.send('De Feliks het en usprägte Orientierigssinn.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}game`)) {
-    message.channel.send('Gits eis?');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}gschicht`)) {
-    message.channel.send('*glernt*');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content === '.ich') {
-    message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}ichi`)) {
-    message.channel.send('Bruchsch hilf? **ICH** cha der helfe.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}interessiert`)) {
-    message.channel.send('Wie es Loch im Chopf.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}inyourfaculty`)) {
-    message.channel.send('BECEASED!!!1!!!!111!!1!!!');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}inyourfamily`)) {
-    message.channel.send('BECEASED!!!1!!!!111!!1!!!');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}inyourname`)) {
-    message.channel.send('BECEASED!!!1!!!!111!!1!!!');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}inyourspirit`)) {
-    message.channel.send('BECEASED!!!1!!!!111!!1!!!');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}ivan`)) {
-    message.channel.send('Hoi zämä, i bims, dr Ivam. I bi ä waschächtä Schwiizer wiä mr gseht. Wohne duän i ~~IM REICH~~ in Öschtriich, und cha ou nid Schwiizertüütsch. Ademerci.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}jacob`)) {
-    message.channel.send('Jeg elsker dig ligesom du elsker min fugtig migmig.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content === '.jesus') {
-    message.channel.send('**IN THE NAAAAME OF JESUS!!!!!!**');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}jesuschrist`)) {
-    message.channel.send('is my nigga.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}joel`)) {
-    message.channel.send('IcH bI dE jOeL uNd IcH gLaUb AlLeS wO mEr MiR sEiT.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content === '.kadder') {
-    message.channel.send('Ich ha gern Klobürschtene.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}kadder2`)) {
-    message.channel.send('Tüend sie Wasser löse?');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content === '.lucas') {
-    message.channel.send('Dr Luckckas verdient viu a dr HSR.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}lucas2`)) {
-    message.channel.send('exit');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}lucas3`)) {
-    message.channel.send('ICH chan auto fahre');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}mila`)) {
-    message.channel.send('__**ACHT**__');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}noah`)) {
-    message.channel.send('Wo isch de Noah?');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}oli`)) {
-    message.channel.send('Ich bi sozial.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}ppap`)) {
-    message.channel.send(':pen_fountain: :pineapple: :apple: :pen_fountain:');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}pubg`)) {
-    message.channel.send('1=0');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}stfu`)) {
-    message.channel.send('Bitte, stfu.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}toubi`)) {
-    message.channel.send('Hallo, ich heisse Toubi.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}velo`)) {
-    message.channel.send('黒人が自転車を盗んだ');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}weltbild`)) {
-    message.channel.send('"Du hesch es falsches Weltbild."');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}zeit`)) {
-    message.channel.send('Neun Uhr Achtzig.');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}ziit?`)) {
-    message.channel.send('Ja, was isch denn für Ziit?');
-  }
-});
-
-client.on('message', function(message) {
-  if (message.content.startsWith(`${PREFIX}zoel`)) {
-    message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
+  } else if (message.content.startsWith(`${PREFIX}setStatus`)) {
+      if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        var input = message.content;
+        var clientInput = input.substr(11);
+        if(clientInput === ('dnd') || ('online') || ('idle') || ('invisible')){
+          client.user.setStatus(clientInput);
+        } else {
+        message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
+        }
+      } else {
+        message.channel.send('You are not authorized to use this command.');
+    }
+  } else if (message.content.startsWith(`${PREFIX}restart`)) {
+      if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        message.channel.send('Restarting...');
+        process.exit();
+      } else {
+        message.channel.send('You are not authorized to use this command.');
+      }
+  } else if (message.content.startsWith(`${PREFIX}shutdown`)) {
+      if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
+        client.destroy((err) => {
+          console.log(err);
+        });
+        exec('pm2 stop bot.js');
+      } else {
+        message.channel.send('You are not authorized to use this command.');
+      }
+  } else if (message.content.startsWith(`${PREFIX}ping`)) {
+      message.channel.send('**PONG**' + ' `' + client.ping.toString() + 'ms`');
+  } else if (message.content.startsWith(`${PREFIX}vn`)) {
+      embed.setTitle('Vape Nation');
+      embed.setColor('#29ff00');
+      embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
+      message.channel.send({ embed });
+  } else if (message.content === '.ziit') {
+      embed.setTitle('Die Uhrzeit');
+      embed.setColor('BLACK');
+      embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
+      message.channel.send({ embed });
+  } else if (message.content.startsWith(`${PREFIX}echo`)) {
+      var input = message.content;
+      var clientInput = input.substr(6);
+      message.delete(200);
+      setTimeout(function(){ message.channel.send(clientInput); }, 300);
+  } else if (message.content.startsWith(`${PREFIX}help`)) {
+      message.channel.send('Help page is being worked on.');
+  } else if (message.content.startsWith(`${PREFIX}1=0`)) {
+      message.channel.send('1=0');
+  } else if (message.content.startsWith(`${PREFIX}alina`)) {
+      message.channel.send('Daddy?');
+  } else if ((message.content.startsWith(`${PREFIX}andy`)) || (message.content.startsWith(`${PREFIX}andi`))) {
+      message.channel.send('De Andi füut sech elei in Bärn.');
+  } else if (message.content.startsWith(`${PREFIX}autismus`)) {
+      message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
+  } else if (message.content.startsWith(`${PREFIX}autist`)) {
+      message.channel.send('Wüki?!?!?');
+  } else if (message.content === '.baumi') {
+      message.channel.send('Try using `.baumi1`, `.baumi2`, `.baumi3`, or `.baumi4`!');
+  } else if (message.content.startsWith(`${PREFIX}baumi1`)) {
+      message.channel.send("Cha de Alain scho d'Uhr lese?");
+  } else if (message.content.startsWith(`${PREFIX}baumi2`)) {
+      message.channel.send('Wetsch es Zäpfli?');
+  } else if (message.content.startsWith(`${PREFIX}baumi3`)) {
+      message.channel.send('<@'+LUCASID+'>, ab id Duschi');
+  } else if (message.content.startsWith(`${PREFIX}baumi4`)) {
+      message.channel.send('Chopf im Sofa.');
+  } else if (message.content.startsWith(`${PREFIX}bitte`)) {
+      message.channel.send('**NEI**');
+  } else if (message.content.startsWith(`${PREFIX}boogeyman`)) {
+      message.channel.send('Kuka pelkää musta miestä?');
+  } else if (message.content === '.claudio') {
+      message.channel.send('De Clö isch immer am schaffe.');
+  } else if (message.content.startsWith(`${PREFIX}claudiolino`)) {
+      message.channel.send('Clö, bitte, stfu.');
+  } else if (message.content.startsWith(`${PREFIX}clö`)) {
+      message.channel.send('Ich ha gseit **NEI**.');
+  } else if (message.content.startsWith(`${PREFIX}danke`)) {
+      embed.setTitle('Merci viu mol');
+      embed.setColor('#001fff');
+      message.channel.send(embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg'));
+  } else if (message.content.startsWith(`${PREFIX}dinimom`)) {
+      message.channel.send('WÜKI?!?!?!??');
+  } else if (message.content.startsWith(`${PREFIX}doni`)) {
+      message.channel.send('Heb fressi oder ich küss dich.');
+  } else if (message.content.startsWith(`${PREFIX}eis`)) {
+      message.channel.send('isch keis.');
+  } else if (message.content === '.fabio') {
+      message.channel.send('De Vabio isch en chline Memer.');
+  } else if (message.content.startsWith(`${PREFIX}fabio2`)) {
+      message.channel.send('Wie isch d\'Matur? - Isch fein gsi.');
+  } else if (message.content.startsWith(`${PREFIX}fabiocsgo`)) {
+      message.channel.send('High risk - no reward.');
+  } else if (message.content.startsWith(`${PREFIX}fige`)) {
+      message.channel.send('De Feliks het en usprägte Orientierigssinn.');
+  } else if (message.content.startsWith(`${PREFIX}game`)) {
+      message.channel.send('Gits eis?');
+  } else if (message.content.startsWith(`${PREFIX}gschicht`)) {
+      message.channel.send('*glernt*');
+  } else if (message.content === '.ich') {
+      message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
+  } else if (message.content.startsWith(`${PREFIX}ichi`)) {
+      message.channel.send('Bruchsch hilf? **ICH** cha der helfe.');
+  } else if (message.content.startsWith(`${PREFIX}interessiert`)) {
+      message.channel.send('Wie es Loch im Chopf.');
+  } else if (message.content.startsWith(`${PREFIX}inyourfaculty`)) {
+      message.channel.send('BECEASED!!!1!!!!111!!1!!!');
+  } else if (message.content.startsWith(`${PREFIX}inyourfamily`)) {
+      message.channel.send('BECEASED!!!1!!!!111!!1!!!');
+  } else if (message.content.startsWith(`${PREFIX}inyourname`)) {
+      message.channel.send('BECEASED!!!1!!!!111!!1!!!');
+  } else if (message.content.startsWith(`${PREFIX}inyourspirit`)) {
+      message.channel.send('BECEASED!!!1!!!!111!!1!!!');
+  } else if (message.content.startsWith(`${PREFIX}ivan`)) {
+      message.channel.send('Hoi zämä, i bims, dr Ivam. I bi ä waschächtä Schwiizer wiä mr gseht. Wohne duän i ~~IM REICH~~ in Öschtriich, und cha ou nid Schwiizertüütsch. Ademerci.');
+  } else if (message.content.startsWith(`${PREFIX}jacob`)) {
+      message.channel.send('Jeg elsker dig ligesom du elsker min fugtig migmig.');
+  } else if (message.content === '.jesus') {
+      message.channel.send('**IN THE NAAAAME OF JESUS!!!!!!**');
+  } else if (message.content.startsWith(`${PREFIX}jesuschrist`)) {
+      message.channel.send('is my nigga.');
+  } else if (message.content.startsWith(`${PREFIX}joel`)) {
+      message.channel.send('IcH bI dE jOeL uNd IcH gLaUb AlLeS wO mEr MiR sEiT.');
+  } else if (message.content === '.kadder') {
+      message.channel.send('Ich ha gern Klobürschtene.');
+  } else if (message.content.startsWith(`${PREFIX}kadder2`)) {
+      message.channel.send('Tüend sie Wasser löse?');
+  } else if (message.content === '.lucas') {
+      message.channel.send('Dr Luckckas verdient viu a dr HSR.');
+  } else if (message.content.startsWith(`${PREFIX}lucas2`)) {
+      message.channel.send('exit');
+  } else if (message.content.startsWith(`${PREFIX}lucas3`)) {
+      message.channel.send('ICH chan auto fahre');
+  } else if (message.content.startsWith(`${PREFIX}mila`)) {
+      message.channel.send('__**ACHT**__');
+  } else if (message.content.startsWith(`${PREFIX}noah`)) {
+      message.channel.send('Wo isch de Noah?');
+  } else if (message.content.startsWith(`${PREFIX}oli`)) {
+      message.channel.send('Ich bi sozial.');
+  } else if (message.content.startsWith(`${PREFIX}ppap`)) {
+      message.channel.send(':pen_fountain: :pineapple: :apple: :pen_fountain:');
+  } else if (message.content.startsWith(`${PREFIX}pubg`)) {
+      message.channel.send('1=0');
+  } else if (message.content.startsWith(`${PREFIX}stfu`)) {
+      message.channel.send('Bitte, stfu.');
+  } else if (message.content.startsWith(`${PREFIX}toubi`)) {
+      message.channel.send('Hallo, ich heisse Toubi.');
+  } else if (message.content.startsWith(`${PREFIX}velo`)) {
+      message.channel.send('黒人が自転車を盗んだ');
+  } else if (message.content.startsWith(`${PREFIX}weltbild`)) {
+      message.channel.send('"Du hesch es falsches Weltbild."');
+  } else if (message.content.startsWith(`${PREFIX}zeit`)) {
+      message.channel.send('Neun Uhr Achtzig.');
+  } else if (message.content.startsWith(`${PREFIX}ziit?`)) {
+      message.channel.send('Ja, was isch denn für Ziit?');
+  } else if (message.content.startsWith(`${PREFIX}zoel`)) {
+       message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
   }
 });
