@@ -282,7 +282,8 @@ client.on('message', function(message) {
   } else if (message.content.startsWith(`${PREFIX}danke`)) { //danke
       embed.setTitle('Merci viu mol');
       embed.setColor('#001fff');
-      message.channel.send(embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg'));
+      embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
+      message.channel.send({ embed });
   } else if (message.content.startsWith(`${PREFIX}dinimom`)) { //dinimom
       message.channel.send('WÜKI?!?!?!??');
   } else if (message.content.startsWith(`${PREFIX}doni`)) { //doni
