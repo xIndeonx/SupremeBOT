@@ -1,6 +1,6 @@
-exports.TOKEN = 'MzU5NjY4NjIxOTg5MTE3OTUz.DKKXAw.rXTNd7PK3g1tNnjbYOOTZqmxBCg';
+exports.TOKEN = 'MzU2Nzk5MDM5OTc2NzY3NDkz.DKak1g.7kHi_L_XopwgFtibGTVaXhQ2mDI';
 
-exports.PREFIX = '.';
+exports.PREFIX = '!';
 
 exports.CHANNEL = '360070371715710976';
 
