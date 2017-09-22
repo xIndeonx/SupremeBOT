@@ -39,7 +39,7 @@ client.on('message', async message => {
   if (!message.content.startsWith(PREFIX)) return;
   const args = message.content.split(' ');
   const searchString = args.slice(1).join(' ');
-  const url = args[1].replace(/<(.+)>/g, '$1');
+  const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
   const serverQueue = queue.get(message.guild.id);
 
   if (message.content.startsWith(`${PREFIX}play`)) {
