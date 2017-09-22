@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 const { Client, Util } = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const { TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID } = require('./config');
+const { TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
+const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
-
+const youtube = new YouTube(YT_API);
 const queue = new Map();
 
 //warn
@@ -37,6 +38,8 @@ client.on('message', async message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(PREFIX)) return;
   const args = message.content.split(' ');
+  const searchString = args.slice(1).join(' ');
+  const url = args[1].replace(/<(.+)>/g, '$1');
   const serverQueue = queue.get(message.guild.id);
 
   if (message.content.startsWith(`${PREFIX}play`)) {
@@ -50,10 +53,22 @@ client.on('message', async message => {
           return message.channel.send(':bangbang: **Cannot speak in your voice channel!**');
       }
 
-      const songInfo = await ytdl.getInfo(args[1]);
+      try {
+        var video = await youtube.getVideo(url);
+      } catch (error) {
+          try {
+            var videos = await youtube.searchVideos(searchString, 1);
+            var video = await youtube.getVideoByID(videos[0].id);
+          } catch (err) {
+              console.error(err);
+              return message.channel.send(':bangbang: **Could not get search results.**');
+          }
+      }
+      console.log(video);
       const song = {
-          title: Util.escapeMarkdown(songInfo.title),
-          url: songInfo.video_url
+          id: video.id,
+          title: video.title,
+          url: `https://www.youtube.com/watch?v=${video.id}`
       };
       if (!serverQueue) {
           const queueConstruct = {
@@ -87,14 +102,14 @@ client.on('message', async message => {
   } else if (message.content.startsWith(`${PREFIX}skip`)) {
       if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
-      serverQueue.connection.dispatcher.end();
+      serverQueue.connection.dispatcher.end('Skip command has been used.');
       message.channel.send(':track_next: **Skipping...**');
       return;
   } else if (message.content.startsWith(`${PREFIX}stop`)) {
       if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       serverQueue.songs = [];
-      serverQueue.connection.dispatcher.end();
+      serverQueue.connection.dispatcher.end('Stop command has been used.');
       message.channel.send(':stop_button: **Successfully stopped.**');
       return;
   } else if (message.content.startsWith(`${PREFIX}volume`)) {
@@ -145,8 +160,9 @@ function play(guild, song) {
   console.log(serverQueue.songs);
 
   const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
-      .on('end', () => {
-          console.log('Song ended!');
+      .on('end', reason => {
+          if (reason === 'Stream is not generating quickly enough.') console.log('Song ended!');
+          else console.log(reason);
           serverQueue.songs.shift();
           play(guild, serverQueue.songs[0]);
       })
