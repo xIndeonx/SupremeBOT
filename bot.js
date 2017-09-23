@@ -245,14 +245,40 @@ client.on('message', function(message) {
       } else {
         message.channel.send('You are not authorized to use this command.');
       }
-  } else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
+  } else if (message.content.startsWith(`${PREFIX}delete`)) {
+        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+         var input = message.content;
+         var clientInput = input.substr(8);
+         let messagecount = parseInt(clientInput);
+         if(isNaN(messagecount)){
+
+          message.channel.send('Bisch du behindert?');
+          return;
+         } else {
+
+            messagecount = messagecount + 1;
+                    
+            setTimeout(function(){ message.channel.fetchMessages({limit: messagecount})
+             .then(messages => message.channel.bulkDelete(messages)); }, 5000);
+                    
+            setTimeout(function(){ message.channel.send({embed: {
+             color: 3447003,
+             description: "You deleted: " + (messagecount-1) +" message(s)"
+            }}); }, 5100);
+                    
+           }
+        } else {
+          message.channel.send('You are not authorized to use this command.');
+        }
+  }
+    else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
       message.channel.send('**PONG**' + ' `' + client.ping.toString() + 'ms`');
   } else if (message.content.startsWith(`${PREFIX}vn`)) { //vn
       embed.setTitle('Vape Nation');
       embed.setColor('#29ff00');
       embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
       message.channel.send({ embed });
-  } else if (message.content === '.ziit') { //ziit
+  } else if (message.content.startsWith(`${PREFIX}ziit`)) { //ziit
       embed.setTitle('Die Uhrzeit');
       embed.setColor('BLACK');
       embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
