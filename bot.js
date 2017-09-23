@@ -252,7 +252,7 @@ client.on('message', function(message) {
          let messagecount = parseInt(clientInput);
          if(isNaN(messagecount)){
 
-          message.channel.send('Bisch du behindert?');
+          message.channel.send('Could not delete messages. Please enter a valid number.');
           return;
          } else {
 
@@ -278,7 +278,7 @@ client.on('message', function(message) {
       embed.setColor('#29ff00');
       embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
       message.channel.send({ embed });
-  } else if (message.content.startsWith(`${PREFIX}ziit`)) { //ziit
+  } else if (message.content === 'ziit') { //ziit
       embed.setTitle('Die Uhrzeit');
       embed.setColor('BLACK');
       embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
