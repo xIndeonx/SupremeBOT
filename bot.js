@@ -16,11 +16,12 @@ client.on('error', console.error);
 
 //ready
 client.on('ready',() => {
-  console.log('Bot ready.');
+  exec('../run.sh');
   client.user.setGame('Work in Progress | Prefix: .');
   const channel = client.channels.get(CHANNEL);
   if (!channel) return;
   channel.send('Bot successfully initialized.');
+  console.log('Bot ready.');
 });
 
 //disconnect
