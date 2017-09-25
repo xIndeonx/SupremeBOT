@@ -356,6 +356,8 @@ client.on('message', function(message) {
       message.channel.send('Gits eis?');
   } else if (message.content.startsWith(`${PREFIX}gschicht`)) { //gschicht
       message.channel.send('*glernt*');
+  } else if (message.content.startsWith(`${PREFIX}hm`)) { //gschicht
+      message.channel.send('Hm?');
   } else if (message.content === `${PREFIX}ich`) { //ich
       message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
   } else if (message.content.startsWith(`${PREFIX}ichi`)) { //ichi
