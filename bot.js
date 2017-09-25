@@ -8,6 +8,16 @@ const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
 
+//const for admin commands
+const SET_GAME = `${PREFIX}setGame`;
+const PURGE = `${PREFIX}purge`;
+const SET_AVATER = `${PREFIX}setAvatar`;
+const SET_STATUS = `${PREFIX}setStatus`;
+const RESTART = `${PREFIX}restart`;
+const SHUTDOWN = `${PREFIX}shutdown`
+const DELETE = `${PREFIX}delete`
+
+
 //warn
 client.on('warn', console.warn);
 
@@ -199,7 +209,7 @@ client.on('guildMemberAdd', function(member) {
 //commands
 client.on('message', function(message) {
   if (message.author.bot) return;
-  if (message.content.startsWith(`${PREFIX}setGame`)) { //setGame
+  if (message.content.startsWith(SET_GAME)) { //setGame
     if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
       var input = message.content;
       var clientInput = input.substr(9);
@@ -207,7 +217,7 @@ client.on('message', function(message) {
     } else {
       message.channel.send('You are not authorized to use this command.');
     }
-  } else if (message.content === `${PREFIX}purge`) { //purge Messages
+  } else if (message.content === PURGE) { //purge Messages
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         if (message.channel.type == 'text') {
             message.channel.fetchMessages()
@@ -227,7 +237,7 @@ client.on('message', function(message) {
       } else {
         message.channel.send('You are not authorized to use this command.');
     }
-  } else if (message.content.startsWith(`${PREFIX}setAvatar`)) { //setAvatar
+  } else if (message.content.startsWith(SET_AVATER)) { //setAvatar
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         var input = message.content;
         var clientInput = input.substr(11);
@@ -235,7 +245,7 @@ client.on('message', function(message) {
       } else {
         message.channel.send('You are not authorized to use this command.');
     }
-  } else if (message.content.startsWith(`${PREFIX}setStatus`)) { //setStatus
+  } else if (message.content.startsWith(SET_STATUS)) { //setStatus
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         var input = message.content;
         var clientInput = input.substr(11);
@@ -247,14 +257,14 @@ client.on('message', function(message) {
       } else {
         message.channel.send('You are not authorized to use this command.');
     }
-  } else if (message.content.startsWith(`${PREFIX}restart`)) { //restart
+  } else if (message.content.startsWith(RESTART)) { //restart
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         message.channel.send('Restarting...');
         process.exit();
       } else {
         message.channel.send('You are not authorized to use this command.');
       }
-  } else if (message.content.startsWith(`${PREFIX}shutdown`)) { //shutdown
+  } else if (message.content.startsWith(SHUTDOWN)) { //shutdown
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
         client.destroy((err) => {
@@ -264,7 +274,7 @@ client.on('message', function(message) {
       } else {
         message.channel.send('You are not authorized to use this command.');
       }
-  } else if (message.content.startsWith(`${PREFIX}delete`)) {
+  } else if (message.content.startsWith(DELETE)) {
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(8);
