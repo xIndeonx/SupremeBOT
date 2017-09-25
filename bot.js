@@ -17,6 +17,17 @@ const SHUTDOWN = `${PREFIX}shutdown`;
 const DELETE = `${PREFIX}delete`;
 const PURGE = `${PREFIX}purge`;
 
+//const for music commands
+const MUSIC_PLAY = `${PREFIX}play`;
+const MUSIC_STOP = `${PREFIX}stop`;
+const MUSIC_SKIP = `${PREFIX}skip`;
+const MUSIC_PAUSE = `${PREFIX}pause`;
+const MUSIC_RESUME = `${PREFIX}resume`;
+const MUSIC_VOLUME = `${PREFIX}volume`;
+const MUSIC_NP = `${PREFIX}np`;
+const MUSIC_QUEUE = `${PREFIX}queue`;
+
+
 //warn
 client.on('warn', console.warn);
 
@@ -50,7 +61,7 @@ client.on('message', async message => {
   const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
   const serverQueue = queue.get(message.guild.id);
 
-  if (message.content.startsWith(`${PREFIX}play`)) {
+  if (message.content.startsWith(MUSIC_PLAY)) {
       const voiceChannel = message.member.voiceChannel;
       if (!voiceChannel) return message.channel.send(':bangbang: **You need to be in a voice channel to play music!**');
       const permissions = voiceChannel.permissionsFor(message.client.user);
@@ -83,30 +94,30 @@ client.on('message', async message => {
           }
         return handleVideo(video, message, voiceChannel);
       }
-  } else if (message.content.startsWith(`${PREFIX}skip`)) {
+  } else if (message.content.startsWith(MUSIC_SKIP)) {
       if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       serverQueue.connection.dispatcher.end('Skip command has been used.');
       message.channel.send(':track_next: **Skipping...**');
       return;
-  } else if ((message.content.startsWith(`${PREFIX}stop`)) || (message.content.startsWith(`${PREFIX}leave`))) {
+  } else if ((message.content.startsWith(MUSIC_STOP)) || (message.content.startsWith(`${PREFIX}leave`))) {
       if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       serverQueue.songs = [];
       serverQueue.connection.dispatcher.end('Stop command has been used.');
       message.channel.send(':stop_button: **Successfully stopped.**');
       return;
-  } else if (message.content.startsWith(`${PREFIX}volume`)) {
+  } else if (message.content.startsWith(MUSIC_VOLUME)) {
       if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       if (!args[1]) return message.channel.send(`:loud_sound: The current volume is: **${serverQueue.volume}**.`);
       serverQueue.volume = args[1];
       serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
       return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
-  } else if (message.content.startsWith(`${PREFIX}np`)) {
+  } else if (message.content.startsWith(MUSIC_NP)) {
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
       return message.channel.send(`:notes: Now playing: **${serverQueue.songs[0].title}**`);
-  } else if (message.content.startsWith(`${PREFIX}queue`)) {
+  } else if (message.content.startsWith(MUSIC_QUEUE)) {
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
       return message.channel.send(`
 __**Queue:**__
@@ -114,14 +125,14 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
 
 :notes: Now playing: **${serverQueue.songs[0].title}**
       `);
-  } else if (message.content.startsWith(`${PREFIX}pause`)) {
+  } else if (message.content.startsWith(MUSIC_PAUSE)) {
       if (serverQueue && serverQueue.playing) {
         serverQueue.playing = false;
         serverQueue.connection.dispatcher.pause();
         return message.channel.send(':pause_button: **Successfully paused.**');
       }
       return message.channel.send(':bangbang: **There is nothing playing.**');
-  } else if (message.content.startsWith(`${PREFIX}resume`)) {
+  } else if (message.content.startsWith(MUSIC_RESUME)) {
       if (serverQueue && !serverQueue.playing) {
         serverQueue.playing = true;
         serverQueue.connection.dispatcher.resume();
