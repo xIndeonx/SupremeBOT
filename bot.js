@@ -266,35 +266,39 @@ client.on('message', function(message) {
       }
   } else if (message.content.startsWith(DELETE)) { //delete
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-            var input = message.content;
-            var clientInput = input.substr(8);
-            let messagecount = parseInt(clientInput);
-            if(isNaN(messagecount)){
-                message.channel.send('Could not delete messages. Please enter a valid number.');
-                return;
-            } else {
-                messagecount = messagecount + 1;
-                message.channel.fetchMessages({ limit: messagecount })
-                    .then(messages => message.channel.bulkDelete(messages));
-                message.channel.send({embed: {
-                color: 3447003,
-                description: "You deleted: " + (messagecount-1) +" message(s)"}})
-                    .then(sent => sent.delete(5000));
-            }
+            if (message.channel.type == 'text') {
+                var input = message.content;
+                var clientInput = input.substr(8);
+                let messagecount = parseInt(clientInput);
+                if(isNaN(messagecount)){
+                    message.channel.send('Could not delete messages. Please enter a valid number.');
+                    return;
+                } else {
+                    messagecount = messagecount + 1;
+                    message.channel.fetchMessages({ limit: messagecount })
+                        .then(messages => message.channel.bulkDelete(messages));
+                    message.channel.send({embed: {
+                    color: 3447003,
+                    description: "You deleted: " + (messagecount-1) +" message(s)"}})
+                        .then(sent => sent.delete(5000));
+                }
+            } 
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
-  } else if (message.content === PURGE) { //purge Messages
+  } else if (message.content.startsWith(PURGE)) { //purge
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             if (message.channel.type == 'text') {
                 message.channel.fetchMessages()
                     .then(messages => {
                         message.channel.bulkDelete(messages);
                         messagesDeleted = messages.array().length; // number of messages deleted
-  
                         // Logging the number of messages deleted on both the channel and console.
-                        message.channel.sendMessage("Deletion of messages successful. Total messages deleted: "+messagesDeleted);
-                        console.log('Deletion of messages successful. Total messages deleted: '+messagesDeleted)
+                        message.channel.send({embed: {
+                            color: 3447003,
+                            description: "You deleted: " + messagesDeleted +" message(s)"}})
+                                .then(sent => sent.delete(5000));
+                        console.log('Deletion of messages successful. Total messages deleted: '+messagesDeleted);
                     })
                     .catch(err => {
                         console.log('Error while doing Bulk Delete');
