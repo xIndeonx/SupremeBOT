@@ -80,7 +80,7 @@ client.on('message', async message => {
       serverQueue.connection.dispatcher.end('Skip command has been used.');
       message.channel.send(':track_next: **Skipping...**');
       return;
-  } else if (message.content.startsWith(`${PREFIX}stop`)) {
+  } else if ((message.content.startsWith(`${PREFIX}stop`)) || (message.content.startsWith(`${PREFIX}leave`))) {
       if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       serverQueue.songs = [];
