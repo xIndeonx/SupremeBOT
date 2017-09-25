@@ -271,7 +271,7 @@ client.on('message', function(message) {
       embed.setColor('#29ff00');
       embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
       message.channel.send({ embed });
-  } else if (message.content === '.ziit') { //ziit
+  } else if (message.content === `${PREFIX}ziit`) { //ziit
       embed.setTitle('Die Uhrzeit');
       embed.setColor('BLACK');
       embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
@@ -293,7 +293,7 @@ client.on('message', function(message) {
       message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
   } else if (message.content.startsWith(`${PREFIX}autist`)) { //autist
       message.channel.send('Wüki?!?!?');
-  } else if (message.content === '.baumi') { //baumi
+  } else if (message.content === `${PREFIX}baumi`) { //baumi
       message.channel.send('Try using `.baumi1`, `.baumi2`, `.baumi3`, or `.baumi4`!');
   } else if (message.content.startsWith(`${PREFIX}baumi1`)) { //baumi1
       message.channel.send("Cha de Alain scho d'Uhr lese?");
@@ -307,7 +307,7 @@ client.on('message', function(message) {
       message.channel.send('**NEI**');
   } else if (message.content.startsWith(`${PREFIX}boogeyman`)) { //boogeyman
       message.channel.send('Kuka pelkää musta miestä?');
-  } else if (message.content === '.claudio') { //claudio
+  } else if (message.content === `${PREFIX}claudio`) { //claudio
       message.channel.send('De Clö isch immer am schaffe.');
   } else if (message.content.startsWith(`${PREFIX}claudiolino`)) { //claudiolino
       message.channel.send('Clö, bitte, stfu.');
@@ -324,7 +324,7 @@ client.on('message', function(message) {
       message.channel.send('Heb fressi oder ich küss dich.');
   } else if (message.content.startsWith(`${PREFIX}eis`)) { //eis
       message.channel.send('isch keis.');
-  } else if (message.content === '.fabio') { //fabio
+  } else if (message.content === `${PREFIX}fabio`) { //fabio
       message.channel.send('De Vabio isch en chline Memer.');
   } else if (message.content.startsWith(`${PREFIX}fabio2`)) { //fabio2
       message.channel.send('Wie isch d\'Matur? - Isch fein gsi.');
@@ -336,7 +336,7 @@ client.on('message', function(message) {
       message.channel.send('Gits eis?');
   } else if (message.content.startsWith(`${PREFIX}gschicht`)) { //gschicht
       message.channel.send('*glernt*');
-  } else if (message.content === '.ich') { //ich
+  } else if (message.content === `${PREFIX}ich`) { //ich
       message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
   } else if (message.content.startsWith(`${PREFIX}ichi`)) { //ichi
       message.channel.send('Bruchsch hilf? **ICH** cha der helfe.');
@@ -354,17 +354,17 @@ client.on('message', function(message) {
       message.channel.send('Hoi zämä, i bims, dr Ivam. I bi ä waschächtä Schwiizer wiä mr gseht. Wohne duän i ~~IM REICH~~ in Öschtriich, und cha ou nid Schwiizertüütsch. Ademerci.');
   } else if (message.content.startsWith(`${PREFIX}jacob`)) { //jacob
       message.channel.send('Jeg elsker dig ligesom du elsker min fugtig migmig.');
-  } else if (message.content === '.jesus') { //jesus
+  } else if (message.content === `${PREFIX}jesus`) { //jesus
       message.channel.send('**IN THE NAAAAME OF JESUS!!!!!!**');
   } else if (message.content.startsWith(`${PREFIX}jesuschrist`)) { //jesuschrist
       message.channel.send('is my nigga.');
   } else if (message.content.startsWith(`${PREFIX}joel`)) { //joel
       message.channel.send('IcH bI dE jOeL uNd IcH gLaUb AlLeS wO mEr MiR sEiT.');
-  } else if (message.content === '.kadder') { //kadder
+  } else if (message.content === `${PREFIX}kadder`) { //kadder
       message.channel.send('Ich ha gern Klobürschtene.');
   } else if (message.content.startsWith(`${PREFIX}kadder2`)) { //kadder2
       message.channel.send('Tüend sie Wasser löse?');
-  } else if (message.content === '.lucas') { //lucas
+  } else if (message.content === `${PREFIX}lucas`) { //lucas
       message.channel.send('Dr Luckckas verdient viu a dr HSR.');
   } else if (message.content.startsWith(`${PREFIX}lucas2`)) { //lucas2
       message.channel.send('exit');
