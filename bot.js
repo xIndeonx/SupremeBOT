@@ -17,7 +17,6 @@ client.on('error', console.error);
 //ready
 client.on('ready',() => {
   console.log('Bot ready.');
-  client.user.setStatus("dnd");
   client.user.setGame('Work in Progress | Prefix: .');
   const channel = client.channels.get(CHANNEL);
   if (!channel) return;
