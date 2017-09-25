@@ -10,13 +10,12 @@ const queue = new Map();
 
 //const for admin commands
 const SET_GAME = `${PREFIX}setGame`;
-const PURGE = `${PREFIX}purge`;
-const SET_AVATER = `${PREFIX}setAvatar`;
+const SET_AVATAR = `${PREFIX}setAvatar`;
 const SET_STATUS = `${PREFIX}setStatus`;
 const RESTART = `${PREFIX}restart`;
-const SHUTDOWN = `${PREFIX}shutdown`
-const DELETE = `${PREFIX}delete`
-
+const SHUTDOWN = `${PREFIX}shutdown`;
+const DELETE = `${PREFIX}delete`;
+const PURGE = `${PREFIX}purge`;
 
 //warn
 client.on('warn', console.warn);
@@ -237,7 +236,7 @@ client.on('message', function(message) {
       } else {
         message.channel.send('You are not authorized to use this command.');
     }
-  } else if (message.content.startsWith(SET_AVATER)) { //setAvatar
+  } else if (message.content.startsWith(SET_AVATAR)) { //setAvatar
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         var input = message.content;
         var clientInput = input.substr(11);
