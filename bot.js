@@ -1,3 +1,4 @@
+//const
 const Discord = require('discord.js');
 const { Client, Util } = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -26,7 +27,6 @@ const MUSIC_RESUME = `${PREFIX}resume`;
 const MUSIC_VOLUME = `${PREFIX}volume`;
 const MUSIC_NP = `${PREFIX}np`;
 const MUSIC_QUEUE = `${PREFIX}queue`;
-
 
 //warn
 client.on('warn', console.warn);
@@ -227,26 +227,6 @@ client.on('message', function(message) {
     } else {
       message.channel.send('You are not authorized to use this command.');
     }
-  } else if (message.content === PURGE) { //purge Messages
-      if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-        if (message.channel.type == 'text') {
-            message.channel.fetchMessages()
-              .then(messages => {
-                message.channel.bulkDelete(messages);
-                messagesDeleted = messages.array().length; // number of messages deleted
-    
-                // Logging the number of messages deleted on both the channel and console.
-                message.channel.sendMessage("Deletion of messages successful. Total messages deleted: "+messagesDeleted);
-                console.log('Deletion of messages successful. Total messages deleted: '+messagesDeleted)
-              })
-              .catch(err => {
-                console.log('Error while doing Bulk Delete');
-                console.log(err);
-              });
-          }
-      } else {
-        message.channel.send('You are not authorized to use this command.');
-    }
   } else if (message.content.startsWith(SET_AVATAR)) { //setAvatar
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         var input = message.content;
@@ -284,7 +264,7 @@ client.on('message', function(message) {
       } else {
         message.channel.send('You are not authorized to use this command.');
       }
-  } else if (message.content.startsWith(DELETE)) {
+  } else if (message.content.startsWith(DELETE)) { //delete
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(8);
@@ -300,6 +280,26 @@ client.on('message', function(message) {
                 color: 3447003,
                 description: "You deleted: " + (messagecount-1) +" message(s)"}})
                     .then(sent => sent.delete(5000));
+            }
+        } else {
+            message.channel.send('You are not authorized to use this command.');
+        }
+  } else if (message.content === PURGE) { //purge Messages
+        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+            if (message.channel.type == 'text') {
+                message.channel.fetchMessages()
+                    .then(messages => {
+                        message.channel.bulkDelete(messages);
+                        messagesDeleted = messages.array().length; // number of messages deleted
+  
+                        // Logging the number of messages deleted on both the channel and console.
+                        message.channel.sendMessage("Deletion of messages successful. Total messages deleted: "+messagesDeleted);
+                        console.log('Deletion of messages successful. Total messages deleted: '+messagesDeleted)
+                    })
+                    .catch(err => {
+                        console.log('Error while doing Bulk Delete');
+                        console.log(err);
+                    });
             }
         } else {
             message.channel.send('You are not authorized to use this command.');
