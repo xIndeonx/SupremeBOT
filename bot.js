@@ -16,7 +16,6 @@ client.on('error', console.error);
 
 //ready
 client.on('ready',() => {
-  exec('../run.sh');
   client.user.setGame('Work in Progress | Prefix: .');
   const channel = client.channels.get(CHANNEL);
   if (!channel) return;
