@@ -368,8 +368,12 @@ client.on('message', function(message) {
       message.channel.send('WÜKI?!?!?!??');
   } else if (message.content.startsWith(`${PREFIX}doni`)) { //doni
       message.channel.send('Heb fressi oder ich küss dich.');
+  } else if (message.content.startsWith(`${PREFIX}eine`)) { //eine
+      message.channel.send('isch keine.');
   } else if (message.content.startsWith(`${PREFIX}eis`)) { //eis
       message.channel.send('isch keis.');
+  } else if (message.content.startsWith(`${PREFIX}exit`)) { //exit
+      message.channel.send('Selbstmordorganisation');
   } else if (message.content === `${PREFIX}fabio`) { //fabio
       message.channel.send('De Vabio isch en chline Memer.');
   } else if (message.content.startsWith(`${PREFIX}fabio2`)) { //fabio2
@@ -378,6 +382,8 @@ client.on('message', function(message) {
       message.channel.send('High risk - no reward.');
   } else if (message.content.startsWith(`${PREFIX}fige`)) { //fige
       message.channel.send('De Feliks het en usprägte Orientierigssinn.');
+  } else if (message.content.startsWith(`${PREFIX}filip`)) { //filip
+      message.channel.send('Uf de Chopf gheit.');
   } else if (message.content.startsWith(`${PREFIX}game`)) { //game
       message.channel.send('Gits eis?');
   } else if (message.content.startsWith(`${PREFIX}gschicht`)) { //gschicht
@@ -430,6 +436,8 @@ client.on('message', function(message) {
       message.channel.send('1=0');
   } else if (message.content.startsWith(`${PREFIX}stfu`)) { //stfu
       message.channel.send('Bitte, stfu.');
+  } else if (message.content.startsWith(`${PREFIX}thermos`)) { //thermos
+      message.channel.send('Ich rauch mini Thermoschanne voll dure.');
   } else if (message.content.startsWith(`${PREFIX}toubi`)) { //toubi
       message.channel.send('Hallo, ich heisse Toubi.');
   } else if (message.content.startsWith(`${PREFIX}velo`)) { //velo
