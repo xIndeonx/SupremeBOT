@@ -326,7 +326,7 @@ client.on('message', function(message) {
       message.delete(200);
       setTimeout(function(){ message.channel.send(clientInput); }, 300);
   } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
-      message.channel.send('**' + process.uptime() + '** seconds.');
+      message.channel.send('**' + Math.floor(process.uptime()) + '** seconds.');
   } else if (message.content.startsWith(`${PREFIX}help`)) { //help
       message.channel.send('Help page is being worked on.');
   } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
