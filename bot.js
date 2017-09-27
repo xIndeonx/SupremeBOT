@@ -73,12 +73,14 @@ client.on('message', async message => {
       }
 
       if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+          message.channel.startTyping();
           const playlist = await youtube.getPlaylist(url);
           const videos = await playlist.getVideos();
           for (const video of Object.values(videos)) {
             const video2 = await youtube.getVideoByID(video.id);
             await handleVideo(video2, message, voiceChannel, true);
           }
+          message.channel.stopTyping();
           return message.channel.send(`Playlist **${playlist.title}** has been added to the queue!`);
       } else {
           try {
@@ -89,6 +91,7 @@ client.on('message', async message => {
                 var video = await youtube.getVideoByID(videos[0].id);
               } catch (err) {
                   console.error(err);
+                  message.channel.stopTyping(true);
                   return message.channel.send(':bangbang: **Could not get search results.**');
               }
           }
@@ -145,6 +148,7 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
 });
 
 async function handleVideo(video, message, voiceChannel, playlist = false) {
+  message.channel.startTyping();
   const serverQueue = queue.get(message.guild.id);
   console.log(video);
   const song = {
@@ -180,6 +184,7 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
       if (playlist) return;
       else return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
   }
+  message.channel.stopTyping();
   return;
 }
 
