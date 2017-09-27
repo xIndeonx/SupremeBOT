@@ -148,7 +148,6 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
 });
 
 async function handleVideo(video, message, voiceChannel, playlist = false) {
-  message.channel.startTyping();
   const serverQueue = queue.get(message.guild.id);
   console.log(video);
   const song = {
@@ -184,7 +183,6 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
       if (playlist) return;
       else return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
   }
-  message.channel.stopTyping();
   return;
 }
 
