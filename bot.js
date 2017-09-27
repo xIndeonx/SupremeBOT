@@ -256,11 +256,11 @@ client.on('message', function(message) {
       }
   } else if (message.content.startsWith(SHUTDOWN)) { //shutdown
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-        message.channel.send('Shutting down... **Please end process in task manager `node.exe`**');
+        message.channel.send('Shutting down...');
         client.destroy((err) => {
           console.log(err);
         });
-        exec('pm2 stop bot.js');
+        process.exitCode = 1;
       } else {
         message.channel.send('You are not authorized to use this command.');
       }
@@ -327,6 +327,13 @@ client.on('message', function(message) {
       setTimeout(function(){ message.channel.send(clientInput); }, 300);
   } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
       message.channel.send('**' + Math.floor(process.uptime()) + '** seconds.');
+  } else if (message.content.startsWith(`${PREFIX}memory`)) { //memory
+    if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        const used = process.memoryUsage();
+        for (let key in used) {
+            message.channel.send(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+        }
+    }
   } else if (message.content.startsWith(`${PREFIX}help`)) { //help
       message.channel.send('Help page is being worked on.');
   } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
