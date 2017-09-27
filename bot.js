@@ -80,7 +80,7 @@ client.on('message', async message => {
             const video2 = await youtube.getVideoByID(video.id);
             await handleVideo(video2, message, voiceChannel, true);
           }
-          message.channel.stopTyping();
+          message.channel.stopTyping(true);
           return message.channel.send(`Playlist **${playlist.title}** has been added to the queue!`);
       } else {
           try {
