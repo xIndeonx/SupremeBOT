@@ -114,9 +114,17 @@ client.on('message', async message => {
       if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
       if (!args[1]) return message.channel.send(`:loud_sound: The current volume is: **${serverQueue.volume}**.`);
-      serverQueue.volume = args[1];
-      serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
-      return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
+      if(args[1]) {
+          if (args[1] > 10) {
+              serverQueue.volume = 10;
+              serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
+              return message.channel.send(':loud_sound: Set the volume to the maximum: **10**.');
+          } else {
+              serverQueue.volume = args[1];
+              serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
+              return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
+          }
+      }
   } else if (message.content.startsWith(MUSIC_NP)) {
       if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
       return message.channel.send(`:notes: Now playing: **${serverQueue.songs[0].title}**`);
