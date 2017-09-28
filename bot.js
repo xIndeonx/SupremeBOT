@@ -17,6 +17,7 @@ const RESTART = `${PREFIX}restart`;
 const SHUTDOWN = `${PREFIX}shutdown`;
 const DELETE = `${PREFIX}delete`;
 const PURGE = `${PREFIX}purge`;
+const MEMORY = `${PREFIX}memory`;
 
 //const for music commands
 const MUSIC_PLAY = `${PREFIX}play`;
@@ -227,6 +228,17 @@ client.on('guildMemberAdd', function(member) {
   channel.send(`Welcome to the server, ${member}`);
 });
 
+function format(seconds){
+    function pad(s){
+      return (s < 10 ? '0' : '') + s;
+    }
+    var hours = Math.floor(seconds / (60*60));
+    var minutes = Math.floor(seconds % (60*60) / 60);
+    var seconds = Math.floor(seconds % 60);
+  
+    return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+  }
+
 //commands
 client.on('message', function(message) {
   if (message.author.bot) return;
@@ -319,6 +331,13 @@ client.on('message', function(message) {
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
+  } else if (message.content.startsWith(MEMORY)) { //memory
+    if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        const used = process.memoryUsage();
+        for (let key in used) {
+            message.channel.send(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+        }
+    }
   } else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
       message.channel.send('**PONG**' + ' `' + client.ping.toString() + 'ms`');
   } else if (message.content.startsWith(`${PREFIX}vn`)) { //vn
@@ -337,14 +356,17 @@ client.on('message', function(message) {
       message.delete(200);
       setTimeout(function(){ message.channel.send(clientInput); }, 300);
   } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
-      message.channel.send('**' + Math.floor(process.uptime()) + '** seconds.');
-  } else if (message.content.startsWith(`${PREFIX}memory`)) { //memory
-    if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-        const used = process.memoryUsage();
-        for (let key in used) {
-            message.channel.send(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
-        }
-    }
+      message.channel.send({embed: {
+        color: 3447003,
+        description: "Uptime of the bot process:\n**" + format(process.uptime()) + "**"
+        }}
+      );
+  } else if (message.content.startsWith(`${PREFIX}osuptime`)) { //os uptime
+      message.channel.send({embed: {
+        color: 3447003,
+        description: "Uptime of the operating system:\n**" + format(require('os').uptime()) + "**"
+        }}
+      );
   } else if (message.content.startsWith(`${PREFIX}help`)) { //help
       message.channel.send('Help page is being worked on.');
   } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
