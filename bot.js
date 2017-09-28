@@ -8,6 +8,7 @@ const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
+const GAME = 'Work in Progress | Prefix: .';
 
 //const for admin commands
 const SET_GAME = `${PREFIX}setGame`;
@@ -37,7 +38,7 @@ client.on('error', console.error);
 
 //ready
 client.on('ready',() => {
-  client.user.setGame('Work in Progress | Prefix: .');
+  client.user.setPresence({ game: { name: GAME, type: 0 } });
   const channel = client.channels.get(CHANNEL);
   if (!channel) return;
   channel.send('Bot successfully initialized.');
