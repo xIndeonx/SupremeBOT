@@ -355,6 +355,13 @@ client.on('message', function(message) {
       var clientInput = input.substr(6);
       message.delete(200);
       setTimeout(function(){ message.channel.send(clientInput); }, 300);
+  } else if (message.content.startsWith(`${PREFIX}tts`)) { //echo
+      var input = message.content;
+      var clientInput = input.substr(6);
+      message.delete(200);
+      setTimeout(function(){ message.channel.send(clientInput, {
+          tts: true
+      }); }, 300);
   } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
       message.channel.send({embed: {
         color: 3447003,
