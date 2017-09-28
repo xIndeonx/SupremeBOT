@@ -395,7 +395,7 @@ client.on('message', function(message) {
   } else if (message.content === `${PREFIX}fabio`) { //fabio
       message.channel.send('De Vabio isch en chline Memer.');
   } else if (message.content.startsWith(`${PREFIX}fabio2`)) { //fabio2
-      message.channel.send('Wie isch d\'Matur? - Isch fein gsi.');
+      message.channel.send('Wie isch d\'Matur? - Mis Lebe isch erfüllt.');
   } else if (message.content.startsWith(`${PREFIX}fabiocsgo`)) { //fabiocsgo
       message.channel.send('High risk - no reward.');
   } else if (message.content.startsWith(`${PREFIX}fige`)) { //fige
