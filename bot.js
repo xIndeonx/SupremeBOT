@@ -339,7 +339,7 @@ client.on('message', function(message) {
         }
     }
   } else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
-      message.channel.send('**PONG**' + ' `' + client.ping.toString() + 'ms`');
+      message.channel.send('**PONG**' + ' `' + Math.floor(client.ping.toString()) + 'ms`');
   } else if (message.content.startsWith(`${PREFIX}vn`)) { //vn
       embed.setTitle('Vape Nation');
       embed.setColor('#29ff00');
