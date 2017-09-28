@@ -273,7 +273,7 @@ client.on('message', function(message) {
   } else if (message.content.startsWith(RESTART)) { //restart
       if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
         message.channel.send('Restarting...');
-        process.exit();
+        setTimeout(function(){ process.exit(); }, 1000);
       } else {
         message.channel.send('You are not authorized to use this command.');
       }
