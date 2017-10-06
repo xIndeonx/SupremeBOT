@@ -72,26 +72,6 @@ function logToChannel(title, logMessage, messageAuthor, picture){
     }*/
 }
 
-function warnToChannel(logMessage){
-    client.channels.get("341732211612975104").send({embed: {
-        color: 0xf9bd31,
-        title: "Warn",
-        description: logMessage
-    }
-    });
-    console.warn(logMessage);
-}
-
-function errorToChannel(logMessage){
-    client.channels.get("341732211612975104").send({embed: {
-        color: 0xff2b30,
-        title: "Error",
-        description: logMessage
-    }
-    });
-    console.error(logMessage);
-}
-
 //ready
 client.on('ready',() => {
     client.user.setPresence({ game: { name: GAME, type: 0 } });
