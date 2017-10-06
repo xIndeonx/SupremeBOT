@@ -36,13 +36,69 @@ client.on('warn', console.warn);
 //error
 client.on('error', console.error);
 
+//function to log
+function logToChannel(title, logMessage, messageAuthor, picture){
+
+    switch(title) {
+        case "Information":
+            color = 3447003;
+            break;
+        case "Warning":
+            color = 0xf9bd31;
+            break;
+        case "Error":
+            color = 0xff2b30;
+            break;
+        default:
+            color = 000000;
+            break;
+    }
+
+    const embed = new Discord.RichEmbed()
+    .setAuthor(messageAuthor)
+    .setColor(color)
+    .setThumbnail(picture)
+    .setTimestamp()
+    .addField(title,
+      logMessage);
+    client.channels.get("341732211612975104").send({embed});
+
+    /*if(title === "Information") {
+        console.log(logMessage);
+    }else if(title == "Warning") {
+        console.warn(logMessage);
+    }else{
+        console.error(logMessage);
+    }*/
+}
+
+function warnToChannel(logMessage){
+    client.channels.get("341732211612975104").send({embed: {
+        color: 0xf9bd31,
+        title: "Warn",
+        description: logMessage
+    }
+    });
+    console.warn(logMessage);
+}
+
+function errorToChannel(logMessage){
+    client.channels.get("341732211612975104").send({embed: {
+        color: 0xff2b30,
+        title: "Error",
+        description: logMessage
+    }
+    });
+    console.error(logMessage);
+}
+
 //ready
 client.on('ready',() => {
     client.user.setPresence({ game: { name: GAME, type: 0 } });
     const channel = client.channels.get(CHANNEL);
     if (!channel) return;
     channel.send('Bot successfully initialized.');
-    console.log('Bot ready.');
+    //logToChannel('Bot successfully initialized.');
 });
 
 //disconnect
@@ -321,6 +377,7 @@ client.on('message', function(message) {
                     color: 3447003,
                     description: "You deleted: " + (messagecount-1) +" message(s)"}})
                         .then(sent => sent.delete(5000));
+                    logToChannel("Information", "You deleted: " + (messagecount-1) +" message(s)", message.author.username, message.author.avatar);
                 }
             } 
         } else {
