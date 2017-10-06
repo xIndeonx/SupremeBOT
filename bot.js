@@ -51,16 +51,15 @@ function logToChannel(title, logMessage, messageAuthor, picture){
             break;
         default:
             color = 000000;
-            break;
     }
 
     const embed = new Discord.RichEmbed()
+    .setTitle(title)
     .setAuthor(messageAuthor)
     .setColor(color)
+    .setDescription(logMessage)
     .setThumbnail(picture)
-    .setTimestamp()
-    .addField(title,
-      logMessage);
+    .setTimestamp();
     client.channels.get("341732211612975104").send({embed});
 
     /*if(title === "Information") {
@@ -357,7 +356,7 @@ client.on('message', function(message) {
                     color: 3447003,
                     description: "You deleted: " + (messagecount-1) +" message(s)"}})
                         .then(sent => sent.delete(5000));
-                    logToChannel("Information", "You deleted: " + (messagecount-1) +" message(s)", message.author.username, message.author.avatar);
+                    logToChannel("Information", "Deleted Messages.\nCount: **" + (messagecount-1) +"**", message.author.username, message.author.displayAvatarURL);
                 }
             } 
         } else {
