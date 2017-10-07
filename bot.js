@@ -11,9 +11,9 @@ const queue = new Map();
 const GAME = 'Work in Progress | Prefix: .';
 
 //const for admin commands
-const SET_GAME = `${PREFIX}setGame`;
-const SET_AVATAR = `${PREFIX}setAvatar`;
-const SET_STATUS = `${PREFIX}setStatus`;
+const SET_GAME = `${PREFIX}setgame`;
+const SET_AVATAR = `${PREFIX}setavatar`;
+const SET_STATUS = `${PREFIX}setstatus`;
 const RESTART = `${PREFIX}restart`;
 const SHUTDOWN = `${PREFIX}shutdown`;
 const DELETE = `${PREFIX}delete`;
@@ -125,7 +125,7 @@ client.on('message', async message => {
                 serverQueue.volume = args[1];
                 serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
                 return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
-            } /*else if (serverQueue.volume == args[1]) {
+            } /*else if (serverQueue.volume === args[1]) {
                 return message.channel.send(`:loud_sound: The volume is already on **${args[1]}**.`);
             }*/
         }
@@ -259,7 +259,7 @@ client.on('message', function(message) {
         } else {
             message.channel.send(':bangbang: You are not in a voice channel!');
         }
-    } else if (message.content.startsWith(SET_GAME)) { //setGame
+    } else if (message.content.startsWith(SET_GAME)) { //setgame
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(9);
@@ -267,7 +267,7 @@ client.on('message', function(message) {
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
-    } else if (message.content.startsWith(SET_AVATAR)) { //setAvatar
+    } else if (message.content.startsWith(SET_AVATAR)) { //setavatar
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(11);
@@ -275,7 +275,7 @@ client.on('message', function(message) {
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
-    } else if (message.content.startsWith(SET_STATUS)) { //setStatus
+    } else if (message.content.startsWith(SET_STATUS)) { //setstatus
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(11);
@@ -361,6 +361,11 @@ client.on('message', function(message) {
         embed.setTitle('Vape Nation');
         embed.setColor('#29ff00');
         embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
+        message.channel.send({ embed });
+    } else if (message.content.startsWith(`${PREFIX}snus`)) { //snus
+        embed.setTitle('Die Uhrzeit');
+        embed.setColor('BLACK');
+        embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
         message.channel.send({ embed });
     } else if (message.content === `${PREFIX}ziit`) { //ziit
         if (message.author.id === OWNERID) {
