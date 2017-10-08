@@ -435,20 +435,34 @@ client.on('message', function(message) {
             message.channel.send('Could not create countdown. Please enter a valid number.');
             return;
         } else {
-            message.channel.send('Countdown start.').then(sentmsg => {
-                (function fn(i) {
+            message.channel.send({embed: {
+                color: 3447003,
+                title: 'Countdown',
+                description: 'Countdown started.'
+            }}).then(sentmsg => {
+                var i = clientInput;
+                var interval = setInterval(function() {
                     sentmsg.edit({embed: {
                         color: 3447003,
+                        title: 'Countdown',
                         description: '```' + i + '```'
                         }}
                     );
-                    if (i > 0) setTimeout(function() {
-                        fn(--i);
-                    }, 1000);
-                    if(i === 0) return sentmsg.edit({embed: {
-                        color: 3447003,
-                        description: 'Countdown ended.'
+                }, 3000);
+                (function fn() {
+                    if (i > 0) {
+                        setTimeout(function() {
+                            fn(--i);
+                        }, 1000);
+                    }
+                    if(i === 0) {
+                        sentmsg.edit({embed: {
+                            color: 3447003,
+                            title: 'Countdown',
+                            description: 'Countdown ended.'
                         }});
+                        clearInterval(interval);
+                    }
                 }(clientInput));
             });
         }
