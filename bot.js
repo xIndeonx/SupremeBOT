@@ -276,11 +276,17 @@ client.on('message', function(message) {
                 let evaled = eval(code);
           
                 if (typeof evaled !== "string")
-                  evaled = require("util").inspect(evaled);
+                    evaled = require("util").inspect(evaled);
           
-                message.channel.send(clean(evaled), {code:"xl"});
+                embed.setColor('#00ff00');
+                embed.setTitle('Success');
+                embed.setDescription('\`\`\`xl\n' + clean(evaled) + '\`\`\`');
+                message.channel.send({ embed });
               } catch (err) {
-                message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+                    embed.setColor('#ff0000');
+                    embed.setTitle('ERROR');
+                    embed.setDescription(`\`\`\`xl\n${clean(err)}\n\`\`\``);
+                    message.channel.send({ embed });
               }
         } else return;
     } else if (message.content.startsWith(SET_GAME)) { //setgame
