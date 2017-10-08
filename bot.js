@@ -438,14 +438,14 @@ client.on('message', function(message) {
             message.channel.send({embed: {
                 color: 3447003,
                 title: 'Countdown',
-                description: 'Countdown started.'
+                description: 'Countdown started. This will take approximately **' + format(clientInput) + '**'
             }}).then(sentmsg => {
                 var i = clientInput;
                 var interval = setInterval(function() {
                     sentmsg.edit({embed: {
                         color: 3447003,
                         title: 'Countdown',
-                        description: '```' + i + '```'
+                        description: '```' + format(i) + '```'
                         }}
                     );
                 }, 3000);
@@ -459,7 +459,7 @@ client.on('message', function(message) {
                         sentmsg.edit({embed: {
                             color: 3447003,
                             title: 'Countdown',
-                            description: 'Countdown ended.'
+                            description: 'Countdown ended. Total time wasted: **' + format(clientInput) + '**'
                         }});
                         clearInterval(interval);
                     }
