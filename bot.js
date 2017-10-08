@@ -222,7 +222,7 @@ client.on('guildMemberAdd', function(member) {
     // Do nothing if the channel wasn't found on this server
     if (!channel) return;
     // Send the message, mentioning the member
-    channel.send(`Welcome to the server, ${member}`);
+    channel.send(`Welcome to the server, ${member}!`);
 });
 
 //function for correct time format
@@ -403,7 +403,7 @@ client.on('message', function(message) {
             description: "Uptime of the operating system:\n**" + format(require('os').uptime()) + "**"
             }}
         );
-    } /*else if (message.content.startsWith(`${PREFIX}countdown`)) { //countdown
+    } else if (message.content.startsWith(`${PREFIX}countdown`)) { //countdown
         var input = message.content;
         var clientInput = input.substr(11);
         let count = parseInt(clientInput);
@@ -411,19 +411,72 @@ client.on('message', function(message) {
             message.channel.send('Could not create countdown. Please enter a valid number.');
             return;
         } else {
-            message.channel.send('Countdown start.'); //.then(sentmsg => something) throws message object and can edit
-            for (i = clientInput; i > 0; i--) {
-                message.channel.edit({embed: {
-                    color: 3447003,
-                    description: "Countdown: " + i
-                    }}
-                );
-                if(i = 0) {
-                    message.channel.send('Countdown ended.');
-                }
-            }
+            message.channel.send('Countdown start.').then(sentmsg => {
+                (function fn(i) {
+                    sentmsg.edit({embed: {
+                        color: 3447003,
+                        description: '```' + i + '```'
+                        }}
+                    );
+                    if (i > 0) setTimeout(function() {
+                        fn(--i);
+                    }, 1000);
+                    if(i === 0) return sentmsg.edit({embed: {
+                        color: 3447003,
+                        description: 'Countdown ended.'
+                        }});
+                }(clientInput));
+            });
         }
-    }*/ else if (message.content.startsWith(`${PREFIX}help`)) { //help
+    } else if (message.content.startsWith(`${PREFIX}hakai`)) { //hakai
+        if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
+        if (message.mentions.users.size == 1) return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
+        if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
+        //You cannot destroy yourself, check if message.author.id same as mentioned
+    } else if (message.content.startsWith(`${PREFIX}serverinfo`)) { //serverinfo
+        const embed = new Discord.RichEmbed()
+        .setColor(3447003)
+        .setTimestamp()
+        .setAuthor(message.guild.name, message.guild.iconURL)
+        .addField('ID', message.guild.id)
+        .addField('Owner', message.guild.owner.user.tag)
+        .addField('Created At', message.guild.createdAt)
+        .addField('Region', message.guild.region)
+        .addField('Verification Level', message.guild.verificationLevel)
+        .addField('Member Count', message.guild.memberCount)
+        .addField('Channels', message.guild.channels.size)
+        .addField('Roles', message.guild.roles.size)
+        .addField('Emojis', message.guild.emojis.size);
+        message.channel.send({ embed });
+    } else if (message.content.startsWith(`${PREFIX}userinfo`)) { //userinfo
+        const embed = new Discord.RichEmbed()
+        .setColor(3447003)
+        .setAuthor(message.author.username, message.author.avatarURL)
+        .addField('Username', message.author.username)
+        .addField('Discriminator', message.author.discriminator)
+        .addField('ID', message.author.id)
+        .setFooter('User created at: ' + message.author.createdAt);
+        message.channel.send({ embed });
+    } else if (message.content.startsWith(`${PREFIX}channelinfo`)) { //channelinfo
+        const embed = new Discord.RichEmbed()
+        .setColor(3447003)
+        .setTimestamp()
+        .setAuthor(message.channel.name, message.guild.iconURL)
+        .addField('Name', message.channel.name)
+        .addField('ID', message.channel.id)
+        .addField('Topic', message.channel.topic)
+        .addField('Type', message.channel.type)
+        .addField('Created At', message.channel.createdAt)
+        .addField('Position', message.channel.position);
+        message.channel.send({ embed });
+    } else if (message.content.startsWith(`${PREFIX}roles`)) { //roles
+        const embed = new Discord.RichEmbed()
+        .setColor(3447003)
+        .setTimestamp()
+        .setAuthor(message.guild.name, message.guild.iconURL)
+        .addField('List of Roles', 'TBD');
+        message.channel.send({ embed });
+    } else if (message.content.startsWith(`${PREFIX}help`)) { //help
         message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
         message.channel.send('1=0');
