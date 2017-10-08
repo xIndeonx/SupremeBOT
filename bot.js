@@ -329,7 +329,7 @@ client.on('message', function(message) {
             message.channel.send('You are not authorized to use this command.');
         }
     } else if (message.content.startsWith(DELETE)) { //delete
-        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        if ((message.member.permissions.hasPermission('ADMINISTRATOR')) || (message.author.id === OWNERID) || (message.author.id === OWNERID)) {
             if (message.channel.type == 'text') {
                 var input = message.content;
                 var clientInput = input.substr(8);
@@ -351,7 +351,7 @@ client.on('message', function(message) {
             message.channel.send('You are not authorized to use this command.');
         }
     } else if (message.content.startsWith(PURGE)) { //purge
-        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+        if ((message.member.permissions.hasPermission('ADMINISTRATOR')) || (message.author.id === OWNERID) || (message.author.id === OWNERID)) {
             if (message.channel.type == 'text') {
                 message.channel.fetchMessages()
                     .then(messages => {
