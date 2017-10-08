@@ -19,6 +19,7 @@ const SHUTDOWN = `${PREFIX}shutdown`;
 const DELETE = `${PREFIX}delete`;
 const PURGE = `${PREFIX}purge`;
 const MEMORY = `${PREFIX}memory`;
+const EVAL = `${PREFIX}eval`;
 
 //const for music commands
 const MUSIC_PLAY = `${PREFIX}play`;
@@ -237,6 +238,14 @@ function format(seconds){
     return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
 }
 
+//function for eval command
+function clean(text) {
+    if (typeof(text) === "string")
+      return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+    else
+        return text;
+  }
+
 //commands
 client.on('message', function(message) {
     if (message.author.bot) return;
@@ -259,6 +268,21 @@ client.on('message', function(message) {
         } else {
             message.channel.send(':bangbang: You are not in a voice channel!');
         }
+    } else if (message.content.startsWith(EVAL)) { //eval
+        if (message.author.id === OWNERID) {
+            const args = message.content.split(" ").slice(1);
+            try {
+                const code = args.join(" ");
+                let evaled = eval(code);
+          
+                if (typeof evaled !== "string")
+                  evaled = require("util").inspect(evaled);
+          
+                message.channel.send(clean(evaled), {code:"xl"});
+              } catch (err) {
+                message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+              }
+        } else return;
     } else if (message.content.startsWith(SET_GAME)) { //setgame
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
