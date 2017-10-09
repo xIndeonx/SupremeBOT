@@ -9,6 +9,7 @@ const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
 const GAME = 'Work in Progress | Prefix: .';
+var color = 000000;
 
 //const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -43,14 +44,14 @@ client.on('ready',() => {
     const channel = client.channels.get(CHANNEL);
     if (!channel) return;
     channel.send('Bot successfully initialized.');
-    console.log('Bot ready.');
+    logToChannel("Information", "Bot successfully initialized.", client.user.username, client.user.displayAvatarURL);
 });
 
 //disconnect
-client.on('disconnect', () => console.log('Bot has disconnected...'));
+client.on('disconnect', () => logToChannel("Information", 'Bot has disconnected...', client.user.username, client.user.displayAvatarURL));
 
 //reconnecting
-client.on('reconnecting', () => console.log('Bot is reconnecting...'));
+client.on('reconnecting', () => logToChannel("Information", "Bot is reconnecting...", client.user.username, client.user.displayAvatarURL));
 
 //bot token login
 client.login(TOKEN);
@@ -93,7 +94,7 @@ client.on('message', async message => {
                     var videos = await youtube.searchVideos(searchString, 1);
                     var video = await youtube.getVideoByID(videos[0].id);
                 } catch (err) {
-                    console.error(err);
+                    logToChannel("Error", err, message.author.username, message.author.displayAvatarURL);
                     message.channel.stopTyping(true);
                     return message.channel.send(':bangbang: **Could not get search results.**');
                 }
@@ -161,7 +162,7 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
 
 async function handleVideo(video, message, voiceChannel, playlist = false) {
     const serverQueue = queue.get(message.guild.id);
-    console.log(video);
+    logToChannel("Information", video, message.author.username, message.author.displayAvatarURL);
     const song = {
         id: video.id,
         title: Util.escapeMarkdown(video.title),
@@ -183,13 +184,13 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
             queueConstruct.connection = connection;
             play(message.guild, queueConstruct.songs[0]);
         } catch (error) {
-            console.error(`:bangbang: **Could not join the voice channel:** ${error}`);
+            logToChannel("Error", `:bangbang: **Could not join the voice channel:** ${error}`, message.author.username, message.author.displayAvatarURL);
             queue.delete(message.guild.id);
             return message.channel.send(`:bangbang: **Could not join the voice channel:** ${error}`);
         }
     } else {
         serverQueue.songs.push(song);
-        console.log(serverQueue.songs);
+        logToChannel("Information", serverQueue.songs, message.author.username, message.author.displayAvatarURL);
         if (playlist) return;
         else return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
     }
@@ -203,15 +204,15 @@ function play(guild, song) {
         queue.delete(guild.id);
         return;
     }
-    console.log(serverQueue.songs);
+    logToChannel("Information", serverQueue.songs, message.author.username, message.author.displayAvatarURL);
     const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
         .on('end', reason => {
-            if (reason === 'Stream is not generating quickly enough.') console.log('Song ended!');
-            else console.log(reason);
+            if (reason === 'Stream is not generating quickly enough.') logToChannel("Information", "Song ended!", message.author.username, message.author.displayAvatarURL);
+            else logToChannel("Information", reason, message.author.username, message.author.displayAvatarURL);
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
         })
-        .on('error', error => console.error(error));
+        .on('error', error => logToChannel("Error", error, message.author.username, message.author.displayAvatarURL))
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     serverQueue.textChannel.send(`:arrow_forward: Started playing: **${song.title}**`);
 }
@@ -238,6 +239,37 @@ function format(seconds){
     return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
 }
 
+//function for logging
+function logToChannel(title, logMessage, messageAuthor, picture){
+    
+        switch(title) {
+            case "Information":
+                color = 3447003;
+                console.log(logMessage);
+                break;
+            case "Warning":
+                color = 0xf9bd31;
+                console.warn(logMessage);
+                break;
+            case "Error":
+                color = 0xff2b30;
+                console.error(logMessage);
+                break;
+            default:
+                color = 000000;
+        }
+    
+        const embed = new Discord.RichEmbed()
+        .setTitle(title)
+        .setAuthor(messageAuthor)
+        .setColor(color)
+        .setDescription(logMessage)
+        .setThumbnail(picture)
+        .setTimestamp();
+        client.channels.get("341732211612975104").send({embed});
+        
+}
+
 //function for eval command
 function clean(text) {
     if (typeof(text) === "string")
@@ -257,7 +289,7 @@ client.on('message', function(message) {
                 .then(connection => { // Connection is an instance of VoiceConnection
                 message.channel.send(':GreenTick: I have successfully connected to the channel!');
                 })
-            .catch(console.log);
+            .catch(logToChannel("Information", "Connected to channel", message.author.username, message.author.displayAvatarURL));
         } else {
             message.channel.send(':bangbang: You need to join a voice channel first!');
         }
@@ -330,7 +362,7 @@ client.on('message', function(message) {
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             message.channel.send('Shutting down...');
             client.destroy((err) => {
-                console.log(err);
+                logToChannel("Error", err, message.author.username, message.author.displayAvatarURL);
             });
             process.exitCode = 1;
         } else {
@@ -353,6 +385,7 @@ client.on('message', function(message) {
                     color: 3447003,
                     description: "You deleted: " + (messagecount-1) +" message(s)"}})
                         .then(sent => sent.delete(5000));
+                    logToChannel("Information", "Deleted Messages.\nCount: **" + (messagecount-1) +"**", message.author.username, message.author.displayAvatarURL);
                 }
             } 
         } else {
@@ -370,11 +403,10 @@ client.on('message', function(message) {
                             color: 3447003,
                             description: "You deleted: " + messagesDeleted +" message(s)"}})
                                 .then(sent => sent.delete(5000));
-                        console.log('Deletion of messages successful. Total messages deleted: '+messagesDeleted);
+                        logToChannel("Information", "Deletion of messages successful. Total messages deleted: " + messagesDeleted, message.author.username, message.author.displayAvatarURL);
                     })
                     .catch(err => {
-                        console.log('Error while doing Bulk Delete');
-                        console.log(err);
+                        logToChannel("Error", err, message.author.username, message.author.displayAvatarURL);
                     });
             }
         } else {
