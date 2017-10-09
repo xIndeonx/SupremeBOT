@@ -204,7 +204,7 @@ function play(guild, song) {
     console.log(serverQueue.songs);
     const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
         .on('end', reason => {
-            if (reason === 'Stream is not generating quickly enough.') logToChannel("Information", "Song ended!", message.author.username, message.author.displayAvatarURL);
+            if (reason === 'Stream is not generating quickly enough.') logToChannel("Information", "Song ended!", message.author.tag, message.author.displayAvatarURL);
             else console.log(reason);
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
@@ -359,7 +359,7 @@ client.on('message', function(message) {
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             message.channel.send('Shutting down...');
             client.destroy((err) => {
-                logToChannel("Error", err, message.author.username, message.author.displayAvatarURL);
+                logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
             });
             process.exitCode = 1;
         } else {
@@ -382,7 +382,7 @@ client.on('message', function(message) {
                     color: 3447003,
                     description: "You deleted: " + (messagecount-1) +" message(s)"}})
                         .then(sent => sent.delete(5000));
-                    logToChannel("Information", "Deleted Messages.\nCount: **" + (messagecount-1) +"**", message.author.username, message.author.displayAvatarURL);
+                    logToChannel("Information", "Deleted Messages.\nCount: **" + (messagecount-1) +"**", message.author.tag, message.author.displayAvatarURL);
                 }
             } 
         } else {
@@ -400,10 +400,10 @@ client.on('message', function(message) {
                             color: 3447003,
                             description: "You deleted: " + messagesDeleted +" message(s)"}})
                                 .then(sent => sent.delete(5000));
-                        logToChannel("Information", "Deletion of messages successful. Total messages deleted: " + messagesDeleted, message.author.username, message.author.displayAvatarURL);
+                        logToChannel("Information", "Deletion of messages successful. Total messages deleted: " + messagesDeleted, message.author.tag, message.author.displayAvatarURL);
                     })
                     .catch(err => {
-                        logToChannel("Error", err, message.author.username, message.author.displayAvatarURL);
+                        logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
                     });
             }
         } else {
