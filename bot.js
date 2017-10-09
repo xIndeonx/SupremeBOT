@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const { Client, Util } = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const { TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
+const { SECRET, TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
@@ -310,15 +310,17 @@ client.on('message', function(message) {
                 if (typeof evaled !== "string")
                     evaled = require("util").inspect(evaled);
           
-                embed.setColor('#00ff00');
-                embed.setTitle('Success');
-                embed.setDescription('\`\`\`xl\n' + clean(evaled) + '\`\`\`');
-                message.channel.send({ embed });
+                message.channel.send({ embed: {
+                    color: 0x00ff00,
+                    title: 'Success',
+                    description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`'
+                } });
               } catch (err) {
-                    embed.setColor('#ff0000');
-                    embed.setTitle('ERROR');
-                    embed.setDescription(`\`\`\`xl\n${clean(err)}\n\`\`\``);
-                    message.channel.send({ embed });
+                    message.channel.send({ embed: {
+                        color: 0xff0000,
+                        title: 'ERROR',
+                        description: `\`\`\`xl\n${clean(err)}\n\`\`\``
+                    } });
               }
         } else return;
     } else if (message.content.startsWith(SET_GAME)) { //setgame
@@ -556,6 +558,8 @@ client.on('message', function(message) {
         message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
         message.channel.send('1=0');
+    } else if (message.content.startsWith(`${PREFIX}aha`)) { //aha
+        message.channel.send('Aha');
     } else if (message.content.startsWith(`${PREFIX}alina`)) { //alina
         message.channel.send('Daddy?');
     } else if ((message.content.startsWith(`${PREFIX}andy`)) || (message.content.startsWith(`${PREFIX}andi`))) { //andy/andi
@@ -578,6 +582,8 @@ client.on('message', function(message) {
         message.channel.send('**NEI**');
     } else if (message.content.startsWith(`${PREFIX}boogeyman`)) { //boogeyman
         message.channel.send('Kuka pelkää musta miestä?');
+    } else if (message.content.startsWith(`${PREFIX}bzz`)) { //bzz
+        message.channel.send('Bescht Schuel vom Kanton Horge.');
     } else if (message.content === `${PREFIX}claudio`) { //claudio
         message.channel.send('De Clö isch immer am schaffe.');
     } else if (message.content.startsWith(`${PREFIX}claudiolino`)) { //claudiolino
@@ -611,6 +617,8 @@ client.on('message', function(message) {
         message.channel.send('Uf de Chopf gheit.');
     } else if (message.content.startsWith(`${PREFIX}game`)) { //game
         message.channel.send('Gits eis?');
+    } else if (message.content.startsWith(`${PREFIX}getshiton`)) { //getshiton
+        message.channel.send('Catch it hard!');
     } else if (message.content.startsWith(`${PREFIX}gschicht`)) { //gschicht
         message.channel.send('*glernt*');
     } else if (message.content.startsWith(`${PREFIX}hm`)) { //gschicht
@@ -643,6 +651,8 @@ client.on('message', function(message) {
         message.channel.send('Ich ha gern Klobürschtene.');
     } else if (message.content.startsWith(`${PREFIX}kadder2`)) { //kadder2
         message.channel.send('Tüend sie Wasser löse?');
+    } else if (message.content.startsWith(`${PREFIX}ksh`)) { //ksh
+        message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
     } else if (message.content === `${PREFIX}lucas`) { //lucas
         message.channel.send('Dr Luckckas verdient viu a dr HSR.');
     } else if (message.content.startsWith(`${PREFIX}lucas2`)) { //lucas2
@@ -659,6 +669,10 @@ client.on('message', function(message) {
         message.channel.send(':pen_fountain: :pineapple: :apple: :pen_fountain:');
     } else if (message.content.startsWith(`${PREFIX}pubg`)) { //pubg
         message.channel.send('1=0');
+    } else if (message.content.startsWith(`${PREFIX}rip`)) { //rip
+        message.channel.send('Rest In Peace.');
+    } else if (message.content.startsWith(`${PREFIX}sorry`)) { //sorry
+        message.channel.send('Sorry?');
     } else if (message.content.startsWith(`${PREFIX}stfu`)) { //stfu
         message.channel.send('Bitte, stfu.');
     } else if (message.content.startsWith(`${PREFIX}thermos`)) { //thermos
