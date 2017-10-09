@@ -238,9 +238,11 @@ function format(seconds){
     return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
 }
 
-//function to log
+//function for logging
 function logToChannel(title, logMessage, messageAuthor, picture){
     
+        const color;
+
         switch(title) {
             case "Information":
                 color = 3447003;
@@ -268,6 +270,7 @@ function logToChannel(title, logMessage, messageAuthor, picture){
         client.channels.get("341732211612975104").send({embed});
         
 }
+
 //function for eval command
 function clean(text) {
     if (typeof(text) === "string")
