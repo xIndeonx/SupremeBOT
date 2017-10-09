@@ -41,17 +41,14 @@ client.on('error', console.error);
 //ready
 client.on('ready',() => {
     client.user.setPresence({ game: { name: GAME, type: 0 } });
-    const channel = client.channels.get(CHANNEL);
-    if (!channel) return;
-    channel.send('Bot successfully initialized.');
-    logToChannel("Information", "Bot successfully initialized.", client.user.username, client.user.displayAvatarURL);
+    logToChannel("Information", "Bot successfully initialized.", client.user.tag, client.user.displayAvatarURL);
 });
 
 //disconnect
-client.on('disconnect', () => logToChannel("Information", 'Bot has disconnected...', client.user.username, client.user.displayAvatarURL));
+client.on('disconnect', () => console.log('Bot has disconnected...'));
 
 //reconnecting
-client.on('reconnecting', () => logToChannel("Information", "Bot is reconnecting...", client.user.username, client.user.displayAvatarURL));
+client.on('reconnecting', () => console.log('Bot is reconnecting...'));
 
 //bot token login
 client.login(TOKEN);
@@ -94,7 +91,7 @@ client.on('message', async message => {
                     var videos = await youtube.searchVideos(searchString, 1);
                     var video = await youtube.getVideoByID(videos[0].id);
                 } catch (err) {
-                    logToChannel("Error", err, message.author.username, message.author.displayAvatarURL);
+                    console.error(err);
                     message.channel.stopTyping(true);
                     return message.channel.send(':bangbang: **Could not get search results.**');
                 }
@@ -162,7 +159,7 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
 
 async function handleVideo(video, message, voiceChannel, playlist = false) {
     const serverQueue = queue.get(message.guild.id);
-    logToChannel("Information", video, message.author.username, message.author.displayAvatarURL);
+    console.log(video);
     const song = {
         id: video.id,
         title: Util.escapeMarkdown(video.title),
@@ -184,13 +181,13 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
             queueConstruct.connection = connection;
             play(message.guild, queueConstruct.songs[0]);
         } catch (error) {
-            logToChannel("Error", `:bangbang: **Could not join the voice channel:** ${error}`, message.author.username, message.author.displayAvatarURL);
+            console.error(`:bangbang: **Could not join the voice channel:** ${error}`);
             queue.delete(message.guild.id);
             return message.channel.send(`:bangbang: **Could not join the voice channel:** ${error}`);
         }
     } else {
         serverQueue.songs.push(song);
-        logToChannel("Information", serverQueue.songs, message.author.username, message.author.displayAvatarURL);
+        console.log(serverQueue.songs);
         if (playlist) return;
         else return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
     }
@@ -204,15 +201,15 @@ function play(guild, song) {
         queue.delete(guild.id);
         return;
     }
-    logToChannel("Information", serverQueue.songs, message.author.username, message.author.displayAvatarURL);
+    console.log(serverQueue.songs);
     const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
         .on('end', reason => {
             if (reason === 'Stream is not generating quickly enough.') logToChannel("Information", "Song ended!", message.author.username, message.author.displayAvatarURL);
-            else logToChannel("Information", reason, message.author.username, message.author.displayAvatarURL);
+            else console.log(reason);
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
         })
-        .on('error', error => logToChannel("Error", error, message.author.username, message.author.displayAvatarURL))
+        .on('error', error => console.error(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     serverQueue.textChannel.send(`:arrow_forward: Started playing: **${song.title}**`);
 }
@@ -289,7 +286,7 @@ client.on('message', function(message) {
                 .then(connection => { // Connection is an instance of VoiceConnection
                 message.channel.send(':GreenTick: I have successfully connected to the channel!');
                 })
-            .catch(logToChannel("Information", "Connected to channel", message.author.username, message.author.displayAvatarURL));
+                .catch(console.log);
         } else {
             message.channel.send(':bangbang: You need to join a voice channel first!');
         }
