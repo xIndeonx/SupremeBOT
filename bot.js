@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const { Client, Util } = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const { SECRET, TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
+const { SECRET, TOKEN, PREFIX, CHANNEL, BOT_CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
@@ -263,7 +263,7 @@ function logToChannel(title, logMessage, messageAuthor, picture){
         .setDescription(logMessage)
         .setThumbnail(picture)
         .setTimestamp();
-        client.channels.get("341732211612975104").send({embed});
+        client.channels.get(BOT_CHANNEL).send({embed});
         
 }
 
