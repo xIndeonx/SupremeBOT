@@ -9,6 +9,7 @@ const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
 const GAME = 'Work in Progress | Prefix: .';
+const color = 000000;
 
 //const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -241,8 +242,6 @@ function format(seconds){
 //function for logging
 function logToChannel(title, logMessage, messageAuthor, picture){
     
-        const color;
-
         switch(title) {
             case "Information":
                 color = 3447003;
