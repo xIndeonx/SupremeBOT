@@ -43,7 +43,7 @@ client.on('ready',() => {
     const channel = client.channels.get(CHANNEL);
     if (!channel) return;
     channel.send('Bot successfully initialized.');
-    //logToChannel('Bot successfully initialized.');
+    logToChannel("Information", "Bot successfully initialized.", client.user.username, client.user.displayAvatarURL);
 });
 
 //disconnect
@@ -211,7 +211,7 @@ function play(guild, song) {
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
         })
-        .on('error', error => logToChannel("Error", error, message.author.username, message.author.displayAvatarURL);
+        .on('error', error => logToChannel("Error", error, message.author.username, message.author.displayAvatarURL))
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     serverQueue.textChannel.send(`:arrow_forward: Started playing: **${song.title}**`);
 }
