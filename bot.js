@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const { Client, Util } = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const { TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
+const { SECRET, TOKEN, PREFIX, CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
