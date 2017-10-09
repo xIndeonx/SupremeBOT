@@ -412,9 +412,17 @@ client.on('message', function(message) {
     } else if (message.content.startsWith(MEMORY)) { //memory
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             const used = process.memoryUsage();
+            var usage = [];
             for (let key in used) {
-                message.channel.send(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`;
+                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`;
+                usage.push(output);
             }
+            message.channel.send({ embed: {
+                color: 3447003,
+                description: usage.toString(),
+                description: usage.join("\n")
+            }});
         }
     } else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
         message.channel.send('**PONG**' + ' `' + Math.floor(client.ping.toString()) + 'ms`');
