@@ -9,7 +9,7 @@ const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
 const GAME = 'Work in Progress | Prefix: .';
-const color = 000000;
+var color = 000000;
 
 //const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -33,10 +33,10 @@ const MUSIC_NP = `${PREFIX}np`;
 const MUSIC_QUEUE = `${PREFIX}queue`;
 
 //warn
-client.on('warn', logToChannel("Warning", "Unknown warning", client.user.username, client.user.displayAvatarURL));
+client.on('warn', console.warn);
 
 //error
-client.on('error', logToChannel("Error", "Unknown error", client.user.username, client.user.displayAvatarURL));
+client.on('error', console.error);
 
 //ready
 client.on('ready',() => {
