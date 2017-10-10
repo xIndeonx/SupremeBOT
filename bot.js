@@ -88,8 +88,29 @@ client.on('message', async message => {
                 var video = await youtube.getVideo(url);
             } catch (error) {
                 try {
-                    var videos = await youtube.searchVideos(searchString, 1);
-                    var video = await youtube.getVideoByID(videos[0].id);
+                    var videos = await youtube.searchVideos(searchString, 5);
+                    let index = 0;
+                    message.channel.send(`
+__**Search results:**__
+
+\`\`\`xl
+${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
+\`\`\`
+Please input the number of the song you want to play **(1-5)**
+                    `);
+
+                    try {
+                        var response = await message.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 6, {
+                            maxMatches: 1,
+                            time: 30000,
+                            errors: ['time']
+                        });
+                    } catch(err) {
+                        console.error(err);
+                        return message.channel.send('No or invalid input, cancelling video selection.');
+                    }
+                    const videoIndex = parseInt(response.first().content);
+                    var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
                 } catch (err) {
                     console.error(err);
                     message.channel.stopTyping(true);
