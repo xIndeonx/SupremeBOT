@@ -564,7 +564,7 @@ client.on('message', function(message) {
         .setColor(3447003)
         .setTimestamp()
         .setAuthor(message.guild.name, message.guild.iconURL)
-        .addField('List of CHannels', 'TBD');
+        .addField('List of Channels', 'TBD');
         message.channel.send({ embed });
     } else if (message.content.startsWith(`${PREFIX}roles`)) { //roles
         const embed = new Discord.RichEmbed()
