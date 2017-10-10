@@ -98,7 +98,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 \`\`\`
 Please input the number of the song you want to play **(1-5)**
                     `);
-
                     try {
                         var response = await message.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 6, {
                             maxMatches: 1,
@@ -294,11 +293,6 @@ function clean(text) {
       return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
     else
         return text;
-}
-
-function precision(i, p) {
-    var d = Math.pow(10, p);
-    return Math.round(i * d) / d;
 }
 
 //commands
