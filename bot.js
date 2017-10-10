@@ -273,7 +273,12 @@ function clean(text) {
       return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
     else
         return text;
-  }
+}
+
+function precision(i, p) {
+    var d = Math.pow(10, p);
+    return Math.round(i * d) / d;
+}
 
 //commands
 client.on('message', function(message) {
@@ -298,11 +303,14 @@ client.on('message', function(message) {
             message.channel.send(':bangbang: You are not in a voice channel!');
         }
     } else if (message.content.startsWith(EVAL)) { //eval
-        if (message.author.id === OWNERID) {
+        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             const args = message.content.split(" ").slice(1);
             try {
                 const code = args.join(" ");
+                var now = require('performance-now');
+                var start = now();
                 let evaled = eval(code);
+                var end = now();
           
                 if (typeof evaled !== "string")
                     evaled = require("util").inspect(evaled);
@@ -310,7 +318,7 @@ client.on('message', function(message) {
                 message.channel.send({ embed: {
                     color: 0x00ff00,
                     title: 'Success',
-                    description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`'
+                    description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`Took `' + (end - start).toFixed(3) + 'ms`'
                 } });
               } catch (err) {
                     message.channel.send({ embed: {
@@ -561,7 +569,7 @@ client.on('message', function(message) {
         .setColor(3447003)
         .setTimestamp()
         .setAuthor(message.guild.name, message.guild.iconURL)
-        .addField('List of CHannels', 'TBD');
+        .addField('List of Channels', 'TBD');
         message.channel.send({ embed });
     } else if (message.content.startsWith(`${PREFIX}roles`)) { //roles
         const embed = new Discord.RichEmbed()
