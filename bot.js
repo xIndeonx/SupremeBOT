@@ -273,7 +273,12 @@ function clean(text) {
       return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
     else
         return text;
-  }
+}
+
+function precision(i, p) {
+    var d = Math.pow(10, p);
+    return Math.round(i * d) / d;
+}
 
 //commands
 client.on('message', function(message) {
@@ -313,7 +318,7 @@ client.on('message', function(message) {
                 message.channel.send({ embed: {
                     color: 0x00ff00,
                     title: 'Success',
-                    description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`Took `' + (end - start) + 'ms`'
+                    description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`Took `' + (end - start).toFixed(3) + 'ms`'
                 } });
               } catch (err) {
                     message.channel.send({ embed: {
