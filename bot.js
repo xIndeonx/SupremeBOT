@@ -400,7 +400,7 @@ client.on('message', function(message) {
                             color: 3447003,
                             description: "You deleted: " + messagesDeleted +" message(s)"}})
                                 .then(sent => sent.delete(5000));
-                        logToChannel("Information", "Deletion of messages successful. Total messages deleted: " + messagesDeleted, message.author.tag, message.author.displayAvatarURL);
+                        logToChannel("Information", "Purge successful: " + messagesDeleted, message.author.tag, message.author.displayAvatarURL);
                     })
                     .catch(err => {
                         logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
@@ -452,7 +452,10 @@ client.on('message', function(message) {
         var input = message.content;
         var clientInput = input.substr(6);
         message.delete(200);
-        setTimeout(function(){ message.channel.send(clientInput); }, 300);
+        setTimeout(function() {
+            message.channel.send(clientInput);
+        }, 300);
+        logToChannel("Information", "Echo command has been used: " + clientInput, message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.startsWith(`${PREFIX}tts`)) { //tts
         var input = message.content;
         var clientInput = input.substr(5);
@@ -460,6 +463,7 @@ client.on('message', function(message) {
         setTimeout(function(){ message.channel.send(clientInput, {
             tts: true
         }); }, 300);
+        logToChannel("Information", "TTS command has been used: " + clientInput, message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
         message.channel.send({embed: {
             color: 3447003,
