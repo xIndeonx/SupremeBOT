@@ -664,7 +664,9 @@ client.on('message', function(message) {
         message.channel.send('Catch it hard!');
     } else if (message.content.startsWith(`${PREFIX}gschicht`)) { //gschicht
         message.channel.send('*glernt*');
-    } else if (message.content.startsWith(`${PREFIX}hm`)) { //gschicht
+    } else if (message.content.startsWith(`${PREFIX}hoi`)) { //hoi
+        message.channel.send('Sali.');
+    } else if (message.content.startsWith(`${PREFIX}hm`)) { //hm
         message.channel.send('Hm?');
     } else if (message.content === `${PREFIX}ich`) { //ich
         message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
