@@ -552,6 +552,13 @@ client.on('message', function(message) {
         .addField('Created At', message.channel.createdAt)
         .addField('Position', message.channel.position);
         message.channel.send({ embed });
+    } else if (message.content.startsWith(`${PREFIX}channels`)) { //channels
+        const embed = new Discord.RichEmbed()
+        .setColor(3447003)
+        .setTimestamp()
+        .setAuthor(message.guild.name, message.guild.iconURL)
+        .addField('List of CHannels', 'TBD');
+        message.channel.send({ embed });
     } else if (message.content.startsWith(`${PREFIX}roles`)) { //roles
         const embed = new Discord.RichEmbed()
         .setColor(3447003)
@@ -563,10 +570,14 @@ client.on('message', function(message) {
         message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
         message.channel.send('1=0');
+    } else if (message.content.startsWith(`${PREFIX}ademerci`)) { //ademerci
+        message.channel.send('Ademerci');
     } else if (message.content.startsWith(`${PREFIX}aha`)) { //aha
         message.channel.send('Aha');
     } else if (message.content.startsWith(`${PREFIX}alina`)) { //alina
         message.channel.send('Daddy?');
+    } else if (message.content.startsWith(`${PREFIX}andreas`)) { //andreas
+        message.channel.send('I heisse Andreas, nöd Oliver.');
     } else if ((message.content.startsWith(`${PREFIX}andy`)) || (message.content.startsWith(`${PREFIX}andi`))) { //andy/andi
         message.channel.send('De Andi füut sech elei in Bärn.');
     } else if (message.content.startsWith(`${PREFIX}autismus`)) { //autismus
@@ -584,7 +595,7 @@ client.on('message', function(message) {
     } else if (message.content.startsWith(`${PREFIX}baumi4`)) { //baumi4
         message.channel.send('Chopf im Sofa.');
     } else if (message.content.startsWith(`${PREFIX}bitte`)) { //bitte
-        message.channel.send('**NEI**');
+        message.channel.send('Bitte gerngscheh.');
     } else if (message.content.startsWith(`${PREFIX}boogeyman`)) { //boogeyman
         message.channel.send('Kuka pelkää musta miestä?');
     } else if (message.content.startsWith(`${PREFIX}bzz`)) { //bzz
