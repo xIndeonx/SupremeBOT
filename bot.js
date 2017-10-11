@@ -179,8 +179,8 @@ Please input the number of the song you want to play **(1-5)**
         return message.channel.send(`
 __**Queue:**__
 
-\`\`\`xl
-${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n')}
+\`\`\`
+${serverQueue.songs.map(song => `**- ** ${song.title}`).join('\n')}
 \`\`\`
 :notes: Now playing: **${serverQueue.songs[0].title}**
       `);
