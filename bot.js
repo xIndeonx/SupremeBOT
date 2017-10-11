@@ -15,7 +15,9 @@ const {
     BOT_CHANNEL,
     OWNERID,
     LUCASID,
-    YT_API
+    YT_API,
+    PROJECT_ID,
+    PROJECT_KEY
 } = require('./config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
@@ -45,6 +47,17 @@ const MUSIC_RESUME = `${PREFIX}resume`;
 const MUSIC_VOLUME = `${PREFIX}volume`;
 const MUSIC_NP = `${PREFIX}np`;
 const MUSIC_QUEUE = `${PREFIX}queue`;
+
+//airbrake
+var airbrakeJs = require('airbrake-js');
+var airbrake = new airbrakeJs({
+    projectId: PROJECT_ID,
+    projectKey: PROJECT_KEY
+});
+airbrake.addFilter(function (notice) {
+    notice.context.environment = 'production';
+    return notice;
+});
 
 //warn
 client.on('warn', console.warn);
@@ -83,6 +96,7 @@ client.on('message', async message => {
 
     if (message.content.startsWith(MUSIC_PLAY)) {
         const voiceChannel = message.member.voiceChannel;
+        const authorid = message.author.id;
         if (!voiceChannel) return message.channel.send(':bangbang: **You need to be in a voice channel to play music!**');
         const permissions = voiceChannel.permissionsFor(message.client.user);
         if (!permissions.has('CONNECT')) {
@@ -176,14 +190,18 @@ Please input the number of the song you want to play **(1-5)**
         return message.channel.send(`:notes: Now playing: **${serverQueue.songs[0].title}**`);
     } else if (message.content.startsWith(MUSIC_QUEUE)) {
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
-        return message.channel.send(`
-__**Queue:**__
-
-\`\`\`
-${serverQueue.songs.map(song => `**- ** ${song.title}`).join('\n')}
-\`\`\`
-:notes: Now playing: **${serverQueue.songs[0].title}**
-      `);
+        let index = 0;
+        var queuelist = `\n${serverQueue.songs.map(song => `${++index} - ${song.title}`).join('\n')}`;
+        return message.channel.send({ embed: {
+            title: 'Queue',
+            color: 3447003,
+            description: `\`\`\`xl
+${queuelist}
+            \`\`\``,
+            footer: {
+                text: `Now playing: ${serverQueue.songs[0].title}`
+              }
+        }});
     } else if (message.content.startsWith(MUSIC_PAUSE)) {
         if (serverQueue && serverQueue.playing) {
             serverQueue.playing = false;
