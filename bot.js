@@ -1,8 +1,22 @@
 //const
 const Discord = require('discord.js');
-const { Client, Util } = require('discord.js');
-const client = new Discord.Client({ disableEveryone: true });
-const { SECRET, TOKEN, PREFIX, CHANNEL, BOT_CHANNEL, OWNERID, LUCASID, YT_API } = require('./config');
+const {
+    Client,
+    Util
+} = require('discord.js');
+const client = new Discord.Client({
+    disableEveryone: true
+});
+const {
+    SECRET,
+    TOKEN,
+    PREFIX,
+    CHANNEL,
+    BOT_CHANNEL,
+    OWNERID,
+    LUCASID,
+    YT_API
+} = require('./config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
@@ -39,8 +53,13 @@ client.on('warn', console.warn);
 client.on('error', console.error);
 
 //ready
-client.on('ready',() => {
-    client.user.setPresence({ game: { name: GAME, type: 0 } });
+client.on('ready', () => {
+    client.user.setPresence({
+        game: {
+            name: GAME,
+            type: 0
+        }
+    });
     logToChannel("Information", "Bot successfully initialized.", client.user.tag, client.user.displayAvatarURL);
 });
 
@@ -104,7 +123,7 @@ Please input the number of the song you want to play **(1-5)**
                             time: 30000,
                             errors: ['time']
                         });
-                    } catch(err) {
+                    } catch (err) {
                         console.error(err);
                         return message.channel.send('No or invalid input, cancelling video selection.');
                     }
@@ -121,7 +140,9 @@ Please input the number of the song you want to play **(1-5)**
     } else if (message.content.startsWith(MUSIC_SKIP)) {
         if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
-        setTimeout(function(){ serverQueue.connection.dispatcher.end('Skip command has been used.'); }, 500);
+        setTimeout(function () {
+            serverQueue.connection.dispatcher.end('Skip command has been used.');
+        }, 500);
         message.channel.send(':track_next: **Skipping...**');
         return;
     } else if ((message.content.startsWith(MUSIC_STOP)) || (message.content.startsWith(`${PREFIX}leave`))) {
@@ -135,7 +156,7 @@ Please input the number of the song you want to play **(1-5)**
         if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
         if (!args[1]) return message.channel.send(`:loud_sound: The current volume is: **${serverQueue.volume}**.`);
-        if(args[1]) {
+        if (args[1]) {
             if (args[1] > 10) {
                 serverQueue.volume = 10;
                 serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
@@ -144,9 +165,10 @@ Please input the number of the song you want to play **(1-5)**
                 serverQueue.volume = args[1];
                 serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
                 return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
-            } /*else if (serverQueue.volume === args[1]) {
-                return message.channel.send(`:loud_sound: The volume is already on **${args[1]}**.`);
-            }*/
+            }
+            /*else if (serverQueue.volume === args[1]) {
+                           return message.channel.send(`:loud_sound: The volume is already on **${args[1]}**.`);
+                       }*/
         }
     } else if (message.content.startsWith(MUSIC_NP)) {
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
@@ -161,9 +183,9 @@ ${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n
       `);
     } else if (message.content.startsWith(MUSIC_PAUSE)) {
         if (serverQueue && serverQueue.playing) {
-        serverQueue.playing = false;
-        serverQueue.connection.dispatcher.pause();
-        return message.channel.send(':pause_button: **Successfully paused.**');
+            serverQueue.playing = false;
+            serverQueue.connection.dispatcher.pause();
+            return message.channel.send(':pause_button: **Successfully paused.**');
         }
         return message.channel.send(':bangbang: **There is nothing playing.**');
     } else if (message.content.startsWith(MUSIC_RESUME)) {
@@ -235,7 +257,7 @@ function play(guild, song) {
 }
 
 //message on member join
-client.on('guildMemberAdd', function(member) {
+client.on('guildMemberAdd', function (member) {
     // Send the message to a designated channel on a server
     const channel = member.guild.channels.find('name', 'announcements');
     // Do nothing if the channel wasn't found on this server
@@ -245,58 +267,60 @@ client.on('guildMemberAdd', function(member) {
 });
 
 //function for correct time format
-function format(seconds){
-    function pad(s){
+function format(seconds) {
+    function pad(s) {
         return (s < 10 ? '0' : '') + s;
     }
-    var hours = Math.floor(seconds / (60*60));
-    var minutes = Math.floor(seconds % (60*60) / 60);
+    var hours = Math.floor(seconds / (60 * 60));
+    var minutes = Math.floor(seconds % (60 * 60) / 60);
     var seconds = Math.floor(seconds % 60);
-  
+
     return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
 }
 
 //function for logging
-function logToChannel(title, logMessage, messageAuthor, picture){
-    
-        switch(title) {
-            case "Information":
-                color = 3447003;
-                console.log(logMessage);
-                break;
-            case "Warning":
-                color = 0xf9bd31;
-                console.warn(logMessage);
-                break;
-            case "Error":
-                color = 0xff2b30;
-                console.error(logMessage);
-                break;
-            default:
-                color = 000000;
-        }
-    
-        const embed = new Discord.RichEmbed()
+function logToChannel(title, logMessage, messageAuthor, picture) {
+
+    switch (title) {
+        case "Information":
+            color = 3447003;
+            console.log(logMessage);
+            break;
+        case "Warning":
+            color = 0xf9bd31;
+            console.warn(logMessage);
+            break;
+        case "Error":
+            color = 0xff2b30;
+            console.error(logMessage);
+            break;
+        default:
+            color = 000000;
+    }
+
+    const embed = new Discord.RichEmbed()
         .setTitle(title)
         .setAuthor(messageAuthor)
         .setColor(color)
         .setDescription(logMessage)
         .setThumbnail(picture)
         .setTimestamp();
-        client.channels.get(BOT_CHANNEL).send({embed});
-        
+    client.channels.get(BOT_CHANNEL).send({
+        embed
+    });
+
 }
 
 //function for eval command
 function clean(text) {
-    if (typeof(text) === "string")
-      return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+    if (typeof (text) === "string")
+        return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
     else
         return text;
 }
 
 //commands
-client.on('message', function(message) {
+client.on('message', function (message) {
     if (message.author.bot) return;
     if (!message.content.startsWith(PREFIX)) return;
     if (!message.guild) return;
@@ -304,14 +328,14 @@ client.on('message', function(message) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => { // Connection is an instance of VoiceConnection
-                message.channel.send(':GreenTick: I have successfully connected to the channel!');
+                    message.channel.send(':GreenTick: I have successfully connected to the channel!');
                 })
                 .catch(console.log);
         } else {
             message.channel.send(':bangbang: You need to join a voice channel first!');
         }
     } else if (message.content.startsWith(`${PREFIX}vcleave`)) {
-        if(message.member.voiceChannel) {
+        if (message.member.voiceChannel) {
             message.member.voiceChannel.leave();
             message.channel.send(':GreenTick: I have successfully disconnected from the channel!');
         } else {
@@ -326,28 +350,37 @@ client.on('message', function(message) {
                 var start = now();
                 let evaled = eval(code);
                 var end = now();
-          
+
                 if (typeof evaled !== "string")
                     evaled = require("util").inspect(evaled);
-          
-                message.channel.send({ embed: {
-                    color: 0x00ff00,
-                    title: 'Success',
-                    description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`Took `' + (end - start).toFixed(3) + 'ms`'
-                } });
-              } catch (err) {
-                    message.channel.send({ embed: {
+
+                message.channel.send({
+                    embed: {
+                        color: 0x00ff00,
+                        title: 'Success',
+                        description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`Took `' + (end - start).toFixed(3) + 'ms`'
+                    }
+                });
+            } catch (err) {
+                message.channel.send({
+                    embed: {
                         color: 0xff0000,
                         title: 'ERROR',
                         description: `\`\`\`xl\n${clean(err)}\n\`\`\``
-                    } });
-              }
+                    }
+                });
+            }
         } else return;
     } else if (message.content.startsWith(SET_GAME)) { //setgame
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(9);
-            client.user.setPresence({ game: { name: clientInput, type: 0 } });
+            client.user.setPresence({
+                game: {
+                    name: clientInput,
+                    type: 0
+                }
+            });
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
@@ -363,10 +396,10 @@ client.on('message', function(message) {
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(11);
-            if(clientInput === ('dnd') || ('online') || ('idle') || ('invisible')){
+            if (clientInput === ('dnd') || ('online') || ('idle') || ('invisible')) {
                 client.user.setStatus(clientInput);
             } else {
-            message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
+                message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
             }
         } else {
             message.channel.send('You are not authorized to use this command.');
@@ -374,7 +407,9 @@ client.on('message', function(message) {
     } else if (message.content.startsWith(RESTART)) { //restart
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             message.channel.send('Restarting...');
-            setTimeout(function(){ process.exit(); }, 1000);
+            setTimeout(function () {
+                process.exit();
+            }, 1000);
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
@@ -394,20 +429,25 @@ client.on('message', function(message) {
                 var input = message.content;
                 var clientInput = input.substr(8);
                 let messagecount = parseInt(clientInput);
-                if(isNaN(messagecount)){
+                if (isNaN(messagecount)) {
                     message.channel.send('Could not delete messages. Please enter a valid number.');
                     return;
                 } else {
                     messagecount = messagecount + 1;
-                    message.channel.fetchMessages({ limit: messagecount })
+                    message.channel.fetchMessages({
+                            limit: messagecount
+                        })
                         .then(messages => message.channel.bulkDelete(messages));
-                    message.channel.send({embed: {
-                    color: 3447003,
-                    description: "You deleted: " + (messagecount-1) +" message(s)"}})
+                    message.channel.send({
+                            embed: {
+                                color: 3447003,
+                                description: "You deleted: " + (messagecount - 1) + " message(s)"
+                            }
+                        })
                         .then(sent => sent.delete(5000));
-                    logToChannel("Information", "Deleted Messages.\nCount: **" + (messagecount-1) +"**", message.author.tag, message.author.displayAvatarURL);
+                    logToChannel("Information", "Deleted Messages.\nCount: **" + (messagecount - 1) + "**", message.author.tag, message.author.displayAvatarURL);
                 }
-            } 
+            }
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
@@ -419,10 +459,13 @@ client.on('message', function(message) {
                         message.channel.bulkDelete(messages);
                         messagesDeleted = messages.array().length; // number of messages deleted
                         // Logging the number of messages deleted on both the channel and console.
-                        message.channel.send({embed: {
-                            color: 3447003,
-                            description: "You deleted: " + messagesDeleted +" message(s)"}})
-                                .then(sent => sent.delete(5000));
+                        message.channel.send({
+                                embed: {
+                                    color: 3447003,
+                                    description: "You deleted: " + messagesDeleted + " message(s)"
+                                }
+                            })
+                            .then(sent => sent.delete(5000));
                         logToChannel("Information", "Purge successful: " + messagesDeleted, message.author.tag, message.author.displayAvatarURL);
                     })
                     .catch(err => {
@@ -441,11 +484,13 @@ client.on('message', function(message) {
                 var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`;
                 usage.push(output);
             }
-            message.channel.send({ embed: {
-                color: 3447003,
-                description: usage.toString(),
-                description: usage.join("\n")
-            }});
+            message.channel.send({
+                embed: {
+                    color: 3447003,
+                    description: usage.toString(),
+                    description: usage.join("\n")
+                }
+            });
         }
     } else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
         message.channel.send('**PONG**' + ' `' + Math.floor(client.ping.toString()) + 'ms`');
@@ -453,29 +498,37 @@ client.on('message', function(message) {
         embed.setTitle('Vape Nation');
         embed.setColor('#29ff00');
         embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
-        message.channel.send({ embed });
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}snus`)) { //snus
         embed.setTitle('Die Uhrzeit');
         embed.setColor('BLACK');
         embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
-        message.channel.send({ embed });
+        message.channel.send({
+            embed
+        });
     } else if (message.content === `${PREFIX}ziit`) { //ziit
         if (message.author.id === OWNERID) {
             embed.setTitle('Vape Nation');
             embed.setColor('#29ff00');
             embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
-            message.channel.send({ embed });
+            message.channel.send({
+                embed
+            });
         } else {
             embed.setTitle('Die Uhrzeit');
             embed.setColor('BLACK');
             embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
-            message.channel.send({ embed });
+            message.channel.send({
+                embed
+            });
         }
     } else if (message.content.startsWith(`${PREFIX}echo`)) { //echo
         var input = message.content;
         var clientInput = input.substr(6);
         message.delete(200);
-        setTimeout(function() {
+        setTimeout(function () {
             message.channel.send(clientInput);
         }, 300);
         logToChannel("Information", "Echo command has been used: " + clientInput, message.author.tag, message.author.displayAvatarURL);
@@ -483,56 +536,65 @@ client.on('message', function(message) {
         var input = message.content;
         var clientInput = input.substr(5);
         message.delete(200);
-        setTimeout(function(){ message.channel.send(clientInput, {
-            tts: true
-        }); }, 300);
+        setTimeout(function () {
+            message.channel.send(clientInput, {
+                tts: true
+            });
+        }, 300);
         logToChannel("Information", "TTS command has been used: " + clientInput, message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
-        message.channel.send({embed: {
-            color: 3447003,
-            description: "Uptime of the bot process:\n**" + format(process.uptime()) + "**"
-            }}
-        );
+        message.channel.send({
+            embed: {
+                color: 3447003,
+                description: "Uptime of the bot process:\n**" + format(process.uptime()) + "**"
+            }
+        });
     } else if (message.content.startsWith(`${PREFIX}osuptime`)) { //os uptime
-        message.channel.send({embed: {
-            color: 3447003,
-            description: "Uptime of the operating system:\n**" + format(require('os').uptime()) + "**"
-            }}
-        );
+        message.channel.send({
+            embed: {
+                color: 3447003,
+                description: "Uptime of the operating system:\n**" + format(require('os').uptime()) + "**"
+            }
+        });
     } else if (message.content.startsWith(`${PREFIX}countdown`)) { //countdown
         var input = message.content;
         var clientInput = input.substr(11);
         let count = parseInt(clientInput);
-        if(isNaN(count)){
+        if (isNaN(count)) {
             message.channel.send('Could not create countdown. Please enter a valid number.');
             return;
         } else {
-            message.channel.send({embed: {
-                color: 3447003,
-                title: 'Countdown',
-                description: 'Countdown started. This will take approximately **' + format(clientInput) + '**'
-            }}).then(sentmsg => {
+            message.channel.send({
+                embed: {
+                    color: 3447003,
+                    title: 'Countdown',
+                    description: 'Countdown started. This will take approximately **' + format(clientInput) + '**'
+                }
+            }).then(sentmsg => {
                 var i = clientInput;
-                var interval = setInterval(function() {
-                    sentmsg.edit({embed: {
-                        color: 3447003,
-                        title: 'Countdown',
-                        description: '```' + format(i) + '```'
-                        }}
-                    );
+                var interval = setInterval(function () {
+                    sentmsg.edit({
+                        embed: {
+                            color: 3447003,
+                            title: 'Countdown',
+                            description: '```' + format(i) + '```'
+                        }
+                    });
                 }, 3000);
                 (function fn() {
                     if (i > 0) {
-                        setTimeout(function() {
+                        setTimeout(function () {
                             fn(--i);
                         }, 1000);
                     }
-                    if(i === 0) {
-                        sentmsg.edit({embed: {
-                            color: 3447003,
-                            title: 'Countdown',
-                            description: 'Countdown ended. Total time wasted: **' + format(clientInput) + '**'
-                        }});
+                    if (i === 0) {
+                        sentmsg.edit({
+                            embed: {
+                                color: 3447003,
+                                title: 'Countdown',
+                                description: 'Countdown ended. Total time wasted: **' + format(clientInput) + '**'
+                            }
+                        });
                         clearInterval(interval);
                     }
                 }(clientInput));
@@ -545,54 +607,64 @@ client.on('message', function(message) {
         //You cannot destroy yourself, check if message.author.id same as mentioned
     } else if (message.content.startsWith(`${PREFIX}serverinfo`)) { //serverinfo
         const embed = new Discord.RichEmbed()
-        .setColor(3447003)
-        .setTimestamp()
-        .setAuthor(message.guild.name, message.guild.iconURL)
-        .addField('ID', message.guild.id)
-        .addField('Owner', message.guild.owner.user.tag)
-        .addField('Created At', message.guild.createdAt)
-        .addField('Region', message.guild.region)
-        .addField('Verification Level', message.guild.verificationLevel)
-        .addField('Member Count', message.guild.memberCount)
-        .addField('Channels', message.guild.channels.size)
-        .addField('Roles', message.guild.roles.size)
-        .addField('Emojis', message.guild.emojis.size);
-        message.channel.send({ embed });
+            .setColor(3447003)
+            .setTimestamp()
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .addField('ID', message.guild.id)
+            .addField('Owner', message.guild.owner.user.tag)
+            .addField('Created At', message.guild.createdAt)
+            .addField('Region', message.guild.region)
+            .addField('Verification Level', message.guild.verificationLevel)
+            .addField('Member Count', message.guild.memberCount)
+            .addField('Channels', message.guild.channels.size)
+            .addField('Roles', message.guild.roles.size)
+            .addField('Emojis', message.guild.emojis.size);
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}userinfo`)) { //userinfo
         const embed = new Discord.RichEmbed()
-        .setColor(3447003)
-        .setAuthor(message.author.username, message.author.avatarURL)
-        .addField('Username', message.author.username)
-        .addField('Discriminator', message.author.discriminator)
-        .addField('ID', message.author.id)
-        .setFooter('User created at: ' + message.author.createdAt);
-        message.channel.send({ embed });
+            .setColor(3447003)
+            .setAuthor(message.author.username, message.author.avatarURL)
+            .addField('Username', message.author.username)
+            .addField('Discriminator', message.author.discriminator)
+            .addField('ID', message.author.id)
+            .setFooter('User created at: ' + message.author.createdAt);
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}channelinfo`)) { //channelinfo
         const embed = new Discord.RichEmbed()
-        .setColor(3447003)
-        .setTimestamp()
-        .setAuthor(message.channel.name, message.guild.iconURL)
-        .addField('Name', message.channel.name)
-        .addField('ID', message.channel.id)
-        .addField('Topic', message.channel.topic)
-        .addField('Type', message.channel.type)
-        .addField('Created At', message.channel.createdAt)
-        .addField('Position', message.channel.position);
-        message.channel.send({ embed });
+            .setColor(3447003)
+            .setTimestamp()
+            .setAuthor(message.channel.name, message.guild.iconURL)
+            .addField('Name', message.channel.name)
+            .addField('ID', message.channel.id)
+            .addField('Topic', message.channel.topic)
+            .addField('Type', message.channel.type)
+            .addField('Created At', message.channel.createdAt)
+            .addField('Position', message.channel.position);
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}channels`)) { //channels
         const embed = new Discord.RichEmbed()
-        .setColor(3447003)
-        .setTimestamp()
-        .setAuthor(message.guild.name, message.guild.iconURL)
-        .addField('List of Channels', 'TBD');
-        message.channel.send({ embed });
+            .setColor(3447003)
+            .setTimestamp()
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .addField('List of Channels', 'TBD');
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}roles`)) { //roles
         const embed = new Discord.RichEmbed()
-        .setColor(3447003)
-        .setTimestamp()
-        .setAuthor(message.guild.name, message.guild.iconURL)
-        .addField('List of Roles', 'TBD');
-        message.channel.send({ embed });
+            .setColor(3447003)
+            .setTimestamp()
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .addField('List of Roles', 'TBD');
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}help`)) { //help
         message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
@@ -618,7 +690,7 @@ client.on('message', function(message) {
     } else if (message.content.startsWith(`${PREFIX}baumi2`)) { //baumi2
         message.channel.send('Wetsch es Zäpfli?');
     } else if (message.content.startsWith(`${PREFIX}baumi3`)) { //baumi3
-        message.channel.send('<@'+LUCASID+'>, ab id Duschi');
+        message.channel.send('<@' + LUCASID + '>, ab id Duschi');
     } else if (message.content.startsWith(`${PREFIX}baumi4`)) { //baumi4
         message.channel.send('Chopf im Sofa.');
     } else if (message.content.startsWith(`${PREFIX}bitte`)) { //bitte
@@ -637,7 +709,9 @@ client.on('message', function(message) {
         embed.setTitle('Merci viu mol');
         embed.setColor('#001fff');
         embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
-        message.channel.send({ embed });
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}dinimom`)) { //dinimom
         message.channel.send('WÜKI?!?!?!??');
     } else if (message.content.startsWith(`${PREFIX}doni`)) { //doni
