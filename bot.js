@@ -349,7 +349,7 @@ client.on('message', function (message) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => { // Connection is an instance of VoiceConnection
-                    message.channel.send(':GreenTick: I have successfully connected to the channel!');
+                    message.channel.send(':white_check_mark: I have successfully connected to the channel!');
                 })
                 .catch(console.log);
         } else {
@@ -358,7 +358,7 @@ client.on('message', function (message) {
     } else if (message.content.startsWith(`${PREFIX}vcleave`)) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.leave();
-            message.channel.send(':GreenTick: I have successfully disconnected from the channel!');
+            message.channel.send(':white_check_mark: I have successfully disconnected from the channel!');
         } else {
             message.channel.send(':bangbang: You are not in a voice channel!');
         }
