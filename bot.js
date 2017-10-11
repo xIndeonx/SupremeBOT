@@ -117,6 +117,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 \`\`\`
 Please input the number of the song you want to play **(1-5)**
                     `);
+
                     try {
                         var response = await message.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 6, {
                             maxMatches: 1,
@@ -177,8 +178,10 @@ Please input the number of the song you want to play **(1-5)**
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
         return message.channel.send(`
 __**Queue:**__
-${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n')}
 
+\`\`\`xl
+${serverQueue.songs.map(song => `**:arrow_right_hook:** ${song.title}`).join('\n')}
+\`\`\`
 :notes: Now playing: **${serverQueue.songs[0].title}**
       `);
     } else if (message.content.startsWith(MUSIC_PAUSE)) {
@@ -531,7 +534,7 @@ client.on('message', function (message) {
         setTimeout(function () {
             message.channel.send(clientInput);
         }, 300);
-        logToChannel("Information", "Echo command has been used: " + clientInput, message.author.tag, message.author.displayAvatarURL);
+        logToChannel("Information", "Echo command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.startsWith(`${PREFIX}tts`)) { //tts
         var input = message.content;
         var clientInput = input.substr(5);
@@ -541,7 +544,7 @@ client.on('message', function (message) {
                 tts: true
             });
         }, 300);
-        logToChannel("Information", "TTS command has been used: " + clientInput, message.author.tag, message.author.displayAvatarURL);
+        logToChannel("Information", "TTS command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
         message.channel.send({
             embed: {
