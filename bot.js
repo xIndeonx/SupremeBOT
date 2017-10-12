@@ -647,7 +647,7 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}8BALL`)) { //8ball
         message.channel.send({
             embed: {
-                title: 'Der magische 8ball',
+                title: 'The magic 8ball says...',
                 color: blue,
                 description: eightball()
             }
