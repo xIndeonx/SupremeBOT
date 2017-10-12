@@ -436,43 +436,43 @@ function eightball() {
 
     var answer = Math.floor((Math.random() * 10) + 1);
     var answerChoice = Math.floor((Math.random() * 8) + 1);
-    if(answer <= 5){
-        switch(answerChoice){
+    if (answer <= 5) {
+        switch (answerChoice) {
             case 1:
-                return "Definitiv";
+                return "Definitiv.";
             case 2:
-                return "Uf jede Fall ja";
+                return "Uf jede Fall, ja.";
             case 3:
-                return "Mini source seget mir das stimmt";
+                return "Mini Source seget mir das stimmt.";
             case 4:
-                return "Ja aber nur will ICHs sege";
+                return "Ja, aber nur will **ICH**s sege.";
             case 5:
-                return "Bin mir nöd 100% sicher aber glaubs ja";
+                return "Bin mir nöd 100% sicher, aber glaubs ja.";
             case 6:
-                return "Ich bin de vapeio und ich han kei entscheidigsfähigkeit";
+                return "Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.";
             case 7:
-                return "ich han googlet, es stimmt ja";
+                return "Ich han googlet, es stimmt, ja.";
             case 8:
-                return "ih dem fall scho ja";
+                return "Ih dem Fall scho, ja.";
         }
     } else {
-        switch(answerChoice){
+        switch (answerChoice) {
             case 1:
-                return "Nö sicher nöd";
+                return "Nö, sicher nöd.";
             case 2:
-                return "Bisch du behindert nei";
+                return "Bisch du behindert? **Nei**.";
             case 3:
-                return "Also wenn das stimmt, denn weissi au nöd";
+                return "Also wenn das stimmt, denn weissi au nöd.";
             case 4:
-                return "Also wenn denksch das mini antwort ja isch, denn hesch dich girrt";
+                return "Also wenn du denksch, dass mini Antwort ja isch, denn hesch dich girrt.";
             case 5:
-                return "hesch du wükis gfühl das ich ja sege? wtf";
+                return "Hesch du wüki s'Gfühl, dass ich ja sege? wtf";
             case 6:
-                return "ich weiss du ghörsches nöd gern, aber es isch es klars nei vo mir";
+                return "Ich weiss du ghörsch es nöd gern, aber es isch es klars nei vo mir.";
             case 7:
-                return "also wenn das \"britain's got talent\" wär hetsch fix 3 mal nei becho";
+                return "Also wenn das \"Britain's Got Talent\" wär, hetsch fix 3 Mal nei becho.";
             case 8:
-                return "wenns wort ja **nei** heisse wür wärs es ja";
+                return "Wenns Wort ja **\"nei\"** heisse wür, wärs es ja.";
         }
     }
 
@@ -645,7 +645,13 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}1=0`)) { //1=0
         message.channel.send('1=0');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}8BALL`)) { //8ball
-        message.channel.send(eightball());
+        message.channel.send({
+            embed: {
+                title: 'Der magische 8ball',
+                color: blue,
+                description: eightball()
+            }
+        });
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ADEMERCI`)) { //ademerci
         message.channel.send('Ademerci');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}AHA`)) { //aha
@@ -709,7 +715,13 @@ client.on('message', function (message) {
         message.channel.send('Ich ha gseit **NEI**.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}COINFLIP`)) { //coinflip
         var result = coinFlip(message.content);
-        message.channel.send(result);
+        message.channel.send({
+            embed: {
+                title: 'Result',
+                color: blue,
+                description: result
+            }
+        });
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}COUNTDOWN`)) { //countdown
         var input = message.content;
         var clientInput = input.substr(11);
@@ -892,7 +904,13 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}RPS`)) { //rps
         var input = message.content;
         var clientInput = input.substr(5);
-        message.channel.send(rpsPrint(clientInput, message.author.toString()));
+        message.channel.send({
+            embed: {
+                title: 'Result',
+                color: blue,
+                description: rpsPrint(clientInput, message.author.toString())
+            }
+        });
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}SERVERINFO`)) { //serverinfo
         const embed = new Discord.RichEmbed()
             .setColor(blue)
