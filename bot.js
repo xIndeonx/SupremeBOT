@@ -15,7 +15,9 @@ const {
     BOT_CHANNEL,
     OWNERID,
     LUCASID,
-    YT_API
+    YT_API,
+    PROJECT_ID,
+    PROJECT_KEY
 } = require('./config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
@@ -45,6 +47,17 @@ const MUSIC_RESUME = `${PREFIX}resume`;
 const MUSIC_VOLUME = `${PREFIX}volume`;
 const MUSIC_NP = `${PREFIX}np`;
 const MUSIC_QUEUE = `${PREFIX}queue`;
+
+//airbrake
+var airbrakeJs = require('airbrake-js');
+var airbrake = new airbrakeJs({
+    projectId: PROJECT_ID,
+    projectKey: PROJECT_KEY
+});
+airbrake.addFilter(function (notice) {
+    notice.context.environment = 'production';
+    return notice;
+});
 
 //warn
 client.on('warn', console.warn);
@@ -83,6 +96,7 @@ client.on('message', async message => {
 
     if (message.content.startsWith(MUSIC_PLAY)) {
         const voiceChannel = message.member.voiceChannel;
+        const authorid = message.author.id;
         if (!voiceChannel) return message.channel.send(':bangbang: **You need to be in a voice channel to play music!**');
         const permissions = voiceChannel.permissionsFor(message.client.user);
         if (!permissions.has('CONNECT')) {
@@ -132,6 +146,7 @@ Please input the number of the song you want to play **(1-5)**
                     var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
                 } catch (err) {
                     console.error(err);
+                    airbrake.notify(err);
                     message.channel.stopTyping(true);
                     return message.channel.send(':bangbang: **Could not get search results.**');
                 }
@@ -176,14 +191,20 @@ Please input the number of the song you want to play **(1-5)**
         return message.channel.send(`:notes: Now playing: **${serverQueue.songs[0].title}**`);
     } else if (message.content.startsWith(MUSIC_QUEUE)) {
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
-        return message.channel.send(`
-__**Queue:**__
-
-\`\`\`
-${serverQueue.songs.map(song => `**- ** ${song.title}`).join('\n')}
-\`\`\`
-:notes: Now playing: **${serverQueue.songs[0].title}**
-      `);
+        let index = 0;
+        var queuelist = `\n${serverQueue.songs.map(song => `${++index} - ${song.title}`).join('\n')}`;
+        return message.channel.send({
+            embed: {
+                title: 'Queue',
+                color: 3447003,
+                description: `\`\`\`xl
+${queuelist}
+            \`\`\``,
+                footer: {
+                    text: `Now playing: ${serverQueue.songs[0].title}`
+                }
+            }
+        });
     } else if (message.content.startsWith(MUSIC_PAUSE)) {
         if (serverQueue && serverQueue.playing) {
             serverQueue.playing = false;
@@ -227,6 +248,7 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
             play(message.guild, queueConstruct.songs[0]);
         } catch (error) {
             console.error(`:bangbang: **Could not join the voice channel:** ${error}`);
+            airbrake.notify(error);
             queue.delete(message.guild.id);
             return message.channel.send(`:bangbang: **Could not join the voice channel:** ${error}`);
         }
@@ -249,7 +271,7 @@ function play(guild, song) {
     console.log(serverQueue.songs);
     const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
         .on('end', reason => {
-            if (reason === 'Stream is not generating quickly enough.') logToChannel("Information", "Song ended!", message.author.tag, message.author.displayAvatarURL);
+            if (reason === 'Stream is not generating quickly enough.') console.log('Song ended!');
             else console.log(reason);
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
@@ -296,6 +318,7 @@ function logToChannel(title, logMessage, messageAuthor, picture) {
         case "Error":
             color = 0xff2b30;
             console.error(logMessage);
+            airbrake.notify(logMessage);
             break;
         default:
             color = 000000;
@@ -331,7 +354,7 @@ client.on('message', function (message) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.join()
                 .then(connection => { // Connection is an instance of VoiceConnection
-                    message.channel.send(':GreenTick: I have successfully connected to the channel!');
+                    message.channel.send(':white_check_mark: I have successfully connected to the channel!');
                 })
                 .catch(console.log);
         } else {
@@ -340,7 +363,7 @@ client.on('message', function (message) {
     } else if (message.content.startsWith(`${PREFIX}vcleave`)) {
         if (message.member.voiceChannel) {
             message.member.voiceChannel.leave();
-            message.channel.send(':GreenTick: I have successfully disconnected from the channel!');
+            message.channel.send(':white_check_mark: I have successfully disconnected from the channel!');
         } else {
             message.channel.send(':bangbang: You are not in a voice channel!');
         }
@@ -421,6 +444,7 @@ client.on('message', function (message) {
             message.channel.send('Shutting down...');
             client.destroy((err) => {
                 logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
+                airbrake.notify(err);
             });
             process.exitCode = 1;
         } else {
@@ -473,6 +497,7 @@ client.on('message', function (message) {
                     })
                     .catch(err => {
                         logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
+                        airbrake.notify(err);
                     });
             }
         } else {
