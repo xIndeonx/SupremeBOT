@@ -668,7 +668,7 @@ client.on('message', function (message) {
         message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}AUTIST`)) { //autist
         message.channel.send('Wüki?!?!?');
-    } else if (message.content === `${PREFIX}BAUMI`) { //baumi
+    } else if (message.content.toUpperCase() === `${PREFIX}BAUMI`) { //baumi
         message.channel.send('Try using `.baumi1`, `.baumi2`, `.baumi3`, or `.baumi4`!');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}BAUMI1`)) { //baumi1
         message.channel.send("Cha de Alain scho d'Uhr lese?");
@@ -707,7 +707,7 @@ client.on('message', function (message) {
         message.channel.send({
             embed
         });
-    } else if (message.content === `${PREFIX}CLAUDIO`) { //claudio
+    } else if (message.content.toUpperCase() === `${PREFIX}CLAUDIO`) { //claudio
         message.channel.send('De Clö isch immer am schaffe.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}CLAUDIOLINO`)) { //claudiolino
         message.channel.send('Clö, bitte, stfu.');
@@ -800,7 +800,7 @@ client.on('message', function (message) {
         message.channel.send('isch keis.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}EXIT`)) { //exit
         message.channel.send('Selbstmordorganisation');
-    } else if (message.content === `${PREFIX}FABIO`) { //fabio
+    } else if (message.content.toUpperCase() === `${PREFIX}FABIO`) { //fabio
         message.channel.send('De Vabio isch en chline Memer.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}FABIO2`)) { //fabio2
         message.channel.send('Wie isch d\'Matur? - Mis Lebe isch erfüllt.');
@@ -840,7 +840,7 @@ client.on('message', function (message) {
         message.channel.send('Sali.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HM`)) { //hm
         message.channel.send('Hm?');
-    } else if (message.content === `${PREFIX}ICH`) { //ich
+    } else if (message.content.toUpperCase() === `${PREFIX}ICH`) { //ich
         message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ICHI`)) { //ichi
         message.channel.send('Bruchsch hilf? **ICH** cha der helfe.');
@@ -1006,7 +1006,7 @@ client.on('message', function (message) {
         message.channel.send('"Du hesch es falsches Weltbild."');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ZEIT`)) { //zeit
         message.channel.send('Neun Uhr Achtzig.');
-    } else if (message.content === `${PREFIX}ZIIT`) { //ziit
+    } else if (message.content.toUpperCase() === `${PREFIX}ZIIT`) { //ziit
         if (message.author.id === OWNERID) {
             embed.setTitle('Vape Nation');
             embed.setColor(green);
