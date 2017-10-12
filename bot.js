@@ -723,6 +723,9 @@ client.on('message', function (message) {
         message.channel.send({
             embed
         });
+    } else if (message.content.startsWith(`${PREFIX}coinflip`)) { //coinflip
+        var result = coinFlip(message.content);
+        message.channel.send(result);
     } else if (message.content.startsWith(`${PREFIX}help`)) { //help
         message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
@@ -868,8 +871,5 @@ client.on('message', function (message) {
         message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
     } else if (message.content.startsWith(`${PREFIX}auä`)) { //auä
         message.channel.send('auä!');
-    } else if (message.content.startsWith(`${PREFIX}coinflip`)) { //coinflip
-        var result = coinFlip(message.content);
-        message.channel.send(result);
     }
 });
