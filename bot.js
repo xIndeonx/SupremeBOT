@@ -61,8 +61,9 @@ airbrake.addFilter(function (notice) {
 //const for colors
 const blue = 3447003;
 const orange = 0xf9bd31;
-const red = 0xff2b30;
+const red = 0xff0000;
 const black = 000000;
+const green = 0x00ff00;
 
 //warn
 client.on('warn', console.warn);
@@ -201,7 +202,7 @@ Please input the number of the song you want to play **(1-5)**
         return message.channel.send({
             embed: {
                 title: 'Queue',
-                color: 3447003,
+                color: blue,
                 description: `\`\`\`xl
 ${queuelist}
             \`\`\``,
@@ -310,8 +311,6 @@ function format(seconds) {
 
 //function for logging
 function logToChannel(title, logMessage, messageAuthor, picture) {
-
-    var color = black;
 
     switch (title) {
         case "Information":
@@ -477,7 +476,7 @@ client.on('message', function (message) {
 
                 message.channel.send({
                     embed: {
-                        color: 0x00ff00,
+                        color: green,
                         title: 'Success',
                         description: '\`\`\`xl\n' + clean(evaled) + '\`\`\`Took `' + (end - start).toFixed(3) + 'ms`'
                     }
@@ -485,7 +484,7 @@ client.on('message', function (message) {
             } catch (err) {
                 message.channel.send({
                     embed: {
-                        color: 0xff0000,
+                        color: red,
                         title: 'ERROR',
                         description: `\`\`\`xl\n${clean(err)}\n\`\`\``
                     }
@@ -562,7 +561,7 @@ client.on('message', function (message) {
                         .then(messages => message.channel.bulkDelete(messages));
                     message.channel.send({
                             embed: {
-                                color: 3447003,
+                                color: blue,
                                 description: "You deleted: " + (messagecount - 1) + " message(s)"
                             }
                         })
@@ -583,7 +582,7 @@ client.on('message', function (message) {
                         // Logging the number of messages deleted on both the channel and console.
                         message.channel.send({
                                 embed: {
-                                    color: 3447003,
+                                    color: blue,
                                     description: "You deleted: " + messagesDeleted + " message(s)"
                                 }
                             })
@@ -598,205 +597,6 @@ client.on('message', function (message) {
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
-    } else if (message.content.startsWith(MEMORY)) { //memory
-        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-            const used = process.memoryUsage();
-            var usage = [];
-            for (let key in used) {
-                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`;
-                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`;
-                usage.push(output);
-            }
-            message.channel.send({
-                embed: {
-                    color: 3447003,
-                    description: usage.toString(),
-                    description: usage.join("\n")
-                }
-            });
-        }
-    } else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
-        message.channel.send('**PONG**' + ' `' + Math.floor(client.ping.toString()) + 'ms`');
-    } else if (message.content.startsWith(`${PREFIX}vn`)) { //vn
-        embed.setTitle('Vape Nation');
-        embed.setColor('#29ff00');
-        embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
-        message.channel.send({
-            embed
-        });
-    } else if (message.content.startsWith(`${PREFIX}snus`)) { //snus
-        embed.setTitle('Die Uhrzeit');
-        embed.setColor('BLACK');
-        embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
-        message.channel.send({
-            embed
-        });
-    } else if (message.content === `${PREFIX}ziit`) { //ziit
-        if (message.author.id === OWNERID) {
-            embed.setTitle('Vape Nation');
-            embed.setColor('#29ff00');
-            embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
-            message.channel.send({
-                embed
-            });
-        } else {
-            embed.setTitle('Die Uhrzeit');
-            embed.setColor('BLACK');
-            embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
-            message.channel.send({
-                embed
-            });
-        }
-    } else if (message.content.startsWith(`${PREFIX}echo`)) { //echo
-        var input = message.content;
-        var clientInput = input.substr(6);
-        message.delete(200);
-        setTimeout(function () {
-            message.channel.send(clientInput);
-        }, 300);
-        logToChannel("Information", "Echo command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
-    } else if (message.content.startsWith(`${PREFIX}tts`)) { //tts
-        var input = message.content;
-        var clientInput = input.substr(5);
-        message.delete(200);
-        setTimeout(function () {
-            message.channel.send(clientInput, {
-                tts: true
-            });
-        }, 300);
-        logToChannel("Information", "TTS command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
-    } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
-        message.channel.send({
-            embed: {
-                color: 3447003,
-                description: "Uptime of the bot process:\n**" + format(process.uptime()) + "**"
-            }
-        });
-    } else if (message.content.startsWith(`${PREFIX}osuptime`)) { //os uptime
-        message.channel.send({
-            embed: {
-                color: 3447003,
-                description: "Uptime of the operating system:\n**" + format(require('os').uptime()) + "**"
-            }
-        });
-    } else if (message.content.startsWith(`${PREFIX}countdown`)) { //countdown
-        var input = message.content;
-        var clientInput = input.substr(11);
-        let count = parseInt(clientInput);
-        if (isNaN(count)) {
-            message.channel.send('Could not create countdown. Please enter a valid number.');
-            return;
-        } else {
-            message.channel.send({
-                embed: {
-                    color: 3447003,
-                    title: 'Countdown',
-                    description: 'Countdown started. This will take approximately **' + format(clientInput) + '**'
-                }
-            }).then(sentmsg => {
-                var i = clientInput;
-                var interval = setInterval(function () {
-                    sentmsg.edit({
-                        embed: {
-                            color: 3447003,
-                            title: 'Countdown',
-                            description: '```' + format(i) + '```'
-                        }
-                    });
-                }, 3000);
-                (function fn() {
-                    if (i > 0) {
-                        setTimeout(function () {
-                            fn(--i);
-                        }, 1000);
-                    }
-                    if (i === 0) {
-                        sentmsg.edit({
-                            embed: {
-                                color: 3447003,
-                                title: 'Countdown',
-                                description: 'Countdown ended. Total time wasted: **' + format(clientInput) + '**'
-                            }
-                        });
-                        clearInterval(interval);
-                    }
-                }(clientInput));
-            });
-        }
-    } else if (message.content.startsWith(`${PREFIX}hakai`)) { //hakai
-        if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
-        if (message.mentions.users.size == 1) return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
-        if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
-        //You cannot destroy yourself, check if message.author.id same as mentioned
-    } else if (message.content.startsWith(`${PREFIX}serverinfo`)) { //serverinfo
-        const embed = new Discord.RichEmbed()
-            .setColor(3447003)
-            .setTimestamp()
-            .setAuthor(message.guild.name, message.guild.iconURL)
-            .addField('ID', message.guild.id)
-            .addField('Owner', message.guild.owner.user.tag)
-            .addField('Created At', message.guild.createdAt)
-            .addField('Region', message.guild.region)
-            .addField('Verification Level', message.guild.verificationLevel)
-            .addField('Member Count', message.guild.memberCount)
-            .addField('Channels', message.guild.channels.size)
-            .addField('Roles', message.guild.roles.size)
-            .addField('Emojis', message.guild.emojis.size);
-        message.channel.send({
-            embed
-        });
-    } else if (message.content.startsWith(`${PREFIX}userinfo`)) { //userinfo
-        const embed = new Discord.RichEmbed()
-            .setColor(3447003)
-            .setAuthor(message.author.username, message.author.avatarURL)
-            .addField('Username', message.author.username)
-            .addField('Discriminator', message.author.discriminator)
-            .addField('ID', message.author.id)
-            .setFooter('User created at: ' + message.author.createdAt);
-        message.channel.send({
-            embed
-        });
-    } else if (message.content.startsWith(`${PREFIX}channelinfo`)) { //channelinfo
-        const embed = new Discord.RichEmbed()
-            .setColor(3447003)
-            .setTimestamp()
-            .setAuthor(message.channel.name, message.guild.iconURL)
-            .addField('Name', message.channel.name)
-            .addField('ID', message.channel.id)
-            .addField('Topic', message.channel.topic)
-            .addField('Type', message.channel.type)
-            .addField('Created At', message.channel.createdAt)
-            .addField('Position', message.channel.position);
-        message.channel.send({
-            embed
-        });
-    } else if (message.content.startsWith(`${PREFIX}channels`)) { //channels
-        const embed = new Discord.RichEmbed()
-            .setColor(3447003)
-            .setTimestamp()
-            .setAuthor(message.guild.name, message.guild.iconURL)
-            .addField('List of Channels', 'TBD');
-        message.channel.send({
-            embed
-        });
-    } else if (message.content.startsWith(`${PREFIX}roles`)) { //roles
-        const embed = new Discord.RichEmbed()
-            .setColor(3447003)
-            .setTimestamp()
-            .setAuthor(message.guild.name, message.guild.iconURL)
-            .addField('List of Roles', 'TBD');
-        message.channel.send({
-            embed
-        });
-    } else if (message.content.startsWith(`${PREFIX}coinflip`)) { //coinflip
-        var result = coinFlip(message.content);
-        message.channel.send(result);
-    } else if (message.content.startsWith(`${PREFIX}rps`)) { //rps
-        var input = message.content;
-        var clientInput = input.substr(5);
-        message.channel.send(rpsPrint(clientInput, message.author.toString()));
-    } else if (message.content.startsWith(`${PREFIX}help`)) { //help
-        message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
         message.channel.send('1=0');
     } else if (message.content.startsWith(`${PREFIX}ademerci`)) { //ademerci
@@ -809,6 +609,8 @@ client.on('message', function (message) {
         message.channel.send('I heisse Andreas, nöd Oliver.');
     } else if ((message.content.startsWith(`${PREFIX}andy`)) || (message.content.startsWith(`${PREFIX}andi`))) { //andy/andi
         message.channel.send('De Andi füut sech elei in Bärn.');
+    } else if (message.content.startsWith(`${PREFIX}auä`)) { //auä
+        message.channel.send('Auä!');
     } else if (message.content.startsWith(`${PREFIX}autismus`)) { //autismus
         message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
     } else if (message.content.startsWith(`${PREFIX}autist`)) { //autist
@@ -829,15 +631,85 @@ client.on('message', function (message) {
         message.channel.send('Kuka pelkää musta miestä?');
     } else if (message.content.startsWith(`${PREFIX}bzz`)) { //bzz
         message.channel.send('Bescht Schuel vom Kanton Horge.');
+    } else if (message.content.startsWith(`${PREFIX}channelinfo`)) { //channelinfo
+        const embed = new Discord.RichEmbed()
+            .setColor(blue)
+            .setTimestamp()
+            .setAuthor(message.channel.name, message.guild.iconURL)
+            .addField('Name', message.channel.name)
+            .addField('ID', message.channel.id)
+            .addField('Topic', message.channel.topic)
+            .addField('Type', message.channel.type)
+            .addField('Created At', message.channel.createdAt)
+            .addField('Position', message.channel.position);
+        message.channel.send({
+            embed
+        });
+    } else if (message.content.startsWith(`${PREFIX}channels`)) { //channels
+        const embed = new Discord.RichEmbed()
+            .setColor(blue)
+            .setTimestamp()
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .addField('List of Channels', 'TBD');
+        message.channel.send({
+            embed
+        });
     } else if (message.content === `${PREFIX}claudio`) { //claudio
         message.channel.send('De Clö isch immer am schaffe.');
     } else if (message.content.startsWith(`${PREFIX}claudiolino`)) { //claudiolino
         message.channel.send('Clö, bitte, stfu.');
     } else if (message.content.startsWith(`${PREFIX}clö`)) { //clö
         message.channel.send('Ich ha gseit **NEI**.');
+    } else if (message.content.startsWith(`${PREFIX}coinflip`)) { //coinflip
+        var result = coinFlip(message.content);
+        message.channel.send(result);
+    } else if (message.content.startsWith(`${PREFIX}countdown`)) { //countdown
+        var input = message.content;
+        var clientInput = input.substr(11);
+        let count = parseInt(clientInput);
+        if (isNaN(count)) {
+            message.channel.send('Could not create countdown. Please enter a valid number.');
+            return;
+        } else {
+            message.channel.send({
+                embed: {
+                    color: blue,
+                    title: 'Countdown',
+                    description: 'Countdown started. This will take approximately **' + format(clientInput) + '**'
+                }
+            }).then(sentmsg => {
+                var i = clientInput;
+                var interval = setInterval(function () {
+                    sentmsg.edit({
+                        embed: {
+                            color: blue,
+                            title: 'Countdown',
+                            description: '```' + format(i) + '```'
+                        }
+                    });
+                }, 3000);
+                (function fn() {
+                    if (i > 0) {
+                        setTimeout(function () {
+                            fn(--i);
+                        }, 1000);
+                    }
+                    if (i === 0) {
+                        sentmsg.edit({
+                            embed: {
+                                color: blue,
+                                title: 'Countdown',
+                                description: 'Countdown ended. Total time wasted: **' + format(clientInput) + '**'
+                            }
+                        });
+                        clearInterval(interval);
+                    }
+                }(clientInput));
+            });
+        }
     } else if ((message.content.startsWith(`${PREFIX}danke`)) || (message.content.startsWith(`${PREFIX}merci`))) { //danke
         embed.setTitle('Merci viu mol');
-        embed.setColor('#001fff');
+        embed.setColor(blue);
         embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
         message.channel.send({
             embed
@@ -846,6 +718,14 @@ client.on('message', function (message) {
         message.channel.send('WÜKI?!?!?!??');
     } else if (message.content.startsWith(`${PREFIX}doni`)) { //doni
         message.channel.send('Heb fressi oder ich küss dich.');
+    } else if (message.content.startsWith(`${PREFIX}echo`)) { //echo
+        var input = message.content;
+        var clientInput = input.substr(6);
+        message.delete(200);
+        setTimeout(function () {
+            message.channel.send(clientInput);
+        }, 300);
+        logToChannel("Information", "Echo command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.startsWith(`${PREFIX}eine`)) { //eine
         message.channel.send('isch keine.');
     } else if (message.content.startsWith(`${PREFIX}eis`)) { //eis
@@ -868,6 +748,13 @@ client.on('message', function (message) {
         message.channel.send('Catch it hard!');
     } else if (message.content.startsWith(`${PREFIX}gschicht`)) { //gschicht
         message.channel.send('*glernt*');
+    } else if (message.content.startsWith(`${PREFIX}hakai`)) { //hakai
+        if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
+        if (message.mentions.users.size == 1) return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
+        if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
+        //You cannot destroy yourself, check if message.author.id same as mentioned
+    } else if (message.content.startsWith(`${PREFIX}help`)) { //help
+        message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}hoi`)) { //hoi
         message.channel.send('Sali.');
     } else if (message.content.startsWith(`${PREFIX}hm`)) { //hm
@@ -908,18 +795,81 @@ client.on('message', function (message) {
         message.channel.send('exit');
     } else if (message.content.startsWith(`${PREFIX}lucas3`)) { //lucas3
         message.channel.send('ICH chan auto fahre');
+    } else if (message.content.startsWith(MEMORY)) { //memory
+        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
+            const used = process.memoryUsage();
+            var usage = [];
+            for (let key in used) {
+                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`;
+                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`;
+                usage.push(output);
+            }
+            message.channel.send({
+                embed: {
+                    color: blue,
+                    description: usage.toString(),
+                    description: usage.join("\n")
+                }
+            });
+        }
     } else if (message.content.startsWith(`${PREFIX}mila`)) { //mila
         message.channel.send('__**ACHT**__');
     } else if (message.content.startsWith(`${PREFIX}noah`)) { //noah
         message.channel.send('Wo isch de Noah?');
     } else if (message.content.startsWith(`${PREFIX}oli`)) { //oli
         message.channel.send('Ich bi sozial.');
+    } else if (message.content.startsWith(`${PREFIX}osuptime`)) { //os uptime
+        message.channel.send({
+            embed: {
+                color: blue,
+                description: "Uptime of the operating system:\n**" + format(require('os').uptime()) + "**"
+            }
+        });
+    } else if (message.content.startsWith(`${PREFIX}ping`)) { //ping
+        message.channel.send('**PONG**' + ' `' + Math.floor(client.ping.toString()) + 'ms`');
     } else if (message.content.startsWith(`${PREFIX}ppap`)) { //ppap
         message.channel.send(':pen_fountain: :pineapple: :apple: :pen_fountain:');
     } else if (message.content.startsWith(`${PREFIX}pubg`)) { //pubg
         message.channel.send('1=0');
     } else if (message.content.startsWith(`${PREFIX}rip`)) { //rip
         message.channel.send('Rest In Peace.');
+    } else if (message.content.startsWith(`${PREFIX}roles`)) { //roles
+        const embed = new Discord.RichEmbed()
+            .setColor(blue)
+            .setTimestamp()
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .addField('List of Roles', 'TBD');
+        message.channel.send({
+            embed
+        });
+    } else if (message.content.startsWith(`${PREFIX}rps`)) { //rps
+        var input = message.content;
+        var clientInput = input.substr(5);
+        message.channel.send(rpsPrint(clientInput, message.author.toString()));
+    } else if (message.content.startsWith(`${PREFIX}serverinfo`)) { //serverinfo
+        const embed = new Discord.RichEmbed()
+            .setColor(blue)
+            .setTimestamp()
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .addField('ID', message.guild.id)
+            .addField('Owner', message.guild.owner.user.tag)
+            .addField('Created At', message.guild.createdAt)
+            .addField('Region', message.guild.region)
+            .addField('Verification Level', message.guild.verificationLevel)
+            .addField('Member Count', message.guild.memberCount)
+            .addField('Channels', message.guild.channels.size)
+            .addField('Roles', message.guild.roles.size)
+            .addField('Emojis', message.guild.emojis.size);
+        message.channel.send({
+            embed
+        });
+    } else if (message.content.startsWith(`${PREFIX}snus`)) { //snus
+        embed.setTitle('Die Uhrzeit');
+        embed.setColor(black);
+        embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}sorry`)) { //sorry
         message.channel.send('Sorry?');
     } else if (message.content.startsWith(`${PREFIX}stfu`)) { //stfu
@@ -928,17 +878,66 @@ client.on('message', function (message) {
         message.channel.send('Ich rauch mini Thermoschanne voll dure.');
     } else if (message.content.startsWith(`${PREFIX}toubi`)) { //toubi
         message.channel.send('Hallo, ich heisse Toubi.');
+    } else if (message.content.startsWith(`${PREFIX}tts`)) { //tts
+        var input = message.content;
+        var clientInput = input.substr(5);
+        message.delete(200);
+        setTimeout(function () {
+            message.channel.send(clientInput, {
+                tts: true
+            });
+        }, 300);
+        logToChannel("Information", "TTS command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
+    } else if (message.content.startsWith(`${PREFIX}uptime`)) { //uptime
+        message.channel.send({
+            embed: {
+                color: blue,
+                description: "Uptime of the bot process:\n**" + format(process.uptime()) + "**"
+            }
+        });
+    } else if (message.content.startsWith(`${PREFIX}userinfo`)) { //userinfo
+        const embed = new Discord.RichEmbed()
+            .setColor(blue)
+            .setAuthor(message.author.username, message.author.avatarURL)
+            .addField('Username', message.author.username)
+            .addField('Discriminator', message.author.discriminator)
+            .addField('ID', message.author.id)
+            .setFooter('User created at: ' + message.author.createdAt);
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}velo`)) { //velo
         message.channel.send('黒人が自転車を盗んだ');
+    } else if (message.content.startsWith(`${PREFIX}vn`)) { //vn
+        embed.setTitle('Vape Nation');
+        embed.setColor(green);
+        embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
+        message.channel.send({
+            embed
+        });
     } else if (message.content.startsWith(`${PREFIX}weltbild`)) { //weltbild
         message.channel.send('"Du hesch es falsches Weltbild."');
     } else if (message.content.startsWith(`${PREFIX}zeit`)) { //zeit
         message.channel.send('Neun Uhr Achtzig.');
+    } else if (message.content === `${PREFIX}ziit`) { //ziit
+        if (message.author.id === OWNERID) {
+            embed.setTitle('Vape Nation');
+            embed.setColor(green);
+            embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
+            message.channel.send({
+                embed
+            });
+        } else {
+            embed.setTitle('Die Uhrzeit');
+            embed.setColor(black);
+            embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
+            message.channel.send({
+                embed
+            });
+        }
     } else if (message.content.startsWith(`${PREFIX}ziit?`)) { //ziit?
         message.channel.send('Ja, was isch denn für Ziit?');
     } else if (message.content.startsWith(`${PREFIX}zoel`)) { //zoel
         message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
-    } else if (message.content.startsWith(`${PREFIX}auä`)) { //auä
-        message.channel.send('auä!');
     }
 });
