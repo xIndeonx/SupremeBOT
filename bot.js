@@ -25,9 +25,6 @@ const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
 const GAME = 'Work in Progress | Prefix: .';
-const coinflipEmbed = new Discord.RichEmbed()
-    .setDescription(`${PREFIX}coinflip firstCondition secondCondition **or** ${PREFIX}coinflip`)
-    .setColor(3447003);
 var color = 000000;
 
 //const for admin commands
@@ -341,7 +338,16 @@ function logToChannel(title, logMessage, messageAuthor, picture) {
 }
 
 //function for coinflip
-function coinFlip(firstCondition, secondCondition) {
+function coinFlip(coinFlipMessage) {
+    const coinflipEmbed = new Discord.RichEmbed()
+    .setDescription(`${PREFIX}coinflip firstCondition secondCondition **or** ${PREFIX}coinflip`)
+    .setColor(3447003);
+    var clientInput = coinFlipMessage.split(" ");
+    if (clientInput.length > 3) {
+        return coinflipEmbed;
+    } else {
+        var firstCondition = clientInput[1];
+        var secondCondition = clientInput[2];
     if (firstCondition && secondCondition) {
         var coin = Math.floor((Math.random() * 10) + 1);
         if (coin <= 5) return firstCondition;
@@ -352,6 +358,7 @@ function coinFlip(firstCondition, secondCondition) {
         else return "Zahl";
     } else {
         return coinflipEmbed;
+    }
     }
 }
 
@@ -857,13 +864,7 @@ client.on('message', function (message) {
     } else if (message.content.startsWith(`${PREFIX}auä`)) { //auä
         message.channel.send('auä!');
     } else if (message.content.startsWith(`${PREFIX}coinflip`)) { //coinflip
-        var input = message.content;
-        var clientInput = input.split(" ");
-        if (clientInput.length > 3) {
-            message.channel.send(coinflipEmbed);
-        } else {
-            var result = coinFlip(clientInput[1], clientInput[2]);
-            message.channel.send(result);
-        }
+        var result = coinFlip(message.content);
+        message.channel.send(result);
     }
 });
