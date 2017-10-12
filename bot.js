@@ -590,7 +590,7 @@ client.on('message', function (message) {
             message.channel.send('You are not authorized to use this command.');
         }
     } else if (message.content.toUpperCase().startsWith(DELETE)) { //delete
-        if ((message.member.permissions.hasPermission('ADMINISTRATOR')) || (message.author.id === OWNERID) || (message.author.id === OWNERID)) {
+        if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === OWNERID) || (message.author.id === OWNERID)) {
             if (message.channel.type == 'text') {
                 var input = message.content;
                 var clientInput = input.substr(8);
@@ -618,7 +618,7 @@ client.on('message', function (message) {
             message.channel.send('You are not authorized to use this command.');
         }
     } else if (message.content.toUpperCase().startsWith(PURGE)) { //purge
-        if ((message.member.permissions.hasPermission('ADMINISTRATOR')) || (message.author.id === OWNERID) || (message.author.id === OWNERID)) {
+        if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === OWNERID) || (message.author.id === OWNERID)) {
             if (message.channel.type == 'text') {
                 message.channel.fetchMessages()
                     .then(messages => {
@@ -660,7 +660,7 @@ client.on('message', function (message) {
         message.channel.send('Daddy?');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ANDREAS`)) { //andreas
         message.channel.send('I heisse Andreas, nöd Oliver.');
-    } else if ((message.content.toUpperCase().startsWith(`${PREFIX}ANDY`)) || (message.content.toUpperCase().startsWith(`${PREFIX}andi`))) { //andy/andi
+    } else if ((message.content.toUpperCase().startsWith(`${PREFIX}ANDY`)) || (message.content.toUpperCase().startsWith(`${PREFIX}ANDI`))) { //andy / andi
         message.channel.send('De Andi füut sech elei in Bärn.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}AUÄ`)) { //auä
         message.channel.send('Auä!');
@@ -766,7 +766,16 @@ client.on('message', function (message) {
                 }(clientInput));
             });
         }
-    } else if ((message.content.toUpperCase().startsWith(`${PREFIX}DANKE`)) || (message.content.toUpperCase().startsWith(`${PREFIX}MERCI`))) { //danke
+    } else if (message.content.toUpperCase().startsWith(`${PREFIX}CUSTOM`)) { //custom
+        embed.setColor(red);
+        embed.setTimestamp();
+        embed.setAuthor(client.user.username, client.user.displayAvatarURL);
+        embed.setTitle('Custom Commands');
+        embed.setDescription('\`' + PREFIX + '1=0\`\n' + '\`' + PREFIX + 'ademerci\`\n' + '\`' + PREFIX + 'aha\`\n' + '\`' + PREFIX + 'alina\`\n' + '\`' + PREFIX + 'andreas\`\n' + '\`' + PREFIX + 'andi\`\n' + '\`' + PREFIX + 'andy\`\n' + '\`' + PREFIX + 'auä\`\n' + '\`' + PREFIX + 'autismus\`\n' + '\`' + PREFIX + 'autist\`\n' + '\`' + PREFIX + 'baumi\`\n' + '\`' + PREFIX + 'baumi1\`\n' + '\`' + PREFIX + 'baumi2\`\n' + '\`' + PREFIX + 'baumi3\`\n' + '\`' + PREFIX + 'baumi4\`\n' + '\`' + PREFIX + 'bitte\`\n' + '\`' + PREFIX + 'boogeyman\`\n' + '\`' + PREFIX + 'bzz\`\n' + '\`' + PREFIX + 'claudio\`\n' + '\`' + PREFIX + 'claudiolino\`\n' + '\`' + PREFIX + 'clö\`\n' + '\`' + PREFIX + 'danke\`\n' + '\`' + PREFIX + 'merci\`\n' + '\`' + PREFIX + 'dinimom\`\n' + '\`' + PREFIX + 'doni\`\n' + '\`' + PREFIX + 'eine\`\n' + '\`' + PREFIX + 'eis\`\n' + '\`' + PREFIX + 'exit\`\n' + '\`' + PREFIX + 'fabio\`\n' + '\`' + PREFIX + 'fabio2\`\n' + '\`' + PREFIX + 'fabiocsgo\`\n' + '\`' + PREFIX + 'fige\`\n' + '\`' + PREFIX + 'filip\`\n' + '\`' + PREFIX + 'game\`\n' + '\`' + PREFIX + 'getshiton\`\n' + '\`' + PREFIX + 'gschicht\`\n' + '\`' + PREFIX + 'hoi\`\n' + '\`' + PREFIX + 'hm\`\n' + '\`' + PREFIX + 'ich\`\n' + '\`' + PREFIX + 'ichi\`\n' + '\`' + PREFIX + 'interessiert\`\n' + '\`' + PREFIX + 'inyourfaculty\`\n' + '\`' + PREFIX + 'inyourfamily\`\n' + '\`' + PREFIX + 'inyourname\`\n' + '\`' + PREFIX + 'inyourspirit\`\n' + '\`' + PREFIX + 'ivan\`\n' + '\`' + PREFIX + 'jacob\`\n' + '\`' + PREFIX + 'jesus\`\n' + '\`' + PREFIX + 'jesuschrist\`\n' + '\`' + PREFIX + 'joel\`\n' + '\`' + PREFIX + 'kadder\`\n' + '\`' + PREFIX + 'kadder2\`\n' + '\`' + PREFIX + 'ksh\`\n' + '\`' + PREFIX + 'lucas\`\n' + '\`' + PREFIX + 'lucas2\`\n' + '\`' + PREFIX + 'lucas3\`\n' + '\`' + PREFIX + 'mila\`\n' + '\`' + PREFIX + 'noah\`\n' + '\`' + PREFIX + 'oli\`\n' + '\`' + PREFIX + 'ppap\`\n' + '\`' + PREFIX + 'pubg\`\n' + '\`' + PREFIX + 'rip\`\n' + '\`' + PREFIX + 'snus\`\n' + '\`' + PREFIX + 'sorry\`\n' + '\`' + PREFIX + 'stfu\`\n' + '\`' + PREFIX + 'thermos\`\n' + '\`' + PREFIX + 'toubi\`\n' + '\`' + PREFIX + 'velo\`\n' + '\`' + PREFIX + 'vn\`\n' + '\`' + PREFIX + 'weltbild\`\n' + '\`' + PREFIX + 'zeit\`\n' + '\`' + PREFIX + 'ziit\`\n' + '\`' + PREFIX + 'ziit?\`\n' + '\`' + PREFIX + 'zoel\`\n');
+        message.channel.send({
+            embed
+        });
+    } else if ((message.content.toUpperCase().startsWith(`${PREFIX}DANKE`)) || (message.content.toUpperCase().startsWith(`${PREFIX}MERCI`))) { //danke / merci
         embed.setTitle('Merci viu mol');
         embed.setColor(blue);
         embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
@@ -813,7 +822,20 @@ client.on('message', function (message) {
         if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
         //You cannot destroy yourself, check if message.author.id same as mentioned
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HELP`)) { //help
-        message.channel.send('Help page is being worked on.');
+        const embed = new Discord.RichEmbed()
+            .setColor(red)
+            .setTimestamp()
+            .setAuthor(client.user.username, client.user.displayAvatarURL)
+            .setTitle('Commands')
+            .setDescription('This is a complete list of commands currently available for the bot.\nFor a list of custom commands, use \`' + PREFIX + 'custom\`')
+            .addField('Owner', '\`' + PREFIX + 'eval\`\n' + '\`' + PREFIX + 'restart\`\n' + '\`' + PREFIX + 'setavatar\`\n' + '\`' + PREFIX + 'setgame\`\n' + '\`' + PREFIX + 'setstatus\`\n' + '\`' + PREFIX + 'shutdown\`\n')
+            .addField('Admin', '\`' + PREFIX + 'delete\`\n' + '\`' + PREFIX + 'purge\`\n')
+            .addField('Music', '\`' + PREFIX + 'join\`\n' + '\`' + PREFIX + 'leave\`\n' + '\`' + PREFIX + 'np\`\n' + '\`' + PREFIX + 'pause\`\n' + '\`' + PREFIX + 'play\`\n' + '\`' + PREFIX + 'queue\`\n' + '\`' + PREFIX + 'resume\`\n' + '\`' + PREFIX + 'skip\`\n' + '\`' + PREFIX + 'stop\`\n' + '\`' + PREFIX + 'vcleave\`\n' + '\`' + PREFIX + 'volume\`\n')
+            .addField('Info', '\`' + PREFIX + 'channelinfo\`\n' + '\`' + PREFIX + 'channels\`\n' + '\`' + PREFIX + 'custom\`\n' + '\`' + PREFIX + 'help\`\n' + '\`' + PREFIX + 'memory\`\n' + '\`' + PREFIX + 'osuptime\`\n' + '\`' + PREFIX + 'ping\`\n' + '\`' + PREFIX + 'roles\`\n' + '\`' + PREFIX + 'serverinfo\`\n' + '\`' + PREFIX + 'uptime\`\n' + '\`' + PREFIX + 'userinfo\`\n')
+            .addField('Miscellaneous', '\`' + PREFIX + '8ball\`\n' + '\`' + PREFIX + 'coinflip\`\n' + '\`' + PREFIX + 'countdown\`\n' + '\`' + PREFIX + 'echo\`\n' + '\`' + PREFIX + 'hakai\`\n' + '\`' + PREFIX + 'rps\`\n' + '\`' + PREFIX + 'tts\`\n')
+        message.channel.send({
+            embed
+        });
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HOI`)) { //hoi
         message.channel.send('Sali.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HM`)) { //hm
@@ -877,7 +899,7 @@ client.on('message', function (message) {
         message.channel.send('Wo isch de Noah?');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}OLI`)) { //oli
         message.channel.send('Ich bi sozial.');
-    } else if (message.content.toUpperCase().startsWith(`${PREFIX}OSUPTIME`)) { //os uptime
+    } else if (message.content.toUpperCase().startsWith(`${PREFIX}OSUPTIME`)) { //osuptime
         message.channel.send({
             embed: {
                 color: blue,
