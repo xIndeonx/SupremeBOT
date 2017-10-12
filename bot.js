@@ -516,11 +516,9 @@ client.on('message', function (message) {
         if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
             var input = message.content;
             var clientInput = input.substr(11);
-            if (clientInput === ('dnd') || ('online') || ('idle') || ('invisible')) {
+            if (clientInput === ('dnd') || clientInput === ('online') || clientInput === ('idle') || clientInput === ('invisible')) {
                 client.user.setStatus(clientInput);
-            } else {
-                message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
-            }
+            } else return message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
         } else {
             message.channel.send('You are not authorized to use this command.');
         }
