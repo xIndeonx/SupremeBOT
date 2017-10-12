@@ -25,7 +25,6 @@ const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
 const GAME = 'Work in Progress | Prefix: .';
-var color = 000000;
 
 //const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -58,6 +57,12 @@ airbrake.addFilter(function (notice) {
     notice.context.environment = 'production';
     return notice;
 });
+
+//const for colors
+const blue = 3447003;
+const orange = 0xf9bd31;
+const red = 0xff2b30;
+const black = 000000;
 
 //warn
 client.on('warn', console.warn);
@@ -306,22 +311,24 @@ function format(seconds) {
 //function for logging
 function logToChannel(title, logMessage, messageAuthor, picture) {
 
+    var color = black;
+
     switch (title) {
         case "Information":
-            color = 3447003;
+            color = blue;
             console.log(logMessage);
             break;
         case "Warning":
-            color = 0xf9bd31;
+            color = orange;
             console.warn(logMessage);
             break;
         case "Error":
-            color = 0xff2b30;
+            color = red;
             console.error(logMessage);
             airbrake.notify(logMessage);
             break;
         default:
-            color = 000000;
+            color = black;
     }
 
     const embed = new Discord.RichEmbed()
@@ -335,6 +342,29 @@ function logToChannel(title, logMessage, messageAuthor, picture) {
         embed
     });
 
+}
+
+//function for coinflip
+function coinFlip(coinFlipMessage) {
+    const coinflipEmbed = new Discord.RichEmbed()
+        .setDescription(`${PREFIX}coinflip firstCondition secondCondition **OR** ${PREFIX}coinflip`)
+        .setColor(blue);
+    var clientInput = coinFlipMessage.split(" ");
+    if (clientInput.length != 3 && clientInput.length != 1) {
+        return coinflipEmbed;
+    } else {
+        if (clientInput.length == 3) {
+            var firstCondition = clientInput[1];
+            var secondCondition = clientInput[2];
+            var coin = Math.floor((Math.random() * 10) + 1);
+            if (coin <= 5) return firstCondition;
+            else return secondCondition;
+        } else {
+            var coin = Math.floor((Math.random() * 10) + 1);
+            if (coin <= 5) return "Chopf";
+            else return "Zahl";
+        }
+    }
 }
 
 //function for eval command
@@ -693,6 +723,9 @@ client.on('message', function (message) {
         message.channel.send({
             embed
         });
+    } else if (message.content.startsWith(`${PREFIX}coinflip`)) { //coinflip
+        var result = coinFlip(message.content);
+        message.channel.send(result);
     } else if (message.content.startsWith(`${PREFIX}help`)) { //help
         message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
@@ -836,5 +869,7 @@ client.on('message', function (message) {
         message.channel.send('Ja, was isch denn für Ziit?');
     } else if (message.content.startsWith(`${PREFIX}zoel`)) { //zoel
         message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
+    } else if (message.content.startsWith(`${PREFIX}auä`)) { //auä
+        message.channel.send('auä!');
     }
 });
