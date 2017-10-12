@@ -811,5 +811,7 @@ client.on('message', function (message) {
         message.channel.send('Ja, was isch denn für Ziit?');
     } else if (message.content.startsWith(`${PREFIX}zoel`)) { //zoel
         message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
+    } else if (message.content.startsWith(`${PREFIX}auä`)) { //auä
+        message.channel.send('auä!');
     }
 });
