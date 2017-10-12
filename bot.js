@@ -347,24 +347,22 @@ function logToChannel(title, logMessage, messageAuthor, picture) {
 //function for coinflip
 function coinFlip(coinFlipMessage) {
     const coinflipEmbed = new Discord.RichEmbed()
-        .setDescription(`${PREFIX}coinflip firstCondition secondCondition **or** ${PREFIX}coinflip`)
+        .setDescription(`${PREFIX}coinflip firstCondition secondCondition **OR** ${PREFIX}coinflip`)
         .setColor(blue);
     var clientInput = coinFlipMessage.split(" ");
-    if (clientInput.length > 3) {
+    if (clientInput.length != 3 && clientInput.length != 1) {
         return coinflipEmbed;
     } else {
-        var firstCondition = clientInput[1];
-        var secondCondition = clientInput[2];
-        if (firstCondition && secondCondition) {
+        if (clientInput.length == 3) {
+            var firstCondition = clientInput[1];
+            var secondCondition = clientInput[2];
             var coin = Math.floor((Math.random() * 10) + 1);
             if (coin <= 5) return firstCondition;
             else return secondCondition;
-        } else if (!firstCondition && !secondCondition) {
+        } else {
             var coin = Math.floor((Math.random() * 10) + 1);
             if (coin <= 5) return "Chopf";
             else return "Zahl";
-        } else {
-            return coinflipEmbed;
         }
     }
 }
