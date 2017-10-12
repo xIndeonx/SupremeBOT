@@ -478,6 +478,20 @@ function eightball() {
 
 }
 
+function lotto(userGuess){
+    if(userGuess < 1 || userGuess > 50 || !userGuess || isNaN(userGuess)) {
+        return "Please enter a number between 1 and 50!";
+    } else {
+        var lottoNumber = Math.floor((Math.random() * 50) + 1);
+        if(userGuess == lottoNumber){
+            return "Congratulations, you guessed right! Here a kiss from Doni! :kissing_closed_eyes:";
+        } else {
+            return "You guesses wrong :pensive: maybe next time...";
+        }
+    }
+
+}
+
 //function for eval command
 function clean(text) {
     if (typeof (text) === "string")
@@ -870,6 +884,10 @@ client.on('message', function (message) {
         message.channel.send('Tüend sie Wasser löse?');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}KSH`)) { //ksh
         message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
+    } else if (message.content.toUpperCase().startsWith(`${PREFIX}LOTTO`)) { //lotto
+        var input = message.content;
+        var guess = input.substr(6);
+        message.channel.send(lotto(guess));
     } else if (message.content === `${PREFIX}LUCAS`) { //lucas
         message.channel.send('Dr Luckckas verdient viu a dr HSR.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}LUCAS2`)) { //lucas2
