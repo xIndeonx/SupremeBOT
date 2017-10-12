@@ -146,6 +146,7 @@ Please input the number of the song you want to play **(1-5)**
                     var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
                 } catch (err) {
                     console.error(err);
+                    airbrake.notify(err);
                     message.channel.stopTyping(true);
                     return message.channel.send(':bangbang: **Could not get search results.**');
                 }
@@ -192,16 +193,18 @@ Please input the number of the song you want to play **(1-5)**
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
         let index = 0;
         var queuelist = `\n${serverQueue.songs.map(song => `${++index} - ${song.title}`).join('\n')}`;
-        return message.channel.send({ embed: {
-            title: 'Queue',
-            color: 3447003,
-            description: `\`\`\`xl
+        return message.channel.send({
+            embed: {
+                title: 'Queue',
+                color: 3447003,
+                description: `\`\`\`xl
 ${queuelist}
             \`\`\``,
-            footer: {
-                text: `Now playing: ${serverQueue.songs[0].title}`
-              }
-        }});
+                footer: {
+                    text: `Now playing: ${serverQueue.songs[0].title}`
+                }
+            }
+        });
     } else if (message.content.startsWith(MUSIC_PAUSE)) {
         if (serverQueue && serverQueue.playing) {
             serverQueue.playing = false;
@@ -245,6 +248,7 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
             play(message.guild, queueConstruct.songs[0]);
         } catch (error) {
             console.error(`:bangbang: **Could not join the voice channel:** ${error}`);
+            airbrake.notify(error);
             queue.delete(message.guild.id);
             return message.channel.send(`:bangbang: **Could not join the voice channel:** ${error}`);
         }
@@ -267,7 +271,7 @@ function play(guild, song) {
     console.log(serverQueue.songs);
     const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
         .on('end', reason => {
-            if (reason === 'Stream is not generating quickly enough.') logToChannel("Information", "Song ended!", message.author.tag, message.author.displayAvatarURL);
+            if (reason === 'Stream is not generating quickly enough.') console.log('Song ended!');
             else console.log(reason);
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
@@ -314,6 +318,7 @@ function logToChannel(title, logMessage, messageAuthor, picture) {
         case "Error":
             color = 0xff2b30;
             console.error(logMessage);
+            airbrake.notify(logMessage);
             break;
         default:
             color = 000000;
@@ -439,6 +444,7 @@ client.on('message', function (message) {
             message.channel.send('Shutting down...');
             client.destroy((err) => {
                 logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
+                airbrake.notify(err);
             });
             process.exitCode = 1;
         } else {
@@ -491,6 +497,7 @@ client.on('message', function (message) {
                     })
                     .catch(err => {
                         logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
+                        airbrake.notify(err);
                     });
             }
         } else {
