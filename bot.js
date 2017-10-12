@@ -431,6 +431,53 @@ function rpsPrint(userRPS, usertag) {
 
 }
 
+//function for 8ball
+function eightball() {
+
+    var answer = Math.floor((Math.random() * 10) + 1);
+    var answerChoice = Math.floor((Math.random() * 8) + 1);
+    if(answer <= 5){
+        switch(answerChoice){
+            case 1:
+                return "Definitiv";
+            case 2:
+                return "Uf jede Fall ja";
+            case 3:
+                return "Mini source seget mir das stimmt";
+            case 4:
+                return "Ja aber nur will ICHs sege";
+            case 5:
+                return "Bin mir nöd 100% sicher aber glaubs ja";
+            case 6:
+                return "Ich bin de vapeio und ich han kei entscheidigsfähigkeit";
+            case 7:
+                return "ich han googlet, es stimmt ja";
+            case 8:
+                return "ih dem fall scho ja";
+        }
+    } else {
+        switch(answerChoice){
+            case 1:
+                return "Nö sicher nöd";
+            case 2:
+                return "Bisch du behindert nei";
+            case 3:
+                return "Also wenn das stimmt, denn weissi au nöd";
+            case 4:
+                return "Also wenn denksch das mini antwort ja isch, denn hesch dich girrt";
+            case 5:
+                return "hesch du wükis gfühl das ich ja sege? wtf";
+            case 6:
+                return "ich weiss du ghörsches nöd gern, aber es isch es klars nei vo mir";
+            case 7:
+                return "also wenn das \"britain's got talent\" wär hetsch fix 3 mal nei becho";
+            case 8:
+                return "wenns wort ja **nei** heisse wür wärs es ja";
+        }
+    }
+
+}
+
 //function for eval command
 function clean(text) {
     if (typeof (text) === "string")
@@ -597,6 +644,8 @@ client.on('message', function (message) {
         }
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}1=0`)) { //1=0
         message.channel.send('1=0');
+    } else if (message.content.toUpperCase().startsWith(`${PREFIX}8BALL`)) { //8ball
+        message.channel.send(eightball());
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ADEMERCI`)) { //ademerci
         message.channel.send('Ademerci');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}AHA`)) { //aha
