@@ -765,21 +765,23 @@ client.on('message', function (message) {
             });
         }
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}CUSTOM`)) { //custom
-        embed.setColor(red);
-        embed.setTimestamp();
-        embed.setAuthor(client.user.username, client.user.displayAvatarURL);
-        embed.setTitle('Custom Commands');
-        embed.setDescription('This is a complete list of all custom commands.');
-        embed.addField('A-F', '\`' + PREFIX + '1=0\`\n' + '\`' + PREFIX + 'ademerci\`\n' + '\`' + PREFIX + 'aha\`\n' + '\`' + PREFIX + 'alina\`\n' + '\`' + PREFIX + 'andreas\`\n' + '\`' + PREFIX + 'andi\`\n' + '\`' + PREFIX + 'andy\`\n' + '\`' + PREFIX + 'auä\`\n' + '\`' + PREFIX + 'autismus\`\n' + '\`' + PREFIX + 'autist\`\n' + '\`' + PREFIX + 'baumi\`\n' + '\`' + PREFIX + 'baumi1\`\n' + '\`' + PREFIX + 'baumi2\`\n' + '\`' + PREFIX + 'baumi3\`\n' + '\`' + PREFIX + 'baumi4\`\n' + '\`' + PREFIX + 'bitte\`\n' + '\`' + PREFIX + 'boogeyman\`\n' + '\`' + PREFIX + 'bzz\`\n' + '\`' + PREFIX + 'claudio\`\n' + '\`' + PREFIX + 'claudiolino\`\n' + '\`' + PREFIX + 'clö\`\n' + '\`' + PREFIX + 'danke\`\n' + '\`' + PREFIX + 'merci\`\n' + '\`' + PREFIX + 'dinimom\`\n' + '\`' + PREFIX + 'doni\`\n' + '\`' + PREFIX + 'eine\`\n' + '\`' + PREFIX + 'eis\`\n' + '\`' + PREFIX + 'exit\`\n', true);
-        embed.addField('G-L', '\`' + PREFIX + 'fabio\`\n' + '\`' + PREFIX + 'fabio2\`\n' + '\`' + PREFIX + 'fabiocsgo\`\n' + '\`' + PREFIX + 'fige\`\n' + '\`' + PREFIX + 'filip\`\n' + '\`' + PREFIX + 'game\`\n' + '\`' + PREFIX + 'getshiton\`\n' + '\`' + PREFIX + 'gschicht\`\n' + '\`' + PREFIX + 'hoi\`\n' + '\`' + PREFIX + 'hm\`\n' + '\`' + PREFIX + 'ich\`\n' + '\`' + PREFIX + 'ichi\`\n' + '\`' + PREFIX + 'interessiert\`\n' + '\`' + PREFIX + 'inyourfaculty\`\n' + '\`' + PREFIX + 'inyourfamily\`\n' + '\`' + PREFIX + 'inyourname\`\n' + '\`' + PREFIX + 'inyourspirit\`\n' + '\`' + PREFIX + 'ivan\`\n' + '\`' + PREFIX + 'jacob\`\n' + '\`' + PREFIX + 'jesus\`\n' + '\`' + PREFIX + 'jesuschrist\`\n' + '\`' + PREFIX + 'joel\`\n' + '\`' + PREFIX + 'kadder\`\n' + '\`' + PREFIX + 'kadder2\`\n' + '\`' + PREFIX + 'ksh\`\n' + '\`' + PREFIX + 'lucas\`\n' + '\`' + PREFIX + 'lucas2\`\n' + '\`' + PREFIX + 'lucas3\`\n', true);
-        embed.addField('M-Z', '\`' + PREFIX + 'mila\`\n' + '\`' + PREFIX + 'noah\`\n' + '\`' + PREFIX + 'oli\`\n' + '\`' + PREFIX + 'ppap\`\n' + '\`' + PREFIX + 'pubg\`\n' + '\`' + PREFIX + 'rip\`\n' + '\`' + PREFIX + 'snus\`\n' + '\`' + PREFIX + 'sorry\`\n' + '\`' + PREFIX + 'stfu\`\n' + '\`' + PREFIX + 'thermos\`\n' + '\`' + PREFIX + 'toubi\`\n' + '\`' + PREFIX + 'velo\`\n' + '\`' + PREFIX + 'vn\`\n' + '\`' + PREFIX + 'weltbild\`\n' + '\`' + PREFIX + 'zeit\`\n' + '\`' + PREFIX + 'ziit\`\n' + '\`' + PREFIX + 'ziit?\`\n' + '\`' + PREFIX + 'zoel\`\n', true);
+        const embed = new Discord.RichEmbed()
+            .setColor(red)
+            .setTimestamp()
+            .setAuthor(client.user.username, client.user.displayAvatarURL)
+            .setTitle('Custom Commands')
+            .setDescription('This is a complete list of all custom commands.')
+            .addField('A-E', '\`' + PREFIX + '1=0\`\n' + '\`' + PREFIX + 'ademerci\`\n' + '\`' + PREFIX + 'aha\`\n' + '\`' + PREFIX + 'alina\`\n' + '\`' + PREFIX + 'andreas\`\n' + '\`' + PREFIX + 'andi\`\n' + '\`' + PREFIX + 'andy\`\n' + '\`' + PREFIX + 'auä\`\n' + '\`' + PREFIX + 'autismus\`\n' + '\`' + PREFIX + 'autist\`\n' + '\`' + PREFIX + 'baumi\`\n' + '\`' + PREFIX + 'baumi1\`\n' + '\`' + PREFIX + 'baumi2\`\n' + '\`' + PREFIX + 'baumi3\`\n' + '\`' + PREFIX + 'baumi4\`\n' + '\`' + PREFIX + 'bitte\`\n' + '\`' + PREFIX + 'boogeyman\`\n' + '\`' + PREFIX + 'bzz\`\n' + '\`' + PREFIX + 'claudio\`\n' + '\`' + PREFIX + 'claudiolino\`\n' + '\`' + PREFIX + 'clö\`\n' + '\`' + PREFIX + 'danke\`\n' + '\`' + PREFIX + 'merci\`\n' + '\`' + PREFIX + 'dinimom\`\n' + '\`' + PREFIX + 'doni\`\n' + '\`' + PREFIX + 'eine\`\n' + '\`' + PREFIX + 'eis\`\n' + '\`' + PREFIX + 'exit\`\n', true)
+            .addField('F-L', '\`' + PREFIX + 'fabio\`\n' + '\`' + PREFIX + 'fabio2\`\n' + '\`' + PREFIX + 'fabiocsgo\`\n' + '\`' + PREFIX + 'fige\`\n' + '\`' + PREFIX + 'filip\`\n' + '\`' + PREFIX + 'game\`\n' + '\`' + PREFIX + 'getshiton\`\n' + '\`' + PREFIX + 'gschicht\`\n' + '\`' + PREFIX + 'hoi\`\n' + '\`' + PREFIX + 'hm\`\n' + '\`' + PREFIX + 'ich\`\n' + '\`' + PREFIX + 'ichi\`\n' + '\`' + PREFIX + 'interessiert\`\n' + '\`' + PREFIX + 'inyourfaculty\`\n' + '\`' + PREFIX + 'inyourfamily\`\n' + '\`' + PREFIX + 'inyourname\`\n' + '\`' + PREFIX + 'inyourspirit\`\n' + '\`' + PREFIX + 'ivan\`\n' + '\`' + PREFIX + 'jacob\`\n' + '\`' + PREFIX + 'jesus\`\n' + '\`' + PREFIX + 'jesuschrist\`\n' + '\`' + PREFIX + 'joel\`\n' + '\`' + PREFIX + 'kadder\`\n' + '\`' + PREFIX + 'kadder2\`\n' + '\`' + PREFIX + 'ksh\`\n' + '\`' + PREFIX + 'lucas\`\n' + '\`' + PREFIX + 'lucas2\`\n' + '\`' + PREFIX + 'lucas3\`\n', true)
+            .addField('M-Z', '\`' + PREFIX + 'mila\`\n' + '\`' + PREFIX + 'noah\`\n' + '\`' + PREFIX + 'oli\`\n' + '\`' + PREFIX + 'ppap\`\n' + '\`' + PREFIX + 'pubg\`\n' + '\`' + PREFIX + 'rip\`\n' + '\`' + PREFIX + 'snus\`\n' + '\`' + PREFIX + 'sorry\`\n' + '\`' + PREFIX + 'stfu\`\n' + '\`' + PREFIX + 'thermos\`\n' + '\`' + PREFIX + 'toubi\`\n' + '\`' + PREFIX + 'velo\`\n' + '\`' + PREFIX + 'vn\`\n' + '\`' + PREFIX + 'weltbild\`\n' + '\`' + PREFIX + 'zeit\`\n' + '\`' + PREFIX + 'ziit\`\n' + '\`' + PREFIX + 'ziit?\`\n' + '\`' + PREFIX + 'zoel\`\n', true)
         message.channel.send({
             embed
         });
     } else if ((message.content.toUpperCase().startsWith(`${PREFIX}DANKE`)) || (message.content.toUpperCase().startsWith(`${PREFIX}MERCI`))) { //danke / merci
-        embed.setTitle('Merci viu mol');
-        embed.setColor(blue);
-        embed.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
+        const embed = new Discord.RichEmbed()
+            .setTitle('Merci viu mol')
+            .setColor(blue)
+            .setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg')
         message.channel.send({
             embed
         });
@@ -947,9 +949,10 @@ client.on('message', function (message) {
             embed
         });
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}SNUS`)) { //snus
-        embed.setTitle('Die Uhrzeit');
-        embed.setColor(black);
-        embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
+        const embed = new Discord.RichEmbed()
+            .setTitle('Die Uhrzeit')
+            .setColor(black)
+            .setImage('http://www.odenssnus.eu/public/img/user/1026.png')
         message.channel.send({
             embed
         });
@@ -992,9 +995,10 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}VELO`)) { //velo
         message.channel.send('黒人が自転車を盗んだ');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}VN`)) { //vn
-        embed.setTitle('Vape Nation');
-        embed.setColor(green);
-        embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
+        const embed = new Discord.RichEmbed()
+            .setTitle('Vape Nation')
+            .setColor(green)
+            .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg')
         message.channel.send({
             embed
         });
@@ -1004,16 +1008,18 @@ client.on('message', function (message) {
         message.channel.send('Neun Uhr Achtzig.');
     } else if (message.content.toUpperCase() === `${PREFIX}ZIIT`) { //ziit
         if (message.author.id === OWNERID) {
-            embed.setTitle('Vape Nation');
-            embed.setColor(green);
-            embed.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
+            const embed = new Discord.RichEmbed()
+                .setTitle('Vape Nation')
+                .setColor(green)
+                .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg')
             message.channel.send({
                 embed
             });
         } else {
-            embed.setTitle('Die Uhrzeit');
-            embed.setColor(black);
-            embed.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
+            const embed = new Discord.RichEmbed()
+                .setTitle('Die Uhrzeit')
+                .setColor(black)
+                .setImage('http://www.odenssnus.eu/public/img/user/1026.png')
             message.channel.send({
                 embed
             });
