@@ -25,7 +25,6 @@ const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
 const GAME = 'Work in Progress | Prefix: .';
-var color = 000000;
 
 //const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -58,6 +57,12 @@ airbrake.addFilter(function (notice) {
     notice.context.environment = 'production';
     return notice;
 });
+
+//const for colors
+const blue = 3447003;
+const orange = 0xf9bd31;
+const red = 0xff2b30;
+const black = 000000;
 
 //warn
 client.on('warn', console.warn);
@@ -306,22 +311,24 @@ function format(seconds) {
 //function for logging
 function logToChannel(title, logMessage, messageAuthor, picture) {
 
+    var color = black;
+
     switch (title) {
         case "Information":
-            color = 3447003;
+            color = blue;
             console.log(logMessage);
             break;
         case "Warning":
-            color = 0xf9bd31;
+            color = orange;
             console.warn(logMessage);
             break;
         case "Error":
-            color = 0xff2b30;
+            color = red;
             console.error(logMessage);
             airbrake.notify(logMessage);
             break;
         default:
-            color = 000000;
+            color = black;
     }
 
     const embed = new Discord.RichEmbed()
@@ -341,7 +348,7 @@ function logToChannel(title, logMessage, messageAuthor, picture) {
 function coinFlip(coinFlipMessage) {
     const coinflipEmbed = new Discord.RichEmbed()
     .setDescription(`${PREFIX}coinflip firstCondition secondCondition **or** ${PREFIX}coinflip`)
-    .setColor(3447003);
+    .setColor(blue);
     var clientInput = coinFlipMessage.split(" ");
     if (clientInput.length > 3) {
         return coinflipEmbed;
