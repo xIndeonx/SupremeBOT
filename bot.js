@@ -367,6 +367,71 @@ function coinFlip(coinFlipMessage) {
     }
 }
 
+//function for RPS
+function rpsGenerator() {
+
+    var rps = Math.floor((Math.random() * 3) + 1);
+    if (rps == 1) {
+        return "Rock";
+    } else if (rps == 2) {
+        return "Paper";
+    } else {
+        return "Scissor";
+    }
+}
+
+function rpsBattle(botRPS, userRPS) {
+
+    if (botRPS == "Rock") {
+
+        if (userRPS == "Rock") {
+            return "DRAW";
+        } else if (userRPS == "Scissor") {
+            return "BOT";
+        } else {
+            return "USER";
+        }
+
+    } else if (botRPS == "Paper") {
+        if (userRPS == "Rock") {
+            return "BOT";
+        } else if (userRPS == "Scissor") {
+            return "USER";
+        } else {
+            return "DRAW";
+        }
+
+    } else if (botRPS == "Scissor") {
+        if (userRPS == "Rock") {
+            return "USER";
+        } else if (userRPS == "Scissor") {
+            return "DRAW";
+        } else {
+            return "BOT";
+        }
+
+    }
+}
+
+function rpsPrint(userRPS, usertag) {
+
+    var botRPS = rpsGenerator();
+    if (userRPS == "Rock" || userRPS == "Scissor" || userRPS == "Paper" && userRPS) {
+        var rpsMessage = rpsBattle(botRPS, userRPS);
+        switch (rpsMessage) {
+            case "USER":
+                return usertag + " Won!";
+            case "BOT":
+                return client.user.toString() + " Won!";
+            case "DRAW":
+                return rpsMessage;
+        }
+    } else {
+        return "Please enter a valid message! (Rock, Paper or Scissor)";
+    }
+
+}
+
 //function for eval command
 function clean(text) {
     if (typeof (text) === "string")
@@ -726,6 +791,10 @@ client.on('message', function (message) {
     } else if (message.content.startsWith(`${PREFIX}coinflip`)) { //coinflip
         var result = coinFlip(message.content);
         message.channel.send(result);
+    } else if (message.content.startsWith(`${PREFIX}rps`)) { //rps
+        var input = message.content;
+        var clientInput = input.substr(5);
+        message.channel.send(rpsPrint(clientInput, message.author.toString()));
     } else if (message.content.startsWith(`${PREFIX}help`)) { //help
         message.channel.send('Help page is being worked on.');
     } else if (message.content.startsWith(`${PREFIX}1=0`)) { //1=0
