@@ -846,13 +846,7 @@ client.on('message', function (message) {
         message.channel.send('Bruchsch hilf? **ICH** cha der helfe.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}INTERESSIERT`)) { //interessiert
         message.channel.send('Wie es Loch im Chopf.');
-    } else if (message.content.toUpperCase().startsWith(`${PREFIX}INYOURFACULTY`)) { //inyourfaculty
-        message.channel.send('BECEASED!!!1!!!!111!!1!!!');
-    } else if (message.content.toUpperCase().startsWith(`${PREFIX}INYOURFAMILY`)) { //inyourfamily
-        message.channel.send('BECEASED!!!1!!!!111!!1!!!');
-    } else if (message.content.toUpperCase().startsWith(`${PREFIX}INYOURNAME`)) { //inyourname
-        message.channel.send('BECEASED!!!1!!!!111!!1!!!');
-    } else if (message.content.toUpperCase().startsWith(`${PREFIX}INYOURSPIRIT`)) { //inyourspirit
+    } else if ((message.content.toUpperCase().startsWith(`${PREFIX}INYOURFACULTY`)) || (message.content.toUpperCase().startsWith(`${PREFIX}INYOURFAMILY`)) || (message.content.toUpperCase().startsWith(`${PREFIX}INYOURNAME`)) || (message.content.toUpperCase().startsWith(`${PREFIX}INYOURSPIRIT`))) { //inyour... commands
         message.channel.send('BECEASED!!!1!!!!111!!1!!!');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}IVAN`)) { //ivan
         message.channel.send('Hoi zämä, i bims, dr Ivam. I bi ä waschächtä Schwiizer wiä mr gseht. Wohne duän i ~~IM REICH~~ in Öschtriich, und cha ou nid Schwiizertüütsch. Ademerci.');
