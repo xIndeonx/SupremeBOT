@@ -583,7 +583,6 @@ client.on('message', function (message) {
             message.channel.send('Shutting down...');
             client.destroy((err) => {
                 logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
-                airbrake.notify(err);
             });
             process.exitCode = 1;
         } else {
@@ -636,7 +635,6 @@ client.on('message', function (message) {
                     })
                     .catch(err => {
                         logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
-                        airbrake.notify(err);
                     });
             }
         } else {
