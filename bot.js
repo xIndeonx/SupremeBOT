@@ -183,14 +183,13 @@ Please input the number of the song you want to play **(1-5)**
                 serverQueue.volume = 10;
                 serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
                 return message.channel.send(':loud_sound: Set the volume to the maximum: **10**.');
+            } else if (serverQueue.volume === parseInt(args[1])) {
+                return message.channel.send(`:loud_sound: The volume is already on **${args[1]}**.`);
             } else if (args[1] <= 10) {
                 serverQueue.volume = args[1];
                 serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
                 return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
-            }
-            /*else if (serverQueue.volume === args[1]) {
-                           return message.channel.send(`:loud_sound: The volume is already on **${args[1]}**.`);
-                       }*/
+            } 
         }
     } else if (message.content.toUpperCase().startsWith(MUSIC_NP)) {
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
@@ -473,6 +472,22 @@ function eightball() {
                 return "Also wenn das \"Britain's Got Talent\" wär, hetsch fix 3 Mal nei becho.";
             case 8:
                 return "Wenns Wort ja **\"nei\"** heisse wür, wärs es ja.";
+        }
+    }
+
+}
+
+function lotto(userGuess){
+    if(!userGuess || isNaN(userGuess)) {
+        return `Please use the command like this: ${PREFIX}lotto number`;
+    } else if(userGuess < 1 || userGuess > 50){
+        return "Please enter a number between 1 and 50!";
+    } else {
+        var lottoNumber = Math.floor((Math.random() * 50) + 1);
+        if(userGuess == lottoNumber){
+            return "Congratulations, you guessed right! Here a kiss from Doni! :kissing_closed_eyes:";
+        } else {
+            return "You guesses wrong :pensive: maybe next time...";
         }
     }
 
@@ -823,9 +838,14 @@ client.on('message', function (message) {
         message.channel.send('*glernt*');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HAKAI`)) { //hakai
         if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
-        if (message.mentions.users.size == 1) return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
+        if (message.mentions.users.size == 1) {
+            if(message.mentions.members.first() != message.author.toString()){
+            return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
+            }else{
+                message.channel.send("You cannot destory yourself " + message.author.toString());
+            }
+        }
         if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
-        //You cannot destroy yourself, check if message.author.id same as mentioned
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HELP`)) { //help
         const embed = new Discord.RichEmbed()
             .setColor(red)
@@ -870,6 +890,10 @@ client.on('message', function (message) {
         message.channel.send('Tüend sie Wasser löse?');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}KSH`)) { //ksh
         message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
+    } else if (message.content.toUpperCase().startsWith(`${PREFIX}LOTTO`)) { //lotto
+        var input = message.content;
+        var guess = input.split(" ");
+        message.channel.send(lotto(guess[1]));
     } else if (message.content === `${PREFIX}LUCAS`) { //lucas
         message.channel.send('Dr Luckckas verdient viu a dr HSR.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}LUCAS2`)) { //lucas2
