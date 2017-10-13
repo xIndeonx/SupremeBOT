@@ -479,15 +479,15 @@ function eightball() {
 
 function lotto(userGuess) {
     if (!userGuess || isNaN(userGuess)) {
-        return `Please use the command like this: ${PREFIX}lotto number`;
+        return `Please use the command like this: \`${PREFIX}lotto number\``;
     } else if (userGuess < 1 || userGuess > 50) {
-        return "Please enter a number between 1 and 50!";
+        return "Please enter a valid number between 1 and 50!";
     } else {
         var lottoNumber = Math.floor((Math.random() * 50) + 1);
         if (userGuess == lottoNumber) {
-            return "Congratulations, you guessed right! Here a kiss from Doni! :kissing_closed_eyes:";
+            return "Congratulations, you guessed right! Here's a kiss from Doni! :kissing_closed_eyes:";
         } else {
-            return "You guesses wrong :pensive: maybe next time...";
+            return "You guesses wrong :pensive: Maybe next time...";
         }
     }
 
@@ -839,11 +839,9 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HAKAI`)) { //hakai
         if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
         if (message.mentions.users.size == 1) {
-            if (message.mentions.members.first() != message.author.toString()) {
-                return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
-            } else {
-                message.channel.send("You cannot destory yourself " + message.author.toString());
-            }
+            if (message.mentions.users.first() != message.author.toString()) {
+                return message.channel.send(message.mentions.users.first() + ' has been destroyed by ' + message.author.toString());
+            } else return message.channel.send("You cannot destroy yourself, " + message.author.toString());
         }
         if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HELP`)) { //help
