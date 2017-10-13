@@ -627,7 +627,7 @@ client.on('message', function (message) {
                         message.channel.send({
                                 embed: {
                                     color: blue,
-                                    description: "You deleted: " + messagesDeleted + " message(s)"
+                                    description: "Purge successful: " + messagesDeleted + " message(s) deleted."
                                 }
                             })
                             .then(sent => sent.delete(5000));
