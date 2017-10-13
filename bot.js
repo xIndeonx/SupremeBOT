@@ -67,7 +67,6 @@ const green = 0x00ff00;
 const yellow = 0xffff00;
 
 //attributes for games
-const cardValues = [1,2,3,4,5,6,7,8,9,10,10,10,10,11];
 var isYes;
 
 //warn
