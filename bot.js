@@ -189,7 +189,7 @@ Please input the number of the song you want to play **(1-5)**
                 serverQueue.volume = args[1];
                 serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
                 return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
-            } 
+            }
         }
     } else if (message.content.toUpperCase().startsWith(MUSIC_NP)) {
         if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
@@ -477,14 +477,15 @@ function eightball() {
 
 }
 
-function lotto(userGuess){
-    if(!userGuess || isNaN(userGuess)) {
+//function for lotto
+function lotto(userGuess) {
+    if (!userGuess || isNaN(userGuess)) {
         return `Please use the command like this: ${PREFIX}lotto number`;
-    } else if(userGuess < 1 || userGuess > 50){
+    } else if (userGuess < 1 || userGuess > 50) {
         return "Please enter a number between 1 and 50!";
     } else {
         var lottoNumber = Math.floor((Math.random() * 50) + 1);
-        if(userGuess == lottoNumber){
+        if (userGuess == lottoNumber) {
             return "Congratulations, you guessed right! Here a kiss from Doni! :kissing_closed_eyes:";
         } else {
             return "You guesses wrong :pensive: maybe next time...";
@@ -839,9 +840,9 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}HAKAI`)) { //hakai
         if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
         if (message.mentions.users.size == 1) {
-            if(message.mentions.members.first() != message.author.toString()){
-            return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
-            }else{
+            if (message.mentions.members.first() != message.author.toString()) {
+                return message.channel.send(message.mentions.members.first() + ' has been destroyed by <@' + message.author.id + '>.');
+            } else {
                 message.channel.send("You cannot destory yourself " + message.author.toString());
             }
         }
