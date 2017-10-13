@@ -1,4 +1,3 @@
-//comment test
 //const
 const Discord = require('discord.js');
 const {
