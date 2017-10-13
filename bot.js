@@ -869,11 +869,11 @@ client.on('message', function (message) {
             .setAuthor(client.user.username, client.user.displayAvatarURL)
             .setTitle('Commands')
             .setDescription('This is a complete list of commands currently available for the bot.\nFor a list of custom commands, use \`' + PREFIX + 'custom\`')
-            .addField('Owner', '\`' + PREFIX + 'eval\`\n' + '\`' + PREFIX + 'restart\`\n' + '\`' + PREFIX + 'setavatar\`\n' + '\`' + PREFIX + 'setgame\`\n' + '\`' + PREFIX + 'setstatus\`\n' + '\`' + PREFIX + 'shutdown\`\n', true)
+            .addField('Owner', '\`' + PREFIX + 'eval\`\n' + '\`' + PREFIX + 'memory\`\n' + '\`' + PREFIX + 'restart\`\n' + '\`' + PREFIX + 'setavatar\`\n' + '\`' + PREFIX + 'setgame\`\n' + '\`' + PREFIX + 'setstatus\`\n' + '\`' + PREFIX + 'shutdown\`\n', true)
             .addField('Admin', '\`' + PREFIX + 'delete\`\n' + '\`' + PREFIX + 'purge\`\n', true)
             .addBlankField(true)
             .addField('Music', '\`' + PREFIX + 'join\`\n' + '\`' + PREFIX + 'leave\`\n' + '\`' + PREFIX + 'np\`\n' + '\`' + PREFIX + 'pause\`\n' + '\`' + PREFIX + 'play\`\n' + '\`' + PREFIX + 'queue\`\n' + '\`' + PREFIX + 'resume\`\n' + '\`' + PREFIX + 'skip\`\n' + '\`' + PREFIX + 'stop\`\n' + '\`' + PREFIX + 'vcleave\`\n' + '\`' + PREFIX + 'volume\`\n', true)
-            .addField('Info', '\`' + PREFIX + 'channelinfo\`\n' + '\`' + PREFIX + 'channels\`\n' + '\`' + PREFIX + 'custom\`\n' + '\`' + PREFIX + 'help\`\n' + '\`' + PREFIX + 'memory\`\n' + '\`' + PREFIX + 'osuptime\`\n' + '\`' + PREFIX + 'ping\`\n' + '\`' + PREFIX + 'roles\`\n' + '\`' + PREFIX + 'serverinfo\`\n' + '\`' + PREFIX + 'uptime\`\n' + '\`' + PREFIX + 'userinfo\`\n', true)
+            .addField('Info', '\`' + PREFIX + 'channelinfo\`\n' + '\`' + PREFIX + 'channels\`\n' + '\`' + PREFIX + 'custom\`\n' + '\`' + PREFIX + 'help\`\n' + '\`' + PREFIX + 'osuptime\`\n' + '\`' + PREFIX + 'ping\`\n' + '\`' + PREFIX + 'roles\`\n' + '\`' + PREFIX + 'serverinfo\`\n' + '\`' + PREFIX + 'uptime\`\n' + '\`' + PREFIX + 'userinfo\`\n', true)
             .addField('Miscellaneous', '\`' + PREFIX + '8ball\`\n' + '\`' + PREFIX + 'coinflip\`\n' + '\`' + PREFIX + 'countdown\`\n' + '\`' + PREFIX + 'echo\`\n' + '\`' + PREFIX + 'hakai\`\n' + '\`' + PREFIX + 'lotto\`\n' + '\`' + PREFIX + 'rps\`\n' + '\`' + PREFIX + 'tts\`\n', true)
         message.channel.send({
             embed
