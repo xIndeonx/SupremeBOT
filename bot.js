@@ -64,6 +64,11 @@ const orange = 0xf9bd31;
 const red = 0xff0000;
 const black = 000000;
 const green = 0x00ff00;
+const yellow = 0xffff00;
+
+//attributes for games
+const cardValues = [1,2,3,4,5,6,7,8,9,10,10,10,10,11];
+var isYes;
 
 //warn
 client.on('warn', console.warn);
@@ -436,6 +441,7 @@ function eightball() {
     var answer = Math.floor((Math.random() * 10) + 1);
     var answerChoice = Math.floor((Math.random() * 8) + 1);
     if (answer <= 5) {
+        isYes = "YES";
         switch (answerChoice) {
             case 1:
                 return "Definitiv.";
@@ -448,6 +454,7 @@ function eightball() {
             case 5:
                 return "Bin mir nöd 100% sicher, aber glaubs ja.";
             case 6:
+                isYes = "VAPEIO";
                 return "Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.";
             case 7:
                 return "Ich han googlet, es stimmt, ja.";
@@ -455,6 +462,7 @@ function eightball() {
                 return "Ih dem Fall scho, ja.";
         }
     } else {
+        isYes = "NO";
         switch (answerChoice) {
             case 1:
                 return "Nö, sicher nöd.";
@@ -477,6 +485,17 @@ function eightball() {
 
 }
 
+function eightballColorDecider(){
+    if(isYes == "YES"){
+        return green;
+    } else if(isYes == "VAPEIO"){
+        return yellow;
+    } else {
+        return red;
+    }
+}
+
+//function for lotto
 function lotto(userGuess) {
     if (!userGuess || isNaN(userGuess)) {
         return `Please use the command like this: \`${PREFIX}lotto number\``;
@@ -661,8 +680,8 @@ client.on('message', function (message) {
         message.channel.send({
             embed: {
                 title: 'The magic 8ball says...',
-                color: blue,
-                description: eightball()
+                description: eightball(),
+                color: eightballColorDecider()
             }
         });
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ADEMERCI`)) { //ademerci
