@@ -484,10 +484,10 @@ function eightball() {
 
 }
 
-function eightballColorDecider(){
-    if(isYes == "YES"){
+function eightballColorDecider() {
+    if (isYes == "YES") {
         return green;
-    } else if(isYes == "VAPEIO"){
+    } else if (isYes == "VAPEIO") {
         return yellow;
     } else {
         return red;
