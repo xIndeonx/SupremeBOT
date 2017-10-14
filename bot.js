@@ -484,10 +484,10 @@ function eightball() {
 
 }
 
-function eightballColorDecider(){
-    if(isYes == "YES"){
+function eightballColorDecider() {
+    if (isYes == "YES") {
         return green;
-    } else if(isYes == "VAPEIO"){
+    } else if (isYes == "VAPEIO") {
         return yellow;
     } else {
         return red;
@@ -917,22 +917,20 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}LUCAS3`)) { //lucas3
         message.channel.send('ICH chan auto fahre');
     } else if (message.content.toUpperCase().startsWith(MEMORY)) { //memory
-        if ((message.author.id === OWNERID) || (message.author.id === LUCASID)) {
-            const used = process.memoryUsage();
-            var usage = [];
-            for (let key in used) {
-                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`;
-                var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`;
-                usage.push(output);
-            }
-            message.channel.send({
-                embed: {
-                    color: blue,
-                    description: usage.toString(),
-                    description: usage.join("\n")
-                }
-            });
+        const used = process.memoryUsage();
+        var usage = [];
+        for (let key in used) {
+            var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB\n`;
+            var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`;
+            usage.push(output);
         }
+        message.channel.send({
+            embed: {
+                color: blue,
+                description: usage.toString(),
+                description: usage.join("\n")
+            }
+        });
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}MILA`)) { //mila
         message.channel.send('__**ACHT**__');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}NOAH`)) { //noah
