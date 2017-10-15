@@ -434,7 +434,7 @@ function rpsPrint(userRPS, usertag) {
 
 }
 
-//function for 8ball
+//functions for 8ball
 function eightball() {
 
     var answer = Math.floor((Math.random() * 10) + 1);
@@ -517,6 +517,28 @@ function clean(text) {
         return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
     else
         return text;
+}
+
+//function for user day creation
+function getDay(day) {
+    switch (day) {
+        case 0:
+            return 'Sun';
+        case 1:
+            return 'Mon';
+        case 2:
+            return 'Tue';
+        case 3:
+            return 'Wed';
+        case 4:
+            return 'Thu';
+        case 5:
+            return 'Fri';
+        case 6:
+            return 'Sat';
+        default:
+            return '';
+    }
 }
 
 //commands
@@ -718,14 +740,14 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}CHANNELINFO`)) { //channelinfo
         const embed = new Discord.RichEmbed()
             .setColor(blue)
-            .setTimestamp()
-            .setAuthor(message.channel.name, message.guild.iconURL)
-            .addField('Name', message.channel.name)
-            .addField('ID', message.channel.id)
-            .addField('Topic', message.channel.topic)
-            .addField('Type', message.channel.type)
-            .addField('Created At', message.channel.createdAt)
-            .addField('Position', message.channel.position);
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .addField('Name', message.channel.name, true)
+            .addField('ID', message.channel.id, true)
+            .addField('Topic', message.channel.topic, true)
+            .addField('Type', message.channel.type, true)
+            .addField('Position', message.channel.position, true)
+            .addBlankField(true)
+            .setFooter('Channel created: ' + getDay(message.channel.createdAt.getDay()) + ' ' + message.channel.createdAt.getMonth() + '/' + message.channel.createdAt.getDate() + '/' + message.channel.createdAt.getFullYear() + ' at ' + message.channel.createdAt.getHours() + 'H ' + message.channel.createdAt.getMinutes() + 'M');
         message.channel.send({
             embed
         });
@@ -824,7 +846,7 @@ client.on('message', function (message) {
         message.channel.send('Heb fressi oder ich küss dich.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ECHO`)) { //echo
         var input = message.content;
-        var clientInput = input.substr(7);
+        var clientInput = input.substr(6);
         message.delete(200);
         setTimeout(function () {
             message.channel.send(clientInput);
@@ -976,17 +998,17 @@ client.on('message', function (message) {
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}SERVERINFO`)) { //serverinfo
         const embed = new Discord.RichEmbed()
             .setColor(blue)
-            .setTimestamp()
             .setAuthor(message.guild.name, message.guild.iconURL)
-            .addField('ID', message.guild.id)
-            .addField('Owner', message.guild.owner.user.tag)
-            .addField('Created At', message.guild.createdAt)
-            .addField('Region', message.guild.region)
-            .addField('Verification Level', message.guild.verificationLevel)
-            .addField('Member Count', message.guild.memberCount)
-            .addField('Channels', message.guild.channels.size)
-            .addField('Roles', message.guild.roles.size)
-            .addField('Emojis', message.guild.emojis.size);
+            .addField('Name', message.guild.name, true)
+            .addField('ID', message.guild.id, true)
+            .addField('Owner', message.guild.owner.user.tag, true)
+            .addField('Member Count', message.guild.memberCount, true)
+            .addField('Region', message.guild.region, true)
+            .addField('Verification Level', message.guild.verificationLevel, true)
+            .addField('Channels', message.guild.channels.size, true)
+            .addField('Roles', message.guild.roles.size, true)
+            .addField('Emojis', message.guild.emojis.size, true)
+            .setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
         message.channel.send({
             embed
         });
@@ -1008,7 +1030,7 @@ client.on('message', function (message) {
         message.channel.send('Hallo, ich heisse Toubi.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}TTS`)) { //tts
         var input = message.content;
-        var clientInput = input.substr(6);
+        var clientInput = input.substr(5);
         message.delete(200);
         setTimeout(function () {
             message.channel.send(clientInput, {
@@ -1027,10 +1049,10 @@ client.on('message', function (message) {
         const embed = new Discord.RichEmbed()
             .setColor(blue)
             .setAuthor(message.author.username, message.author.avatarURL)
-            .addField('Username', message.author.username)
-            .addField('Discriminator', message.author.discriminator)
-            .addField('ID', message.author.id)
-            .setFooter('User created at: ' + message.author.createdAt);
+            .addField('Username', message.author.username, true)
+            .addField('Discriminator', message.author.discriminator, true)
+            .addField('ID', message.author.id, true)
+            .setFooter('User created: ' + getDay(message.author.createdAt.getDay()) + ' ' + message.author.createdAt.getMonth() + '/' + message.author.createdAt.getDate() + '/' + message.author.createdAt.getFullYear() + ' at ' + message.author.createdAt.getHours() + 'H ' + message.author.createdAt.getMinutes() + 'M');
         message.channel.send({
             embed
         });
