@@ -143,7 +143,7 @@ Please input the number of the song you want to play **(1-5)**
                     `);
 
                     try {
-                        var response = await message.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 6, {
+                        var response = await message.channel.awaitMessages(msg2 => msg2.author.id === authorid && msg2.content > 0 && msg2.content < 6, {
                             maxMatches: 1,
                             time: 30000,
                             errors: ['time']
