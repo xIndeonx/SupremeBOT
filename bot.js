@@ -643,7 +643,7 @@ client.on('message', function (message) {
                             }
                         })
                         .then(sent => sent.delete(5000));
-                    logToChannel("Information", "Deleted Messages.\nCount: **" + (messagecount - 1) + "**", message.author.tag, message.author.displayAvatarURL);
+                    logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nDeleted Messages.\nCount: **" + (messagecount - 1) + "**", message.author.tag, message.author.displayAvatarURL);
                 }
             }
         } else {
@@ -664,10 +664,10 @@ client.on('message', function (message) {
                                 }
                             })
                             .then(sent => sent.delete(5000));
-                        logToChannel("Information", "Purge successful: " + messagesDeleted, message.author.tag, message.author.displayAvatarURL);
+                        logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nPurge successful: **" + messagesDeleted + "**", message.author.tag, message.author.displayAvatarURL);
                     })
                     .catch(err => {
-                        logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
+                        logToChannel("Error", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nError:\n" + err, message.author.tag, message.author.displayAvatarURL);
                     });
             }
         } else {
@@ -824,12 +824,12 @@ client.on('message', function (message) {
         message.channel.send('Heb fressi oder ich küss dich.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}ECHO`)) { //echo
         var input = message.content;
-        var clientInput = input.substr(6);
+        var clientInput = input.substr(7);
         message.delete(200);
         setTimeout(function () {
             message.channel.send(clientInput);
         }, 300);
-        logToChannel("Information", "Echo command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
+        logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nEcho command has been used:\n**\"**" + clientInput + "**\"**", message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}EINE`)) { //eine
         message.channel.send('isch keine.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}EIS`)) { //eis
@@ -1008,14 +1008,14 @@ client.on('message', function (message) {
         message.channel.send('Hallo, ich heisse Toubi.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}TTS`)) { //tts
         var input = message.content;
-        var clientInput = input.substr(5);
+        var clientInput = input.substr(6);
         message.delete(200);
         setTimeout(function () {
             message.channel.send(clientInput, {
                 tts: true
             });
         }, 300);
-        logToChannel("Information", "TTS command has been used:\n" + clientInput, message.author.tag, message.author.displayAvatarURL);
+        logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nTTS command has been used:\n**\"**" + clientInput + "**\"**", message.author.tag, message.author.displayAvatarURL);
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}UPTIME`)) { //uptime
         message.channel.send({
             embed: {
