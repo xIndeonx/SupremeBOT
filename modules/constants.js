@@ -1,3 +1,4 @@
+//constants
 const Discord = require('discord.js');
 const {
     Client,
@@ -17,13 +18,13 @@ const {
     YT_API,
     PROJECT_ID,
     PROJECT_KEY
-} = require('./config');
+} = require('../config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
-const GAME = 'Work in Progress | Prefix: .';
+const GAME = '.help | Work in Progress';
 
 //const for admin commands
 const SET_GAME = `${PREFIX}SETGAME`;
@@ -66,7 +67,7 @@ const green = 0x00ff00;
 const yellow = 0xffff00;
 
 //attributes for games
-const cardValues = [1,2,3,4,5,6,7,8,9,10,10,10,10,11];
+const cardValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11];
 var isYes;
 
 module.exports.Discord = Discord;

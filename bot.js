@@ -1,6 +1,8 @@
-//const
-let constants = require('./constants');
-require('./commands');
+//requirements
+let constants = require('./modules/constants');
+require('./modules/commands');
+require('./modules/music');
+
 //warn
 constants.client.on('warn', console.warn);
 //error
@@ -26,145 +28,11 @@ constants.client.on('reconnecting', () => console.log('Bot is reconnecting...'))
 //bot token login
 constants.client.login(constants.TOKEN);
 
-//music stuff
-constants.client.on('message', async message => {
-    if (message.author.bot) return;
-    if (!message.content.toUpperCase().startsWith(constants.PREFIX)) return;
-    const args = message.content.split(' ');
-    const searchString = args.slice(1).join(' ');
-    const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
+customCommands();
+musicCommands();
+
+handleVideo = async function (video, message, voiceChannel, playlist = false) {
     const serverQueue = constants.queue.get(message.guild.id);
-
-    if (message.content.toUpperCase().startsWith(constants.MUSIC_PLAY)) {
-        const voiceChannel = message.member.voiceChannel;
-        const authorid = message.author.id;
-        if (!voiceChannel) return message.channel.send(':bangbang: **You need to be in a voice channel to play music!**');
-        const permissions = voiceChannel.permissionsFor(message.client.user);
-        if (!permissions.has('CONNECT')) {
-            return message.channel.send(':bangbang: **Cannot connect to your voice channel!**');
-        }
-        if (!permissions.has('SPEAK')) {
-            return message.channel.send(':bangbang: **Cannot speak in your voice channel!**');
-        }
-
-        if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-            message.channel.startTyping();
-            const playlist = await constants.youtube.getPlaylist(url);
-            const videos = await playlist.getVideos();
-            for (const video of Object.values(videos)) {
-                const video2 = await constants.youtube.getVideoByID(video.id);
-                await handleVideo(video2, message, voiceChannel, true);
-            }
-            message.channel.stopTyping(true);
-            return message.channel.send(`Playlist **${constants.playlist.title}** has been added to the queue!`);
-        } else {
-            try {
-                var video = await constants.youtube.getVideo(url);
-            } catch (error) {
-                try {
-                    var videos = await constants.youtube.searchVideos(searchString, 5);
-                    let index = 0;
-                    message.channel.send(`
-__**Search results:**__
-
-\`\`\`xl
-${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
-\`\`\`
-Please input the number of the song you want to play **(1-5)**
-                    `);
-
-                    try {
-                        var response = await message.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 6, {
-                            maxMatches: 1,
-                            time: 30000,
-                            errors: ['time']
-                        });
-                    } catch (err) {
-                        console.error(err);
-                        return message.channel.send('No or invalid input, cancelling video selection.');
-                    }
-                    const videoIndex = parseInt(response.first().content);
-                    var video = await constants.youtube.getVideoByID(videos[videoIndex - 1].id);
-                } catch (err) {
-                    console.error(err);
-                    constants.airbrake.notify(err);
-                    message.channel.stopTyping(true);
-                    return message.channel.send(':bangbang: **Could not get search results.**');
-                }
-            }
-            return handleVideo(video, message, voiceChannel);
-        }
-    } else if (message.content.toUpperCase().startsWith(constants.MUSIC_SKIP)) {
-        if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
-        if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
-        setTimeout(function () {
-            serverQueue.connection.dispatcher.end('Skip command has been used.');
-        }, 500);
-        message.channel.send(':track_next: **Skipping...**');
-        return;
-    } else if ((message.content.toUpperCase().startsWith(constants.MUSIC_STOP)) || (message.content.toUpperCase().startsWith(`${constants.PREFIX}leave`))) {
-        if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
-        if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
-        serverQueue.songs = [];
-        serverQueue.connection.dispatcher.end('Stop command has been used.');
-        message.channel.send(':stop_button: **Successfully stopped.**');
-        return;
-    } else if (message.content.toUpperCase().startsWith(constants.MUSIC_VOLUME)) {
-        if (!message.member.voiceChannel) return message.channel.send(':bangbang: **You are not in a voice channel!**');
-        if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing!**');
-        if (!args[1]) return message.channel.send(`:loud_sound: The current volume is: **${serverQueue.volume}**.`);
-        if (args[1]) {
-            if (args[1] > 10) {
-                serverQueue.volume = 10;
-                serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
-                return message.channel.send(':loud_sound: Set the volume to the maximum: **10**.');
-            } else if (serverQueue.volume === parseInt(args[1])) {
-                return message.channel.send(`:loud_sound: The volume is already on **${args[1]}**.`);
-            } else if (args[1] <= 10) {
-                serverQueue.volume = args[1];
-                serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
-                return message.channel.send(`:loud_sound: Set the volume to: **${args[1]}**.`);
-            }
-        }
-    } else if (message.content.toUpperCase().startsWith(constants.MUSIC_NP)) {
-        if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
-        return message.channel.send(`:notes: Now playing: **${serverQueue.songs[0].title}**`);
-    } else if (message.content.toUpperCase().startsWith(MUSIC_QUEUE)) {
-        if (!serverQueue) return message.channel.send(':bangbang: **There is nothing playing.**');
-        let index = 0;
-        var queuelist = `\n${serverQueue.songs.map(song => `${++index} - ${song.title}`).join('\n')}`;
-        return message.channel.send({
-            embed: {
-                title: 'Queue',
-                color: constants.blue,
-                description: `\`\`\`xl
-${queuelist}
-            \`\`\``,
-                footer: {
-                    text: `Now playing: ${serverQueue.songs[0].title}`
-                }
-            }
-        });
-    } else if (message.content.toUpperCase().startsWith(constants.MUSIC_PAUSE)) {
-        if (serverQueue && serverQueue.playing) {
-            serverQueue.playing = false;
-            serverQueue.connection.dispatcher.pause();
-            return message.channel.send(':pause_button: **Successfully paused.**');
-        }
-        return message.channel.send(':bangbang: **There is nothing playing.**');
-    } else if (message.content.toUpperCase().startsWith(constants.MUSIC_RESUME)) {
-        if (serverQueue && !serverQueue.playing) {
-            serverQueue.playing = true;
-            serverQueue.connection.dispatcher.resume();
-            return message.channel.send(':arrow_forward: **Successfully resumed.**');
-        }
-        return message.channel.send(':bangbang: **There is nothing playing.**');
-    }
-    return;
-});
-
-handleVideo = async function(video, message, voiceChannel, playlist = false) {
-    const serverQueue = queue.get(message.guild.id);
     console.log(video);
     const song = {
         id: video.id,
@@ -201,15 +69,15 @@ handleVideo = async function(video, message, voiceChannel, playlist = false) {
     return;
 }
 
-play = function(guild, song) {
-    const serverQueue = queue.get(guild.id);
+play = function (guild, song) {
+    const serverQueue = constants.queue.get(guild.id);
     if (!song) {
         serverQueue.voiceChannel.leave();
         constants.queue.delete(guild.id);
         return;
     }
     console.log(serverQueue.songs);
-    const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+    const dispatcher = serverQueue.connection.playStream(constants.ytdl(song.url))
         .on('end', reason => {
             if (reason === 'Stream is not generating quickly enough.') console.log('Song ended!');
             else console.log(reason);
@@ -232,7 +100,7 @@ constants.client.on('guildMemberAdd', function (member) {
 });
 
 //function for correct time format
-format = function(seconds) {
+format = function (seconds) {
     function pad(s) {
         return (s < 10 ? '0' : '') + s;
     }
@@ -244,7 +112,7 @@ format = function(seconds) {
 }
 
 //function for logging
-logToChannel = function(title, logMessage, messageAuthor, picture) {
+logToChannel = function (title, logMessage, messageAuthor, picture) {
 
     switch (title) {
         case "Information":
@@ -278,7 +146,7 @@ logToChannel = function(title, logMessage, messageAuthor, picture) {
 }
 
 //function for coinflip
-coinFlip = function(coinFlipMessage) {
+coinFlip = function (coinFlipMessage) {
     const coinflipEmbed = new constants.Discord.RichEmbed()
         .setDescription(`${constants.PREFIX}coinflip firstCondition secondCondition **OR** ${constants.PREFIX}coinflip`)
         .setColor(constants.blue);
@@ -300,8 +168,8 @@ coinFlip = function(coinFlipMessage) {
     }
 }
 
-//function for RPS
-rpsGenerator = function() {
+//functions for RPS
+rpsGenerator = function () {
 
     var rps = Math.floor((Math.random() * 3) + 1);
     if (rps == 1) {
@@ -313,7 +181,7 @@ rpsGenerator = function() {
     }
 }
 
-rpsBattle = function(botRPS, userRPS) {
+rpsBattle = function (botRPS, userRPS) {
 
     if (botRPS == "Rock") {
 
@@ -346,7 +214,7 @@ rpsBattle = function(botRPS, userRPS) {
     }
 }
 
-rpsPrint = function(userRPS, usertag) {
+rpsPrint = function (userRPS, usertag) {
 
     var botRPS = rpsGenerator();
     if (userRPS.toUpperCase() == "ROCK" || userRPS.toUpperCase() == "SCISSOR" || userRPS.toUpperCase() == "PAPER" && userRPS) {
@@ -365,8 +233,8 @@ rpsPrint = function(userRPS, usertag) {
 
 }
 
-//function for 8ball
-eightball = function() {
+//functions for 8ball
+eightball = function () {
 
     var answer = Math.floor((Math.random() * 10) + 1);
     var answerChoice = Math.floor((Math.random() * 8) + 1);
@@ -415,7 +283,7 @@ eightball = function() {
 
 }
 
-eightballColorDecider = function() {
+eightballColorDecider = function () {
     if (constants.isYes == "YES") {
         return constants.green;
     } else if (constants.isYes == "VAPEIO") {
@@ -426,7 +294,7 @@ eightballColorDecider = function() {
 }
 
 //function for lotto
-lotto = function(userGuess) {
+lotto = function (userGuess) {
     if (!userGuess || isNaN(userGuess)) {
         return `Please use the command like this: \`${constants.PREFIX}lotto number\``;
     } else if (userGuess < 1 || userGuess > 50) {
@@ -443,7 +311,7 @@ lotto = function(userGuess) {
 }
 
 //function for blackjack
-blackJack = function() {
+blackJack = function () {
 
     var value1 = blackJackCardGenerator();
     var value2 = blackJackCardGenerator();
@@ -458,7 +326,7 @@ blackJack = function() {
     }
 }
 
-blackJackCardGenerator = function() {
+blackJackCardGenerator = function () {
 
     var cardNumber = Math.floor((Math.random() * 15));
     return cardValues[cardNumber];
@@ -466,11 +334,31 @@ blackJackCardGenerator = function() {
 }
 
 //function for eval command
-clean = function(text) {
+clean = function (text) {
     if (typeof (text) === "string")
         return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
     else
         return text;
 }
 
-commands();
+//function for user day creation
+getDay = function (day) {
+    switch (day) {
+        case 0:
+            return 'Sun';
+        case 1:
+            return 'Mon';
+        case 2:
+            return 'Tue';
+        case 3:
+            return 'Wed';
+        case 4:
+            return 'Thu';
+        case 5:
+            return 'Fri';
+        case 6:
+            return 'Sat';
+        default:
+            return '';
+    }
+}
