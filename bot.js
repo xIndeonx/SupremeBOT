@@ -2,6 +2,7 @@
 let constants = require('./modules/constants');
 require('./modules/commands');
 require('./modules/music');
+require('./modules/custom');
 
 //warn
 constants.client.on('warn', console.warn);
@@ -28,6 +29,7 @@ constants.client.on('reconnecting', () => console.log('Bot is reconnecting...'))
 //bot token login
 constants.client.login(constants.TOKEN);
 
+commands();
 customCommands();
 musicCommands();
 
