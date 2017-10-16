@@ -24,13 +24,13 @@ customCommands = function () {
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUTIST`)) { //autist
             message.channel.send('Wüki?!?!?');
         } else if (message.content.toUpperCase() === `${constants.PREFIX}BAUMI`) { //baumi
-            message.channel.send('Try using `.baumi1`, `.baumi2`, `.baumi3`, or `.baumi4`!');
+            message.channel.send('Try using \`' + constants.PREFIX + 'baumi1\`, \`' + constants.PREFIX + 'baumi2\`, \`' + constants.PREFIX + 'baumi3\`, or \`' + constants.PREFIX + 'baumi4\`!');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI1`)) { //baumi1
             message.channel.send("Cha de Alain scho d'Uhr lese?");
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI2`)) { //baumi2
             message.channel.send('Wetsch es Zäpfli?');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI3`)) { //baumi3
-            message.channel.send('<@' + LUCASID + '>, ab id Duschi');
+            message.channel.send('<@' + constants.LUCASID + '>, ab id Duschi');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI4`)) { //baumi4
             message.channel.send('Chopf im Sofa.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BITTE`)) { //bitte
@@ -99,7 +99,7 @@ customCommands = function () {
             message.channel.send('Hoi zämä, i bims, dr Ivam. I bi ä waschächtä Schwiizer wiä mr gseht. Wohne duän i ~~IM REICH~~ in Öschtriich, und cha ou nid Schwiizertüütsch. Ademerci.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JACOB`)) { //jacob
             message.channel.send('Jeg elsker dig ligesom du elsker min fugtig migmig.');
-        } else if (message.content === `${constants.PREFIX}JESUS`) { //jesus
+        } else if (message.content.toUpperCase() === `${constants.PREFIX}JESUS`) { //jesus
             message.channel.send('**IN THE NAAAAME OF JESUS!!!!!!**');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JESUSCHRIST`)) { //jesuschrist
             message.channel.send('is my nigga.');
