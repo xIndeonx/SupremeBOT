@@ -24,7 +24,7 @@ const ytdl = require('ytdl-core');
 const embed = new Discord.RichEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
-const GAME = 'Work in Progress | .help';
+const GAME = '.help | Work in Progress';
 
 //const for admin commands
 const SET_GAME = `${PREFIX}SETGAME`;
