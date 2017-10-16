@@ -67,6 +67,7 @@ const green = 0x00ff00;
 const yellow = 0xffff00;
 
 //attributes for games
+const cardValues = [1,2,3,4,5,6,7,8,9,10,10,10,10,11];
 var isYes;
 
 //warn
@@ -484,10 +485,10 @@ function eightball() {
 
 }
 
-function eightballColorDecider(){
-    if(isYes == "YES"){
+function eightballColorDecider() {
+    if (isYes == "YES") {
         return green;
-    } else if(isYes == "VAPEIO"){
+    } else if (isYes == "VAPEIO") {
         return yellow;
     } else {
         return red;
@@ -508,6 +509,29 @@ function lotto(userGuess) {
             return "You guesses wrong :pensive: Maybe next time...";
         }
     }
+
+}
+
+//function for blackjack
+function blackJack() {
+
+    var value1 = blackJackCardGenerator();
+    var value2 = blackJackCardGenerator();
+    var result = value1 + value2;
+    var drewThis = "You drew: " + value1 + " and " + value2 + " = " + result;
+    if (result > 21) {
+        return drewThis + "\n" + "You're **OUT**";
+    } else if (result === 21) {
+        return drewThis + "\n" + "**BLACKJACK**";
+    } else {
+        return drewThis + "\n" + "Do you wish to draw another card? Y/N";
+    }
+}
+
+function blackJackCardGenerator() {
+
+    var cardNumber = Math.floor((Math.random() * 15));
+    return cardValues[cardNumber];
 
 }
 
@@ -711,6 +735,12 @@ client.on('message', function (message) {
         message.channel.send('Chopf im Sofa.');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}BITTE`)) { //bitte
         message.channel.send('Bitte gerngscheh.');
+    } else if (message.content.toUpperCase().startsWith(`${PREFIX}BLACKJACK`)) { //blackjack
+        var returnValue = blackJack();
+        message.channel.send(returnValue);
+        if (returnValue.indexOf("Y/N")) {
+            message.channel.send("Super");
+        }
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}BOOGEYMAN`)) { //boogeyman
         message.channel.send('Kuka pelkää musta miestä?');
     } else if (message.content.toUpperCase().startsWith(`${PREFIX}BZZ`)) { //bzz
