@@ -16,7 +16,7 @@ constants.client.on('ready', () => {
             type: 0
         }
     });
-    logToChannel("Information", "Bot successfully initialized.", constants.client.user.tag, constants.client.user.displayAvatarURL);
+    logToChannel('Information', 'Bot successfully initialized.', constants.client.user.tag, constants.client.user.displayAvatarURL);
 });
 
 //disconnect
@@ -115,15 +115,15 @@ format = function (seconds) {
 logToChannel = function (title, logMessage, messageAuthor, picture) {
 
     switch (title) {
-        case "Information":
+        case 'Information':
             color = constants.blue;
             console.log(logMessage);
             break;
-        case "Warning":
+        case 'Warning':
             color = constants.orange;
             console.warn(logMessage);
             break;
-        case "Error":
+        case 'Error':
             color = constants.red;
             console.error(logMessage);
             constants.airbrake.notify(logMessage);
@@ -150,7 +150,7 @@ coinFlip = function (coinFlipMessage) {
     const coinflipEmbed = new constants.Discord.RichEmbed()
         .setDescription(`${constants.PREFIX}coinflip firstCondition secondCondition **OR** ${constants.PREFIX}coinflip`)
         .setColor(constants.blue);
-    var clientInput = coinFlipMessage.split(" ");
+    var clientInput = coinFlipMessage.split(' ');
     if (clientInput.length != 3 && clientInput.length != 1) {
         return coinflipEmbed;
     } else {
@@ -162,8 +162,8 @@ coinFlip = function (coinFlipMessage) {
             else return secondCondition;
         } else {
             var coin = Math.floor((Math.random() * 10) + 1);
-            if (coin <= 5) return "Head";
-            else return "Tails";
+            if (coin <= 5) return 'Head';
+            else return 'Tails';
         }
     }
 }
@@ -173,42 +173,42 @@ rpsGenerator = function () {
 
     var rps = Math.floor((Math.random() * 3) + 1);
     if (rps == 1) {
-        return "Rock";
+        return 'Rock';
     } else if (rps == 2) {
-        return "Paper";
+        return 'Paper';
     } else {
-        return "Scissor";
+        return 'Scissor';
     }
 }
 
 rpsBattle = function (botRPS, userRPS) {
 
-    if (botRPS == "Rock") {
+    if (botRPS == 'Rock') {
 
-        if (userRPS == "ROCK") {
-            return "DRAW";
-        } else if (userRPS == "SCISSOR") {
-            return "BOT";
+        if (userRPS == 'ROCK') {
+            return 'DRAW';
+        } else if (userRPS == 'SCISSOR') {
+            return 'BOT';
         } else {
-            return "USER";
+            return 'USER';
         }
 
-    } else if (botRPS == "Paper") {
-        if (userRPS == "ROCK") {
-            return "BOT";
-        } else if (userRPS == "SCISSOR") {
-            return "USER";
+    } else if (botRPS == 'Paper') {
+        if (userRPS == 'ROCK') {
+            return 'BOT';
+        } else if (userRPS == 'SCISSOR') {
+            return 'USER';
         } else {
-            return "DRAW";
+            return 'DRAW';
         }
 
-    } else if (botRPS == "Scissor") {
-        if (userRPS == "ROCK") {
-            return "USER";
-        } else if (userRPS == "SCISSOR") {
-            return "DRAW";
+    } else if (botRPS == 'Scissor') {
+        if (userRPS == 'ROCK') {
+            return 'USER';
+        } else if (userRPS == 'SCISSOR') {
+            return 'DRAW';
         } else {
-            return "BOT";
+            return 'BOT';
         }
 
     }
@@ -217,18 +217,18 @@ rpsBattle = function (botRPS, userRPS) {
 rpsPrint = function (userRPS, usertag) {
 
     var botRPS = rpsGenerator();
-    if (userRPS.toUpperCase() == "ROCK" || userRPS.toUpperCase() == "SCISSOR" || userRPS.toUpperCase() == "PAPER" && userRPS) {
+    if (userRPS.toUpperCase() == 'ROCK' || userRPS.toUpperCase() == 'SCISSOR' || userRPS.toUpperCase() == 'PAPER' && userRPS) {
         var rpsMessage = rpsBattle(botRPS, userRPS);
         switch (rpsMessage) {
-            case "USER":
-                return usertag + " Won!";
-            case "BOT":
-                return client.user.toString() + " Won!";
-            case "DRAW":
+            case 'USER':
+                return usertag + ' Won!';
+            case 'BOT':
+                return client.user.toString() + ' Won!';
+            case 'DRAW':
                 return rpsMessage;
         }
     } else {
-        return "Please enter a valid message! (Rock, Paper or Scissor)";
+        return 'Please enter a valid message! (Rock, Paper or Scissor)';
     }
 
 }
@@ -239,54 +239,54 @@ eightball = function () {
     var answer = Math.floor((Math.random() * 10) + 1);
     var answerChoice = Math.floor((Math.random() * 8) + 1);
     if (answer <= 5) {
-        constants.isYes = "YES";
+        constants.isYes = 'YES';
         switch (answerChoice) {
             case 1:
-                return "Definitiv.";
+                return 'Definitiv.';
             case 2:
-                return "Uf jede Fall, ja.";
+                return 'Uf jede Fall, ja.';
             case 3:
-                return "Mini Source seget mir das stimmt.";
+                return 'Mini Source seget mir das stimmt.';
             case 4:
-                return "Ja, aber nur will **ICH**s sege.";
+                return 'Ja, aber nur will **ICH**s sege.';
             case 5:
-                return "Bin mir nöd 100% sicher, aber glaubs ja.";
+                return 'Bin mir nöd 100% sicher, aber glaubs ja.';
             case 6:
-                isYes = "VAPEIO";
-                return "Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.";
+                isYes = 'VAPEIO';
+                return 'Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.';
             case 7:
-                return "Ich han googlet, es stimmt, ja.";
+                return 'Ich han googlet, es stimmt, ja.';
             case 8:
-                return "Ih dem Fall scho, ja.";
+                return 'Ih dem Fall scho, ja.';
         }
     } else {
-        constants.isYes = "NO";
+        constants.isYes = 'NO';
         switch (answerChoice) {
             case 1:
-                return "Nö, sicher nöd.";
+                return 'Nö, sicher nöd.';
             case 2:
-                return "Bisch du behindert? **Nei**.";
+                return 'Bisch du behindert? **Nei**.';
             case 3:
-                return "Also wenn das stimmt, denn weissi au nöd.";
+                return 'Also wenn das stimmt, denn weissi au nöd.';
             case 4:
-                return "Also wenn du denksch, dass mini Antwort ja isch, denn hesch dich girrt.";
+                return 'Also wenn du denksch, dass mini Antwort ja isch, denn hesch dich girrt.';
             case 5:
-                return "Hesch du wüki s'Gfühl, dass ich ja sege? wtf";
+                return 'Hesch du wüki s\'Gfühl, dass ich ja sege? wtf';
             case 6:
-                return "Ich weiss du ghörsch es nöd gern, aber es isch es klars nei vo mir.";
+                return 'Ich weiss du ghörsch es nöd gern, aber es isch es klars nei vo mir.';
             case 7:
-                return "Also wenn das \"Britain's Got Talent\" wär, hetsch fix 3 Mal nei becho.";
+                return 'Also wenn das \`Britain\'s Got Talent\` wär, hetsch fix 3 Mal nei becho.';
             case 8:
-                return "Wenns Wort ja **\"nei\"** heisse wür, wärs es ja.";
+                return 'Wenns Wort ja **\'nei\'** heisse wür, wärs es ja.';
         }
     }
 
 }
 
 eightballColorDecider = function () {
-    if (constants.isYes == "YES") {
+    if (constants.isYes == 'YES') {
         return constants.green;
-    } else if (constants.isYes == "VAPEIO") {
+    } else if (constants.isYes == 'VAPEIO') {
         return constants.yellow;
     } else {
         return constants.red;
@@ -298,13 +298,13 @@ lotto = function (userGuess) {
     if (!userGuess || isNaN(userGuess)) {
         return `Please use the command like this: \`${constants.PREFIX}lotto number\``;
     } else if (userGuess < 1 || userGuess > 50) {
-        return "Please enter a valid number between 1 and 50!";
+        return 'Please enter a valid number between 1 and 50!';
     } else {
         var lottoNumber = Math.floor((Math.random() * 50) + 1);
         if (userGuess == lottoNumber) {
-            return "Congratulations, you guessed right! Here's a kiss from Doni! :kissing_closed_eyes:";
+            return 'Congratulations, you guessed right! Here\'s a kiss from Doni! :kissing_closed_eyes:';
         } else {
-            return "You guesses wrong :pensive: Maybe next time...";
+            return 'You guessed wrong :pensive: Maybe next time...';
         }
     }
 
@@ -312,8 +312,8 @@ lotto = function (userGuess) {
 
 //function for eval command
 clean = function (text) {
-    if (typeof (text) === "string")
-        return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+    if (typeof (text) === 'string')
+        return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
     else
         return text;
 }

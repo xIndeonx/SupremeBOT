@@ -27,16 +27,16 @@ customCommands = function () {
             }
         } else if (message.content.toUpperCase().startsWith(constants.EVAL)) { //eval
             if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-                const args = message.content.split(" ").slice(1);
+                const args = message.content.split(' ').slice(1);
                 try {
-                    const code = args.join(" ");
+                    const code = args.join(' ');
                     var now = require('performance-now');
                     var start = now();
                     let evaled = eval(code);
                     var end = now();
 
-                    if (typeof evaled !== "string")
-                        evaled = require("util").inspect(evaled);
+                    if (typeof evaled !== 'string')
+                        evaled = require('util').inspect(evaled);
 
                     message.channel.send({
                         embed: {
@@ -57,31 +57,55 @@ customCommands = function () {
             } else return;
         } else if (message.content.toUpperCase().startsWith(constants.SET_GAME)) { //setgame
             if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-                var input = message.content;
-                var clientInput = input.substr(9);
-                client.user.setPresence({
+                var args = message.content.split(' ');
+                var gameString = args.slice(1).join(' ');
+                constants.client.user.setPresence({
                     game: {
-                        name: clientInput,
+                        name: gameString,
                         type: 0
                     }
                 });
+                message.delete(200);
+                message.channel.send({
+                        embed: {
+                            color: constants.blue,
+                            description: 'Successfully set game to \`' + gameString + '\`'
+                        }
+                    })
+                    .then(sent => sent.delete(5000));
             } else {
                 message.channel.send('You are not authorized to use this command.');
             }
         } else if (message.content.toUpperCase().startsWith(constants.SET_AVATAR)) { //setavatar
             if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-                var input = message.content;
-                var clientInput = input.substr(11);
-                client.user.setAvatar(clientInput);
+                var args = message.content.split(' ');
+                var urlString = args.slice(1).join(' ');
+                constants.client.user.setAvatar(urlString);
+                message.delete(200);
+                message.channel.send({
+                        embed: {
+                            color: constants.blue,
+                            description: 'Successfully set the avatar.'
+                        }
+                    })
+                    .then(sent => sent.delete(5000));
             } else {
                 message.channel.send('You are not authorized to use this command.');
             }
         } else if (message.content.toUpperCase().startsWith(constants.SET_STATUS)) { //setstatus
             if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-                var input = message.content;
-                var clientInput = input.substr(11);
-                if (clientInput === ('dnd') || clientInput === ('online') || clientInput === ('idle') || clientInput === ('invisible')) {
-                    client.user.setStatus(clientInput);
+                var args = message.content.split(' ');
+                var statusString = args.slice(1).join(' ');
+                if (statusString === ('dnd') || statusString === ('online') || statusString === ('idle') || statusString === ('invisible')) {
+                    constants.client.user.setStatus(statusString);
+                    message.delete(200);
+                    message.channel.send({
+                            embed: {
+                                color: constants.blue,
+                                description: 'Successfully set status to \`' + statusString + '\`.'
+                            }
+                        })
+                        .then(sent => sent.delete(5000));
                 } else return message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
             } else {
                 message.channel.send('You are not authorized to use this command.');
@@ -98,8 +122,8 @@ customCommands = function () {
         } else if (message.content.toUpperCase().startsWith(constants.SHUTDOWN)) { //shutdown
             if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
                 message.channel.send('Shutting down...');
-                client.destroy((err) => {
-                    logToChannel("Error", err, message.author.tag, message.author.displayAvatarURL);
+                constants.client.destroy((err) => {
+                    logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
                 });
                 process.exitCode = 1;
             } else {
@@ -108,9 +132,9 @@ customCommands = function () {
         } else if (message.content.toUpperCase().startsWith(constants.DELETE)) { //delete
             if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
                 if (message.channel.type == 'text') {
-                    var input = message.content;
-                    var clientInput = input.substr(8);
-                    let messagecount = parseInt(clientInput);
+                    var args = message.content.split(' ');
+                    var input = args.slice(1).join(' ');
+                    let messagecount = parseInt(input);
                     if (isNaN(messagecount)) {
                         message.channel.send('Could not delete messages. Please enter a valid number.');
                         return;
@@ -122,12 +146,12 @@ customCommands = function () {
                             .then(messages => message.channel.bulkDelete(messages));
                         message.channel.send({
                                 embed: {
-                                    color: blue,
-                                    description: "You deleted: " + (messagecount - 1) + " message(s)"
+                                    color: constants.blue,
+                                    description: 'You deleted: ' + (messagecount - 1) + ' message(s)'
                                 }
                             })
                             .then(sent => sent.delete(5000));
-                        logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nDeleted Messages.\nCount: **" + (messagecount - 1) + "**", message.author.tag, message.author.displayAvatarURL);
+                        logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL);
                     }
                 }
             } else {
@@ -143,15 +167,15 @@ customCommands = function () {
                             // Logging the number of messages deleted on both the channel and console.
                             message.channel.send({
                                     embed: {
-                                        color: blue,
-                                        description: "Purge successful: " + messagesDeleted + " message(s) fetched and deleted."
+                                        color: constants.blue,
+                                        description: 'Purge successful: ' + messagesDeleted + ' message(s) fetched and deleted.'
                                     }
                                 })
                                 .then(sent => sent.delete(5000));
-                            logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nPurge successful: **" + messagesDeleted + "**", message.author.tag, message.author.displayAvatarURL);
+                            logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nPurge successful: **' + messagesDeleted + '**', message.author.tag, message.author.displayAvatarURL);
                         })
                         .catch(err => {
-                            logToChannel("Error", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nError:\n" + err, message.author.tag, message.author.displayAvatarURL);
+                            logToChannel('Error', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nError:\n' + err, message.author.tag, message.author.displayAvatarURL);
                         });
                 }
             } else {
@@ -238,9 +262,9 @@ customCommands = function () {
                 }
             });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}COUNTDOWN`)) { //countdown
-            var input = message.content;
-            var clientInput = input.substr(11);
-            let count = parseInt(clientInput);
+            var args = message.content.split(' ');
+            var countString = args.slice(1).join(' ');
+            let count = parseInt(countString);
             if (isNaN(count)) {
                 message.channel.send('Could not create countdown. Please enter a valid number.');
                 return;
@@ -249,10 +273,10 @@ customCommands = function () {
                     embed: {
                         color: constants.blue,
                         title: 'Countdown',
-                        description: 'Countdown started. This will take approximately **' + format(clientInput) + '**'
+                        description: 'Countdown started. This will take approximately **' + format(countString) + '**'
                     }
                 }).then(sentmsg => {
-                    var i = clientInput;
+                    var i = countString;
                     var interval = setInterval(function () {
                         sentmsg.edit({
                             embed: {
@@ -273,12 +297,12 @@ customCommands = function () {
                                 embed: {
                                     color: constants.blue,
                                     title: 'Countdown',
-                                    description: 'Countdown ended. Total time wasted: **' + format(clientInput) + '**'
+                                    description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
                                 }
                             });
                             clearInterval(interval);
                         }
-                    }(clientInput));
+                    }(countString));
                 });
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CUSTOM`)) { //custom
@@ -288,7 +312,7 @@ customCommands = function () {
                 .setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
                 .setTitle('Custom Commands')
                 .setDescription('This is a complete list of all custom commands.')
-                .addField('A-E', '\`' + constants.PREFIX + '1=0\`\n' + '\`' + constants.PREFIX + 'ademerci\`\n' + '\`' + constants.PREFIX + 'aha\`\n' + '\`' + constants.PREFIX + 'alina\`\n' + '\`' + constants.PREFIX + 'andreas\`\n' + '\`' + constants.PREFIX + 'andi\`\n' + '\`' + constants.PREFIX + 'andy\`\n' + '\`' + constants.PREFIX + 'auä\`\n' + '\`' + constants.PREFIX + 'autismus\`\n' + '\`' + constants.PREFIX + 'autist\`\n' + '\`' + constants.PREFIX + 'baumi\`\n' + '\`' + constants.PREFIX + 'baumi1\`\n' + '\`' + constants.PREFIX + 'baumi2\`\n' + '\`' + constants.PREFIX + 'baumi3\`\n' + '\`' + constants.PREFIX + 'baumi4\`\n' + '\`' + constants.PREFIX + 'bitte\`\n' + '\`' + constants.PREFIX + 'boogeyman\`\n' + '\`' + constants.PREFIX + 'bzz\`\n' + '\`' + constants.PREFIX + 'claudio\`\n' + '\`' + constants.PREFIX + 'claudiolino\`\n' + '\`' + constants.PREFIX + 'clö\`\n' + '\`' + constants.PREFIX + 'danke\`\n' + '\`' + constants.PREFIX + 'dinimom\`\n' + '\`' + constants.PREFIX + 'doni\`\n' + '\`' + constants.PREFIX + 'eine\`' + constants.PREFIX + 'eis\`\n', true)
+                .addField('A-E', '\`' + constants.PREFIX + '1=0\`\n' + '\`' + constants.PREFIX + 'ademerci\`\n' + '\`' + constants.PREFIX + 'aha\`\n' + '\`' + constants.PREFIX + 'alina\`\n' + '\`' + constants.PREFIX + 'andreas\`\n' + '\`' + constants.PREFIX + 'andi\`\n' + '\`' + constants.PREFIX + 'andy\`\n' + '\`' + constants.PREFIX + 'auä\`\n' + '\`' + constants.PREFIX + 'autismus\`\n' + '\`' + constants.PREFIX + 'autist\`\n' + '\`' + constants.PREFIX + 'baumi\`\n' + '\`' + constants.PREFIX + 'baumi1\`\n' + '\`' + constants.PREFIX + 'baumi2\`\n' + '\`' + constants.PREFIX + 'baumi3\`\n' + '\`' + constants.PREFIX + 'baumi4\`\n' + '\`' + constants.PREFIX + 'bitte\`\n' + '\`' + constants.PREFIX + 'boogeyman\`\n' + '\`' + constants.PREFIX + 'bzz\`\n' + '\`' + constants.PREFIX + 'claudio\`\n' + '\`' + constants.PREFIX + 'claudiolino\`\n' + '\`' + constants.PREFIX + 'clö\`\n' + '\`' + constants.PREFIX + 'danke\`\n' + '\`' + constants.PREFIX + 'dinimom\`\n' + '\`' + constants.PREFIX + 'doni\`\n' + '\`' + constants.PREFIX + 'eine\`\n' + '\`' + constants.PREFIX + 'eis\`\n', true)
                 .addField('E-J', '\`' + constants.PREFIX + 'esgahtnöd\`\n' + '\`' + constants.PREFIX + 'exit\`\n' + '\`' + constants.PREFIX + 'fabio\`\n' + '\`' + constants.PREFIX + 'fabio2\`\n' + '\`' + constants.PREFIX + 'fabiocsgo\`\n' + '\`' + constants.PREFIX + 'fige\`\n' + '\`' + constants.PREFIX + 'filip\`\n' + '\`' + constants.PREFIX + 'game\`\n' + '\`' + constants.PREFIX + 'getshiton\`\n' + '\`' + constants.PREFIX + 'gopfeteli\`\n' + '\`' + constants.PREFIX + 'gschicht\`\n' + '\`' + constants.PREFIX + 'hoi\`\n' + '\`' + constants.PREFIX + 'hm\`\n' + '\`' + constants.PREFIX + 'ich\`\n' + '\`' + constants.PREFIX + 'ichi\`\n' + '\`' + constants.PREFIX + 'interessiert\`\n' + '\`' + constants.PREFIX + 'inyourfaculty\`\n' + '\`' + constants.PREFIX + 'inyourfamily\`\n' + '\`' + constants.PREFIX + 'inyourname\`\n' + '\`' + constants.PREFIX + 'inyourspirit\`\n' + '\`' + constants.PREFIX + 'ivan\`\n' + '\`' + constants.PREFIX + 'jacob\`\n' + '\`' + constants.PREFIX + 'jesus\`\n' + '\`' + constants.PREFIX + 'jesuschrist\`\n' + '\`' + constants.PREFIX + 'joel\`\n', true)
                 .addField('K-Z', '\`' + constants.PREFIX + 'kadder\`\n' + '\`' + constants.PREFIX + 'kadder2\`\n' + '\`' + constants.PREFIX + 'ksh\`\n' + '\`' + constants.PREFIX + 'lucas\`\n' + '\`' + constants.PREFIX + 'lucas2\`\n' + '\`' + constants.PREFIX + 'lucas3\`\n' + '\`' + constants.PREFIX + 'merci\`\n' + '\`' + constants.PREFIX + 'mila\`\n' + '\`' + constants.PREFIX + 'noah\`\n' + '\`' + constants.PREFIX + 'oli\`\n' + '\`' + constants.PREFIX + 'ppap\`\n' + '\`' + constants.PREFIX + 'pubg\`\n' + '\`' + constants.PREFIX + 'rip\`\n' + '\`' + constants.PREFIX + 'snus\`\n' + '\`' + constants.PREFIX + 'sorry\`\n' + '\`' + constants.PREFIX + 'stfu\`\n' + '\`' + constants.PREFIX + 'thermos\`\n' + '\`' + constants.PREFIX + 'toubi\`\n' + '\`' + constants.PREFIX + 'velo\`\n' + '\`' + constants.PREFIX + 'vn\`\n' + '\`' + constants.PREFIX + 'weltbild\`\n' + '\`' + constants.PREFIX + 'zeit\`\n' + '\`' + constants.PREFIX + 'ziit\`\n' + '\`' + constants.PREFIX + 'ziit?\`\n' + '\`' + constants.PREFIX + 'zoel\`\n', true)
             message.channel.send({
@@ -307,13 +331,13 @@ customCommands = function () {
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}DONI`)) { //doni
             message.channel.send('Heb fressi oder ich küss dich.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ECHO`)) { //echo
-            var input = message.content;
-            var clientInput = input.substr(6);
+            var args = message.content.split(' ');
+            var string = args.slice(1).join(' ');
             message.delete(200);
             setTimeout(function () {
-                message.channel.send(clientInput);
+                message.channel.send(string);
             }, 300);
-            logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nEcho command has been used:\n**\"**" + clientInput + "**\"**", message.author.tag, message.author.displayAvatarURL);
+            logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nEcho command has been used:\n**\"**" + string + "**\"**", message.author.tag, message.author.displayAvatarURL);
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}EINE`)) { //eine
             message.channel.send('isch keine.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}EIS`)) { //eis
@@ -359,7 +383,7 @@ customCommands = function () {
                 .addField('Admin', '\`' + constants.PREFIX + 'delete\`\n' + '\`' + constants.PREFIX + 'purge\`\n', true)
                 .addBlankField(true)
                 .addField('Music', '\`' + constants.PREFIX + 'join\`\n' + '\`' + constants.PREFIX + 'leave\`\n' + '\`' + constants.PREFIX + 'np\`\n' + '\`' + constants.PREFIX + 'pause\`\n' + '\`' + constants.PREFIX + 'play\`\n' + '\`' + constants.PREFIX + 'queue\`\n' + '\`' + constants.PREFIX + 'resume\`\n' + '\`' + constants.PREFIX + 'skip\`\n' + '\`' + constants.PREFIX + 'stop\`\n' + '\`' + constants.PREFIX + 'vcleave\`\n' + '\`' + constants.PREFIX + 'volume\`\n', true)
-                .addField('Info', '\`' + constants.PREFIX + 'channelinfo\`\n' + '\`' + constants.PREFIX + 'channels\`\n' + '\`' + constants.PREFIX + 'custom\`\n' + '\`' + constants.PREFIX + 'help\`\n' + constants.PREFIX + 'memory\`\n' + '\`' + '\`' + constants.PREFIX + 'osuptime\`\n' + '\`' + constants.PREFIX + 'ping\`\n' + '\`' + constants.PREFIX + 'roles\`\n' + '\`' + constants.PREFIX + 'serverinfo\`\n' + '\`' + constants.PREFIX + 'uptime\`\n' + '\`' + constants.PREFIX + 'userinfo\`\n', true)
+                .addField('Info', '\`' + constants.PREFIX + 'channelinfo\`\n' + '\`' + constants.PREFIX + 'channels\`\n' + '\`' + constants.PREFIX + 'custom\`\n' + '\`' + constants.PREFIX + 'help\`\n' + '\`' + constants.PREFIX + 'memory\`\n' + '\`' + constants.PREFIX + 'osuptime\`\n' + '\`' + constants.PREFIX + 'ping\`\n' + '\`' + constants.PREFIX + 'roles\`\n' + '\`' + constants.PREFIX + 'serverinfo\`\n' + '\`' + constants.PREFIX + 'uptime\`\n' + '\`' + constants.PREFIX + 'userinfo\`\n', true)
                 .addField('Miscellaneous', '\`' + constants.PREFIX + '8ball\`\n' + '\`' + constants.PREFIX + 'coinflip\`\n' + '\`' + constants.PREFIX + 'countdown\`\n' + '\`' + constants.PREFIX + 'echo\`\n' + '\`' + constants.PREFIX + 'hakai\`\n' + '\`' + constants.PREFIX + 'lotto\`\n' + '\`' + constants.PREFIX + 'rps\`\n' + '\`' + constants.PREFIX + 'tts\`\n', true)
             message.channel.send({
                 embed
@@ -427,7 +451,7 @@ customCommands = function () {
             message.channel.send({
                 embed: {
                     color: constants.blue,
-                    description: "Uptime of the operating system:\n**" + format(require('os').uptime()) + "**"
+                    description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**'
                 }
             });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PING`)) { //ping
@@ -448,13 +472,13 @@ customCommands = function () {
                 embed
             });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}RPS`)) { //rps
-            var input = message.content;
-            var clientInput = input.substr(5);
+            var args = message.content.split(' ');
+            var string = args.slice(1).join(' ');
             message.channel.send({
                 embed: {
                     title: 'Result',
                     color: constants.blue,
-                    description: rpsPrint(clientInput, message.author.toString())
+                    description: rpsPrint(string, message.author.toString())
                 }
             });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}SERVERINFO`)) { //serverinfo
@@ -491,20 +515,20 @@ customCommands = function () {
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}TOUBI`)) { //toubi
             message.channel.send('Hallo, ich heisse Toubi.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}TTS`)) { //tts
-            var input = message.content;
-            var clientInput = input.substr(5);
+            var args = message.content.split(' ');
+            var string = args.slice(1).join(' ');
             message.delete(200);
             setTimeout(function () {
-                message.channel.send(clientInput, {
+                message.channel.send(string, {
                     tts: true
                 });
             }, 300);
-            logToChannel("Information", "Guild Name: *" + message.guild.name + "*\nGuild ID: *" + message.guild.id + "*\n\nTTS command has been used:\n**\"**" + clientInput + "**\"**", message.author.tag, message.author.displayAvatarURL);
+            logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nTTS command has been used:\n**\"**' + string + '**\"**', message.author.tag, message.author.displayAvatarURL);
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}UPTIME`)) { //uptime
             message.channel.send({
                 embed: {
                     color: constants.blue,
-                    description: "Uptime of the bot process:\n**" + format(process.uptime()) + "**"
+                    description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
                 }
             });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}USERINFO`)) { //userinfo
