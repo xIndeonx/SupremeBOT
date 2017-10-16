@@ -195,12 +195,6 @@ customCommands = function () {
             message.channel.send('Chopf im Sofa.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BITTE`)) { //bitte
             message.channel.send('Bitte gerngscheh.');
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BLACKJACK`)) { //blackjack
-            var returnValue = blackJack();
-            message.channel.send(returnValue);
-            if (returnValue.indexOf("Y/N")) {
-                message.channel.send("Super");
-            }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BOOGEYMAN`)) { //boogeyman
             message.channel.send('Kuka pelkää musta miestä?');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BZZ`)) { //bzz

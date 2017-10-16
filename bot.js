@@ -310,29 +310,6 @@ lotto = function (userGuess) {
 
 }
 
-//function for blackjack
-blackJack = function () {
-
-    var value1 = blackJackCardGenerator();
-    var value2 = blackJackCardGenerator();
-    var result = value1 + value2;
-    var drewThis = "You drew: " + value1 + " and " + value2 + " = " + result;
-    if (result > 21) {
-        return drewThis + "\n" + "You're **OUT**";
-    } else if (result === 21) {
-        return drewThis + "\n" + "**BLACKJACK**";
-    } else {
-        return drewThis + "\n" + "Do you wish to draw another card? Y/N";
-    }
-}
-
-blackJackCardGenerator = function () {
-
-    var cardNumber = Math.floor((Math.random() * 15));
-    return cardValues[cardNumber];
-
-}
-
 //function for eval command
 clean = function (text) {
     if (typeof (text) === "string")
