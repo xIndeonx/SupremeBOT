@@ -151,7 +151,7 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 coinFlip = function (coinFlipMessage) {
     const coinFlipErrorEmbed = new constants.Discord.RichEmbed()
         .setTitle('Error')
-        .setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\`\n**OR**\n\`${constants.PREFIX}coinflip\``)
+        .setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\` **OR** \`${constants.PREFIX}coinflip\``)
         .setColor(constants.red);
     var clientInput = coinFlipMessage.split(" ");
     console.log(clientInput);
