@@ -149,25 +149,37 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 
 //function for coinflip
 coinFlip = function (coinFlipMessage) {
-    const coinflipEmbed = new constants.Discord.RichEmbed()
-        .setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\` **OR** \`${constants.PREFIX}coinflip\``)
-        .setColor(constants.blue);
-    var clientInput = coinFlipMessage.split(' ');
+    const coinFlipErrorEmbed = new constants.Discord.RichEmbed()
+        .setTitle("Error")
+        .setDescription(`${constants.PREFIX}coinflip firstCondition secondCondition **OR** ${constants.PREFIX}coinflip`)
+        .setColor(constants.red);
+    var clientInput = coinFlipMessage.split(" ");
     if (clientInput.length !== 3 && clientInput.length !== 1) {
-        return coinflipEmbed;
+        return coinFlipErrorEmbed;
     } else {
         if (clientInput.length === 3) {
             var firstCondition = clientInput[1];
             var secondCondition = clientInput[2];
             var coin = Math.floor((Math.random() * 10) + 1);
-            if (coin <= 5) return firstCondition;
-            else return secondCondition;
+            if (coin <= 5) return coinFlipEmbed(firstCondition);
+            else return coinFlipEmbed(secondCondition);
         } else {
             var coin = Math.floor((Math.random() * 10) + 1);
-            if (coin <= 5) return 'Head';
-            else return 'Tails';
+            if (coin <= 5) return coinFlipEmbed('Head');
+            else return coinFlipEmbed('Tails');
         }
     }
+}
+
+coinFlipEmbed = function (description){
+
+    const coinFlipEmbed = new constants.Discord.RichEmbed()
+    .setTitle("Result")
+    .setDescription(description)
+    .setColor(constants.blue);
+
+    return coinFlipEmbed;
+
 }
 
 //functions for RPS
