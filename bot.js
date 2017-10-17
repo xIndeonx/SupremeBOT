@@ -47,7 +47,7 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: 3,
+            volume: 5,
             playing: true
         };
         constants.queue.set(message.guild.id, queueConstruct);
@@ -150,13 +150,13 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 //function for coinflip
 coinFlip = function (coinFlipMessage) {
     const coinflipEmbed = new constants.Discord.RichEmbed()
-        .setDescription(`${constants.PREFIX}coinflip firstCondition secondCondition **OR** ${constants.PREFIX}coinflip`)
+        .setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\` **OR** \`${constants.PREFIX}coinflip\``)
         .setColor(constants.blue);
     var clientInput = coinFlipMessage.split(' ');
-    if (clientInput.length != 3 && clientInput.length != 1) {
+    if (clientInput.length !== 3 && clientInput.length !== 1) {
         return coinflipEmbed;
     } else {
-        if (clientInput.length == 3) {
+        if (clientInput.length === 3) {
             var firstCondition = clientInput[1];
             var secondCondition = clientInput[2];
             var coin = Math.floor((Math.random() * 10) + 1);
@@ -174,7 +174,7 @@ coinFlip = function (coinFlipMessage) {
 rpsGenerator = function () {
 
     var rps = Math.floor((Math.random() * 3) + 1);
-    if (rps == 1) {
+    if (rps === 1) {
         return 'Rock';
     } else if (rps == 2) {
         return 'Paper';
@@ -185,29 +185,29 @@ rpsGenerator = function () {
 
 rpsBattle = function (botRPS, userRPS) {
 
-    if (botRPS == 'Rock') {
+    if (botRPS === 'Rock') {
 
-        if (userRPS == 'ROCK') {
+        if (userRPS === 'ROCK') {
             return 'DRAW';
-        } else if (userRPS == 'SCISSOR') {
+        } else if (userRPS === 'SCISSOR') {
             return 'BOT';
         } else {
             return 'USER';
         }
 
-    } else if (botRPS == 'Paper') {
-        if (userRPS == 'ROCK') {
+    } else if (botRPS === 'Paper') {
+        if (userRPS === 'ROCK') {
             return 'BOT';
-        } else if (userRPS == 'SCISSOR') {
+        } else if (userRPS === 'SCISSOR') {
             return 'USER';
         } else {
             return 'DRAW';
         }
 
-    } else if (botRPS == 'Scissor') {
-        if (userRPS == 'ROCK') {
+    } else if (botRPS === 'Scissor') {
+        if (userRPS === 'ROCK') {
             return 'USER';
-        } else if (userRPS == 'SCISSOR') {
+        } else if (userRPS === 'SCISSOR') {
             return 'DRAW';
         } else {
             return 'BOT';
@@ -219,7 +219,7 @@ rpsBattle = function (botRPS, userRPS) {
 rpsPrint = function (userRPS, usertag) {
 
     var botRPS = rpsGenerator();
-    if (userRPS.toUpperCase() == 'ROCK' || userRPS.toUpperCase() == 'SCISSOR' || userRPS.toUpperCase() == 'PAPER' && userRPS) {
+    if (userRPS.toUpperCase() === 'ROCK' || userRPS.toUpperCase() === 'SCISSOR' || userRPS.toUpperCase() === 'PAPER' && userRPS) {
         var rpsMessage = rpsBattle(botRPS, userRPS);
         switch (rpsMessage) {
             case 'USER':
@@ -286,9 +286,9 @@ eightball = function () {
 }
 
 eightballColorDecider = function () {
-    if (constants.isYes == 'YES') {
+    if (constants.isYes === 'YES') {
         return constants.green;
-    } else if (constants.isYes == 'VAPEIO') {
+    } else if (constants.isYes === 'VAPEIO') {
         return constants.yellow;
     } else {
         return constants.red;
@@ -303,7 +303,7 @@ lotto = function (userGuess) {
         return 'Please enter a valid number between 1 and 50!';
     } else {
         var lottoNumber = Math.floor((Math.random() * 50) + 1);
-        if (userGuess == lottoNumber) {
+        if (userGuess === lottoNumber) {
             return 'Congratulations, you guessed right! Here\'s a kiss from Doni! :kissing_closed_eyes:';
         } else {
             return 'You guessed wrong :pensive: Maybe next time...';
