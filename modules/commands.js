@@ -213,7 +213,9 @@ commands = function () {
                 embed
             });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}COINFLIP`)) { //coinflip
-            message.channel.send(coinFlip(message.content));
+            message.channel.send({
+                embed: coinFlip(message.content)
+            });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}COUNTDOWN`)) { //countdown
             var args = message.content.split(' ');
             var countString = args.slice(1).join(' ');

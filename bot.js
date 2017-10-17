@@ -150,10 +150,11 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 //function for coinflip
 coinFlip = function (coinFlipMessage) {
     const coinFlipErrorEmbed = new constants.Discord.RichEmbed()
-        .setTitle("Error")
-        .setDescription(`${constants.PREFIX}coinflip firstCondition secondCondition **OR** ${constants.PREFIX}coinflip`)
+        .setTitle('Error')
+        .setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\`\n**OR**\n\`${constants.PREFIX}coinflip\``)
         .setColor(constants.red);
     var clientInput = coinFlipMessage.split(" ");
+    console.log(clientInput);
     if (clientInput.length !== 3 && clientInput.length !== 1) {
         return coinFlipErrorEmbed;
     } else {
@@ -161,22 +162,22 @@ coinFlip = function (coinFlipMessage) {
             var firstCondition = clientInput[1];
             var secondCondition = clientInput[2];
             var coin = Math.floor((Math.random() * 10) + 1);
-            if (coin <= 5) return coinFlipEmbed(firstCondition);
-            else return coinFlipEmbed(secondCondition);
+            if (coin <= 5) return coinFlipEmbedF(firstCondition);
+            else return coinFlipEmbedF(secondCondition);
         } else {
             var coin = Math.floor((Math.random() * 10) + 1);
-            if (coin <= 5) return coinFlipEmbed('Head');
-            else return coinFlipEmbed('Tails');
+            if (coin <= 5) return coinFlipEmbedF('Head');
+            else return coinFlipEmbedF('Tails');
         }
     }
 }
 
-coinFlipEmbed = function (description){
+coinFlipEmbedF = function (description) {
 
     const coinFlipEmbed = new constants.Discord.RichEmbed()
-    .setTitle("Result")
-    .setDescription(description)
-    .setColor(constants.blue);
+        .setTitle('Result')
+        .setDescription(description)
+        .setColor(constants.blue);
 
     return coinFlipEmbed;
 
