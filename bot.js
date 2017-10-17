@@ -149,12 +149,10 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 
 //function for coinflip
 coinFlip = function (coinFlipMessage) {
-    const coinflipEmbed = new constants.Discord.RichEmbed()
-        .setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\` **OR** \`${constants.PREFIX}coinflip\``)
-        .setColor(constants.blue);
+    const coinflipMessage = `${constants.PREFIX}coinflip firstCondition secondCondition **OR** ${constants.PREFIX}coinflip`;
     var clientInput = coinFlipMessage.split(' ');
     if (clientInput.length !== 3 && clientInput.length !== 1) {
-        return coinflipEmbed;
+        return coinflipMessage;
     } else {
         if (clientInput.length === 3) {
             var firstCondition = clientInput[1];
