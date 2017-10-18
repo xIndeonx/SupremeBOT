@@ -300,7 +300,7 @@ commands = function () {
                 .addField('Admin', '\`' + constants.PREFIX + 'delete\`\n' + '\`' + constants.PREFIX + 'purge\`\n', true)
                 .addBlankField(true)
                 .addField('Music', '\`' + constants.PREFIX + 'join\`\n' + '\`' + constants.PREFIX + 'leave\`\n' + '\`' + constants.PREFIX + 'np\`\n' + '\`' + constants.PREFIX + 'pause\`\n' + '\`' + constants.PREFIX + 'play\`\n' + '\`' + constants.PREFIX + 'queue\`\n' + '\`' + constants.PREFIX + 'resume\`\n' + '\`' + constants.PREFIX + 'skip\`\n' + '\`' + constants.PREFIX + 'stop\`\n' + '\`' + constants.PREFIX + 'vcleave\`\n' + '\`' + constants.PREFIX + 'volume\`\n', true)
-                .addField('Info', '\`' + constants.PREFIX + 'channelinfo\`\n' + '\`' + constants.PREFIX + 'channels\`\n' + '\`' + constants.PREFIX + 'custom\`\n' + '\`' + constants.PREFIX + 'help\`\n' + '\`' + constants.PREFIX + 'memory\`\n' + '\`' + constants.PREFIX + 'osuptime\`\n' + '\`' + constants.PREFIX + 'ping\`\n' + '\`' + constants.PREFIX + 'roles\`\n' + '\`' + constants.PREFIX + 'serverinfo\`\n' + '\`' + constants.PREFIX + 'uptime\`\n' + '\`' + constants.PREFIX + 'userinfo\`\n'  + '\`' + constants.PREFIX + 'whois\`\n', true)
+                .addField('Info', '\`' + constants.PREFIX + 'channelinfo\`\n' + '\`' + constants.PREFIX + 'channels\`\n' + '\`' + constants.PREFIX + 'custom\`\n' + '\`' + constants.PREFIX + 'help\`\n' + '\`' + constants.PREFIX + 'memory\`\n' + '\`' + constants.PREFIX + 'osuptime\`\n' + '\`' + constants.PREFIX + 'ping\`\n' + '\`' + constants.PREFIX + 'roles\`\n' + '\`' + constants.PREFIX + 'serverinfo\`\n' + '\`' + constants.PREFIX + 'uptime\`\n' + '\`' + constants.PREFIX + 'userinfo\`\n' + '\`' + constants.PREFIX + 'whois\`\n', true)
                 .addField('Miscellaneous', '\`' + constants.PREFIX + '8ball\`\n' + '\`' + constants.PREFIX + 'coinflip\`\n' + '\`' + constants.PREFIX + 'countdown\`\n' + '\`' + constants.PREFIX + 'echo\`\n' + '\`' + constants.PREFIX + 'hakai\`\n' + '\`' + constants.PREFIX + 'lotto\`\n' + '\`' + constants.PREFIX + 'rps\`\n' + '\`' + constants.PREFIX + 'tts\`\n', true)
             message.channel.send({
                 embed
@@ -386,6 +386,16 @@ commands = function () {
                     description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
                 }
             });
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBAN`)) { //urban
+            var urban = require('urban');
+            urban.random().first(function (json) {
+                const embed = new constants.Discord.RichEmbed()
+                    .setTitle('Urban Dictionary')
+                    .setDescription(json);
+                message.channel.send({
+                    embed
+                });
+            });
         } else if ((message.content.toUpperCase().startsWith(`${constants.PREFIX}USERINFO`)) || (message.content.toUpperCase().startsWith(`${constants.PREFIX}WHOIS`))) { //userinfo / whois
             var args = message.content.split(' ');
             var string = args.slice(1).join(' ');
@@ -410,10 +420,12 @@ commands = function () {
                 });
             } else {
                 const whoIsError = new constants.Discord.RichEmbed()
-                .setTitle('Error')
-                .setDescription(`User not found. Try \`${constants.PREFIX}userinfo user_id\` **OR** \`${constants.PREFIX}whois ich\``)
-                .setColor(constants.red);
-                message.channel.send({embed: whoIsError});
+                    .setTitle('Error')
+                    .setDescription(`User not found. Try \`${constants.PREFIX}userinfo user_id\` **OR** \`${constants.PREFIX}whois ich\``)
+                    .setColor(constants.red);
+                message.channel.send({
+                    embed: whoIsError
+                });
             }
         }
     });
