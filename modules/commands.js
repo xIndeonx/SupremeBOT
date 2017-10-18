@@ -401,7 +401,7 @@ commands = function () {
             var args = message.content.split(' ');
             var string = args.slice(1).join(' ');
             var user;
-            if (string.toUpperCase() === "ICH") {
+            if (string.toUpperCase() === "ICH" || string.toUpperCase() === "ME") {
                 user = message.author;
             } else if (string) {
                 user = constants.client.users.get(string);
