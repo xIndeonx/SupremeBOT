@@ -301,7 +301,7 @@ commands = function () {
                 .addBlankField(true)
                 .addField('Music', '\`' + constants.PREFIX + 'join\`\n' + '\`' + constants.PREFIX + 'leave\`\n' + '\`' + constants.PREFIX + 'np\`\n' + '\`' + constants.PREFIX + 'pause\`\n' + '\`' + constants.PREFIX + 'play\`\n' + '\`' + constants.PREFIX + 'queue\`\n' + '\`' + constants.PREFIX + 'resume\`\n' + '\`' + constants.PREFIX + 'skip\`\n' + '\`' + constants.PREFIX + 'stop\`\n' + '\`' + constants.PREFIX + 'vcleave\`\n' + '\`' + constants.PREFIX + 'volume\`\n', true)
                 .addField('Info', '\`' + constants.PREFIX + 'channelinfo\`\n' + '\`' + constants.PREFIX + 'channels\`\n' + '\`' + constants.PREFIX + 'custom\`\n' + '\`' + constants.PREFIX + 'help\`\n' + '\`' + constants.PREFIX + 'memory\`\n' + '\`' + constants.PREFIX + 'osuptime\`\n' + '\`' + constants.PREFIX + 'ping\`\n' + '\`' + constants.PREFIX + 'roles\`\n' + '\`' + constants.PREFIX + 'serverinfo\`\n' + '\`' + constants.PREFIX + 'uptime\`\n' + '\`' + constants.PREFIX + 'userinfo\`\n' + '\`' + constants.PREFIX + 'whois\`\n', true)
-                .addField('Miscellaneous', '\`' + constants.PREFIX + '8ball\`\n' + '\`' + constants.PREFIX + 'coinflip\`\n' + '\`' + constants.PREFIX + 'countdown\`\n' + '\`' + constants.PREFIX + 'echo\`\n' + '\`' + constants.PREFIX + 'hakai\`\n' + '\`' + constants.PREFIX + 'lotto\`\n' + '\`' + constants.PREFIX + 'rps\`\n' + '\`' + constants.PREFIX + 'tts\`\n', true)
+                .addField('Miscellaneous', '\`' + constants.PREFIX + '8ball\`\n' + '\`' + constants.PREFIX + 'coinflip\`\n' + '\`' + constants.PREFIX + 'countdown\`\n' + '\`' + constants.PREFIX + 'echo\`\n' + '\`' + constants.PREFIX + 'hakai\`\n' + '\`' + constants.PREFIX + 'lotto\`\n' + '\`' + constants.PREFIX + 'rps\`\n' + '\`' + constants.PREFIX + 'tts\`\n' + '\`' + constants.PREFIX + 'urban\`\n' + '\`' + constants.PREFIX + 'urbanrandom\`\n', true)
             message.channel.send({
                 embed
             });
@@ -392,12 +392,15 @@ commands = function () {
                 if (error) {
                     console.error(error.message)
                 } else {
+                    var link = entry.permalink;
+                    var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
                     const embed = new constants.Discord.RichEmbed()
                         .setTitle(entry.word)
-                        .setDescription(entry.definition)
-                        .setFooter(entry.example)
+                        .addField('Definition', entry.definition)
+                        .addField('Example', entry.example + `\n\n[Link to this word](${link})`)
+                        .setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
                         .setColor(constants.blue)
-                        .setThumbnail("https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg");
+                        .setThumbnail(pic);
                     message.channel.send({
                         embed
                     });
@@ -419,12 +422,14 @@ commands = function () {
                     console.error(error.message);
                 } else {
                     var link = entries[0].permalink;
+                    var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
                     const embed = new constants.Discord.RichEmbed()
                         .setTitle(entries[0].word)
-                        .setDescription(entries[0].definition + `\n[Link to this word](${link})`)
-                        .setFooter(entries[0].example + '\nUp: ' + entries[0].thumbs_up + ' Down: ' + entries[0].thumbs_down)
+                        .addField('Definition', entries[0].definition)
+                        .addField('Example', entries[0].example + `\n\n[Link to this word](${link})`)
+                        .setFooter('Up: ' + entries[0].thumbs_up + ' | Down: ' + entries[0].thumbs_down)
                         .setColor(constants.blue)
-                        .setThumbnail("https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg");
+                        .setThumbnail(pic);
                     message.channel.send({
                         embed
                     });
