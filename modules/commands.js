@@ -386,15 +386,49 @@ commands = function () {
                     description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
                 }
             });
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBANRANDOM`)) { //urbanrandom
+            var urban = require('urban-dictionary');
+            urban.random(function (error, entry) {
+                if (error) {
+                    console.error(error.message)
+                } else {
+                    const embed = new constants.Discord.RichEmbed()
+                        .setTitle(entry.word)
+                        .setDescription(entry.definition)
+                        .setFooter(entry.example)
+                        .setColor(constants.blue)
+                        .setThumbnail("https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg");
+                    message.channel.send({
+                        embed
+                    });
+                }
+            });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBAN`)) { //urban
-            var urban = require('urban');
-            urban.random().first(function (json) {
-                const embed = new constants.Discord.RichEmbed()
-                    .setTitle('Urban Dictionary')
-                    .setDescription(json);
+            var urban = require('urban-dictionary');
+            var args = message.content.split(' ');
+            var string = args.slice(1).join(' ');
+            urban.term(string, function (error, entries, tags, sounds) {
+                if (error) {
+                    const errorEmbed = new constants.Discord.RichEmbed()
+                    .setTitle('Error')
+                    .setDescription('\`' + error.message + '\`')
+                    .setColor(constants.red);
                 message.channel.send({
-                    embed
+                    embed: errorEmbed
                 });
+                  console.error(error.message);
+                } else {
+                    var link = entries[0].permalink;
+                    const embed = new constants.Discord.RichEmbed()
+                        .setTitle(entries[0].word)
+                        .setDescription(entries[0].definition + `\n[Link to this word](${link})`)
+                        .setFooter(entries[0].example + '\nUp: ' + entries[0].thumbs_up + ' Down: ' + entries[0].thumbs_down)
+                        .setColor(constants.blue)
+                        .setThumbnail("https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg");
+                    message.channel.send({
+                        embed
+                    });
+                }
             });
         } else if ((message.content.toUpperCase().startsWith(`${constants.PREFIX}USERINFO`)) || (message.content.toUpperCase().startsWith(`${constants.PREFIX}WHOIS`))) { //userinfo / whois
             var args = message.content.split(' ');
