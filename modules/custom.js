@@ -125,6 +125,9 @@ customCommands = function () {
             message.channel.send('Ich bi sozial.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PPAP`)) { //ppap
             message.channel.send(':pen_fountain: :pineapple: :apple: :pen_fountain:');
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PRAISE`)) { //praise
+            const praise = constants.client.emojis.find("name", "praise");
+            message.channel.send(`Praise the Sun! ${praise}`);
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PUBG`)) { //pubg
             message.channel.send('1=0');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}RIP`)) { //rip

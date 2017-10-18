@@ -269,7 +269,7 @@ commands = function () {
                 .setDescription('This is a complete list of all custom commands.')
                 .addField('A-E', '\`' + constants.PREFIX + '1=0\`\n' + '\`' + constants.PREFIX + 'ademerci\`\n' + '\`' + constants.PREFIX + 'aha\`\n' + '\`' + constants.PREFIX + 'alina\`\n' + '\`' + constants.PREFIX + 'andreas\`\n' + '\`' + constants.PREFIX + 'andi\`\n' + '\`' + constants.PREFIX + 'andy\`\n' + '\`' + constants.PREFIX + 'auä\`\n' + '\`' + constants.PREFIX + 'autismus\`\n' + '\`' + constants.PREFIX + 'autist\`\n' + '\`' + constants.PREFIX + 'baumi\`\n' + '\`' + constants.PREFIX + 'baumi1\`\n' + '\`' + constants.PREFIX + 'baumi2\`\n' + '\`' + constants.PREFIX + 'baumi3\`\n' + '\`' + constants.PREFIX + 'baumi4\`\n' + '\`' + constants.PREFIX + 'bitte\`\n' + '\`' + constants.PREFIX + 'boogeyman\`\n' + '\`' + constants.PREFIX + 'bzz\`\n' + '\`' + constants.PREFIX + 'claudio\`\n' + '\`' + constants.PREFIX + 'claudiolino\`\n' + '\`' + constants.PREFIX + 'clö\`\n' + '\`' + constants.PREFIX + 'danke\`\n' + '\`' + constants.PREFIX + 'dinimom\`\n' + '\`' + constants.PREFIX + 'doni\`\n' + '\`' + constants.PREFIX + 'eine\`\n' + '\`' + constants.PREFIX + 'eis\`\n', true)
                 .addField('E-J', '\`' + constants.PREFIX + 'esgahtnöd\`\n' + '\`' + constants.PREFIX + 'exit\`\n' + '\`' + constants.PREFIX + 'fabio\`\n' + '\`' + constants.PREFIX + 'fabio2\`\n' + '\`' + constants.PREFIX + 'fabiocsgo\`\n' + '\`' + constants.PREFIX + 'fige\`\n' + '\`' + constants.PREFIX + 'filip\`\n' + '\`' + constants.PREFIX + 'game\`\n' + '\`' + constants.PREFIX + 'getshiton\`\n' + '\`' + constants.PREFIX + 'gopfeteli\`\n' + '\`' + constants.PREFIX + 'gschicht\`\n' + '\`' + constants.PREFIX + 'hoi\`\n' + '\`' + constants.PREFIX + 'hm\`\n' + '\`' + constants.PREFIX + 'ich\`\n' + '\`' + constants.PREFIX + 'ichi\`\n' + '\`' + constants.PREFIX + 'interessiert\`\n' + '\`' + constants.PREFIX + 'inyourfaculty\`\n' + '\`' + constants.PREFIX + 'inyourfamily\`\n' + '\`' + constants.PREFIX + 'inyourname\`\n' + '\`' + constants.PREFIX + 'inyourspirit\`\n' + '\`' + constants.PREFIX + 'ivan\`\n' + '\`' + constants.PREFIX + 'jacob\`\n' + '\`' + constants.PREFIX + 'jesus\`\n' + '\`' + constants.PREFIX + 'jesuschrist\`\n' + '\`' + constants.PREFIX + 'joel\`\n', true)
-                .addField('K-Z', '\`' + constants.PREFIX + 'kadder\`\n' + '\`' + constants.PREFIX + 'kadder2\`\n' + '\`' + constants.PREFIX + 'ksh\`\n' + '\`' + constants.PREFIX + 'lucas\`\n' + '\`' + constants.PREFIX + 'lucas2\`\n' + '\`' + constants.PREFIX + 'lucas3\`\n' + '\`' + constants.PREFIX + 'merci\`\n' + '\`' + constants.PREFIX + 'mila\`\n' + '\`' + constants.PREFIX + 'noah\`\n' + '\`' + constants.PREFIX + 'oli\`\n' + '\`' + constants.PREFIX + 'ppap\`\n' + '\`' + constants.PREFIX + 'pubg\`\n' + '\`' + constants.PREFIX + 'rip\`\n' + '\`' + constants.PREFIX + 'snus\`\n' + '\`' + constants.PREFIX + 'sorry\`\n' + '\`' + constants.PREFIX + 'stfu\`\n' + '\`' + constants.PREFIX + 'thermos\`\n' + '\`' + constants.PREFIX + 'toubi\`\n' + '\`' + constants.PREFIX + 'velo\`\n' + '\`' + constants.PREFIX + 'vn\`\n' + '\`' + constants.PREFIX + 'weltbild\`\n' + '\`' + constants.PREFIX + 'zeit\`\n' + '\`' + constants.PREFIX + 'ziit\`\n' + '\`' + constants.PREFIX + 'ziit?\`\n' + '\`' + constants.PREFIX + 'zoel\`\n', true)
+                .addField('K-Z', '\`' + constants.PREFIX + 'kadder\`\n' + '\`' + constants.PREFIX + 'kadder2\`\n' + '\`' + constants.PREFIX + 'ksh\`\n' + '\`' + constants.PREFIX + 'lucas\`\n' + '\`' + constants.PREFIX + 'lucas2\`\n' + '\`' + constants.PREFIX + 'lucas3\`\n' + '\`' + constants.PREFIX + 'merci\`\n' + '\`' + constants.PREFIX + 'mila\`\n' + '\`' + constants.PREFIX + 'noah\`\n' + '\`' + constants.PREFIX + 'oli\`\n' + '\`' + constants.PREFIX + 'ppap\`\n' + '\`' + constants.PREFIX + 'praise\`\n' + '\`' + constants.PREFIX + 'pubg\`\n' + '\`' + constants.PREFIX + 'rip\`\n' + '\`' + constants.PREFIX + 'snus\`\n' + '\`' + constants.PREFIX + 'sorry\`\n' + '\`' + constants.PREFIX + 'stfu\`\n' + '\`' + constants.PREFIX + 'thermos\`\n' + '\`' + constants.PREFIX + 'toubi\`\n' + '\`' + constants.PREFIX + 'velo\`\n' + '\`' + constants.PREFIX + 'vn\`\n' + '\`' + constants.PREFIX + 'weltbild\`\n' + '\`' + constants.PREFIX + 'zeit\`\n' + '\`' + constants.PREFIX + 'ziit\`\n' + '\`' + constants.PREFIX + 'ziit?\`\n' + '\`' + constants.PREFIX + 'zoel\`\n', true)
             message.channel.send({
                 embed
             });
@@ -300,7 +300,7 @@ commands = function () {
                 .addField('Admin', '\`' + constants.PREFIX + 'delete\`\n' + '\`' + constants.PREFIX + 'purge\`\n', true)
                 .addBlankField(true)
                 .addField('Music', '\`' + constants.PREFIX + 'join\`\n' + '\`' + constants.PREFIX + 'leave\`\n' + '\`' + constants.PREFIX + 'np\`\n' + '\`' + constants.PREFIX + 'pause\`\n' + '\`' + constants.PREFIX + 'play\`\n' + '\`' + constants.PREFIX + 'queue\`\n' + '\`' + constants.PREFIX + 'resume\`\n' + '\`' + constants.PREFIX + 'skip\`\n' + '\`' + constants.PREFIX + 'stop\`\n' + '\`' + constants.PREFIX + 'vcleave\`\n' + '\`' + constants.PREFIX + 'volume\`\n', true)
-                .addField('Info', '\`' + constants.PREFIX + 'channelinfo\`\n' + '\`' + constants.PREFIX + 'channels\`\n' + '\`' + constants.PREFIX + 'custom\`\n' + '\`' + constants.PREFIX + 'help\`\n' + '\`' + constants.PREFIX + 'memory\`\n' + '\`' + constants.PREFIX + 'osuptime\`\n' + '\`' + constants.PREFIX + 'ping\`\n' + '\`' + constants.PREFIX + 'roles\`\n' + '\`' + constants.PREFIX + 'serverinfo\`\n' + '\`' + constants.PREFIX + 'uptime\`\n' + '\`' + constants.PREFIX + 'userinfo\`\n', true)
+                .addField('Info', '\`' + constants.PREFIX + 'channelinfo\`\n' + '\`' + constants.PREFIX + 'channels\`\n' + '\`' + constants.PREFIX + 'custom\`\n' + '\`' + constants.PREFIX + 'help\`\n' + '\`' + constants.PREFIX + 'memory\`\n' + '\`' + constants.PREFIX + 'osuptime\`\n' + '\`' + constants.PREFIX + 'ping\`\n' + '\`' + constants.PREFIX + 'roles\`\n' + '\`' + constants.PREFIX + 'serverinfo\`\n' + '\`' + constants.PREFIX + 'uptime\`\n' + '\`' + constants.PREFIX + 'userinfo\`\n'  + '\`' + constants.PREFIX + 'whois\`\n', true)
                 .addField('Miscellaneous', '\`' + constants.PREFIX + '8ball\`\n' + '\`' + constants.PREFIX + 'coinflip\`\n' + '\`' + constants.PREFIX + 'countdown\`\n' + '\`' + constants.PREFIX + 'echo\`\n' + '\`' + constants.PREFIX + 'hakai\`\n' + '\`' + constants.PREFIX + 'lotto\`\n' + '\`' + constants.PREFIX + 'rps\`\n' + '\`' + constants.PREFIX + 'tts\`\n', true)
             message.channel.send({
                 embed
@@ -397,6 +397,39 @@ commands = function () {
             message.channel.send({
                 embed
             });
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WHOIS`)) { //whois
+            var args = message.content.split(' ');
+            var string = args.slice(1).join(' ');
+            var user;
+            if (string.toUpperCase() === "ICH" || string.toUpperCase() === "ME") {
+                user = message.author;
+            } else if (string) {
+                user = constants.client.users.get(string);
+            } else {
+                const whoIsError = new constants.Discord.RichEmbed()
+                .setTitle('Error')
+                .setDescription(`\`${constants.PREFIX}whois user_id\` **OR** \`${constants.PREFIX}whois ich\``)
+                .setColor(constants.red);
+                return message.channel.send({ embed: whoIsError});
+            }
+            if (user) {
+                const embed = new constants.Discord.RichEmbed()
+                    .setColor(constants.blue)
+                    .setAuthor(user.username, user.displayAvatarURL)
+                    .addField('Username', user.username, true)
+                    .addField('Discriminator', user.discriminator, true)
+                    .addField('ID', user.id, true)
+                    .setFooter('User created: ' + getDay(message.author.createdAt.getDay()) + ' ' + message.author.createdAt.getMonth() + '/' + message.author.createdAt.getDate() + '/' + message.author.createdAt.getFullYear() + ' at ' + message.author.createdAt.getHours() + 'H ' + message.author.createdAt.getMinutes() + 'M');
+                message.channel.send({
+                    embed
+                });
+            } else {
+                const whoIsUserError = new constants.Discord.RichEmbed()
+                .setTitle('Error')
+                .setDescription('User not found')
+                .setColor(constants.red);
+                message.channel.send({embed: whoIsUserError});
+            }
         }
     });
 }
