@@ -386,31 +386,16 @@ commands = function () {
                     description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
                 }
             });
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}USERINFO`)) { //userinfo
-            const embed = new constants.Discord.RichEmbed()
-                .setColor(constants.blue)
-                .setAuthor(message.author.username, message.author.avatarURL)
-                .addField('Username', message.author.username, true)
-                .addField('Discriminator', message.author.discriminator, true)
-                .addField('ID', message.author.id, true)
-                .setFooter('User created: ' + getDay(message.author.createdAt.getDay()) + ' ' + message.author.createdAt.getMonth() + '/' + message.author.createdAt.getDate() + '/' + message.author.createdAt.getFullYear() + ' at ' + message.author.createdAt.getHours() + 'H ' + message.author.createdAt.getMinutes() + 'M');
-            message.channel.send({
-                embed
-            });
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WHOIS`)) { //whois
+        } else if ((message.content.toUpperCase().startsWith(`${constants.PREFIX}USERINFO`)) || (message.content.toUpperCase().startsWith(`${constants.PREFIX}WHOIS`))) { //userinfo / whois
             var args = message.content.split(' ');
             var string = args.slice(1).join(' ');
             var user;
-            if (string.toUpperCase() === "ICH" || string.toUpperCase() === "ME") {
+            if (string.toUpperCase() === 'ICH' || string.toUpperCase() === 'ME') {
                 user = message.author;
             } else if (string) {
                 user = constants.client.users.get(string);
             } else {
-                const whoIsError = new constants.Discord.RichEmbed()
-                .setTitle('Error')
-                .setDescription(`\`${constants.PREFIX}whois user_id\` **OR** \`${constants.PREFIX}whois ich\``)
-                .setColor(constants.red);
-                return message.channel.send({ embed: whoIsError});
+                user = message.author;
             }
             if (user) {
                 const embed = new constants.Discord.RichEmbed()
@@ -424,11 +409,11 @@ commands = function () {
                     embed
                 });
             } else {
-                const whoIsUserError = new constants.Discord.RichEmbed()
+                const whoIsError = new constants.Discord.RichEmbed()
                 .setTitle('Error')
-                .setDescription('User not found')
+                .setDescription(`User not found. Try \`${constants.PREFIX}userinfo user_id\` **OR** \`${constants.PREFIX}whois ich\``)
                 .setColor(constants.red);
-                message.channel.send({embed: whoIsUserError});
+                message.channel.send({embed: whoIsError});
             }
         }
     });
