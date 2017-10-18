@@ -397,6 +397,39 @@ commands = function () {
             message.channel.send({
                 embed
             });
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WHOIS`)) { //whois
+            var args = message.content.split(' ');
+            var string = args.slice(1).join(' ');
+            var user;
+            if (string === "ich") {
+                user = message.author;
+            } else if (string) {
+                user = constants.client.users.get(string);
+            } else {
+                const whoIsError = new constants.Discord.RichEmbed()
+                .setTitle('Error')
+                .setDescription(`\`${constants.PREFIX}whois user_id\` **OR** \`${constants.PREFIX}whois ich\``)
+                .setColor(constants.red);
+                return message.channel.send({ embed: whoIsError});
+            }
+            if (user) {
+                const embed = new constants.Discord.RichEmbed()
+                    .setColor(constants.blue)
+                    .setAuthor(user.username, user.displayAvatarURL)
+                    .addField('Username', user.username, true)
+                    .addField('Discriminator', user.discriminator, true)
+                    .addField('ID', user.id, true)
+                    .setFooter('User created: ' + getDay(message.author.createdAt.getDay()) + ' ' + message.author.createdAt.getMonth() + '/' + message.author.createdAt.getDate() + '/' + message.author.createdAt.getFullYear() + ' at ' + message.author.createdAt.getHours() + 'H ' + message.author.createdAt.getMinutes() + 'M');
+                message.channel.send({
+                    embed
+                });
+            } else {
+                const whoIsUserError = new constants.Discord.RichEmbed()
+                .setTitle('Error')
+                .setDescription('User not found')
+                .setColor(constants.red);
+                message.channel.send({embed: whoIsUserError});
+            }
         }
     });
 }
