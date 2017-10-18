@@ -410,13 +410,13 @@ commands = function () {
             urban.term(string, function (error, entries, tags, sounds) {
                 if (error) {
                     const errorEmbed = new constants.Discord.RichEmbed()
-                    .setTitle('Error')
-                    .setDescription('\`' + error.message + '\`')
-                    .setColor(constants.red);
-                message.channel.send({
-                    embed: errorEmbed
-                });
-                  console.error(error.message);
+                        .setTitle('Error')
+                        .setDescription('\`' + error.message + '\`')
+                        .setColor(constants.red);
+                    message.channel.send({
+                        embed: errorEmbed
+                    });
+                    console.error(error.message);
                 } else {
                     var link = entries[0].permalink;
                     const embed = new constants.Discord.RichEmbed()
