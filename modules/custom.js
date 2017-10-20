@@ -19,18 +19,22 @@ customCommands = function () {
             message.channel.send('De Andi füut sech elei in Bärn.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUÄ`)) { //auä
             message.channel.send('Auä!');
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUSTRALIA`)) { //australia
+            message.channel.send('Yea, we are fucked, but we don\'t want to admit it.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUTISMUS`)) { //autismus
             message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUTIST`)) { //autist
             message.channel.send('Wüki?!?!?');
         } else if (message.content.toUpperCase() === `${constants.PREFIX}BAUMI`) { //baumi
-            message.channel.send('Try using \`' + constants.PREFIX + 'baumi1\`, \`' + constants.PREFIX + 'baumi2\`, \`' + constants.PREFIX + 'baumi3\`, or \`' + constants.PREFIX + 'baumi4\`!');
+            message.channel.send('Try using \`' + constants.PREFIX + 'baumi1\`, \`' + constants.PREFIX + 'baumi2\`, \`' + constants.PREFIX + 'baumi3\`, or \`' + constants.PREFIX + 'baumi4\`!')
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI1`)) { //baumi1
             message.channel.send("Cha de Alain scho d'Uhr lese?");
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI2`)) { //baumi2
             message.channel.send('Wetsch es Zäpfli?');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI3`)) { //baumi3
-            message.channel.send('<@' + constants.LUCASID + '>, ab id Duschi');
+            message.channel.send('<@' + constants.LUCASID + '>, ab id Duschi')
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BAUMI4`)) { //baumi4
             message.channel.send('Chopf im Sofa.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}BITTE`)) { //bitte
@@ -51,8 +55,9 @@ customCommands = function () {
                 .setColor(constants.blue)
                 .setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg')
             message.channel.send({
-                embed
-            });
+                    embed
+                })
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}DINIMOM`)) { //dinimom
             message.channel.send('WÜKI?!?!?!??');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}DONI`)) { //doni
@@ -127,7 +132,8 @@ customCommands = function () {
             message.channel.send(':pen_fountain: :pineapple: :apple: :pen_fountain:');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PRAISE`)) { //praise
             const praise = constants.client.emojis.find("name", "praise");
-            message.channel.send(`Praise the Sun! ${praise}`);
+            message.channel.send(`Praise the Sun! ${praise}`)
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PUBG`)) { //pubg
             message.channel.send('1=0');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}RIP`)) { //rip
@@ -138,8 +144,9 @@ customCommands = function () {
                 .setColor(constants.black)
                 .setImage('http://www.odenssnus.eu/public/img/user/1026.png')
             message.channel.send({
-                embed
-            });
+                    embed
+                })
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}SORRY`)) { //sorry
             message.channel.send('Sorry?');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}STFU`)) { //stfu
@@ -156,8 +163,9 @@ customCommands = function () {
                 .setColor(constants.green)
                 .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg')
             message.channel.send({
-                embed
-            });
+                    embed
+                })
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WELTBILD`)) { //weltbild
             message.channel.send('"Du hesch es falsches Weltbild."');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ZEIT`)) { //zeit
@@ -169,16 +177,18 @@ customCommands = function () {
                     .setColor(constants.green)
                     .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg')
                 message.channel.send({
-                    embed
-                });
+                        embed
+                    })
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
             } else {
                 const embed = new constants.Discord.RichEmbed()
                     .setTitle('Die Uhrzeit')
                     .setColor(constants.black)
                     .setImage('http://www.odenssnus.eu/public/img/user/1026.png')
                 message.channel.send({
-                    embed
-                });
+                        embed
+                    })
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ZIIT?`)) { //ziit?
             message.channel.send('Ja, was isch denn für Ziit?');
