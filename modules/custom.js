@@ -20,7 +20,14 @@ customCommands = function () {
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUÄ`)) { //auä
             message.channel.send('Auä!');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUSTRALIA`)) { //australia
-            message.channel.send('Yea, we are fucked, but we don\'t want to admit it.');
+            const embed = new constants.Discord.RichEmbed()
+                .setTitle('Australia in a nutshell')
+                .setColor(constants.black)
+                .setImage('https://cdn.discordapp.com/attachments/367644529773379586/370929924564975616/images.jpg');
+            message.channel.send({
+                    embed
+                })
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUTISMUS`)) { //autismus
             message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}AUTIST`)) { //autist
@@ -53,7 +60,7 @@ customCommands = function () {
             const embed = new constants.Discord.RichEmbed()
                 .setTitle('Merci viu mol')
                 .setColor(constants.blue)
-                .setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg')
+                .setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
             message.channel.send({
                     embed
                 })
@@ -161,7 +168,7 @@ customCommands = function () {
             const embed = new constants.Discord.RichEmbed()
                 .setTitle('Vape Nation')
                 .setColor(constants.green)
-                .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg')
+                .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
             message.channel.send({
                     embed
                 })
@@ -175,7 +182,7 @@ customCommands = function () {
                 const embed = new constants.Discord.RichEmbed()
                     .setTitle('Vape Nation')
                     .setColor(constants.green)
-                    .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg')
+                    .setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
                 message.channel.send({
                         embed
                     })
@@ -184,7 +191,7 @@ customCommands = function () {
                 const embed = new constants.Discord.RichEmbed()
                     .setTitle('Die Uhrzeit')
                     .setColor(constants.black)
-                    .setImage('http://www.odenssnus.eu/public/img/user/1026.png')
+                    .setImage('http://www.odenssnus.eu/public/img/user/1026.png');
                 message.channel.send({
                         embed
                     })
