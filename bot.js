@@ -59,16 +59,26 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
             queueConstruct.connection = connection;
             play(message.guild, queueConstruct.songs[0]);
         } catch (error) {
-            console.error(`:bangbang: **Could not join the voice channel:** ${error}`);
+            console.error(`Could not join the voice channel: ${error}`);
             constants.airbrake.notify(error);
             constants.queue.delete(message.guild.id);
-            return message.channel.send(`:bangbang: **Could not join the voice channel:** ${error}`);
+            return message.channel.send({
+                embed: {
+                    description: `:bangbang: **Could not join the voice channel:** ${error}`,
+                    color: constants.red
+                }
+            });
         }
     } else {
         serverQueue.songs.push(song);
         console.log(serverQueue.songs);
         if (playlist) return;
-        else return message.channel.send(`:notes: **${song.title}** has been added to the queue!`);
+        else return message.channel.send({
+            embed: {
+                description: `:notes: **${song.title}** has been added to the queue!`,
+                color: constants.blue
+            }
+        });
     }
     return;
 }
@@ -90,7 +100,12 @@ play = function (guild, song) {
         })
         .on('error', error => console.error(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    serverQueue.textChannel.send(`:arrow_forward: Started playing: **${song.title}**`);
+    serverQueue.textChannel.send({
+        embed: {
+            description: `:arrow_forward: Started playing: **${song.title}**`,
+            color: constants.blue
+        }
+    });
 }
 
 //message on member join
