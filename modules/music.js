@@ -2,7 +2,7 @@
 let constants = require('./constants');
 require('../bot');
 
-//music stuff
+//music
 musicCommands = function () {
     constants.client.on('message', async message => {
         if (message.author.bot) return;

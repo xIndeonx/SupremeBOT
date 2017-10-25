@@ -6,7 +6,7 @@ require('../bot');
 commands = function () {
     constants.client.on('message', function (message) {
         if (message.author.bot) return;
-        if (!message.content.toUpperCase().startsWith(constants.PREFIX)) return;
+        if (!message.content.startsWith(constants.PREFIX)) return;
         if (!message.guild) return;
         if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JOIN`)) {
             try {
@@ -246,11 +246,12 @@ commands = function () {
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CHANNELS`)) { //channels
             try {
+                const channels = message.guild.channels.map(c => c.name);
                 const embed = new constants.Discord.RichEmbed()
                     .setColor(constants.blue)
                     .setTimestamp()
                     .setAuthor(message.guild.name, message.guild.iconURL)
-                    .addField('List of Channels', 'TBD');
+                    .addField('List of Channels', '\`\`\`\n' + channels.join('\n') + '\`\`\`');
                 message.channel.send({
                     embed
                 });
@@ -311,22 +312,22 @@ commands = function () {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CUSTOM`)) { //custom
-            try {
-                const embed = new constants.Discord.RichEmbed()
-                    .setColor(constants.red)
-                    .setTimestamp()
-                    .setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
-                    .setTitle('Custom Commands')
-                    .setDescription('This is a complete list of all custom commands.')
-                    .addField('A-E', '\`' + constants.PREFIX + '1=0\`\n' + '\`' + constants.PREFIX + 'ademerci\`\n' + '\`' + constants.PREFIX + 'aha\`\n' + '\`' + constants.PREFIX + 'alina\`\n' + '\`' + constants.PREFIX + 'andreas\`\n' + '\`' + constants.PREFIX + 'andi\`\n' + '\`' + constants.PREFIX + 'andy\`\n' + '\`' + constants.PREFIX + 'auä\`\n' + '\`' + constants.PREFIX + 'australia\`\n' + '\`' + constants.PREFIX + 'autismus\`\n' + '\`' + constants.PREFIX + 'autist\`\n' + '\`' + constants.PREFIX + 'baumi\`\n' + '\`' + constants.PREFIX + 'baumi1\`\n' + '\`' + constants.PREFIX + 'baumi2\`\n' + '\`' + constants.PREFIX + 'baumi3\`\n' + '\`' + constants.PREFIX + 'baumi4\`\n' + '\`' + constants.PREFIX + 'bitte\`\n' + '\`' + constants.PREFIX + 'boogeyman\`\n' + '\`' + constants.PREFIX + 'bzz\`\n' + '\`' + constants.PREFIX + 'claudio\`\n' + '\`' + constants.PREFIX + 'claudiolino\`\n' + '\`' + constants.PREFIX + 'clö\`\n' + '\`' + constants.PREFIX + 'danke\`\n' + '\`' + constants.PREFIX + 'dinimom\`\n' + '\`' + constants.PREFIX + 'doni\`\n' + '\`' + constants.PREFIX + 'eine\`\n', true)
-                    .addField('E-J', '\`' + constants.PREFIX + 'eis\`\n' + '\`' + constants.PREFIX + 'esgahtnöd\`\n' + '\`' + constants.PREFIX + 'exit\`\n' + '\`' + constants.PREFIX + 'fabio\`\n' + '\`' + constants.PREFIX + 'fabio2\`\n' + '\`' + constants.PREFIX + 'fabiocsgo\`\n' + '\`' + constants.PREFIX + 'fige\`\n' + '\`' + constants.PREFIX + 'filip\`\n' + '\`' + constants.PREFIX + 'game\`\n' + '\`' + constants.PREFIX + 'getshiton\`\n' + '\`' + constants.PREFIX + 'gopfeteli\`\n' + '\`' + constants.PREFIX + 'gschicht\`\n' + '\`' + constants.PREFIX + 'hoi\`\n' + '\`' + constants.PREFIX + 'hm\`\n' + '\`' + constants.PREFIX + 'ich\`\n' + '\`' + constants.PREFIX + 'ichi\`\n' + '\`' + constants.PREFIX + 'interessiert\`\n' + '\`' + constants.PREFIX + 'inyourfaculty\`\n' + '\`' + constants.PREFIX + 'inyourfamily\`\n' + '\`' + constants.PREFIX + 'inyourname\`\n' + '\`' + constants.PREFIX + 'inyourspirit\`\n' + '\`' + constants.PREFIX + 'ivan\`\n' + '\`' + constants.PREFIX + 'jacob\`\n' + '\`' + constants.PREFIX + 'jesus\`\n' + '\`' + constants.PREFIX + 'jesuschrist\`\n' + '\`' + constants.PREFIX + 'joel\`\n', true)
-                    .addField('K-Z', '\`' + constants.PREFIX + 'kadder\`\n' + '\`' + constants.PREFIX + 'kadder2\`\n' + '\`' + constants.PREFIX + 'ksh\`\n' + '\`' + constants.PREFIX + 'lucas\`\n' + '\`' + constants.PREFIX + 'lucas2\`\n' + '\`' + constants.PREFIX + 'lucas3\`\n' + '\`' + constants.PREFIX + 'merci\`\n' + '\`' + constants.PREFIX + 'mila\`\n' + '\`' + constants.PREFIX + 'noah\`\n' + '\`' + constants.PREFIX + 'oli\`\n' + '\`' + constants.PREFIX + 'ppap\`\n' + '\`' + constants.PREFIX + 'praise\`\n' + '\`' + constants.PREFIX + 'pubg\`\n' + '\`' + constants.PREFIX + 'rip\`\n' + '\`' + constants.PREFIX + 'snus\`\n' + '\`' + constants.PREFIX + 'sorry\`\n' + '\`' + constants.PREFIX + 'stfu\`\n' + '\`' + constants.PREFIX + 'thermos\`\n' + '\`' + constants.PREFIX + 'toubi\`\n' + '\`' + constants.PREFIX + 'velo\`\n' + '\`' + constants.PREFIX + 'vn\`\n' + '\`' + constants.PREFIX + 'weltbild\`\n' + '\`' + constants.PREFIX + 'zeit\`\n' + '\`' + constants.PREFIX + 'ziit\`\n' + '\`' + constants.PREFIX + 'ziit?\`\n' + '\`' + constants.PREFIX + 'zoel\`\n', true)
-                message.channel.send({
-                    embed
-                });
-            } catch (err) {
-                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-            }
+                try {
+                    const embed = new constants.Discord.RichEmbed()
+                        .setColor(constants.red)
+                        .setTimestamp()
+                        .setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
+                        .setTitle('Custom Commands')
+                        .setDescription('This is a complete list of all custom commands.')
+                        .addField('A-E', '\`' + constants.PREFIX + '1=0\`\n' + '\`' + constants.PREFIX + 'ademerci\`\n' + '\`' + constants.PREFIX + 'aha\`\n' + '\`' + constants.PREFIX + 'alina\`\n' + '\`' + constants.PREFIX + 'andreas\`\n' + '\`' + constants.PREFIX + 'andi\`\n' + '\`' + constants.PREFIX + 'andy\`\n' + '\`' + constants.PREFIX + 'auä\`\n' + '\`' + constants.PREFIX + 'australia\`\n' + '\`' + constants.PREFIX + 'autismus\`\n' + '\`' + constants.PREFIX + 'autist\`\n' + '\`' + constants.PREFIX + 'baumi\`\n' + '\`' + constants.PREFIX + 'baumi1\`\n' + '\`' + constants.PREFIX + 'baumi2\`\n' + '\`' + constants.PREFIX + 'baumi3\`\n' + '\`' + constants.PREFIX + 'baumi4\`\n' + '\`' + constants.PREFIX + 'bitte\`\n' + '\`' + constants.PREFIX + 'boogeyman\`\n' + '\`' + constants.PREFIX + 'bzz\`\n' + '\`' + constants.PREFIX + 'claudio\`\n' + '\`' + constants.PREFIX + 'claudiolino\`\n' + '\`' + constants.PREFIX + 'clö\`\n' + '\`' + constants.PREFIX + 'danke\`\n' + '\`' + constants.PREFIX + 'dinimom\`\n' + '\`' + constants.PREFIX + 'doni\`\n' + '\`' + constants.PREFIX + 'eine\`\n', true)
+                        .addField('E-J', '\`' + constants.PREFIX + 'eis\`\n' + '\`' + constants.PREFIX + 'esgahtnöd\`\n' + '\`' + constants.PREFIX + 'exit\`\n' + '\`' + constants.PREFIX + 'fabio\`\n' + '\`' + constants.PREFIX + 'fabio2\`\n' + '\`' + constants.PREFIX + 'fabiocsgo\`\n' + '\`' + constants.PREFIX + 'fige\`\n' + '\`' + constants.PREFIX + 'filip\`\n' + '\`' + constants.PREFIX + 'game\`\n' + '\`' + constants.PREFIX + 'getshiton\`\n' + '\`' + constants.PREFIX + 'gopfeteli\`\n' + '\`' + constants.PREFIX + 'gschicht\`\n' + '\`' + constants.PREFIX + 'hoi\`\n' + '\`' + constants.PREFIX + 'hm\`\n' + '\`' + constants.PREFIX + 'ich\`\n' + '\`' + constants.PREFIX + 'ichi\`\n' + '\`' + constants.PREFIX + 'interessiert\`\n' + '\`' + constants.PREFIX + 'inyourfaculty\`\n' + '\`' + constants.PREFIX + 'inyourfamily\`\n' + '\`' + constants.PREFIX + 'inyourname\`\n' + '\`' + constants.PREFIX + 'inyourspirit\`\n' + '\`' + constants.PREFIX + 'ivan\`\n' + '\`' + constants.PREFIX + 'jacob\`\n' + '\`' + constants.PREFIX + 'jesus\`\n' + '\`' + constants.PREFIX + 'jesuschrist\`\n' + '\`' + constants.PREFIX + 'joel\`\n', true)
+                        .addField('K-Z', '\`' + constants.PREFIX + 'kadder\`\n' + '\`' + constants.PREFIX + 'kadder2\`\n' + '\`' + constants.PREFIX + 'ksh\`\n' + '\`' + constants.PREFIX + 'lucas\`\n' + '\`' + constants.PREFIX + 'lucas2\`\n' + '\`' + constants.PREFIX + 'lucas3\`\n' + '\`' + constants.PREFIX + 'merci\`\n' + '\`' + constants.PREFIX + 'mila\`\n' + '\`' + constants.PREFIX + 'noah\`\n' + '\`' + constants.PREFIX + 'oli\`\n' + '\`' + constants.PREFIX + 'ppap\`\n' + '\`' + constants.PREFIX + 'praise\`\n' + '\`' + constants.PREFIX + 'pubg\`\n' + '\`' + constants.PREFIX + 'rip\`\n' + '\`' + constants.PREFIX + 'snus\`\n' + '\`' + constants.PREFIX + 'sorry\`\n' + '\`' + constants.PREFIX + 'stfu\`\n' + '\`' + constants.PREFIX + 'thermos\`\n' + '\`' + constants.PREFIX + 'toubi\`\n' + '\`' + constants.PREFIX + 'velo\`\n' + '\`' + constants.PREFIX + 'vn\`\n' + '\`' + constants.PREFIX + 'weltbild\`\n' + '\`' + constants.PREFIX + 'zeit\`\n' + '\`' + constants.PREFIX + 'ziit\`\n' + '\`' + constants.PREFIX + 'ziit?\`\n' + '\`' + constants.PREFIX + 'zoel\`\n', true)
+                    message.channel.send({
+                        embed
+                    });
+                } catch (err) {
+                    logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+                }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ECHO`)) { //echo
             try {
                 var args = message.content.split(' ');
@@ -411,11 +412,12 @@ commands = function () {
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ROLES`)) { //roles
             try {
+                const roles = message.guild.roles.map(r => r.name);
                 const embed = new constants.Discord.RichEmbed()
                     .setColor(constants.blue)
                     .setTimestamp()
                     .setAuthor(message.guild.name, message.guild.iconURL)
-                    .addField('List of Roles', 'TBD');
+                    .addField('List of Roles', '\`\`\`\n' + roles.join('\n') + '\`\`\`');
                 message.channel.send({
                     embed
                 });
@@ -458,18 +460,27 @@ commands = function () {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}TTS`)) { //tts
-            try {
-                var args = message.content.split(' ');
-                var string = args.slice(1).join(' ');
-                message.delete(200);
-                setTimeout(function () {
-                    message.channel.send(string, {
-                        tts: true
-                    });
-                }, 300);
-                logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nTTS command has been used:\n**\"**' + string + '**\"**', message.author.tag, message.author.displayAvatarURL);
-            } catch (err) {
-                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+            if (message.member.permissions.has("SEND_TTS_MESSAGES")) {
+                try {
+                    var args = message.content.split(' ');
+                    var string = args.slice(1).join(' ');
+                    message.delete(200);
+                    setTimeout(function () {
+                        message.channel.send(string, {
+                            tts: true
+                        });
+                    }, 300);
+                    logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nTTS command has been used:\n**\"**' + string + '**\"**', message.author.tag, message.author.displayAvatarURL);
+                } catch (err) {
+                    logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+                }
+            } else {
+                message.channel.send({
+                    embed: {
+                        color: constants.red,
+                        description: 'You need the `Send TTS Messages` permission to use this command.'
+                    }
+                });
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}UPTIME`)) { //uptime
             message.channel.send({
@@ -479,37 +490,6 @@ commands = function () {
                     }
                 })
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBANRANDOM`)) { //urbanrandom
-            try {
-                var urban = require('urban-dictionary');
-                urban.random(function (error, entry) {
-                    if (error) {
-                        const errorEmbed = new constants.Discord.RichEmbed()
-                            .setTitle('Error')
-                            .setDescription('\`' + error.message + '\`')
-                            .setColor(constants.red);
-                        message.channel.send({
-                            embed: errorEmbed
-                        });
-                        console.error(error.message);
-                    } else {
-                        var link = entry.permalink;
-                        var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
-                        const embed = new constants.Discord.RichEmbed()
-                            .setTitle(entry.word)
-                            .addField('Definition', entry.definition)
-                            .addField('Example', entry.example + `\n\n[Link to this word](${link})`)
-                            .setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
-                            .setColor(constants.blue)
-                            .setThumbnail(pic);
-                        message.channel.send({
-                            embed
-                        });
-                    }
-                });
-            } catch (err) {
-                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-            }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBAN`)) { //urban
             try {
                 var urban = require('urban-dictionary');
@@ -533,6 +513,37 @@ commands = function () {
                             .addField('Definition', entries[0].definition)
                             .addField('Example', entries[0].example + `\n\n[Link to this word](${link})`)
                             .setFooter('Up: ' + entries[0].thumbs_up + ' | Down: ' + entries[0].thumbs_down)
+                            .setColor(constants.blue)
+                            .setThumbnail(pic);
+                        message.channel.send({
+                            embed
+                        });
+                    }
+                });
+            } catch (err) {
+                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+            }
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBANRANDOM`)) { //urbanrandom
+            try {
+                var urban = require('urban-dictionary');
+                urban.random(function (error, entry) {
+                    if (error) {
+                        const errorEmbed = new constants.Discord.RichEmbed()
+                            .setTitle('Error')
+                            .setDescription('\`' + error.message + '\`')
+                            .setColor(constants.red);
+                        message.channel.send({
+                            embed: errorEmbed
+                        });
+                        console.error(error.message);
+                    } else {
+                        var link = entry.permalink;
+                        var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
+                        const embed = new constants.Discord.RichEmbed()
+                            .setTitle(entry.word)
+                            .addField('Definition', entry.definition)
+                            .addField('Example', entry.example + `\n\n[Link to this word](${link})`)
+                            .setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
                             .setColor(constants.blue)
                             .setThumbnail(pic);
                         message.channel.send({

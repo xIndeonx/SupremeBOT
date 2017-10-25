@@ -1,10 +1,10 @@
+//requirements
 let constants = require('./constants');
 require('../bot');
 
 //commands
 customCommands = function () {
     constants.client.on('message', function (message) {
-
         if (message.content.toUpperCase().startsWith(`${constants.PREFIX}1=0`)) { //1=0
             message.channel.send('1=0');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ADEMERCI`)) { //ademerci
