@@ -267,10 +267,9 @@ rpsPrint = function (userRPS, usertag) {
 
 //functions for 8ball
 eightball = function () {
-
     var answer = Math.floor((Math.random() * 10) + 1);
     var answerChoice = Math.floor((Math.random() * 8) + 1);
-    if (answer <= 5) {
+    if (answer <= 4) {
         constants.isYes = 'YES';
         switch (answerChoice) {
             case 1:
@@ -284,14 +283,13 @@ eightball = function () {
             case 5:
                 return 'Bin mir nöd 100% sicher, aber glaubs ja.';
             case 6:
-                isYes = 'VAPEIO';
-                return 'Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.';
-            case 7:
                 return 'Ich han googlet, es stimmt, ja.';
-            case 8:
+            case 7:
                 return 'Ih dem Fall scho, ja.';
+            case 8:
+                return 'Ich wür scho sege, hä.';
         }
-    } else {
+    } else if (answer > 4 && answer <= 8) {
         constants.isYes = 'NO';
         switch (answerChoice) {
             case 1:
@@ -311,6 +309,9 @@ eightball = function () {
             case 8:
                 return 'Wenns Wort ja **\'nei\'** heisse wür, wärs es ja.';
         }
+    } else {
+        constants.isYes = 'VAPEIO';
+        return 'Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.';
     }
 
 }
