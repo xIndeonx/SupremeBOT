@@ -66,8 +66,9 @@ const black = 000000;
 const green = 0x00ff00;
 const yellow = 0xffff00;
 
-//attributes for games
+//attributes for commands
 var isYes;
+var isRunning = false;
 
 module.exports.Discord = Discord;
 module.exports.Client = Client;

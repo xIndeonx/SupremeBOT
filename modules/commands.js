@@ -264,14 +264,24 @@ commands = function () {
                 })
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}COUNTDOWN`)) { //countdown
+            if (constants.isRunning === true) {
+                message.channel.send({ embed: {
+                    color: constants.red,
+                    description: 'Could not create countdown. There\'s already one running'
+                }});
+            } else {
             try {
                 var args = message.content.split(' ');
                 var countString = args.slice(1).join(' ');
                 let count = parseInt(countString);
                 if (isNaN(count)) {
-                    message.channel.send('Could not create countdown. Please enter a valid number.');
+                    message.channel.send({ embed: {
+                        color: constants.red,
+                        description: 'Could not create countdown. Please enter a valid number'
+                    }});
                     return;
                 } else {
+                    constants.isRunning = true;
                     message.channel.send({
                         embed: {
                             color: constants.blue,
@@ -304,6 +314,7 @@ commands = function () {
                                     }
                                 });
                                 clearInterval(interval);
+                                constants.isRunning = false;
                             }
                         }(countString));
                     });
@@ -311,6 +322,7 @@ commands = function () {
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
+        }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CUSTOM`)) { //custom
                 try {
                     const embed = new constants.Discord.RichEmbed()
