@@ -616,7 +616,6 @@ commands = function () {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
         }
-
     });
 
 }

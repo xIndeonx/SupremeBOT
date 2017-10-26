@@ -17,7 +17,8 @@ const {
     LUCASID,
     YT_API,
     PROJECT_ID,
-    PROJECT_KEY
+    PROJECT_KEY,
+    WOLFRAM_APPID
 } = require('../config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
