@@ -265,81 +265,95 @@ commands = function () {
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}COUNTDOWN`)) { //countdown
             if (constants.isRunning === true) {
-                message.channel.send({ embed: {
-                    color: constants.red,
-                    description: 'Could not create countdown. There\'s already one running'
-                }});
-            } else {
-            try {
-                var args = message.content.split(' ');
-                var countString = args.slice(1).join(' ');
-                let count = parseInt(countString);
-                if (isNaN(count)) {
-                    message.channel.send({ embed: {
-                        color: constants.red,
-                        description: 'Could not create countdown. Please enter a valid number'
-                    }});
-                    return;
-                } else {
-                    constants.isRunning = true;
-                    message.channel.send({
+                message.channel.send({
                         embed: {
-                            color: constants.blue,
-                            title: 'Countdown',
-                            description: 'Countdown started. This will take approximately **' + format(countString) + '**'
+                            color: constants.red,
+                            description: 'Could not create countdown. A countdown is already running.'
                         }
-                    }).then(sentmsg => {
-                        var i = countString;
-                        var interval = setInterval(function () {
-                            sentmsg.edit({
-                                embed: {
-                                    color: constants.blue,
-                                    title: 'Countdown',
-                                    description: '```' + format(i) + '```'
-                                }
-                            });
-                        }, 3000);
-                        (function fn() {
-                            if (i > 0) {
-                                setTimeout(function () {
-                                    fn(--i);
-                                }, 1000);
+                    })
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+                return;
+            } else { //else countdown > 24h deny
+                try {
+                    var args = message.content.split(' ');
+                    var countString = args.slice(1).join(' ');
+                    let count = parseInt(countString);
+                    if (isNaN(count)) {
+                        message.channel.send({
+                            embed: {
+                                color: constants.red,
+                                description: 'Could not create countdown. Please enter a valid number.'
                             }
-                            if (i === 0) {
+                        });
+                        return;
+                    } else if (count > 86400) {
+                        message.channel.send({
+                            embed: {
+                                color: constants.red,
+                                description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).'
+                            }
+                        });
+                        return;
+                    } else {
+                        constants.isRunning = true;
+                        message.channel.send({
+                            embed: {
+                                color: constants.blue,
+                                title: 'Countdown',
+                                description: 'Countdown started. This will take approximately **' + format(countString) + '**'
+                            }
+                        }).then(sentmsg => {
+                            var i = countString;
+                            var interval = setInterval(function () {
                                 sentmsg.edit({
                                     embed: {
                                         color: constants.blue,
                                         title: 'Countdown',
-                                        description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
+                                        description: '```' + format(i) + '```'
                                     }
                                 });
-                                clearInterval(interval);
-                                constants.isRunning = false;
-                            }
-                        }(countString));
-                    });
-                }
-            } catch (err) {
-                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-            }
-        }
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CUSTOM`)) { //custom
-                try {
-                    const embed = new constants.Discord.RichEmbed()
-                        .setColor(constants.red)
-                        .setTimestamp()
-                        .setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
-                        .setTitle('Custom Commands')
-                        .setDescription('This is a complete list of all custom commands.')
-                        .addField('A-E', '\`' + constants.PREFIX + '1=0\`\n' + '\`' + constants.PREFIX + 'ademerci\`\n' + '\`' + constants.PREFIX + 'aha\`\n' + '\`' + constants.PREFIX + 'alina\`\n' + '\`' + constants.PREFIX + 'andreas\`\n' + '\`' + constants.PREFIX + 'andi\`\n' + '\`' + constants.PREFIX + 'andy\`\n' + '\`' + constants.PREFIX + 'auä\`\n' + '\`' + constants.PREFIX + 'australia\`\n' + '\`' + constants.PREFIX + 'autismus\`\n' + '\`' + constants.PREFIX + 'autist\`\n' + '\`' + constants.PREFIX + 'baumi\`\n' + '\`' + constants.PREFIX + 'baumi1\`\n' + '\`' + constants.PREFIX + 'baumi2\`\n' + '\`' + constants.PREFIX + 'baumi3\`\n' + '\`' + constants.PREFIX + 'baumi4\`\n' + '\`' + constants.PREFIX + 'bitte\`\n' + '\`' + constants.PREFIX + 'boogeyman\`\n' + '\`' + constants.PREFIX + 'bzz\`\n' + '\`' + constants.PREFIX + 'claudio\`\n' + '\`' + constants.PREFIX + 'claudiolino\`\n' + '\`' + constants.PREFIX + 'clö\`\n' + '\`' + constants.PREFIX + 'danke\`\n' + '\`' + constants.PREFIX + 'dinimom\`\n' + '\`' + constants.PREFIX + 'doni\`\n' + '\`' + constants.PREFIX + 'eine\`\n', true)
-                        .addField('E-J', '\`' + constants.PREFIX + 'eis\`\n' + '\`' + constants.PREFIX + 'esgahtnöd\`\n' + '\`' + constants.PREFIX + 'exit\`\n' + '\`' + constants.PREFIX + 'fabio\`\n' + '\`' + constants.PREFIX + 'fabio2\`\n' + '\`' + constants.PREFIX + 'fabiocsgo\`\n' + '\`' + constants.PREFIX + 'fige\`\n' + '\`' + constants.PREFIX + 'filip\`\n' + '\`' + constants.PREFIX + 'game\`\n' + '\`' + constants.PREFIX + 'getshiton\`\n' + '\`' + constants.PREFIX + 'gopfeteli\`\n' + '\`' + constants.PREFIX + 'gschicht\`\n' + '\`' + constants.PREFIX + 'hoi\`\n' + '\`' + constants.PREFIX + 'hm\`\n' + '\`' + constants.PREFIX + 'ich\`\n' + '\`' + constants.PREFIX + 'ichi\`\n' + '\`' + constants.PREFIX + 'interessiert\`\n' + '\`' + constants.PREFIX + 'inyourfaculty\`\n' + '\`' + constants.PREFIX + 'inyourfamily\`\n' + '\`' + constants.PREFIX + 'inyourname\`\n' + '\`' + constants.PREFIX + 'inyourspirit\`\n' + '\`' + constants.PREFIX + 'ivan\`\n' + '\`' + constants.PREFIX + 'jacob\`\n' + '\`' + constants.PREFIX + 'jesus\`\n' + '\`' + constants.PREFIX + 'jesuschrist\`\n' + '\`' + constants.PREFIX + 'joel\`\n', true)
-                        .addField('K-Z', '\`' + constants.PREFIX + 'kadder\`\n' + '\`' + constants.PREFIX + 'kadder2\`\n' + '\`' + constants.PREFIX + 'ksh\`\n' + '\`' + constants.PREFIX + 'lucas\`\n' + '\`' + constants.PREFIX + 'lucas2\`\n' + '\`' + constants.PREFIX + 'lucas3\`\n' + '\`' + constants.PREFIX + 'merci\`\n' + '\`' + constants.PREFIX + 'mila\`\n' + '\`' + constants.PREFIX + 'noah\`\n' + '\`' + constants.PREFIX + 'oli\`\n' + '\`' + constants.PREFIX + 'ppap\`\n' + '\`' + constants.PREFIX + 'praise\`\n' + '\`' + constants.PREFIX + 'pubg\`\n' + '\`' + constants.PREFIX + 'rip\`\n' + '\`' + constants.PREFIX + 'snus\`\n' + '\`' + constants.PREFIX + 'sorry\`\n' + '\`' + constants.PREFIX + 'stfu\`\n' + '\`' + constants.PREFIX + 'thermos\`\n' + '\`' + constants.PREFIX + 'toubi\`\n' + '\`' + constants.PREFIX + 'velo\`\n' + '\`' + constants.PREFIX + 'vn\`\n' + '\`' + constants.PREFIX + 'weltbild\`\n' + '\`' + constants.PREFIX + 'zeit\`\n' + '\`' + constants.PREFIX + 'ziit\`\n' + '\`' + constants.PREFIX + 'ziit?\`\n' + '\`' + constants.PREFIX + 'zoel\`\n', true)
-                    message.channel.send({
-                        embed
-                    });
+                            }, 3000);
+                            (function fn() {
+                                if (i > 0) {
+                                    setTimeout(function () {
+                                        fn(--i);
+                                    }, 1000);
+                                }
+                                if (i === 0) {
+                                    sentmsg.edit({
+                                        embed: {
+                                            color: constants.blue,
+                                            title: 'Countdown',
+                                            description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
+                                        }
+                                    });
+                                    clearInterval(interval);
+                                    constants.isRunning = false;
+                                }
+                            }(countString));
+                        });
+                    }
                 } catch (err) {
                     logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
                 }
+            }
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CUSTOM`)) { //custom
+            try {
+                const embed = new constants.Discord.RichEmbed()
+                    .setColor(constants.red)
+                    .setTimestamp()
+                    .setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
+                    .setTitle('Custom Commands')
+                    .setDescription('This is a complete list of all custom commands.')
+                    .addField('A-E', '\`' + constants.PREFIX + '1=0\`\n' + '\`' + constants.PREFIX + 'ademerci\`\n' + '\`' + constants.PREFIX + 'aha\`\n' + '\`' + constants.PREFIX + 'alina\`\n' + '\`' + constants.PREFIX + 'andreas\`\n' + '\`' + constants.PREFIX + 'andi\`\n' + '\`' + constants.PREFIX + 'andy\`\n' + '\`' + constants.PREFIX + 'auä\`\n' + '\`' + constants.PREFIX + 'australia\`\n' + '\`' + constants.PREFIX + 'autismus\`\n' + '\`' + constants.PREFIX + 'autist\`\n' + '\`' + constants.PREFIX + 'baumi\`\n' + '\`' + constants.PREFIX + 'baumi1\`\n' + '\`' + constants.PREFIX + 'baumi2\`\n' + '\`' + constants.PREFIX + 'baumi3\`\n' + '\`' + constants.PREFIX + 'baumi4\`\n' + '\`' + constants.PREFIX + 'bitte\`\n' + '\`' + constants.PREFIX + 'boogeyman\`\n' + '\`' + constants.PREFIX + 'bzz\`\n' + '\`' + constants.PREFIX + 'claudio\`\n' + '\`' + constants.PREFIX + 'claudiolino\`\n' + '\`' + constants.PREFIX + 'clö\`\n' + '\`' + constants.PREFIX + 'danke\`\n' + '\`' + constants.PREFIX + 'dinimom\`\n' + '\`' + constants.PREFIX + 'doni\`\n' + '\`' + constants.PREFIX + 'eine\`\n' + '\`' + constants.PREFIX + 'eis\`\n', true)
+                    .addField('E-J', '\`' + constants.PREFIX + 'esgahtnöd\`\n' + '\`' + constants.PREFIX + 'exit\`\n' + '\`' + constants.PREFIX + 'fabio\`\n' + '\`' + constants.PREFIX + 'fabio2\`\n' + '\`' + constants.PREFIX + 'fabiocsgo\`\n' + '\`' + constants.PREFIX + 'ffs\`\n' + '\`' + constants.PREFIX + 'fige\`\n' + '\`' + constants.PREFIX + 'filip\`\n' + '\`' + constants.PREFIX + 'game\`\n' + '\`' + constants.PREFIX + 'getshiton\`\n' + '\`' + constants.PREFIX + 'gopfeteli\`\n' + '\`' + constants.PREFIX + 'gschicht\`\n' + '\`' + constants.PREFIX + 'hoi\`\n' + '\`' + constants.PREFIX + 'hm\`\n' + '\`' + constants.PREFIX + 'ich\`\n' + '\`' + constants.PREFIX + 'ichi\`\n' + '\`' + constants.PREFIX + 'interessiert\`\n' + '\`' + constants.PREFIX + 'inyourfaculty\`\n' + '\`' + constants.PREFIX + 'inyourfamily\`\n' + '\`' + constants.PREFIX + 'inyourname\`\n' + '\`' + constants.PREFIX + 'inyourspirit\`\n' + '\`' + constants.PREFIX + 'ivan\`\n' + '\`' + constants.PREFIX + 'jacob\`\n' + '\`' + constants.PREFIX + 'jaoder\`\n' + '\`' + constants.PREFIX + 'jesus\`\n' + '\`' + constants.PREFIX + 'jesuschrist\`\n' + '\`' + constants.PREFIX + 'joel\`\n', true)
+                    .addField('K-Z', '\`' + constants.PREFIX + 'kadder\`\n' + '\`' + constants.PREFIX + 'kadder2\`\n' + '\`' + constants.PREFIX + 'ksh\`\n' + '\`' + constants.PREFIX + 'lucas\`\n' + '\`' + constants.PREFIX + 'lucas2\`\n' + '\`' + constants.PREFIX + 'lucas3\`\n' + '\`' + constants.PREFIX + 'merci\`\n' + '\`' + constants.PREFIX + 'mila\`\n' + '\`' + constants.PREFIX + 'noah\`\n' + '\`' + constants.PREFIX + 'oli\`\n' + '\`' + constants.PREFIX + 'ppap\`\n' + '\`' + constants.PREFIX + 'praise\`\n' + '\`' + constants.PREFIX + 'pubg\`\n' + '\`' + constants.PREFIX + 'rip\`\n' + '\`' + constants.PREFIX + 'snus\`\n' + '\`' + constants.PREFIX + 'sorry\`\n' + '\`' + constants.PREFIX + 'stfu\`\n' + '\`' + constants.PREFIX + 'thermos\`\n' + '\`' + constants.PREFIX + 'toubi\`\n' + '\`' + constants.PREFIX + 'velo\`\n' + '\`' + constants.PREFIX + 'vn\`\n' + '\`' + constants.PREFIX + 'weltbild\`\n' + '\`' + constants.PREFIX + 'zeit\`\n' + '\`' + constants.PREFIX + 'ziit\`\n' + '\`' + constants.PREFIX + 'ziit?\`\n' + '\`' + constants.PREFIX + 'zoel\`\n', true)
+                message.channel.send({
+                    embed
+                });
+            } catch (err) {
+                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+            }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ECHO`)) { //echo
             try {
                 var args = message.content.split(' ');

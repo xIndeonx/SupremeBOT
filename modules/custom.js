@@ -83,6 +83,8 @@ customCommands = function () {
             message.channel.send('Wie isch d\'Matur? - Mis Lebe isch erfüllt.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FABIOCSGO`)) { //fabiocsgo
             message.channel.send('High risk - no reward.');
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FFS`)) { //ffs
+            message.channel.send('FFS.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FIGE`)) { //fige
             message.channel.send('De Feliks het en usprägte Orientierigssinn.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FILIP`)) { //filip
@@ -111,6 +113,8 @@ customCommands = function () {
             message.channel.send('Hoi zämä, i bims, dr Ivam. I bi ä waschächtä Schwiizer wiä mr gseht. Wohne duän i ~~IM REICH~~ in Öschtriich, und cha ou nid Schwiizertüütsch. Ademerci.');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JACOB`)) { //jacob
             message.channel.send('Jeg elsker dig ligesom du elsker min fugtig migmig.');
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JAODER`)) { //jaoder
+            message.channel.send('Ja oder.');
         } else if (message.content.toUpperCase() === `${constants.PREFIX}JESUS`) { //jesus
             message.channel.send('**IN THE NAAAAME OF JESUS!!!!!!**');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JESUSCHRIST`)) { //jesuschrist
