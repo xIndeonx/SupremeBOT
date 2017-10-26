@@ -490,6 +490,37 @@ commands = function () {
                     }
                 })
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBANRANDOM`)) { //urbanrandom
+            try {
+                var urban = require('urban-dictionary');
+                urban.random(function (error, entry) {
+                    if (error) {
+                        const errorEmbed = new constants.Discord.RichEmbed()
+                            .setTitle('Error')
+                            .setDescription('\`' + error.message + '\`')
+                            .setColor(constants.red);
+                        message.channel.send({
+                            embed: errorEmbed
+                        });
+                        console.error(error.message);
+                    } else {
+                        var link = entry.permalink;
+                        var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
+                        const embed = new constants.Discord.RichEmbed()
+                            .setTitle(entry.word)
+                            .addField('Definition', entry.definition)
+                            .addField('Example', entry.example + `\n\n[Link to this word](${link})`)
+                            .setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
+                            .setColor(constants.blue)
+                            .setThumbnail(pic);
+                        message.channel.send({
+                            embed
+                        });
+                    }
+                });
+            } catch (err) {
+                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+            }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBAN`)) { //urban
             try {
                 var urban = require('urban-dictionary');
@@ -513,37 +544,6 @@ commands = function () {
                             .addField('Definition', entries[0].definition)
                             .addField('Example', entries[0].example + `\n\n[Link to this word](${link})`)
                             .setFooter('Up: ' + entries[0].thumbs_up + ' | Down: ' + entries[0].thumbs_down)
-                            .setColor(constants.blue)
-                            .setThumbnail(pic);
-                        message.channel.send({
-                            embed
-                        });
-                    }
-                });
-            } catch (err) {
-                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-            }
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBANRANDOM`)) { //urbanrandom
-            try {
-                var urban = require('urban-dictionary');
-                urban.random(function (error, entry) {
-                    if (error) {
-                        const errorEmbed = new constants.Discord.RichEmbed()
-                            .setTitle('Error')
-                            .setDescription('\`' + error.message + '\`')
-                            .setColor(constants.red);
-                        message.channel.send({
-                            embed: errorEmbed
-                        });
-                        console.error(error.message);
-                    } else {
-                        var link = entry.permalink;
-                        var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
-                        const embed = new constants.Discord.RichEmbed()
-                            .setTitle(entry.word)
-                            .addField('Definition', entry.definition)
-                            .addField('Example', entry.example + `\n\n[Link to this word](${link})`)
-                            .setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
                             .setColor(constants.blue)
                             .setThumbnail(pic);
                         message.channel.send({
