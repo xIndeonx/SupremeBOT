@@ -425,14 +425,6 @@ commands = function () {
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}OSUPTIME`)) { //osuptime
-            message.channel.send({
-                    embed: {
-                        color: constants.blue,
-                        description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**'
-                    }
-                })
-                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PING`)) { //ping
             message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
@@ -509,13 +501,34 @@ commands = function () {
                 });
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}UPTIME`)) { //uptime
-            message.channel.send({
+            var args = message.content.split(' ');
+            var type = args.slice(1).join(' ');
+
+            if (type === 'process') {
+                message.channel.send({
                     embed: {
                         color: constants.blue,
                         description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
                     }
                 })
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+            } else if (type === 'os') {
+                message.channel.send({
+                    embed: {
+                        color: constants.blue,
+                        description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**'
+                    }
+                })
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+            } else {
+                message.channel.send({
+                    embed: {
+                        color: constants.blue,
+                        description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**'
+                    }
+                })
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+            }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBANRANDOM`)) { //urbanrandom
             try {
                 var urban = require('urban-dictionary');
