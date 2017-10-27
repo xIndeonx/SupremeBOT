@@ -391,13 +391,25 @@ commands = function () {
                     .addBlankField(true)
                     .addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
                     .addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
-                    .addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true)
+                    .addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true)
                 message.channel.send({
                     embed
                 });
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}INVITE`)) { //invite
+            constants.client.generateInvite(['ADMINISTRATOR'])
+                .then(link => {
+                    message.channel.send({
+                        embed: {
+                            color: constants.blue,
+                            title: 'Invite',
+                            description: `[Click here to invite me](${link})`
+                        }
+                    });
+                })
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}LOTTO`)) { //lotto
             try {
                 var input = message.content;
@@ -506,28 +518,28 @@ commands = function () {
 
             if (type === 'process') {
                 message.channel.send({
-                    embed: {
-                        color: constants.blue,
-                        description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
-                    }
-                })
-                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+                        embed: {
+                            color: constants.blue,
+                            description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
+                        }
+                    })
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
             } else if (type === 'os') {
                 message.channel.send({
-                    embed: {
-                        color: constants.blue,
-                        description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**'
-                    }
-                })
-                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+                        embed: {
+                            color: constants.blue,
+                            description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**'
+                        }
+                    })
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
             } else {
                 message.channel.send({
-                    embed: {
-                        color: constants.blue,
-                        description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**'
-                    }
-                })
-                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+                        embed: {
+                            color: constants.blue,
+                            description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**'
+                        }
+                    })
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}URBANRANDOM`)) { //urbanrandom
             try {
