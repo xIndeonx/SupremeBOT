@@ -406,7 +406,7 @@ commands = function () {
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
-        } else if (message.content.toUpperCase().startsWith(constants.MEMORY)) { //memory
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}MEMORY`)) { //memory
             try {
                 const used = process.memoryUsage();
                 var usage = [];
@@ -616,6 +616,27 @@ commands = function () {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
         }
+        /*else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WOLFRAM`)) {
+                   var wajs = require('wajs');
+                   var args = message.content.split(' ');
+                   var queryString = args.slice(1).join(' ');
+                   var waClient = new wajs(conastants.WOLFRAM_APP_ID);
+                   
+                   waClient.query(queryString)
+                   .then(function(resp) {
+                       message.channel.send({ embed: {
+                           color: constants.blue,
+                           description: resp
+                       }});
+                   })
+                   .catch(function(err) {
+                       logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+                       message.channel.send({ embed: {
+                           color: constants.red,
+                           description: 'An error has occured.\n\nError:\n' + err
+                       }});
+                   });
+           }*/
     });
 
 }

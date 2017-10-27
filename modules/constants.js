@@ -35,7 +35,6 @@ const RESTART = `${PREFIX}RESTART`;
 const SHUTDOWN = `${PREFIX}SHUTDOWN`;
 const DELETE = `${PREFIX}DELETE`;
 const PURGE = `${PREFIX}PURGE`;
-const MEMORY = `${PREFIX}MEMORY`;
 const EVAL = `${PREFIX}EVAL`;
 
 //const for music commands
@@ -47,6 +46,7 @@ const MUSIC_RESUME = `${PREFIX}RESUME`;
 const MUSIC_VOLUME = `${PREFIX}VOLUME`;
 const MUSIC_NP = `${PREFIX}NP`;
 const MUSIC_QUEUE = `${PREFIX}QUEUE`;
+const MUSIC_SEARCH = `${PREFIX}SEARCH`;
 
 //airbrake
 var airbrakeJs = require('airbrake-js');
@@ -98,7 +98,6 @@ module.exports.RESTART = RESTART;
 module.exports.SHUTDOWN = SHUTDOWN;
 module.exports.DELETE = DELETE;
 module.exports.PURGE = PURGE;
-module.exports.MEMORY = MEMORY;
 module.exports.EVAL = EVAL;
 module.exports.MUSIC_PLAY = MUSIC_PLAY;
 module.exports.MUSIC_STOP = MUSIC_STOP;
@@ -108,6 +107,7 @@ module.exports.MUSIC_RESUME = MUSIC_RESUME;
 module.exports.MUSIC_VOLUME = MUSIC_VOLUME;
 module.exports.MUSIC_NP = MUSIC_NP;
 module.exports.MUSIC_QUEUE = MUSIC_QUEUE;
+module.exports.MUSIC_SEARCH = MUSIC_SEARCH;
 module.exports.airbrakeJs = airbrakeJs;
 module.exports.airbrake = airbrake;
 module.exports.blue = blue;
@@ -117,3 +117,4 @@ module.exports.black = black;
 module.exports.green = green;
 module.exports.yellow = yellow;
 module.exports.isYes = isYes;
+module.exports.isRunning = isRunning;

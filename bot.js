@@ -29,7 +29,7 @@ constants.client.on('reconnecting', () => console.log('Bot is reconnecting...'))
 //bot token login
 constants.client.login(constants.TOKEN);
 
-process.on("unhandledRejection", console.error);
+process.on('unhandledRejection', console.error);
 
 commands();
 customCommands();
