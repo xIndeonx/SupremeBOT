@@ -109,14 +109,14 @@ play = function (guild, song) {
 }
 
 //message on member join
-constants.client.on('guildMemberAdd', function (member) {
+/*constants.client.on('guildMemberAdd', function (member) {
     // Send the message to a designated channel on a server
     const channel = member.guild.channels.find('name', 'announcements');
     // Do nothing if the channel wasn't found on this server
     if (!channel) return;
     // Send the message, mentioning the member
     channel.send(`Welcome to the server, ${member}!`);
-});
+});*/
 
 //function for correct time format
 format = function (seconds) {
@@ -131,10 +131,10 @@ format = function (seconds) {
 }
 
 msToTime = function (duration) {
-    var milliseconds = Math.floor((duration%1000)/100)
-        , seconds = Math.floor((duration/1000)%60)
-        , minutes = Math.floor((duration/(1000*60))%60)
-        , hours = Math.floor((duration/(1000*60*60))%24);
+    var milliseconds = Math.floor((duration % 1000) / 100),
+        seconds = Math.floor((duration / 1000) % 60),
+        minutes = Math.floor((duration / (1000 * 60)) % 60),
+        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
