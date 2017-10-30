@@ -268,7 +268,7 @@ rpsPrint = function (userRPS, usertag) {
             case 'USER':
                 return usertag + ' Won!';
             case 'BOT':
-                return client.user.toString() + ' Won!';
+                return constants.client.user.toString() + ' Won!';
             case 'DRAW':
                 return rpsMessage;
         }
