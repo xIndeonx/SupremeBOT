@@ -438,8 +438,15 @@ commands = function () {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}PING`)) { //ping
-            message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
-                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+            var args = message.content.split(' ');
+            var string = args.slice(1).join(' ');
+            if (string === 'realtime' || string === 'rt') {
+                message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+            } else {
+                message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+            }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ROLES`)) { //roles
             try {
                 const roles = message.guild.roles.map(r => r.name);
