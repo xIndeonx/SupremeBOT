@@ -206,6 +206,5 @@ customCommands = function () {
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ZOEL`)) { //zoel
             message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
         }
-
     });
 }
