@@ -8,32 +8,7 @@ commands = function () {
         if (message.author.bot) return;
         if (!message.content.startsWith(constants.PREFIX)) return;
         if (!message.guild) return;
-        if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JOIN`)) {
-            try {
-                if (message.member.voiceChannel) {
-                    message.member.voiceChannel.join()
-                        .then(connection => { // Connection is an instance of VoiceConnection
-                            message.channel.send(':white_check_mark: I have successfully connected to the channel!');
-                        })
-                        .catch(console.log);
-                } else {
-                    message.channel.send(':bangbang: You need to join a voice channel first!');
-                }
-            } catch (err) {
-                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-            }
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VCLEAVE`)) {
-            try {
-                if (message.member.voiceChannel) {
-                    message.member.voiceChannel.leave();
-                    message.channel.send(':white_check_mark: I have successfully disconnected from the channel!');
-                } else {
-                    message.channel.send(':bangbang: You are not in a voice channel!');
-                }
-            } catch (err) {
-                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-            }
-        } else if (message.content.toUpperCase().startsWith(constants.EVAL)) { //eval
+        if (message.content.toUpperCase().startsWith(constants.EVAL)) { //eval
             if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
                 const args = message.content.split(' ').slice(1);
                 try {
@@ -410,6 +385,20 @@ commands = function () {
                     });
                 })
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JOIN`)) {
+            try {
+                if (message.member.voiceChannel) {
+                    message.member.voiceChannel.join()
+                        .then(connection => { // Connection is an instance of VoiceConnection
+                            message.channel.send(':white_check_mark: I have successfully connected to the channel!');
+                        })
+                        .catch(console.log);
+                } else {
+                    message.channel.send(':bangbang: You need to join a voice channel first!');
+                }
+            } catch (err) {
+                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+            }
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}LOTTO`)) { //lotto
             try {
                 var input = message.content;
@@ -643,6 +632,17 @@ commands = function () {
                     message.channel.send({
                         embed: whoIsError
                     });
+                }
+            } catch (err) {
+                logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+            }
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VCLEAVE`)) {
+            try {
+                if (message.member.voiceChannel) {
+                    message.member.voiceChannel.leave();
+                    message.channel.send(':white_check_mark: I have successfully disconnected from the channel!');
+                } else {
+                    message.channel.send(':bangbang: You are not in a voice channel!');
                 }
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
