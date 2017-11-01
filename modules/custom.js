@@ -181,7 +181,7 @@ customCommands = function () {
             message.channel.send('"Du hesch es falsches Weltbild."');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ZEIT`)) { //zeit
             message.channel.send('Neun Uhr Achtzig.');
-        } else if (message.content.toUpperCase() === `${constants.PREFIX}ZIIT`) { //ziit
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ZIIT`)) { //ziit
             if (message.author.id === constants.OWNERID) {
                 const embed = new constants.Discord.RichEmbed()
                     .setTitle('Vape Nation')
@@ -201,8 +201,6 @@ customCommands = function () {
                     })
                     .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
             }
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ZIIT?`)) { //ziit?
-            message.channel.send('Ja, was isch denn für Ziit?');
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}ZOEL`)) { //zoel
             message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
         }
