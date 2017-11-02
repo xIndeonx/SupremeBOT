@@ -675,34 +675,39 @@ commands = function () {
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WOLFRAM`)) { //wolfram
+            if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+                try {
+                    var wajs = require('wajs');
+                    var waClient = new wajs(constants.WOLFRAM_APPID);
+
+                    var args = message.content.split(' ');
+                    var queryString = args.slice(1).join(' ');
+
+                    waClient.query(queryString)
+                        .then(function (resp) {
+                            message.channel.send({
+                                embed: {
+                                    color: constants.blue,
+                                    title: queryString,
+                                    description: resp
+                                }
+                            });
+                        })
+                        .catch(function (err) {
+                            logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+                            message.channel.send({
+                                embed: {
+                                    color: constants.red,
+                                    description: 'An error has occured.\n\nError:\n' + err
+                                }
+                            });
+                        });
+                } catch (err) {
+                    logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+                }
+            }
         }
-        /*else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WOLFRAM`)) {
-                   var wajs = require('wajs');
-                   var waAppId = process.env.WA_APP_ID
-                   var waClient = new wajs(waAppId);
-
-                   var args = message.content.split(' ');
-                   var queryString = args.slice(1).join(' ');
-
-                   waClient.query(queryString)
-                       .then(function (resp) {
-                           message.channel.send({
-                               embed: {
-                                   color: constants.blue,
-                                   description: resp
-                               }
-                           });
-                       })
-                       .catch(function (err) {
-                           logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-                           message.channel.send({
-                               embed: {
-                                   color: constants.red,
-                                   description: 'An error has occured.\n\nError:\n' + err
-                               }
-                           });
-                       });
-               }*/
     });
 
 }
