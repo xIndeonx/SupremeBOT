@@ -687,21 +687,23 @@ commands = function () {
                     waClient.query(queryString)
                         .then(function (resp) {
                             message.channel.send({
-                                embed: {
-                                    color: constants.blue,
-                                    title: queryString,
-                                    description: resp
-                                }
-                            });
+                                    embed: {
+                                        color: constants.blue,
+                                        title: queryString,
+                                        description: resp
+                                    }
+                                })
+                                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
                         })
                         .catch(function (err) {
                             logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
                             message.channel.send({
-                                embed: {
-                                    color: constants.red,
-                                    description: 'An error has occured.\n\nError:\n' + err
-                                }
-                            });
+                                    embed: {
+                                        color: constants.red,
+                                        description: 'An error has occured.\n\nError:\n' + err
+                                    }
+                                })
+                                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
                         });
                 } catch (err) {
                     logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
