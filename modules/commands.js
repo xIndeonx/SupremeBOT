@@ -255,7 +255,7 @@ commands = function () {
                 message.channel.send({
                         embed: {
                             color: constants.blue,
-                            title: 'Response',
+                            title: 'Cleverbot says...',
                             description: response.output,
                         }
                     })
