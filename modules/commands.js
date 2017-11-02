@@ -233,7 +233,7 @@ commands = function () {
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CLEVERBOT`)) {
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CLEVERBOT`)) { //cleverbot
             const CleverbotAPI = require('cleverbot-api');
             const cleverbot = new CleverbotAPI(constants.CLEVERBOT_KEY);
 
@@ -244,14 +244,14 @@ commands = function () {
                 input: queryString
             }, (error, response) => {
                 if (error) throw error + message.channel.send({
-                    embed: {
-                        color: constants.red,
-                        title: 'Error',
-                        description: error
-                    }
-                })
-                .then(logToChannel('Error', error, message.author.tag, message.author.displayAvatarURL))
-                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+                        embed: {
+                            color: constants.red,
+                            title: 'Error',
+                            description: error
+                        }
+                    })
+                    .then(logToChannel('Error', error, message.author.tag, message.author.displayAvatarURL))
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
                 message.channel.send({
                         embed: {
                             color: constants.blue,
@@ -413,7 +413,7 @@ commands = function () {
                     });
                 })
                 .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JOIN`)) {
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}JOIN`)) { //join
             try {
                 if (message.member.voiceChannel) {
                     message.member.voiceChannel.join()
@@ -664,7 +664,7 @@ commands = function () {
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
-        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VCLEAVE`)) {
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VCLEAVE`)) { //vcleave
             try {
                 if (message.member.voiceChannel) {
                     message.member.voiceChannel.leave();
@@ -678,25 +678,31 @@ commands = function () {
         }
         /*else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}WOLFRAM`)) {
                    var wajs = require('wajs');
+                   var waAppId = process.env.WA_APP_ID
+                   var waClient = new wajs(waAppId);
+
                    var args = message.content.split(' ');
                    var queryString = args.slice(1).join(' ');
-                   var waClient = new wajs(conastants.WOLFRAM_APP_ID);
-                   
+
                    waClient.query(queryString)
-                   .then(function(resp) {
-                       message.channel.send({ embed: {
-                           color: constants.blue,
-                           description: resp
-                       }});
-                   })
-                   .catch(function(err) {
-                       logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-                       message.channel.send({ embed: {
-                           color: constants.red,
-                           description: 'An error has occured.\n\nError:\n' + err
-                       }});
-                   });
-           }*/
+                       .then(function (resp) {
+                           message.channel.send({
+                               embed: {
+                                   color: constants.blue,
+                                   description: resp
+                               }
+                           });
+                       })
+                       .catch(function (err) {
+                           logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+                           message.channel.send({
+                               embed: {
+                                   color: constants.red,
+                                   description: 'An error has occured.\n\nError:\n' + err
+                               }
+                           });
+                       });
+               }*/
     });
 
 }
