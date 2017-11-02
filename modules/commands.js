@@ -233,6 +233,34 @@ commands = function () {
             } catch (err) {
                 logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
             }
+        } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}CLEVERBOT`)) {
+            const CleverbotAPI = require('cleverbot-api');
+            const cleverbot = new CleverbotAPI(constants.CLEVERBOT_KEY);
+
+            var args = message.content.split(' ');
+            var queryString = args.slice(1).join(' ');
+
+            cleverbot.getReply({
+                input: queryString
+            }, (error, response) => {
+                if (error) throw error + message.channel.send({
+                    embed: {
+                        color: constants.red,
+                        title: 'Error',
+                        description: error
+                    }
+                })
+                .then(logToChannel('Error', error, message.author.tag, message.author.displayAvatarURL))
+                .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+                message.channel.send({
+                        embed: {
+                            color: constants.blue,
+                            title: 'Response',
+                            description: response.output,
+                        }
+                    })
+                    .catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+            });
         } else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}COINFLIP`)) { //coinflip
             message.channel.send({
                     embed: coinFlip(message.content)
@@ -366,7 +394,7 @@ commands = function () {
                     .addBlankField(true)
                     .addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
                     .addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
-                    .addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true)
+                    .addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true)
                 message.channel.send({
                     embed
                 });
