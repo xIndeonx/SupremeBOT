@@ -18,7 +18,8 @@ const {
     YT_API,
     PROJECT_ID,
     PROJECT_KEY,
-    WOLFRAM_APPID
+    WOLFRAM_APPID,
+    CLEVERBOT_KEY
 } = require('../config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
@@ -85,6 +86,8 @@ module.exports.LUCASID = LUCASID;
 module.exports.YT_API = YT_API;
 module.exports.PROJECT_ID = PROJECT_ID;
 module.exports.PROJECT_KEY = PROJECT_KEY;
+module.exports.WOLFRAM_APPID = WOLFRAM_APPID;
+module.exports.CLEVERBOT_KEY = CLEVERBOT_KEY;
 module.exports.YouTube = YouTube;
 module.exports.ytdl = ytdl;
 module.exports.embed = embed;
