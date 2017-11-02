@@ -18,7 +18,8 @@ const {
     YT_API,
     PROJECT_ID,
     PROJECT_KEY,
-    WOLFRAM_APPID
+    WOLFRAM_APPID,
+    CLEVERBOT_KEY
 } = require('../config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
