@@ -1,3 +1,4 @@
 node_modules
 config.js
 _config.yml
+.eslintrc.json

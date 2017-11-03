@@ -1,25 +1,25 @@
-//constants
+// constants
 const Discord = require('discord.js');
 const {
-    Client,
-    Util
+	Client,
+	Util
 } = require('discord.js');
 const client = new Discord.Client({
-    disableEveryone: true
+	disableEveryone: true
 });
 const {
-    SECRET,
-    TOKEN,
-    PREFIX,
-    CHANNEL,
-    BOT_CHANNEL,
-    OWNERID,
-    LUCASID,
-    YT_API,
-    PROJECT_ID,
-    PROJECT_KEY,
-    WOLFRAM_APPID,
-    CLEVERBOT_KEY
+	SECRET,
+	TOKEN,
+	PREFIX,
+	CHANNEL,
+	BOT_CHANNEL,
+	OWNERID,
+	LUCASID,
+	YT_API,
+	PROJECT_ID,
+	PROJECT_KEY,
+	WOLFRAM_APPID,
+	CLEVERBOT_KEY
 } = require('../config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
@@ -28,7 +28,7 @@ const youtube = new YouTube(YT_API);
 const queue = new Map();
 const GAME = '.help | Work in Progress';
 
-//const for admin commands
+// const for admin commands
 const SET_GAME = `${PREFIX}SETGAME`;
 const SET_AVATAR = `${PREFIX}SETAVATAR`;
 const SET_STATUS = `${PREFIX}SETSTATUS`;
@@ -38,7 +38,7 @@ const DELETE = `${PREFIX}DELETE`;
 const PURGE = `${PREFIX}PURGE`;
 const EVAL = `${PREFIX}EVAL`;
 
-//const for music commands
+// const for music commands
 const MUSIC_PLAY = `${PREFIX}PLAY`;
 const MUSIC_STOP = `${PREFIX}STOP`;
 const MUSIC_SKIP = `${PREFIX}SKIP`;
@@ -49,26 +49,26 @@ const MUSIC_NP = `${PREFIX}NP`;
 const MUSIC_QUEUE = `${PREFIX}QUEUE`;
 const MUSIC_SEARCH = `${PREFIX}SEARCH`;
 
-//airbrake
+// airbrake
 var airbrakeJs = require('airbrake-js');
 var airbrake = new airbrakeJs({
-    projectId: PROJECT_ID,
-    projectKey: PROJECT_KEY
+	projectId: PROJECT_ID,
+	projectKey: PROJECT_KEY
 });
 airbrake.addFilter(function (notice) {
-    notice.context.environment = 'production';
-    return notice;
+	notice.context.environment = 'production';
+	return notice;
 });
 
-//const for colors
+// const for colors
 const blue = 3447003;
 const orange = 0xf9bd31;
 const red = 0xff0000;
-const black = 000000;
+const black = 0x000000;
 const green = 0x00ff00;
 const yellow = 0xffff00;
 
-//attributes for commands
+// attributes for commands
 var isYes;
 var isRunning = false;
 
