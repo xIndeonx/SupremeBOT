@@ -105,7 +105,8 @@ play = function (guild, song) {
 			description: `:arrow_forward: Started playing: **${song.title}**`,
 			color: constants.blue
 		}
-	});
+	})
+		.then(sent => sent.delete(60000));
 };
 
 // message on member join
