@@ -37,78 +37,78 @@ musicCommands = function () {
 				});
 			}
 
-            if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-                message.channel.startTyping();
-                const playlist = await constants.youtube.getPlaylist(url);
-                const videos = await playlist.getVideos();
-                limit = 0;
-                for (const video of Object.values(videos)) {
-                    limit += 1;
-                    try {
-                        const video2 = await constants.youtube.getVideoByID(video.id);
-                        await handleVideo(video2, message, voiceChannel, true);
-                    } catch(err){
-                        logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-                        continue;
-                    }
-                    if (limit === 20){
-                        break;
-                    }
-                }
-                message.channel.stopTyping(true);
-                return message.channel.send({
-                    embed: {
-                        description: `Playlist **${constants.playlist.title}** has been added to the queue!`,
-                        color: constants.blue
-                    }
-                });
-            } else {
-                try {
-                    var video = await constants.youtube.getVideo(url);
-                } catch (error) {
-                    try {
-                        var videos = await constants.youtube.searchVideos(searchString, 1);
-                        var video = await constants.youtube.getVideoByID(videos[0].id);
-                    } catch (err) {
-                        logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-                        message.channel.stopTyping(true);
-                        return message.channel.send({
-                            embed: {
-                                description: ':bangbang: **Could not get search results.**',
-                                color: constants.red
-                            }
-                        });
-                    }
-                }
-                return handleVideo(video, message, voiceChannel);
-            }
-        } else if (message.content.toUpperCase().startsWith(constants.MUSIC_SEARCH)) {
-            console.log('test');
-            const voiceChannel = message.member.voiceChannel;
-            const authorid = message.author.id;
-            if (!voiceChannel) return message.channel.send({
-                embed: {
-                    description: ':bangbang: **You need to be in a voice channel to play music!**',
-                    color: constants.red
-                }
-            });
-            const permissions = voiceChannel.permissionsFor(message.client.user);
-            if (!permissions.has('CONNECT')) {
-                return message.channel.send({
-                    embed: {
-                        description: ':bangbang: **Cannot connect to your voice channel!**',
-                        color: constants.red
-                    }
-                });
-            }
-            if (!permissions.has('SPEAK')) {
-                return message.channel.send({
-                    embed: {
-                        description: ':bangbang: **Cannot speak in your voice channel!**',
-                        color: constants.red
-                    }
-                });
-            }
+			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+				message.channel.startTyping();
+				const playlist = await constants.youtube.getPlaylist(url);
+				const videos = await playlist.getVideos();
+				limit = 0;
+				for (const video of Object.values(videos)) {
+					limit += 1;
+					try {
+						const video2 = await constants.youtube.getVideoByID(video.id);
+						await handleVideo(video2, message, voiceChannel, true);
+					} catch (err) {
+						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+						continue;
+					}
+					if (limit === 20) {
+						break;
+					}
+				}
+				message.channel.stopTyping(true);
+				return message.channel.send({
+					embed: {
+						description: `Playlist **${constants.playlist.title}** has been added to the queue!`,
+						color: constants.blue
+					}
+				});
+			} else {
+				try {
+					var video = await constants.youtube.getVideo(url);
+				} catch (error) {
+					try {
+						var videos = await constants.youtube.searchVideos(searchString, 1);
+						var video = await constants.youtube.getVideoByID(videos[0].id);
+					} catch (err) {
+						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+						message.channel.stopTyping(true);
+						return message.channel.send({
+							embed: {
+								description: ':bangbang: **Could not get search results.**',
+								color: constants.red
+							}
+						});
+					}
+				}
+				return handleVideo(video, message, voiceChannel);
+			}
+		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_SEARCH)) {
+			console.log('test');
+			const voiceChannel = message.member.voiceChannel;
+			const authorid = message.author.id;
+			if (!voiceChannel) return message.channel.send({
+				embed: {
+					description: ':bangbang: **You need to be in a voice channel to play music!**',
+					color: constants.red
+				}
+			});
+			const permissions = voiceChannel.permissionsFor(message.client.user);
+			if (!permissions.has('CONNECT')) {
+				return message.channel.send({
+					embed: {
+						description: ':bangbang: **Cannot connect to your voice channel!**',
+						color: constants.red
+					}
+				});
+			}
+			if (!permissions.has('SPEAK')) {
+				return message.channel.send({
+					embed: {
+						description: ':bangbang: **Cannot speak in your voice channel!**',
+						color: constants.red
+					}
+				});
+			}
 
 			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 				message.channel.startTyping();
