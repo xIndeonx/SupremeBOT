@@ -51,7 +51,7 @@ musicCommands = function () {
 						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 						continue;
 					}
-					if (limit === 20) {
+					if (limit === 100) {
 						break;
 					}
 				}
@@ -289,18 +289,28 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			});
 			let index = 0;
 			var queuelist = `\n${serverQueue.songs.map(song => `${++index} - ${song.title}`).join('\n')}`;
-			return message.channel.send({
-				embed: {
-					title: 'Queue',
-					color: constants.blue,
-					description: `\`\`\`xl
+			if (queuelist.length < 2000) {
+				return message.channel.send({
+					embed: {
+						title: 'Queue',
+						color: constants.blue,
+						description: `\`\`\`xl
 ${queuelist}
             \`\`\``,
-					footer: {
-						text: `Now playing: ${serverQueue.songs[0].title}`
+						footer: {
+							text: `Now playing: ${serverQueue.songs[0].title}`
+						}
 					}
-				}
-			});
+				});
+			} else {
+				return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'Queue is too long to show.'
+					}
+				});
+			}
 		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_PAUSE)) {
 			if (serverQueue && serverQueue.playing) {
 				serverQueue.playing = false;
