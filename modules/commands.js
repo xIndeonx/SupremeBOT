@@ -328,7 +328,7 @@ commands = function () {
 								color: constants.red,
 								description: 'Could not create countdown. Please enter a valid number.'
 							}
-						});
+						}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						return;
 					}
 					else if (count > 86400) {
@@ -337,7 +337,7 @@ commands = function () {
 								color: constants.red,
 								description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).'
 							}
-						});
+						}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						return;
 					}
 					else {
@@ -358,7 +358,7 @@ commands = function () {
 										description: '```' + format(i) + '```'
 									}
 								});
-							}, 3000);
+							}, 3000).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 							(function fn() {
 								if (i > 0) {
 									setTimeout(function () {
@@ -372,7 +372,7 @@ commands = function () {
 											title: 'Countdown',
 											description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
 										}
-									});
+									}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 									clearInterval(interval);
 									constants.isRunning = false;
 								}
@@ -401,18 +401,18 @@ commands = function () {
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
 						embed
-					});
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 				else {
 					message.author.send({
 						embed
-					});
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 					message.channel.send({
 						embed: {
 							color: constants.green,
 							description: message.author + ', please check your Direct Messages!'
 						}
-					}).then(sent => sent.delete(10000));
+					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 			}
 			catch (err) {
@@ -469,18 +469,18 @@ commands = function () {
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
 						embed
-					});
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 				else {
 					message.author.send({
 						embed
-					});
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 					message.channel.send({
 						embed: {
 							color: constants.green,
 							description: message.author + ', please check your Direct Messages!'
 						}
-					}).then(sent => sent.delete(10000));
+					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 			}
 			catch (err) {
