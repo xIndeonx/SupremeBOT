@@ -349,6 +349,7 @@ commands = function () {
 			}
 		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}custom`)) { // custom
 			try {
+				message.delete();
 				const embed = new constants.Discord.RichEmbed()
 					.setColor(constants.red)
 					.setTimestamp()
@@ -361,6 +362,12 @@ commands = function () {
 				message.author.send({
 					embed
 				});
+				message.channel.send({
+					embed: {
+						color: constants.green,
+						description: message.author + ', please check your Direct Messages!'
+					}
+				}).then(sent => sent.delete(10000));
 
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
@@ -398,6 +405,7 @@ commands = function () {
 			}
 		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}help`)) { // help
 			try {
+				message.delete();
 				const embed = new constants.Discord.RichEmbed()
 					.setColor(constants.red)
 					.setTimestamp()
@@ -413,6 +421,12 @@ commands = function () {
 				message.author.send({
 					embed
 				});
+				message.channel.send({
+					embed: {
+						color: constants.green,
+						description: message.author + ', please check your Direct Messages!'
+					}
+				}).then(sent => sent.delete(10000));
 
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
