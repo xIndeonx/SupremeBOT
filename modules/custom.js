@@ -81,8 +81,10 @@ customCommands = function () {
 			message.channel.send('De Vabio isch en chline Memer.');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FABIO2`)) { // fabio2
 			message.channel.send('Wie isch d\'Matur? - Mis Lebe isch erfüllt.');
-		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FABIOCSGO`)) { // fabiocsgo
+		} else if (message.content.toUpperCase() === `${constants.PREFIX}FABIOCSGO`) { // fabiocsgo
 			message.channel.send('High risk - no reward.');
+		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FABIOCSGO2`)) { // fabiocsgo2
+			message.channel.send('AWP Chlauer EFZ');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FFS`)) { // ffs
 			message.channel.send('FFS.');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}FIGE`)) { // fige
@@ -133,6 +135,8 @@ customCommands = function () {
 			message.channel.send('exit');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}LUCAS3`)) { // lucas3
 			message.channel.send('ICH chan auto fahre');
+		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}LUCASCSGO`)) { // lucascsgo
+			message.channel.send('Regt sich nöd uf wemmer ihm d awp chlaut');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}MILA`)) { // mila
 			message.channel.send('__**ACHT**__');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}NOAH`)) { // noah
@@ -166,6 +170,13 @@ customCommands = function () {
 			message.channel.send('Ich rauch mini Thermoschanne voll dure.');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}TOUBI`)) { // toubi
 			message.channel.send('Hallo, ich heisse Toubi.');
+		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VAPEIO`)) { // vapeio
+			if(message.author.id != constants.OWNERID){
+				var vapeio = message.guild.members.find("id", constants.OWNERID)
+				if(vapeio){
+					vapeio.setVoiceChannel("340961232695853068");
+				} else message.channel.send("de vapeio isch leider am vape und nöd da");
+			} else message.channel.send("nei vapeio du chasch dich nöd selber verschiebe");
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VELO`)) { // velo
 			message.channel.send('黒人が自転車を盗んだ');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VN`)) { // vn
