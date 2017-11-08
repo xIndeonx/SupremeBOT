@@ -119,7 +119,7 @@ play = function (guild, song) {
     channel.send(`Welcome to the server, ${member}!`);
 });*/
 
-// function for correct time format
+// functions for correct time format
 format = function (input) {
 	function pad(s) {
 		return (s < 10 ? '0' : '') + s;
@@ -162,7 +162,7 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 		constants.airbrake.notify(logMessage);
 		break;
 	default:
-		color = black;
+		color = constants.black;
 	}
 
 	const embed = new constants.Discord.RichEmbed()
@@ -178,7 +178,7 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 
 };
 
-// function for coinflip
+// functions for coinflip
 coinFlip = function (coinFlipMessage) {
 	const coinFlipErrorEmbed = new constants.Discord.RichEmbed()
 		.setTitle('Error')
