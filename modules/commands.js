@@ -489,7 +489,7 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: `Sorry ${message.author} I couldn't kick because of : ${error}`
+							description: `Sorry ${message.author} I couldn't kick because of: ${error}`
 						}
 					}));
 				message.channel.send({
