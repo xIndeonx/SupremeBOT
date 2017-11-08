@@ -11,7 +11,7 @@ musicCommands = function () {
 		const searchString = args.slice(1).join(' ');
 		const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
 		const serverQueue = constants.queue.get(message.guild.id);
-		if (message.content.toUpperCase().startsWith(constants.MUSIC_PLAY)) {
+		if (message.content.toLowerCase().startsWith(constants.MUSIC_PLAY)) {
 			const voiceChannel = message.member.voiceChannel;
 			if (!voiceChannel) return message.channel.send({
 				embed: {
@@ -82,7 +82,7 @@ musicCommands = function () {
 				}
 				return handleVideo(video, message, voiceChannel);
 			}
-		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_SEARCH)) {
+		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_SEARCH)) {
 			console.log('test');
 			const voiceChannel = message.member.voiceChannel;
 			const authorid = message.author.id;
@@ -175,7 +175,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 				return handleVideo(video, message, voiceChannel);
 			}
-		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_SKIP)) {
+		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_SKIP)) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					description: ':bangbang: **You are not in a voice channel!**',
@@ -198,7 +198,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 			});
 			return;
-		} else if ((message.content.toUpperCase().startsWith(constants.MUSIC_STOP)) || (message.content.toUpperCase().startsWith(`${constants.PREFIX}LEAVE`))) {
+		} else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}LEAVE`))) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					description: ':bangbang: **You are not in a voice channel!**',
@@ -220,7 +220,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 			});
 			return;
-		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_VOLUME)) {
+		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_VOLUME)) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					description: ':bangbang: **You are not in a voice channel!**',
@@ -267,7 +267,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					});
 				}
 			}
-		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_NP)) {
+		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_NP)) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					description: ':bangbang: **There is nothing playing.**',
@@ -280,7 +280,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					color: constants.blue
 				}
 			});
-		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_QUEUE)) {
+		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_QUEUE)) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					description: ':bangbang: **There is nothing playing.**',
@@ -311,7 +311,7 @@ ${queuelist}
 					}
 				});
 			}
-		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_PAUSE)) {
+		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_PAUSE)) {
 			if (serverQueue && serverQueue.playing) {
 				serverQueue.playing = false;
 				serverQueue.connection.dispatcher.pause();
@@ -328,7 +328,7 @@ ${queuelist}
 					color: constants.red
 				}
 			});
-		} else if (message.content.toUpperCase().startsWith(constants.MUSIC_RESUME)) {
+		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_RESUME)) {
 			if (serverQueue && !serverQueue.playing) {
 				serverQueue.playing = true;
 				serverQueue.connection.dispatcher.resume();

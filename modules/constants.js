@@ -29,25 +29,25 @@ const queue = new Map();
 const GAME = '.help | Work in Progress';
 
 // const for admin commands
-const SET_GAME = `${PREFIX}SETGAME`;
-const SET_AVATAR = `${PREFIX}SETAVATAR`;
-const SET_STATUS = `${PREFIX}SETSTATUS`;
-const RESTART = `${PREFIX}RESTART`;
-const SHUTDOWN = `${PREFIX}SHUTDOWN`;
-const DELETE = `${PREFIX}DELETE`;
-const PURGE = `${PREFIX}PURGE`;
-const EVAL = `${PREFIX}EVAL`;
+const SET_GAME = `${PREFIX}setgame`;
+const SET_AVATAR = `${PREFIX}setavatar`;
+const SET_STATUS = `${PREFIX}setstatus`;
+const RESTART = `${PREFIX}restart`;
+const SHUTDOWN = `${PREFIX}shutdown`;
+const DELETE = `${PREFIX}delete`;
+const PURGE = `${PREFIX}purge`;
+const EVAL = `${PREFIX}eval`;
 
 // const for music commands
-const MUSIC_PLAY = `${PREFIX}PLAY`;
-const MUSIC_STOP = `${PREFIX}STOP`;
-const MUSIC_SKIP = `${PREFIX}SKIP`;
-const MUSIC_PAUSE = `${PREFIX}PAUSE`;
-const MUSIC_RESUME = `${PREFIX}RESUME`;
-const MUSIC_VOLUME = `${PREFIX}VOLUME`;
-const MUSIC_NP = `${PREFIX}NP`;
-const MUSIC_QUEUE = `${PREFIX}QUEUE`;
-const MUSIC_SEARCH = `${PREFIX}SEARCH`;
+const MUSIC_PLAY = `${PREFIX}play`;
+const MUSIC_STOP = `${PREFIX}stop`;
+const MUSIC_SKIP = `${PREFIX}skip`;
+const MUSIC_PAUSE = `${PREFIX}pause`;
+const MUSIC_RESUME = `${PREFIX}resume`;
+const MUSIC_VOLUME = `${PREFIX}volume`;
+const MUSIC_NP = `${PREFIX}np`;
+const MUSIC_QUEUE = `${PREFIX}queue`;
+const MUSIC_SEARCH = `${PREFIX}search`;
 
 // airbrake
 var airbrakeJs = require('airbrake-js');
