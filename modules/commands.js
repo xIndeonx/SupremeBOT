@@ -738,35 +738,37 @@ commands = function () {
 					message.channel.send({
 						embed
 					});
-				/*var args = message.content.split(' ');
-				var string = args.slice(1).join(' ');
-				var user;
-				if (string.toLowerCase() === 'ich' || string.toLowerCase() === 'me') {
-					user = message.author;
-				} else if (string) {
-					user = constants.client.users.get(string);
 				} else {
-					user = message.author;
-				}
-				if (user) {
-					const embed = new constants.Discord.RichEmbed()
-						.setColor(constants.blue)
-						.setAuthor(user.username, user.displayAvatarURL)
-						.addField('Username', user.username, true)
-						.addField('Discriminator', user.discriminator, true)
-						.addField('ID', user.id, true)
-						.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
-					message.channel.send({
-						embed
-					});
-				} else {
-					const whoIsError = new constants.Discord.RichEmbed()
-						.setTitle('Error')
-						.setDescription(`User not found. Try \`${constants.PREFIX}userinfo user_id\` **OR** \`${constants.PREFIX}whois ich\``)
-						.setColor(constants.red);
-					message.channel.send({
-						embed: whoIsError
-					});*/
+					var args = message.content.split(' ');
+					var string = args.slice(1).join(' ');
+					var user;
+					if (string.toLowerCase() === 'ich' || string.toLowerCase() === 'me') {
+						user = message.author;
+					} else if (string) {
+						user = constants.client.users.get(string);
+					} else {
+						user = message.author;
+					}
+					if (user) {
+						const embed = new constants.Discord.RichEmbed()
+							.setColor(constants.blue)
+							.setAuthor(user.username, user.displayAvatarURL)
+							.addField('Username', user.username, true)
+							.addField('Discriminator', user.discriminator, true)
+							.addField('ID', user.id, true)
+							.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
+						message.channel.send({
+							embed
+						});
+					} else {
+						const whoIsError = new constants.Discord.RichEmbed()
+							.setTitle('Error')
+							.setDescription(`User not found. Try \`${constants.PREFIX}userinfo user_id\` **OR** \`${constants.PREFIX}whois ich\``)
+							.setColor(constants.red);
+						message.channel.send({
+							embed: whoIsError
+						});
+					}
 				}
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
