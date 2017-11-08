@@ -328,7 +328,7 @@ commands = function () {
 								color: constants.red,
 								description: 'Could not create countdown. Please enter a valid number.'
 							}
-						});
+						}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						return;
 					}
 					else if (count > 86400) {
@@ -337,7 +337,7 @@ commands = function () {
 								color: constants.red,
 								description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).'
 							}
-						});
+						}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						return;
 					}
 					else {
@@ -358,7 +358,7 @@ commands = function () {
 										description: '```' + format(i) + '```'
 									}
 								});
-							}, 3000);
+							}, 3000).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 							(function fn() {
 								if (i > 0) {
 									setTimeout(function () {
@@ -372,7 +372,7 @@ commands = function () {
 											title: 'Countdown',
 											description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
 										}
-									});
+									}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 									clearInterval(interval);
 									constants.isRunning = false;
 								}
@@ -397,20 +397,22 @@ commands = function () {
 					.addField('A-E', `\`${constants.PREFIX}1=0\`\n\`${constants.PREFIX}ademerci\`\n\`${constants.PREFIX}aha\`\n\`${constants.PREFIX}alina\`\n\`${constants.PREFIX}andreas\`\n\`${constants.PREFIX}andi\`\n\`${constants.PREFIX}andy\`\n\`${constants.PREFIX}auä\`\n\`${constants.PREFIX}australia\`\n\`${constants.PREFIX}autismus\`\n\`${constants.PREFIX}autist\`\n\`${constants.PREFIX}baumi\`\n\`${constants.PREFIX}baumi1\`\n\`${constants.PREFIX}baumi2\`\n\`${constants.PREFIX}baumi3\`\n\`${constants.PREFIX}baumi4\`\n\`${constants.PREFIX}bitte\`\n\`${constants.PREFIX}boogeyman\`\n\`${constants.PREFIX}bzz\`\n\`${constants.PREFIX}claudio\`\n\`${constants.PREFIX}claudiolino\`\n\`${constants.PREFIX}clö\`\n\`${constants.PREFIX}danke\`\n\`${constants.PREFIX}dinimom\`\n\`${constants.PREFIX}doni\`\n\`${constants.PREFIX}eine\`\n\`${constants.PREFIX}eis\`\n`, true)
 					.addField('E-J', `\`${constants.PREFIX}esgahtnöd\`\n\`${constants.PREFIX}exit\`\n\`${constants.PREFIX}fabio\`\n\`${constants.PREFIX}fabio2\`\n\`${constants.PREFIX}fabiocsgo\`\n\`${constants.PREFIX}ffs\`\n\`${constants.PREFIX}fige\`\n\`${constants.PREFIX}filip\`\n\`${constants.PREFIX}game\`\n\`${constants.PREFIX}getshiton\`\n\`${constants.PREFIX}gopfeteli\`\n\`${constants.PREFIX}gschicht\`\n\`${constants.PREFIX}hoi\`\n\`${constants.PREFIX}hm\`\n\`${constants.PREFIX}ich\`\n\`${constants.PREFIX}ichi\`\n\`${constants.PREFIX}interessiert\`\n\`${constants.PREFIX}inyourfaculty\`\n\`${constants.PREFIX}inyourfamily\`\n\`${constants.PREFIX}inyourname\`\n\`${constants.PREFIX}inyourspirit\`\n\`${constants.PREFIX}ivan\`\n\`${constants.PREFIX}jacob\`\n\`${constants.PREFIX}jaoder\`\n\`${constants.PREFIX}jesus\`\n\`${constants.PREFIX}jesuschrist\`\n`, true)
 					.addField('J-Z', `\`${constants.PREFIX}joel\`\n\`${constants.PREFIX}kadder\`\n\`${constants.PREFIX}kadder2\`\n\`${constants.PREFIX}ksh\`\n\`${constants.PREFIX}lucas\`\n\`${constants.PREFIX}lucas2\`\n\`${constants.PREFIX}lucas3\`\n\`${constants.PREFIX}merci\`\n\`${constants.PREFIX}mila\`\n\`${constants.PREFIX}noah\`\n\`${constants.PREFIX}oli\`\n\`${constants.PREFIX}ppap\`\n\`${constants.PREFIX}praise\`\n\`${constants.PREFIX}pubg\`\n\`${constants.PREFIX}rip\`\n\`${constants.PREFIX}snus\`\n\`${constants.PREFIX}sorry\`\n\`${constants.PREFIX}stfu\`\n\`${constants.PREFIX}thermos\`\n\`${constants.PREFIX}toubi\`\n\`${constants.PREFIX}velo\`\n\`${constants.PREFIX}vn\`\n\`${constants.PREFIX}weltbild\`\n\`${constants.PREFIX}zeit\`\n\`${constants.PREFIX}ziit\`\n\`${constants.PREFIX}zoel\`\n`, true);
-				message.author.send({
-					embed
-				});
-				message.channel.send({
-					embed: {
-						color: constants.green,
-						description: message.author + ', please check your Direct Messages!'
-					}
-				}).then(sent => sent.delete(10000));
 
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
 						embed
-					});
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				}
+				else {
+					message.author.send({
+						embed
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					message.channel.send({
+						embed: {
+							color: constants.green,
+							description: message.author + ', please check your Direct Messages!'
+						}
+					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 			}
 			catch (err) {
@@ -425,7 +427,7 @@ commands = function () {
 				setTimeout(function () {
 					message.channel.send(string);
 				}, 300);
-				logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nEcho command has been used:\n**"**' + string + '**"**', message.author.tag, message.author.displayAvatarURL);
+				logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nEcho command has been used:\n"' + string + '"', message.author.tag, message.author.displayAvatarURL);
 			}
 			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -467,18 +469,18 @@ commands = function () {
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
 						embed
-					});
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 				else {
 					message.author.send({
 						embed
-					});
+					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 					message.channel.send({
 						embed: {
 							color: constants.green,
 							description: message.author + ', please check your Direct Messages!'
 						}
-					}).then(sent => sent.delete(10000));
+					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 			}
 			catch (err) {
