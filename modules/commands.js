@@ -425,7 +425,7 @@ commands = function () {
 				setTimeout(function () {
 					message.channel.send(string);
 				}, 300);
-				logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nEcho command has been used:\n**"**' + string + '**"**', message.author.tag, message.author.displayAvatarURL);
+				logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nEcho command has been used:\n"' + string + '"', message.author.tag, message.author.displayAvatarURL);
 			}
 			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
