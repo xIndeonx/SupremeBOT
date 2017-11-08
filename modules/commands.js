@@ -349,6 +349,7 @@ commands = function () {
 			}
 		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}custom`)) { // custom
 			try {
+				message.delete();
 				const embed = new constants.Discord.RichEmbed()
 					.setColor(constants.red)
 					.setTimestamp()
@@ -361,6 +362,12 @@ commands = function () {
 				message.author.send({
 					embed
 				});
+				message.channel.send({
+					embed: {
+						color: constants.green,
+						description: message.author + ', please check your Direct Messages!'
+					}
+				}).then(sent => sent.delete(10000));
 
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
@@ -398,6 +405,7 @@ commands = function () {
 			}
 		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}help`)) { // help
 			try {
+				message.delete();
 				const embed = new constants.Discord.RichEmbed()
 					.setColor(constants.red)
 					.setTimestamp()
@@ -413,6 +421,12 @@ commands = function () {
 				message.author.send({
 					embed
 				});
+				message.channel.send({
+					embed: {
+						color: constants.green,
+						description: message.author + ', please check your Direct Messages!'
+					}
+				}).then(sent => sent.delete(10000));
 
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
@@ -729,7 +743,7 @@ commands = function () {
 						.addField('Username', user.username, true)
 						.addField('Discriminator', user.discriminator, true)
 						.addField('ID', user.id, true)
-						.setFooter('User created: ' + getDay(message.author.createdAt.getDay()) + ' ' + message.author.createdAt.getMonth() + '/' + message.author.createdAt.getDate() + '/' + message.author.createdAt.getFullYear() + ' at ' + message.author.createdAt.getHours() + 'H ' + message.author.createdAt.getMinutes() + 'M');
+						.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
 					message.channel.send({
 						embed
 					});
