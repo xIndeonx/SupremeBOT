@@ -743,7 +743,7 @@ commands = function () {
 						.addField('Username', user.username, true)
 						.addField('Discriminator', user.discriminator, true)
 						.addField('ID', user.id, true)
-						.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + ':' + user.createdAt.getMinutes());
+						.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
 					message.channel.send({
 						embed
 					});
