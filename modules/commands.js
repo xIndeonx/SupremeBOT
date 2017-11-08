@@ -351,9 +351,15 @@ commands = function () {
 					.addField('A-E', `\`${constants.PREFIX}1=0\`\n\`${constants.PREFIX}ademerci\`\n\`${constants.PREFIX}aha\`\n\`${constants.PREFIX}alina\`\n\`${constants.PREFIX}andreas\`\n\`${constants.PREFIX}andi\`\n\`${constants.PREFIX}andy\`\n\`${constants.PREFIX}auä\`\n\`${constants.PREFIX}australia\`\n\`${constants.PREFIX}autismus\`\n\`${constants.PREFIX}autist\`\n\`${constants.PREFIX}baumi\`\n\`${constants.PREFIX}baumi1\`\n\`${constants.PREFIX}baumi2\`\n\`${constants.PREFIX}baumi3\`\n\`${constants.PREFIX}baumi4\`\n\`${constants.PREFIX}bitte\`\n\`${constants.PREFIX}boogeyman\`\n\`${constants.PREFIX}bzz\`\n\`${constants.PREFIX}claudio\`\n\`${constants.PREFIX}claudiolino\`\n\`${constants.PREFIX}clö\`\n\`${constants.PREFIX}danke\`\n\`${constants.PREFIX}dinimom\`\n\`${constants.PREFIX}doni\`\n\`${constants.PREFIX}eine\`\n\`${constants.PREFIX}eis\`\n`, true)
 					.addField('E-J', `\`${constants.PREFIX}esgahtnöd\`\n\`${constants.PREFIX}exit\`\n\`${constants.PREFIX}fabio\`\n\`${constants.PREFIX}fabio2\`\n\`${constants.PREFIX}fabiocsgo\`\n\`${constants.PREFIX}ffs\`\n\`${constants.PREFIX}fige\`\n\`${constants.PREFIX}filip\`\n\`${constants.PREFIX}game\`\n\`${constants.PREFIX}getshiton\`\n\`${constants.PREFIX}gopfeteli\`\n\`${constants.PREFIX}gschicht\`\n\`${constants.PREFIX}hoi\`\n\`${constants.PREFIX}hm\`\n\`${constants.PREFIX}ich\`\n\`${constants.PREFIX}ichi\`\n\`${constants.PREFIX}interessiert\`\n\`${constants.PREFIX}inyourfaculty\`\n\`${constants.PREFIX}inyourfamily\`\n\`${constants.PREFIX}inyourname\`\n\`${constants.PREFIX}inyourspirit\`\n\`${constants.PREFIX}ivan\`\n\`${constants.PREFIX}jacob\`\n\`${constants.PREFIX}jaoder\`\n\`${constants.PREFIX}jesus\`\n\`${constants.PREFIX}jesuschrist\`\n`, true)
 					.addField('J-Z', `\`${constants.PREFIX}joel\`\n\`${constants.PREFIX}kadder\`\n\`${constants.PREFIX}kadder2\`\n\`${constants.PREFIX}ksh\`\n\`${constants.PREFIX}lucas\`\n\`${constants.PREFIX}lucas2\`\n\`${constants.PREFIX}lucas3\`\n\`${constants.PREFIX}merci\`\n\`${constants.PREFIX}mila\`\n\`${constants.PREFIX}noah\`\n\`${constants.PREFIX}oli\`\n\`${constants.PREFIX}ppap\`\n\`${constants.PREFIX}praise\`\n\`${constants.PREFIX}pubg\`\n\`${constants.PREFIX}rip\`\n\`${constants.PREFIX}snus\`\n\`${constants.PREFIX}sorry\`\n\`${constants.PREFIX}stfu\`\n\`${constants.PREFIX}thermos\`\n\`${constants.PREFIX}toubi\`\n\`${constants.PREFIX}velo\`\n\`${constants.PREFIX}vn\`\n\`${constants.PREFIX}weltbild\`\n\`${constants.PREFIX}zeit\`\n\`${constants.PREFIX}ziit\`\n\`${constants.PREFIX}zoel\`\n`, true);
-				message.channel.send({
+				message.author.send({
 					embed
 				});
+
+				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+					message.channel.send({
+						embed
+					});
+				}
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
@@ -395,9 +401,15 @@ commands = function () {
 					.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
 					.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
 					.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true);
-				message.channel.send({
+				message.author.send({
 					embed
 				});
+
+				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+					message.channel.send({
+						embed
+					});
+				}
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
@@ -427,6 +439,25 @@ commands = function () {
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
+		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}KICK`)) { // kick
+			if((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+				
+				var args = message.content.split(' ');
+
+				let member = message.mentions.members.first();
+				if(!member)
+					return message.reply("Please mention a valid member of this server");
+				if(!member.kickable) 
+					return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
+				
+				let reason = args.slice(2).join(' ');
+				if(!reason)
+					return message.reply("Please indicate a reason for the kick!");
+
+				member.kick(reason)
+					.catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
+				message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+			} else return message.reply("Sorry, you don't have permissions to use this!");
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}LOTTO`)) { // lotto
 			try {
 				var input = message.content;
@@ -664,6 +695,13 @@ commands = function () {
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
+		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VAPEIO`)) { // vapeio
+			if(message.author.id != constants.OWNERID){
+				var vapeio = message.guild.members.find("id", constants.OWNERID)
+				if(vapeio){
+					vapeio.setVoiceChannel("340961232695853068");
+				} else message.channel.send("de vapeio isch leider am vape und nöd da");
+			} else message.channel.send("nei vapeio du chasch dich nöd selber verschiebe");
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VCLEAVE`)) { // vcleave
 			try {
 				if (message.member.voiceChannel) {
