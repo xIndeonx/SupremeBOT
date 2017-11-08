@@ -726,7 +726,19 @@ commands = function () {
 			}
 		} else if ((message.content.toLowerCase().startsWith(`${constants.PREFIX}userinfo`)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}whois`))) { // userinfo / whois
 			try {
-				var args = message.content.split(' ');
+				var member = message.mentions.members.first();
+				if (member) {
+					const embed = new constants.Discord.RichEmbed()
+						.setColor(constants.blue)
+						.setAuthor(member.user.username, member.user.displayAvatarURL)
+						.addField('Username', member.user.username, true)
+						.addField('Discriminator', member.user.discriminator, true)
+						.addField('ID', member.user.id, true)
+						.setFooter('User created: ' + getDay(member.user.createdAt.getDay()) + ' ' + member.user.createdAt.getMonth() + '/' + member.user.createdAt.getDate() + '/' + member.user.createdAt.getFullYear() + ' at ' + member.user.createdAt.getHours() + 'H ' + member.user.createdAt.getMinutes() + 'M');
+					message.channel.send({
+						embed
+					});
+				/*var args = message.content.split(' ');
 				var string = args.slice(1).join(' ');
 				var user;
 				if (string.toLowerCase() === 'ich' || string.toLowerCase() === 'me') {
@@ -754,7 +766,7 @@ commands = function () {
 						.setColor(constants.red);
 					message.channel.send({
 						embed: whoIsError
-					});
+					});*/
 				}
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
