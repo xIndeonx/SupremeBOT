@@ -170,13 +170,6 @@ customCommands = function () {
 			message.channel.send('Ich rauch mini Thermoschanne voll dure.');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}TOUBI`)) { // toubi
 			message.channel.send('Hallo, ich heisse Toubi.');
-		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VAPEIO`)) { // vapeio
-			if(message.author.id != constants.OWNERID){
-				var vapeio = message.guild.members.find("id", constants.OWNERID)
-				if(vapeio){
-					vapeio.setVoiceChannel("340961232695853068");
-				} else message.channel.send("de vapeio isch leider am vape und nöd da");
-			} else message.channel.send("nei vapeio du chasch dich nöd selber verschiebe");
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VELO`)) { // velo
 			message.channel.send('黒人が自転車を盗んだ');
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VN`)) { // vn

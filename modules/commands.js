@@ -427,6 +427,25 @@ commands = function () {
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
+		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}KICK`)) { // kick
+			if((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+				
+				var args = message.content.split(' ');
+
+				let member = message.mentions.members.first();
+				if(!member)
+					return message.reply("Please mention a valid member of this server");
+				if(!member.kickable) 
+					return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
+				
+				let reason = args.slice(2).join(' ');
+				if(!reason)
+					return message.reply("Please indicate a reason for the kick!");
+
+				member.kick(reason)
+					.catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
+				message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+			} else return message.reply("Sorry, you don't have permissions to use this!");
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}LOTTO`)) { // lotto
 			try {
 				var input = message.content;
@@ -664,6 +683,13 @@ commands = function () {
 			} catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
+		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VAPEIO`)) { // vapeio
+			if(message.author.id != constants.OWNERID){
+				var vapeio = message.guild.members.find("id", constants.OWNERID)
+				if(vapeio){
+					vapeio.setVoiceChannel("340961232695853068");
+				} else message.channel.send("de vapeio isch leider am vape und nöd da");
+			} else message.channel.send("nei vapeio du chasch dich nöd selber verschiebe");
 		} else if (message.content.toUpperCase().startsWith(`${constants.PREFIX}VCLEAVE`)) { // vcleave
 			try {
 				if (message.member.voiceChannel) {
