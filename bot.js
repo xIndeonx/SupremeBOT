@@ -58,7 +58,8 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 			var connection = await voiceChannel.join();
 			queueConstruct.connection = connection;
 			play(message.guild, queueConstruct.songs[0]);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(`Could not join the voice channel: ${error}`);
 			constants.airbrake.notify(error);
 			constants.queue.delete(message.guild.id);
@@ -69,7 +70,8 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 				}
 			});
 		}
-	} else {
+	}
+	else {
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return;
@@ -188,14 +190,16 @@ coinFlip = function (coinFlipMessage) {
 	console.log(clientInput);
 	if (clientInput.length !== 3 && clientInput.length !== 1) {
 		return coinFlipErrorEmbed;
-	} else {
+	}
+	else {
 		if (clientInput.length === 3) {
 			var firstCondition = clientInput[1];
 			var secondCondition = clientInput[2];
 			var coin = Math.floor((Math.random() * 10) + 1);
 			if (coin <= 5) return coinFlipEmbedF(firstCondition);
 			else return coinFlipEmbedF(secondCondition);
-		} else {
+		}
+		else {
 			var coin2 = Math.floor((Math.random() * 10) + 1);
 			if (coin2 <= 5) return coinFlipEmbedF('Head');
 			else return coinFlipEmbedF('Tails');
@@ -220,9 +224,11 @@ rpsGenerator = function () {
 	var rps = Math.floor((Math.random() * 3) + 1);
 	if (rps === 1) {
 		return 'Rock';
-	} else if (rps == 2) {
+	}
+	else if (rps == 2) {
 		return 'Paper';
-	} else {
+	}
+	else {
 		return 'Scissor';
 	}
 };
@@ -233,27 +239,35 @@ rpsBattle = function (botRPS, userRPS) {
 
 		if (userRPS === 'ROCK') {
 			return 'DRAW';
-		} else if (userRPS === 'SCISSOR') {
+		}
+		else if (userRPS === 'SCISSOR') {
 			return 'BOT';
-		} else {
+		}
+		else {
 			return 'USER';
 		}
 
-	} else if (botRPS === 'Paper') {
+	}
+	else if (botRPS === 'Paper') {
 		if (userRPS === 'ROCK') {
 			return 'BOT';
-		} else if (userRPS === 'SCISSOR') {
+		}
+		else if (userRPS === 'SCISSOR') {
 			return 'USER';
-		} else {
+		}
+		else {
 			return 'DRAW';
 		}
 
-	} else if (botRPS === 'Scissor') {
+	}
+	else if (botRPS === 'Scissor') {
 		if (userRPS === 'ROCK') {
 			return 'USER';
-		} else if (userRPS === 'SCISSOR') {
+		}
+		else if (userRPS === 'SCISSOR') {
 			return 'DRAW';
-		} else {
+		}
+		else {
 			return 'BOT';
 		}
 
@@ -273,7 +287,8 @@ rpsPrint = function (userRPS, usertag) {
 		case 'DRAW':
 			return rpsMessage;
 		}
-	} else {
+	}
+	else {
 		return 'Please enter a valid message! (Rock, Paper or Scissor)';
 	}
 
@@ -303,7 +318,8 @@ eightball = function () {
 		case 8:
 			return 'Ich wür scho sege, hä.';
 		}
-	} else if (answer > 4 && answer <= 8) {
+	}
+	else if (answer > 4 && answer <= 8) {
 		constants.isYes = 'NO';
 		switch (answerChoice) {
 		case 1:
@@ -323,7 +339,8 @@ eightball = function () {
 		case 8:
 			return 'Wenns Wort ja **\'nei\'** heisse wür, wärs es ja.';
 		}
-	} else {
+	}
+	else {
 		constants.isYes = 'VAPEIO';
 		return 'Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.';
 	}
@@ -333,9 +350,11 @@ eightball = function () {
 eightballColorDecider = function () {
 	if (constants.isYes === 'YES') {
 		return constants.green;
-	} else if (constants.isYes === 'VAPEIO') {
+	}
+	else if (constants.isYes === 'VAPEIO') {
 		return constants.yellow;
-	} else {
+	}
+	else {
 		return constants.red;
 	}
 };
@@ -344,13 +363,16 @@ eightballColorDecider = function () {
 lotto = function (userGuess) {
 	if (!userGuess || isNaN(userGuess)) {
 		return `Please use the command like this: \`${constants.PREFIX}lotto number\``;
-	} else if (userGuess < 1 || userGuess > 50) {
+	}
+	else if (userGuess < 1 || userGuess > 50) {
 		return 'Please enter a valid number between 1 and 50!';
-	} else {
+	}
+	else {
 		var lottoNumber = Math.floor((Math.random() * 50) + 1);
 		if (userGuess === lottoNumber) {
 			return 'Congratulations, you guessed right! Here\'s a kiss from Doni! :kissing_closed_eyes:';
-		} else {
+		}
+		else {
 			return 'You guessed wrong :pensive: Maybe next time...';
 		}
 	}

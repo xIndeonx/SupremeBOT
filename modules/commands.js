@@ -29,7 +29,8 @@ commands = function () {
 							description: '```xl\n' + clean(evaled) + '```Took `' + (end - start).toFixed(3) + 'ms`'
 						}
 					});
-				} catch (err) {
+				}
+				catch (err) {
 					message.channel.send({
 						embed: {
 							color: constants.red,
@@ -38,10 +39,12 @@ commands = function () {
 						}
 					});
 				}
-			} else {
+			}
+			else {
 				return;
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.SET_GAME)) { // setgame
+		}
+		else if (message.content.toLowerCase().startsWith(constants.SET_GAME)) { // setgame
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					var args = message.content.split(' ');
@@ -60,13 +63,16 @@ commands = function () {
 						}
 					})
 						.then(sent => sent.delete(5000));
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send('You are not authorized to use this command.');
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.SET_AVATAR)) { // setavatar
+		}
+		else if (message.content.toLowerCase().startsWith(constants.SET_AVATAR)) { // setavatar
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					var args = message.content.split(' ');
@@ -80,13 +86,16 @@ commands = function () {
 						}
 					})
 						.then(sent => sent.delete(5000));
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send('You are not authorized to use this command.');
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.SET_STATUS)) { // setstatus
+		}
+		else if (message.content.toLowerCase().startsWith(constants.SET_STATUS)) { // setstatus
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					var args = message.content.split(' ');
@@ -101,29 +110,36 @@ commands = function () {
 							}
 						})
 							.then(sent => sent.delete(5000));
-					} else {
+					}
+					else {
 						return message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
 					}
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send('You are not authorized to use this command.');
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.RESTART)) { // restart
+		}
+		else if (message.content.toLowerCase().startsWith(constants.RESTART)) { // restart
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					message.channel.send('Restarting...');
 					setTimeout(function () {
 						process.exit();
 					}, 1000);
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send('You are not authorized to use this command.');
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.SHUTDOWN)) { // shutdown
+		}
+		else if (message.content.toLowerCase().startsWith(constants.SHUTDOWN)) { // shutdown
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					message.channel.send('Shutting down...');
@@ -131,13 +147,16 @@ commands = function () {
 						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 					});
 					process.exitCode = 1;
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send('You are not authorized to use this command.');
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.DELETE)) { // delete
+		}
+		else if (message.content.toLowerCase().startsWith(constants.DELETE)) { // delete
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
 				try {
 					if (message.channel.type == 'text') {
@@ -147,7 +166,8 @@ commands = function () {
 						if (isNaN(messagecount)) {
 							message.channel.send('Could not delete messages. Please enter a valid number.');
 							return;
-						} else {
+						}
+						else {
 							messagecount = messagecount + 1;
 							message.channel.fetchMessages({
 								limit: messagecount
@@ -163,13 +183,16 @@ commands = function () {
 							logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL);
 						}
 					}
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send('You are not authorized to use this command.');
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.PURGE)) { // purge
+		}
+		else if (message.content.toLowerCase().startsWith(constants.PURGE)) { // purge
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
 				try {
 					if (message.channel.type == 'text') {
@@ -191,13 +214,16 @@ commands = function () {
 								logToChannel('Error', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nError:\n' + err, message.author.tag, message.author.displayAvatarURL);
 							});
 					}
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send('You are not authorized to use this command.');
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}8ball`)) { // 8ball
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}8ball`)) { // 8ball
 			message.channel.send({
 				embed: {
 					title: 'The magic 8ball says...',
@@ -206,7 +232,8 @@ commands = function () {
 				}
 			})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channelinfo`)) { // channelinfo
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channelinfo`)) { // channelinfo
 			try {
 				const embed = new constants.Discord.RichEmbed()
 					.setColor(constants.blue)
@@ -221,10 +248,12 @@ commands = function () {
 				message.channel.send({
 					embed
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channels`)) { // channels
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channels`)) { // channels
 			try {
 				const channels = message.guild.channels.map(c => c.name);
 				const embed = new constants.Discord.RichEmbed()
@@ -235,10 +264,12 @@ commands = function () {
 				message.channel.send({
 					embed
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}cleverbot`)) { // cleverbot
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}cleverbot`)) { // cleverbot
 			const CleverbotAPI = require('cleverbot-api');
 			const cleverbot = new CleverbotAPI(constants.CLEVERBOT_KEY);
 
@@ -268,12 +299,14 @@ commands = function () {
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			});
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}coinflip`)) { // coinflip
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}coinflip`)) { // coinflip
 			message.channel.send({
 				embed: coinFlip(message.content)
 			})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}countdown`)) { // countdown
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}countdown`)) { // countdown
 			if (constants.isRunning === true) {
 				message.channel.send({
 					embed: {
@@ -282,7 +315,8 @@ commands = function () {
 					}
 				});
 				return;
-			} else {
+			}
+			else {
 				try {
 					var args = message.content.split(' ');
 					var countString = args.slice(1).join(' ');
@@ -295,7 +329,8 @@ commands = function () {
 							}
 						});
 						return;
-					} else if (count > 86400) {
+					}
+					else if (count > 86400) {
 						message.channel.send({
 							embed: {
 								color: constants.red,
@@ -303,7 +338,8 @@ commands = function () {
 							}
 						});
 						return;
-					} else {
+					}
+					else {
 						constants.isRunning = true;
 						message.channel.send({
 							embed: {
@@ -342,11 +378,13 @@ commands = function () {
 							}(countString));
 						});
 					}
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}custom`)) { // custom
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}custom`)) { // custom
 			try {
 				message.delete();
 				const embed = new constants.Discord.RichEmbed()
@@ -363,7 +401,8 @@ commands = function () {
 					message.channel.send({
 						embed
 					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-				} else {
+				}
+				else {
 					message.author.send({
 						embed
 					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
@@ -374,10 +413,12 @@ commands = function () {
 						}
 					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}echo`)) { // echo
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}echo`)) { // echo
 			try {
 				var args = message.content.split(' ');
 				var string = args.slice(1).join(' ');
@@ -386,24 +427,29 @@ commands = function () {
 					message.channel.send(string);
 				}, 300);
 				logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nEcho command has been used:\n"' + string + '"', message.author.tag, message.author.displayAvatarURL);
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}hakai`)) { // hakai
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}hakai`)) { // hakai
 			try {
 				if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
 				if (message.mentions.users.size == 1) {
 					if (message.mentions.users.first() != message.author.toString()) {
 						return message.channel.send(message.mentions.users.first() + ' has been destroyed by ' + message.author.toString());
-					} else {
+					}
+					else {
 						return message.channel.send('You cannot destroy yourself, ' + message.author.toString());
 					}
 				}
 				if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}help`)) { // help
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}help`)) { // help
 			try {
 				message.delete();
 				const embed = new constants.Discord.RichEmbed()
@@ -423,7 +469,8 @@ commands = function () {
 					message.channel.send({
 						embed
 					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-				} else {
+				}
+				else {
 					message.author.send({
 						embed
 					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
@@ -434,10 +481,12 @@ commands = function () {
 						}
 					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}invite`)) { // invite
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}invite`)) { // invite
 			constants.client.generateInvite(['ADMINISTRATOR'])
 				.then(link => {
 					message.channel.send({
@@ -449,7 +498,8 @@ commands = function () {
 					});
 				})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}join`)) { // join
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}join`)) { // join
 			try {
 				if (message.member.voiceChannel) {
 					message.member.voiceChannel.join()
@@ -457,13 +507,16 @@ commands = function () {
 							message.channel.send(':white_check_mark: I have successfully connected to the channel!');
 						})
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-				} else {
+				}
+				else {
 					message.channel.send(':bangbang: You need to join a voice channel first!');
 				}
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kick`)) { // kick
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kick`)) { // kick
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
 
 				var args = message.content.split(' ');
@@ -514,7 +567,8 @@ commands = function () {
 						description: `${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`
 					}
 				});
-			} else {
+			}
+			else {
 				return message.channel.send({
 					embed: {
 						title: 'Error',
@@ -523,15 +577,18 @@ commands = function () {
 					}
 				});
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lotto`)) { // lotto
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lotto`)) { // lotto
 			try {
 				var input = message.content;
 				var guess = input.split(' ');
 				message.channel.send(lotto(guess[1]));
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}memory`)) { // memory
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}memory`)) { // memory
 			try {
 				const used = process.memoryUsage();
 				var usage = [];
@@ -547,20 +604,24 @@ commands = function () {
 						description: usage.join('\n')
 					}
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ping`)) { // ping
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ping`)) { // ping
 			var args = message.content.split(' ');
 			var string = args.slice(1).join(' ');
 			if (string === 'realtime' || string === 'rt') {
 				message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-			} else {
+			}
+			else {
 				message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}roles`)) { // roles
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}roles`)) { // roles
 			try {
 				const roles = message.guild.roles.map(r => r.name);
 				const embed = new constants.Discord.RichEmbed()
@@ -571,10 +632,12 @@ commands = function () {
 				message.channel.send({
 					embed
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}rps`)) { // rps
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}rps`)) { // rps
 			try {
 				var args = message.content.split(' ');
 				var string = args.slice(1).join(' ');
@@ -585,10 +648,12 @@ commands = function () {
 						description: rpsPrint(string, message.author.toString())
 					}
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}serverinfo`)) { // serverinfo
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}serverinfo`)) { // serverinfo
 			try {
 				const embed = new constants.Discord.RichEmbed()
 					.setColor(constants.blue)
@@ -606,10 +671,12 @@ commands = function () {
 				message.channel.send({
 					embed
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}tts`)) { // tts
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}tts`)) { // tts
 			if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
 				try {
 					var args = message.content.split(' ');
@@ -621,10 +688,12 @@ commands = function () {
 						});
 					}, 300);
 					logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nTTS command has been used:\n**"**' + string + '**"**', message.author.tag, message.author.displayAvatarURL);
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
-			} else {
+			}
+			else {
 				message.channel.send({
 					embed: {
 						color: constants.red,
@@ -632,7 +701,8 @@ commands = function () {
 					}
 				});
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}uptime`)) { // uptime
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}uptime`)) { // uptime
 			var args = message.content.split(' ');
 			var type = args.slice(1).join(' ');
 
@@ -644,7 +714,8 @@ commands = function () {
 					}
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-			} else if (type === 'os') {
+			}
+			else if (type === 'os') {
 				message.channel.send({
 					embed: {
 						color: constants.blue,
@@ -652,7 +723,8 @@ commands = function () {
 					}
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-			} else {
+			}
+			else {
 				message.channel.send({
 					embed: {
 						color: constants.blue,
@@ -661,7 +733,8 @@ commands = function () {
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}urbanrandom`)) { // urbanrandom
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}urbanrandom`)) { // urbanrandom
 			try {
 				var urban = require('urban-dictionary');
 				urban.random(function (error, entry) {
@@ -674,7 +747,8 @@ commands = function () {
 							embed: errorEmbed
 						});
 						console.error(error.message);
-					} else {
+					}
+					else {
 						var link = entry.permalink;
 						var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
 						const embed = new constants.Discord.RichEmbed()
@@ -689,10 +763,12 @@ commands = function () {
 						});
 					}
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}urban`)) { // urban
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}urban`)) { // urban
 			try {
 				var urban = require('urban-dictionary');
 				var args = message.content.split(' ');
@@ -707,7 +783,8 @@ commands = function () {
 							embed: errorEmbed
 						});
 						console.error(error.message);
-					} else {
+					}
+					else {
 						var link = entries[0].permalink;
 						var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
 						const embed = new constants.Discord.RichEmbed()
@@ -722,10 +799,12 @@ commands = function () {
 						});
 					}
 				});
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if ((message.content.toLowerCase().startsWith(`${constants.PREFIX}userinfo`)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}whois`))) { // userinfo / whois
+		}
+		else if ((message.content.toLowerCase().startsWith(`${constants.PREFIX}userinfo`)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}whois`))) { // userinfo / whois
 			try {
 				var member = message.mentions.members.first();
 				if (member) {
@@ -739,15 +818,18 @@ commands = function () {
 					message.channel.send({
 						embed
 					});
-				} else {
+				}
+				else {
 					var args = message.content.split(' ');
 					var string = args.slice(1).join(' ');
 					var user;
 					if (string.toLowerCase() === 'ich' || string.toLowerCase() === 'me') {
 						user = message.author;
-					} else if (string) {
+					}
+					else if (string) {
 						user = constants.client.users.get(string);
-					} else {
+					}
+					else {
 						user = message.author;
 					}
 					if (user) {
@@ -761,7 +843,8 @@ commands = function () {
 						message.channel.send({
 							embed
 						});
-					} else {
+					}
+					else {
 						const whoIsError = new constants.Discord.RichEmbed()
 							.setTitle('Error')
 							.setDescription(`User not found. Try \`${constants.PREFIX}userinfo user_id\` **OR** \`${constants.PREFIX}whois ich\``)
@@ -771,16 +854,19 @@ commands = function () {
 						});
 					}
 				}
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
 			if (message.author.id != constants.OWNERID) {
 				var vapeio = message.guild.members.find('id', constants.OWNERID);
 				if (vapeio.voiceChannel) {
 					vapeio.setVoiceChannel('340961232695853068');
 					message.react(':white_check_mark:');
-				} else {
+				}
+				else {
 					message.channel.send({
 						embed: {
 							color: constants.red,
@@ -788,7 +874,8 @@ commands = function () {
 						}
 					});
 				}
-			} else {
+			}
+			else {
 				message.channel.send({
 					embed: {
 						color: constants.red,
@@ -802,19 +889,21 @@ commands = function () {
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
 				var server = message.guild;
 				var user = message.mentions.members.first();
-				if(user.voiceChannel) {
-					server.createChannel('kick', 'voice').then(function() {
+				if (user.voiceChannel) {
+					server.createChannel('kick', 'voice').then(function () {
 						const kickChannel = server.channels.find('name', 'kick');
 						user.setVoiceChannel(kickChannel);
-						setTimeout(function() {kickChannel.delete()
-							.then()
-							.catch(console.error);
+						setTimeout(function () {
+							kickChannel.delete()
+								.then()
+								.catch(console.error);
 						}, 500);
 					});
 
 				}
 				else message.channel.send('user not found');
-			} else message.channel.send('You do not have the permission to use this command');
+			}
+			else message.channel.send('You do not have the permission to use this command');
 
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vcleave`)) { // vcleave
@@ -822,13 +911,16 @@ commands = function () {
 				if (message.member.voiceChannel) {
 					message.member.voiceChannel.leave();
 					message.channel.send(':white_check_mark: I have successfully disconnected from the channel!');
-				} else {
+				}
+				else {
 					message.channel.send(':bangbang: You are not in a voice channel!');
 				}
-			} catch (err) {
+			}
+			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 			}
-		} else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}wolfram`)) { // wolfram
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}wolfram`)) { // wolfram
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					var wajs = require('wajs');
@@ -858,7 +950,8 @@ commands = function () {
 							})
 								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						});
-				} catch (err) {
+				}
+				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}

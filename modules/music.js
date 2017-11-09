@@ -47,7 +47,8 @@ musicCommands = function () {
 					try {
 						const video2 = await constants.youtube.getVideoByID(video.id);
 						await handleVideo(video2, message, voiceChannel, true);
-					} catch (err) {
+					}
+					catch (err) {
 						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 						continue;
 					}
@@ -62,14 +63,17 @@ musicCommands = function () {
 						color: constants.blue
 					}
 				});
-			} else {
+			}
+			else {
 				try {
 					var video = await constants.youtube.getVideo(url);
-				} catch (error) {
+				}
+				catch (error) {
 					try {
 						var videos = await constants.youtube.searchVideos(searchString, 1);
 						var video = await constants.youtube.getVideoByID(videos[0].id);
-					} catch (err) {
+					}
+					catch (err) {
 						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 						message.channel.stopTyping(true);
 						return message.channel.send({
@@ -82,7 +86,8 @@ musicCommands = function () {
 				}
 				return handleVideo(video, message, voiceChannel);
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_SEARCH)) {
+		}
+		else if (message.content.toLowerCase().startsWith(constants.MUSIC_SEARCH)) {
 			console.log('test');
 			const voiceChannel = message.member.voiceChannel;
 			const authorid = message.author.id;
@@ -125,10 +130,12 @@ musicCommands = function () {
 						color: constants.blue
 					}
 				});
-			} else {
+			}
+			else {
 				try {
 					var video = await constants.youtube.getVideo(url);
-				} catch (error) {
+				}
+				catch (error) {
 					try {
 						var videos = await constants.youtube.searchVideos(searchString, 5);
 						let index = 0;
@@ -151,7 +158,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 								time: 30000,
 								errors: ['time']
 							});
-						} catch (err) {
+						}
+						catch (err) {
 							logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 							return message.channel.send({
 								embed: {
@@ -162,7 +170,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						}
 						const videoIndex = parseInt(response.first().content);
 						var video = await constants.youtube.getVideoByID(videos[videoIndex - 1].id);
-					} catch (err) {
+					}
+					catch (err) {
 						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 						message.channel.stopTyping(true);
 						return message.channel.send({
@@ -175,7 +184,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 				return handleVideo(video, message, voiceChannel);
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_SKIP)) {
+		}
+		else if (message.content.toLowerCase().startsWith(constants.MUSIC_SKIP)) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					description: ':bangbang: **You are not in a voice channel!**',
@@ -198,7 +208,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 			});
 			return;
-		} else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}LEAVE`))) {
+		}
+		else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}LEAVE`))) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					description: ':bangbang: **You are not in a voice channel!**',
@@ -220,7 +231,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 			});
 			return;
-		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_VOLUME)) {
+		}
+		else if (message.content.toLowerCase().startsWith(constants.MUSIC_VOLUME)) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					description: ':bangbang: **You are not in a voice channel!**',
@@ -249,14 +261,16 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 							color: constants.blue
 						}
 					});
-				} else if (serverQueue.volume === parseInt(args[1])) {
+				}
+				else if (serverQueue.volume === parseInt(args[1])) {
 					return message.channel.send({
 						embed: {
 							description: `:loud_sound: The volume is already on **${args[1]}**.`,
 							color: constants.orange
 						}
 					});
-				} else if (args[1] <= 10) {
+				}
+				else if (args[1] <= 10) {
 					serverQueue.volume = args[1];
 					serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
 					return message.channel.send({
@@ -267,7 +281,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					});
 				}
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_NP)) {
+		}
+		else if (message.content.toLowerCase().startsWith(constants.MUSIC_NP)) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					description: ':bangbang: **There is nothing playing.**',
@@ -280,7 +295,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					color: constants.blue
 				}
 			});
-		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_QUEUE)) {
+		}
+		else if (message.content.toLowerCase().startsWith(constants.MUSIC_QUEUE)) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					description: ':bangbang: **There is nothing playing.**',
@@ -302,7 +318,8 @@ ${queuelist}
 						}
 					}
 				});
-			} else {
+			}
+			else {
 				return message.channel.send({
 					embed: {
 						title: 'Error',
@@ -311,7 +328,8 @@ ${queuelist}
 					}
 				});
 			}
-		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_PAUSE)) {
+		}
+		else if (message.content.toLowerCase().startsWith(constants.MUSIC_PAUSE)) {
 			if (serverQueue && serverQueue.playing) {
 				serverQueue.playing = false;
 				serverQueue.connection.dispatcher.pause();
@@ -328,7 +346,8 @@ ${queuelist}
 					color: constants.red
 				}
 			});
-		} else if (message.content.toLowerCase().startsWith(constants.MUSIC_RESUME)) {
+		}
+		else if (message.content.toLowerCase().startsWith(constants.MUSIC_RESUME)) {
 			if (serverQueue && !serverQueue.playing) {
 				serverQueue.playing = true;
 				serverQueue.connection.dispatcher.resume();
