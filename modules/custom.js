@@ -5,6 +5,9 @@ require('../bot');
 // commands
 customCommands = function () {
 	constants.client.on('message', function (message) {
+		if (message.author.bot) return;
+		if (!message.content.startsWith(constants.PREFIX)) return;
+		if (!message.guild) return;
 		if (message.content.toUpperCase().startsWith(`${constants.PREFIX}1=0`)) { // 1=0
 			message.channel.send('1=0');
 		}
