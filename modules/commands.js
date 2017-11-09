@@ -58,8 +58,8 @@ commands = function () {
 					message.delete(200);
 					message.channel.send({
 						embed: {
-							color: constants.blue,
-							description: 'Successfully set game to `' + gameString + '`'
+							color: constants.green,
+							description: `Successfully set game to \`${gameString}\`.`
 						}
 					})
 						.then(sent => sent.delete(5000));
@@ -69,7 +69,13 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send('You are not authorized to use this command.');
+				message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'You are not authorized to use this command.'
+					}
+				})
+					.then(sent => sent.delete(5000));
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_AVATAR)) { // setavatar
@@ -81,7 +87,7 @@ commands = function () {
 					message.delete(200);
 					message.channel.send({
 						embed: {
-							color: constants.blue,
+							color: constants.green,
 							description: 'Successfully set the avatar.'
 						}
 					})
@@ -92,7 +98,13 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send('You are not authorized to use this command.');
+				message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'You are not authorized to use this command.'
+					}
+				})
+					.then(sent => sent.delete(5000));
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_STATUS)) { // setstatus
@@ -105,14 +117,20 @@ commands = function () {
 						message.delete(200);
 						message.channel.send({
 							embed: {
-								color: constants.blue,
-								description: 'Successfully set status to `' + statusString + '`.'
+								color: constants.green,
+								description: `Successfully set status to \`${statusString}\`.`
 							}
 						})
 							.then(sent => sent.delete(5000));
 					}
 					else {
-						return message.channel.send('Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.');
+						return message.channel.send({
+							embed: {
+								color: constants.red,
+								description: 'Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.'
+							}
+						})
+							.then(sent => sent.delete(5000));
 					}
 				}
 				catch (err) {
@@ -120,7 +138,13 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send('You are not authorized to use this command.');
+				message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'You are not authorized to use this command.'
+					}
+				})
+					.then(sent => sent.delete(5000));
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.RESTART)) { // restart
@@ -136,7 +160,14 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send('You are not authorized to use this command.');
+				message.delete();
+				message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'You are not authorized to use this command.'
+					}
+				})
+					.then(sent => sent.delete(5000));
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SHUTDOWN)) { // shutdown
@@ -153,7 +184,14 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send('You are not authorized to use this command.');
+				message.delete();
+				message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'You are not authorized to use this command.'
+					}
+				})
+					.then(sent => sent.delete(5000));
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.DELETE)) { // delete
@@ -189,7 +227,12 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send('You are not authorized to use this command.');
+				message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'You are not authorized to use this command.'
+					}
+				});
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.PURGE)) { // purge
@@ -220,7 +263,12 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send('You are not authorized to use this command.');
+				message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'You are not authorized to use this command.'
+					}
+				});
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}8ball`)) { // 8ball
@@ -400,18 +448,21 @@ commands = function () {
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
 						embed
-					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					})
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 				else {
 					message.author.send({
 						embed
-					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					})
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 					message.channel.send({
 						embed: {
 							color: constants.green,
-							description: message.author + ', please check your Direct Messages!'
+							description: `${message.author}, please check your Direct Messages!`
 						}
-					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					})
+						.then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 			}
 			catch (err) {
@@ -468,18 +519,22 @@ commands = function () {
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					message.channel.send({
 						embed
-					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					})
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 				else {
 					message.author.send({
 						embed
-					}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					})
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 					message.channel.send({
 						embed: {
 							color: constants.green,
-							description: message.author + ', please check your Direct Messages!'
+							description: `${message.author}, please check your Direct Messages!`
 						}
-					}).then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					})
+						.then(sent => sent.delete(10000))
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 			}
 			catch (err) {
@@ -502,14 +557,16 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}join`)) { // join
 			try {
 				if (message.member.voiceChannel) {
-					message.member.voiceChannel.join()
-						.then(connection => { // Connection is an instance of VoiceConnection
-							message.channel.send(':white_check_mark: I have successfully connected to the channel!');
-						})
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					message.member.voiceChannel.join();
+					message.react('✅');
 				}
 				else {
-					message.channel.send(':bangbang: You need to join a voice channel first!');
+					message.channel.send({
+						embed: {
+							color: constants.red,
+							description: '‼ You need to join a voice channel first!'
+						}
+					});
 				}
 			}
 			catch (err) {
@@ -527,7 +584,7 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Please mention a valid member of this server'
+							description: 'Please mention a valid member of this server.'
 						}
 					});
 				}
@@ -536,7 +593,7 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I cannot kick this user! Do they have a higher role? Do I have kick permissions?'
+							description: 'I cannot kick this user! Do they have a higher role? Do I have the `Kick Members` permission?'
 						}
 					});
 				}
@@ -557,16 +614,10 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: `Sorry ${message.author} I couldn't kick because of: ${error}`
+							description: `Sorry ${message.author}, I couldn't kick the user.\n **Error**: ${error}`
 						}
 					}));
-				message.channel.send({
-					embed: {
-						title: 'Successful',
-						color: constants.green,
-						description: `${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`
-					}
-				});
+				message.react('✅');
 			}
 			else {
 				return message.channel.send({
@@ -847,7 +898,7 @@ commands = function () {
 					else {
 						const whoIsError = new constants.Discord.RichEmbed()
 							.setTitle('Error')
-							.setDescription(`User not found. Try \`${constants.PREFIX}userinfo user_id\` **OR** \`${constants.PREFIX}whois ich\``)
+							.setDescription(`User not found. Try \`${constants.PREFIX}userinfo [mention]\` **OR** \`${constants.PREFIX}whois user_id\``)
 							.setColor(constants.red);
 						message.channel.send({
 							embed: whoIsError
@@ -864,7 +915,7 @@ commands = function () {
 				var vapeio = message.guild.members.find('id', constants.OWNERID);
 				if (vapeio.voiceChannel) {
 					vapeio.setVoiceChannel('340961232695853068');
-					message.react(':white_check_mark:');
+					message.react('✅');
 				}
 				else {
 					message.channel.send({
@@ -896,24 +947,40 @@ commands = function () {
 						setTimeout(function () {
 							kickChannel.delete()
 								.then()
-								.catch(console.error);
+								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						}, 500);
 					});
+					message.react('✅');
 
 				}
-				else message.channel.send('user not found');
+				else message.channel.send({
+					embed: {
+						color: constants.red,
+						description: 'User not found.'
+					}
+				});
 			}
-			else message.channel.send('You do not have the permission to use this command');
+			else message.channel.send({
+				embed: {
+					color: constants.red,
+					description: 'You do not have the permission to use this command.'
+				}
+			});
 
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vcleave`)) { // vcleave
 			try {
 				if (message.member.voiceChannel) {
 					message.member.voiceChannel.leave();
-					message.channel.send(':white_check_mark: I have successfully disconnected from the channel!');
+					message.react('✅');
 				}
 				else {
-					message.channel.send(':bangbang: You are not in a voice channel!');
+					message.channel.send({
+						embed: {
+							color: constants.red,
+							description: '‼ You are not in a voice channel!'
+						}
+					});
 				}
 			}
 			catch (err) {
