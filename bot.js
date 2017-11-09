@@ -65,7 +65,7 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 			constants.queue.delete(message.guild.id);
 			return message.channel.send({
 				embed: {
-					description: `:bangbang: **Could not join the voice channel:** ${error}`,
+					description: `‼ **Could not join the voice channel:** ${error}`,
 					color: constants.red
 				}
 			});
@@ -77,7 +77,7 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 		if (playlist) return;
 		else return message.channel.send({
 			embed: {
-				description: `:notes: **${song.title}** has been added to the queue!`,
+				description: `🎶 **${song.title}** has been added to the queue!`,
 				color: constants.blue
 			}
 		});
@@ -104,7 +104,7 @@ play = function (guild, song) {
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 	serverQueue.textChannel.send({
 		embed: {
-			description: `:arrow_forward: Started playing: **${song.title}**`,
+			description: `▶ Started playing: **${song.title}**`,
 			color: constants.blue
 		}
 	})
