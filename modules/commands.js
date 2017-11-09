@@ -373,6 +373,9 @@ commands = function () {
 											description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
 										}
 									}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+									message.channel.send('Countdown has ended', {
+										tts: true
+									});
 									clearInterval(interval);
 									constants.isRunning = false;
 								}
