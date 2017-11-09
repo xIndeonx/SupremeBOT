@@ -280,8 +280,7 @@ commands = function () {
 						color: constants.red,
 						description: 'Could not create countdown. A countdown is already running.'
 					}
-				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				});
 				return;
 			} else {
 				try {
@@ -294,7 +293,7 @@ commands = function () {
 								color: constants.red,
 								description: 'Could not create countdown. Please enter a valid number.'
 							}
-						}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						});
 						return;
 					} else if (count > 86400) {
 						message.channel.send({
@@ -302,7 +301,7 @@ commands = function () {
 								color: constants.red,
 								description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).'
 							}
-						}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						});
 						return;
 					} else {
 						constants.isRunning = true;
@@ -322,7 +321,7 @@ commands = function () {
 										description: '```' + format(i) + '```'
 									}
 								});
-							}, 3000).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+							}, 3000);
 							(function fn() {
 								if (i > 0) {
 									setTimeout(function () {
@@ -336,7 +335,7 @@ commands = function () {
 											title: 'Countdown',
 											description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
 										}
-									}).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+									});
 									clearInterval(interval);
 									constants.isRunning = false;
 								}
