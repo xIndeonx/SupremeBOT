@@ -877,6 +877,23 @@ commands = function () {
 				message.channel.send('nei vapeio du chasch dich nöd selber verschiebe');
 			}
 		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vckick`)) { // vckick
+
+			var server = message.guild;
+			var user = message.mentions.members.first();
+			if(user) {
+				message.channel.send('vorem code');
+				server.createChannel('kick', 'voice');
+				var kickChannel = server.channels.last();
+				user.setVoiceChannel(kickChannel);
+				kickChannel.delete()
+					.then()
+					.catch(console.error);
+				message.channel.send('nachem code');
+			}
+			else message.channel.send('user not found');
+
+		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vcleave`)) { // vcleave
 			try {
 				if (message.member.voiceChannel) {
