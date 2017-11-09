@@ -8,6 +8,7 @@ commands = function () {
 		if (message.author.bot) return;
 		if (!message.content.startsWith(constants.PREFIX)) return;
 		if (!message.guild) return;
+		const args = message.content.split(' ');
 		if (message.content.toLowerCase().startsWith(constants.EVAL)) { // eval
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				const args = message.content.split(' ').slice(1);
@@ -47,7 +48,6 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(constants.SET_GAME)) { // setgame
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
-					var args = message.content.split(' ');
 					var gameString = args.slice(1).join(' ');
 					constants.client.user.setPresence({
 						game: {
@@ -81,7 +81,6 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(constants.SET_AVATAR)) { // setavatar
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
-					var args = message.content.split(' ');
 					var urlString = args.slice(1).join(' ');
 					constants.client.user.setAvatar(urlString);
 					message.delete(200);
@@ -110,7 +109,6 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(constants.SET_STATUS)) { // setstatus
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
-					var args = message.content.split(' ');
 					var statusString = args.slice(1).join(' ');
 					if (statusString === ('dnd') || statusString === ('online') || statusString === ('idle') || statusString === ('invisible')) {
 						constants.client.user.setStatus(statusString);
@@ -198,7 +196,6 @@ commands = function () {
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
 				try {
 					if (message.channel.type == 'text') {
-						var args = message.content.split(' ');
 						var input = args.slice(1).join(' ');
 						let messagecount = parseInt(input);
 						if (isNaN(messagecount)) {
@@ -321,7 +318,6 @@ commands = function () {
 			const CleverbotAPI = require('cleverbot-api');
 			const cleverbot = new CleverbotAPI(constants.CLEVERBOT_KEY);
 
-			var args = message.content.split(' ');
 			var queryString = args.slice(1).join(' ');
 			message.channel.startTyping();
 			cleverbot.getReply({
@@ -368,7 +364,6 @@ commands = function () {
 			}
 			else {
 				try {
-					var args = message.content.split(' ');
 					var countString = args.slice(1).join(' ');
 					let count = parseInt(countString);
 					if (isNaN(count)) {
@@ -473,7 +468,6 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}echo`)) { // echo
 			try {
-				var args = message.content.split(' ');
 				var string = args.slice(1).join(' ');
 				message.delete(200);
 				setTimeout(function () {
@@ -577,9 +571,6 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kick`)) { // kick
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
-
-				var args = message.content.split(' ');
-
 				let member = message.mentions.members.first();
 				if (!member) {
 					return message.channel.send({
@@ -599,7 +590,6 @@ commands = function () {
 						}
 					});
 				}
-
 				let reason = args.slice(2).join(' ');
 				if (!reason) {
 					return message.channel.send({
@@ -610,7 +600,6 @@ commands = function () {
 						}
 					});
 				}
-
 				member.kick(reason)
 					.catch(error => message.channel.send({
 						embed: {
@@ -633,9 +622,7 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lotto`)) { // lotto
 			try {
-				var input = message.content;
-				var guess = input.split(' ');
-				message.channel.send(lotto(guess[1]));
+				message.channel.send(lotto(args[1]));
 			}
 			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -663,7 +650,6 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ping`)) { // ping
-			var args = message.content.split(' ');
 			var string = args.slice(1).join(' ');
 			if (string === 'realtime' || string === 'rt') {
 				message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
@@ -692,7 +678,6 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}rps`)) { // rps
 			try {
-				var args = message.content.split(' ');
 				var string = args.slice(1).join(' ');
 				message.channel.send({
 					embed: {
@@ -732,7 +717,6 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}tts`)) { // tts
 			if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
 				try {
-					var args = message.content.split(' ');
 					var string = args.slice(1).join(' ');
 					message.delete(200);
 					setTimeout(function () {
@@ -756,7 +740,6 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}uptime`)) { // uptime
-			var args = message.content.split(' ');
 			var type = args.slice(1).join(' ');
 
 			if (type === 'process') {
@@ -824,7 +807,6 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}urban`)) { // urban
 			try {
 				var urban = require('urban-dictionary');
-				var args = message.content.split(' ');
 				var string = args.slice(1).join(' ');
 				urban.term(string, function (error, entries, tags, sounds) {
 					if (error) {
@@ -873,7 +855,6 @@ commands = function () {
 					});
 				}
 				else {
-					var args = message.content.split(' ');
 					var string = args.slice(1).join(' ');
 					var user;
 					if (string.toLowerCase() === 'ich' || string.toLowerCase() === 'me') {
@@ -995,7 +976,6 @@ commands = function () {
 					var wajs = require('wajs');
 					var waClient = new wajs(constants.WOLFRAM_APPID);
 
-					var args = message.content.split(' ');
 					var queryString = args.slice(1).join(' ');
 
 					waClient.query(queryString)
