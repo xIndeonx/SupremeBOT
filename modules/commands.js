@@ -866,7 +866,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
 			if (message.author.id != constants.OWNERID) {
 				var vapeio = message.guild.members.find('id', constants.OWNERID);
-				if (vapeio) {
+				if (vapeio.voiceChannel) {
 					vapeio.setVoiceChannel('340961232695853068');
 				}
 				else {
@@ -881,15 +881,15 @@ commands = function () {
 
 			var server = message.guild;
 			var user = message.mentions.members.first();
-			if(user) {
-				message.channel.send('vorem code');
-				server.createChannel('kick', 'voice');
-				var kickChannel = server.channels.last();
-				user.setVoiceChannel(kickChannel);
-				kickChannel.delete()
-					.then()
-					.catch(console.error);
-				message.channel.send('nachem code');
+			if(user.voiceChannel) {
+				server.createChannel('kick', 'voice').then(function() {
+					const kickChannel = server.channels.find('name', 'kick');
+					user.setVoiceChannel(kickChannel);
+					kickChannel.delete()
+						.then()
+						.catch(console.error);
+				});
+
 			}
 			else message.channel.send('user not found');
 
