@@ -72,6 +72,7 @@ const yellow = 0xffff00;
 var isYes;
 var isRunning = false;
 
+// module exports
 module.exports.Discord = Discord;
 module.exports.Client = Client;
 module.exports.Util = Util;
