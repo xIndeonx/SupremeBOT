@@ -323,11 +323,12 @@ commands = function () {
 
 			var args = message.content.split(' ');
 			var queryString = args.slice(1).join(' ');
-
+			message.channel.startTyping();
 			cleverbot.getReply({
 				input: queryString
 			}, (error, response) => {
 				if (error) {
+					message.channel.stopTyping(true);
 					throw error + message.channel.send({
 						embed: {
 							color: constants.red,
@@ -338,6 +339,7 @@ commands = function () {
 						.then(logToChannel('Error', error, message.author.tag, message.author.displayAvatarURL))
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
+				message.channel.stopTyping(true);
 				message.channel.send({
 					embed: {
 						color: constants.blue,
