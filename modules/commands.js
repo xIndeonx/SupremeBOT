@@ -281,6 +281,15 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ban`)) { // ban
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				const member = message.mentions.members.first();
+				if(!message.member.permissions.has('KICK_MEMBERS')) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'You need the `KICK_MEMBERS` permission to use this command'
+						}
+					});
+				}
 				if (!member) {
 					return message.channel.send({
 						embed: {
