@@ -160,6 +160,10 @@ customCommands = function () {
 			message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
 		}
 		else if (message.content.toLowerCase() === `${constants.PREFIX}lucas`) { // lucas
+			message.channel.send(`Try using \`${constants.PREFIX}lucas1\`, \`${constants.PREFIX}lucas2\`, \`${constants.PREFIX}lucas3\`, or \`${constants.PREFIX}lucas4\`!`)
+				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas1`)) { // lucas1
 			message.channel.send('Dr Luckckas verdient viu a dr HSR.');
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas2`)) { // lucas2
@@ -167,6 +171,9 @@ customCommands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas3`)) { // lucas3
 			message.channel.send('ICH chan auto fahre');
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas4`)) { // lucas4
+			message.channel.send('Aber kei Angst!');
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucascsgo`)) { // lucascsgo
 			message.channel.send('Regt sich nöd uf wemmer ihm d\'AWP chlaut.');

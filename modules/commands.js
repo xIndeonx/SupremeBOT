@@ -1028,19 +1028,21 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
 			if (message.author.id != constants.OWNERID) {
-				var vapeio = message.guild.members.find('id', constants.OWNERID);
-				if (vapeio.voiceChannel) {
-					vapeio.setVoiceChannel('340961232695853068');
-					message.react('✅');
-				}
-				else {
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'De Vapeio isch leider am vape und nöd da.'
-						}
-					});
+				if (message.member.voiceChannel) {
+					var vapeio = message.guild.members.find('id', constants.OWNERID);
+					if (vapeio.voiceChannel) {
+						vapeio.setVoiceChannel('340961232695853068');
+						message.react('✅');
+					}
+					else {
+						message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'De Vapeio isch leider am vape und nöd da.'
+							}
+						});
+					}
 				}
 			}
 			else {
