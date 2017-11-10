@@ -100,6 +100,10 @@ customCommands = function () {
 			message.channel.send('Es gaaaaaaaht nöööd.');
 		}
 		else if (message.content.toLowerCase() === `${constants.PREFIX}fabio`) { // fabio
+			message.channel.send(`Try using \`${constants.PREFIX}fabio1\`, \`${constants.PREFIX}fabio2\`, \`${constants.PREFIX}fabiocsgo\`, or \`${constants.PREFIX}fabiocsgo2\`!`)
+				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}fabio1`)) { // fabio1
 			message.channel.send('De Vabio isch en chline Memer.');
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}fabio2`)) { // fabio2
@@ -160,7 +164,7 @@ customCommands = function () {
 			message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
 		}
 		else if (message.content.toLowerCase() === `${constants.PREFIX}lucas`) { // lucas
-			message.channel.send(`Try using \`${constants.PREFIX}lucas1\`, \`${constants.PREFIX}lucas2\`, \`${constants.PREFIX}lucas3\`, or \`${constants.PREFIX}lucas4\`!`)
+			message.channel.send(`Try using \`${constants.PREFIX}lucas1\`, \`${constants.PREFIX}lucas2\`, \`${constants.PREFIX}lucas3\`, \`${constants.PREFIX}lucas4\`, or \`${constants.PREFIX}lucascsgo\`!`)
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas1`)) { // lucas1
