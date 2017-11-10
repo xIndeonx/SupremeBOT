@@ -278,6 +278,57 @@ commands = function () {
 			})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ban`)) { // ban
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+				const member = message.mentions.members.first();
+				if (!member) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Please mention a valid member of this server.'
+						}
+					});
+				}
+				if (!member.bannable) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'I cannot ban this user! Do they have a higher role? Do I have the `Ban Members` permission?'
+						}
+					});
+				}
+				const reason = args.slice(2).join(' ');
+				if (!reason) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Please indicate a reason for the ban!'
+						}
+					});
+				}
+				member.ban(reason)
+					.catch(error => message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`
+						}
+					}));
+				message.react('✅');
+			}
+			else {
+				return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'Sorry, you don\'t have permissions to use this!'
+					}
+				});
+			}
+		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channelinfo`)) { // channelinfo
 			try {
 				const embed = new constants.Discord.RichEmbed()
@@ -506,7 +557,7 @@ commands = function () {
 					.setTitle('Commands')
 					.setDescription(`This is a complete list of commands currently available for the bot.\nFor a list of custom commands, use \`${constants.PREFIX}custom\``)
 					.addField('Owner', `\`${constants.PREFIX}eval\`\n\`${constants.PREFIX}restart\`\n\`${constants.PREFIX}setavatar\`\n\`${constants.PREFIX}setgame\`\n\`${constants.PREFIX}setstatus\`\n\`${constants.PREFIX}shutdown\`\n\`${constants.PREFIX}wolfram\`\n`, true)
-					.addField('Admin', `\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
+					.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
 					.addBlankField(true)
 					.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
 					.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
