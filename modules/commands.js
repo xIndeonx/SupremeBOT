@@ -1031,11 +1031,23 @@ commands = function () {
 				if (message.member.voiceChannel) {
 					var vapeio = message.guild.members.find('id', constants.OWNERID);
 					if (vapeio.voiceChannel) {
-						vapeio.setVoiceChannel('340961232695853068');
-						message.react('✅');
+						if (vapeio.voiceChannelID === '340961232695853068') {
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'De Vapeio isch leider scho verschobe worde.'
+								}
+							});
+						}
+						else {
+							vapeio.setVoiceChannel('340961232695853068');
+							message.react('✅');
+							return;
+						}
 					}
 					else {
-						message.channel.send({
+						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
@@ -1044,9 +1056,18 @@ commands = function () {
 						});
 					}
 				}
+				else {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'You need to be in a voice channel to use this command.'
+						}
+					});
+				}
 			}
 			else {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
