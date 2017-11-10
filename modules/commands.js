@@ -35,7 +35,7 @@ commands = function () {
 					message.channel.send({
 						embed: {
 							color: constants.red,
-							title: 'ERROR',
+							title: 'Error',
 							description: `\`\`\`xl\n${clean(err)}\n\`\`\``
 						}
 					});
@@ -55,9 +55,10 @@ commands = function () {
 							type: 0
 						}
 					});
-					message.delete(200);
+					message.delete();
 					message.channel.send({
 						embed: {
+							title: 'Success',
 							color: constants.green,
 							description: `Successfully set game to \`${gameString}\`.`
 						}
@@ -71,6 +72,7 @@ commands = function () {
 			else {
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You are not authorized to use this command.'
 					}
@@ -83,11 +85,15 @@ commands = function () {
 				try {
 					var urlString = args.slice(1).join(' ');
 					constants.client.user.setAvatar(urlString);
-					message.delete(200);
+					message.delete();
 					message.channel.send({
 						embed: {
+							title: 'Success',
 							color: constants.green,
-							description: 'Successfully set the avatar.'
+							description: 'Successfully set the avatar.',
+							thumbnail: {
+								url: urlString
+							}
 						}
 					})
 						.then(sent => sent.delete(5000));
@@ -97,8 +103,10 @@ commands = function () {
 				}
 			}
 			else {
+				message.delete(5000);
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You are not authorized to use this command.'
 					}
@@ -112,9 +120,10 @@ commands = function () {
 					var statusString = args.slice(1).join(' ');
 					if (statusString === ('dnd') || statusString === ('online') || statusString === ('idle') || statusString === ('invisible')) {
 						constants.client.user.setStatus(statusString);
-						message.delete(200);
+						message.delete();
 						message.channel.send({
 							embed: {
+								title: 'Success',
 								color: constants.green,
 								description: `Successfully set status to \`${statusString}\`.`
 							}
@@ -122,8 +131,10 @@ commands = function () {
 							.then(sent => sent.delete(5000));
 					}
 					else {
+						message.delete(5000);
 						return message.channel.send({
 							embed: {
+								title: 'Error',
 								color: constants.red,
 								description: 'Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.'
 							}
@@ -138,6 +149,7 @@ commands = function () {
 			else {
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You are not authorized to use this command.'
 					}
@@ -161,6 +173,7 @@ commands = function () {
 				message.delete();
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You are not authorized to use this command.'
 					}
@@ -185,6 +198,7 @@ commands = function () {
 				message.delete();
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You are not authorized to use this command.'
 					}
@@ -199,8 +213,13 @@ commands = function () {
 						var input = args.slice(1).join(' ');
 						let messagecount = parseInt(input);
 						if (isNaN(messagecount)) {
-							message.channel.send('Could not delete messages. Please enter a valid number.');
-							return;
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'Could not delete messages. Please enter a valid number.'
+								}
+							});
 						}
 						else {
 							messagecount = messagecount + 1;
@@ -210,7 +229,8 @@ commands = function () {
 								.then(messages => message.channel.bulkDelete(messages));
 							message.channel.send({
 								embed: {
-									color: constants.blue,
+									title: 'Success',
+									color: constants.green,
 									description: 'You deleted: ' + (messagecount - 1) + ' message(s)'
 								}
 							})
@@ -226,6 +246,7 @@ commands = function () {
 			else {
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You are not authorized to use this command.'
 					}
@@ -243,7 +264,8 @@ commands = function () {
 								// Logging the number of messages deleted on both the channel and console.
 								message.channel.send({
 									embed: {
-										color: constants.blue,
+										title: 'Success',
+										color: constants.green,
 										description: 'Purge successful: ' + messagesDeleted + ' message(s) fetched and deleted.'
 									}
 								})
@@ -262,6 +284,7 @@ commands = function () {
 			else {
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You are not authorized to use this command.'
 					}
@@ -416,6 +439,7 @@ commands = function () {
 			if (constants.isRunning === true) {
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'Could not create countdown. A countdown is already running.'
 					}
@@ -429,6 +453,7 @@ commands = function () {
 					if (isNaN(count)) {
 						message.channel.send({
 							embed: {
+								title: 'Error',
 								color: constants.red,
 								description: 'Could not create countdown. Please enter a valid number.'
 							}
@@ -438,6 +463,7 @@ commands = function () {
 					else if (count > 86400) {
 						message.channel.send({
 							embed: {
+								title: 'Error',
 								color: constants.red,
 								description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).'
 							}
@@ -515,6 +541,7 @@ commands = function () {
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 					message.channel.send({
 						embed: {
+							title: 'Help',
 							color: constants.green,
 							description: `${message.author}, please check your Direct Messages!`
 						}
@@ -541,16 +568,40 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}hakai`)) { // hakai
 			try {
-				if (message.mentions.users.size == 0) return message.channel.send('Did not specify a user.');
+				if (message.mentions.users.size == 0) return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'Did not specify a user.'
+					}
+				});
 				if (message.mentions.users.size == 1) {
 					if (message.mentions.users.first() != message.author.toString()) {
-						return message.channel.send(message.mentions.users.first() + ' has been destroyed by ' + message.author.toString());
+						return message.channel.send({
+							embed: {
+								title: 'Hakai',
+								color: constants.blue,
+								description: `${message.mentions.users.first()} has been destroyed by ${message.author}`
+							}
+						});
 					}
 					else {
-						return message.channel.send('You cannot destroy yourself, ' + message.author.toString());
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `You cannot destroy yourself, ${message.author}`
+							}
+						});
 					}
 				}
-				if (message.mentions.users.size > 1) return message.channel.send('Specified too many users.');
+				if (message.mentions.users.size > 1) return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'Specified too many users.'
+					}
+				});
 			}
 			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -585,6 +636,7 @@ commands = function () {
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 					message.channel.send({
 						embed: {
+							title: 'Help',
 							color: constants.green,
 							description: `${message.author}, please check your Direct Messages!`
 						}
@@ -619,6 +671,7 @@ commands = function () {
 				else {
 					message.channel.send({
 						embed: {
+							title: 'Error',
 							color: constants.red,
 							description: '‼ You need to join a voice channel first!'
 						}
@@ -691,7 +744,13 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lotto`)) { // lotto
 			try {
-				message.channel.send(lotto(args[1]));
+				message.channel.send({
+					embed: {
+						title: 'Lotto',
+						color: constants.blue,
+						description: lotto(args[1])
+					}
+				});
 			}
 			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -708,6 +767,7 @@ commands = function () {
 				}
 				message.channel.send({
 					embed: {
+						title: 'Memory Usage',
 						color: constants.blue,
 						description: usage.toString(),
 						description: usage.join('\n')
@@ -802,6 +862,7 @@ commands = function () {
 			else {
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'You need the `Send TTS Messages` permission to use this command.'
 					}
@@ -814,6 +875,7 @@ commands = function () {
 			if (type === 'process') {
 				message.channel.send({
 					embed: {
+						title: 'Uptime',
 						color: constants.blue,
 						description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
 					}
@@ -823,6 +885,7 @@ commands = function () {
 			else if (type === 'os') {
 				message.channel.send({
 					embed: {
+						title: 'Uptime',
 						color: constants.blue,
 						description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**'
 					}
@@ -832,6 +895,7 @@ commands = function () {
 			else {
 				message.channel.send({
 					embed: {
+						title: 'Uptime',
 						color: constants.blue,
 						description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**'
 					}
@@ -948,12 +1012,12 @@ commands = function () {
 						});
 					}
 					else {
-						const whoIsError = new constants.Discord.RichEmbed()
-							.setTitle('Error')
-							.setDescription(`User not found. Try \`${constants.PREFIX}userinfo [mention]\` **OR** \`${constants.PREFIX}whois user_id\``)
-							.setColor(constants.red);
 						message.channel.send({
-							embed: whoIsError
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `User not found. Try \`${constants.PREFIX}userinfo [mention]\` **OR** \`${constants.PREFIX}whois user_id\``
+							}
 						});
 					}
 				}
@@ -972,6 +1036,7 @@ commands = function () {
 				else {
 					message.channel.send({
 						embed: {
+							title: 'Error',
 							color: constants.red,
 							description: 'De Vapeio isch leider am vape und nöd da.'
 						}
@@ -981,6 +1046,7 @@ commands = function () {
 			else {
 				message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.'
 					}
@@ -1007,6 +1073,7 @@ commands = function () {
 				}
 				else message.channel.send({
 					embed: {
+						title: 'Error',
 						color: constants.red,
 						description: 'User not found.'
 					}
@@ -1014,6 +1081,7 @@ commands = function () {
 			}
 			else message.channel.send({
 				embed: {
+					title: 'Error',
 					color: constants.red,
 					description: 'You do not have the permission to use this command.'
 				}
@@ -1029,6 +1097,7 @@ commands = function () {
 				else {
 					message.channel.send({
 						embed: {
+							title: 'Error',
 							color: constants.red,
 							description: '‼ You are not in a voice channel!'
 						}
@@ -1062,6 +1131,7 @@ commands = function () {
 							logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 							message.channel.send({
 								embed: {
+									title: 'Error',
 									color: constants.red,
 									description: 'An error has occured.\n\nError:\n' + err
 								}
