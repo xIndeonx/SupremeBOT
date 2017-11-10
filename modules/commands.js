@@ -279,14 +279,14 @@ commands = function () {
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ban`)) { // ban
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				const member = message.mentions.members.first();
-				if(!message.member.permissions.has('KICK_MEMBERS')) {
+				if(!message.guild.me.permissions.has('BAN_MEMBERS')) {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'You need the `KICK_MEMBERS` permission to use this command'
+							description: 'I don\'t have the `Ban Members` permission.'
 						}
 					});
 				}
@@ -304,7 +304,7 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I cannot ban this user! Do they have a higher role? Do I have the `Ban Members` permission?'
+							description: 'I cannot ban this user. Do they have a higher role?'
 						}
 					});
 				}
@@ -314,7 +314,7 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Please indicate a reason for the ban!'
+							description: 'Please indicate a reason for the ban.'
 						}
 					});
 				}
@@ -333,7 +333,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Sorry, you don\'t have permissions to use this!'
+						description: 'Sorry, you don\'t have permission to use this command. You need the `Ban Members` permission.'
 					}
 				});
 			}
@@ -630,8 +630,17 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kick`)) { // kick
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-				let member = message.mentions.members.first();
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+				const member = message.mentions.members.first();
+				if(!message.guild.me.permissions.has('KICK_MEMBERS')) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'I don\'t have the `Kick Members` permission.'
+						}
+					});
+				}
 				if (!member) {
 					return message.channel.send({
 						embed: {
@@ -646,17 +655,17 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I cannot kick this user! Do they have a higher role? Do I have the `Kick Members` permission?'
+							description: 'I cannot kick this user. Do they have a higher role?'
 						}
 					});
 				}
-				let reason = args.slice(2).join(' ');
+				const reason = args.slice(2).join(' ');
 				if (!reason) {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Please indicate a reason for the kick!'
+							description: 'Please indicate a reason for the kick.'
 						}
 					});
 				}
@@ -675,7 +684,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Sorry, you don\'t have permissions to use this!'
+						description: 'Sorry, you don\'t have permission to use this command. You need the `Kick Members` permission.'
 					}
 				});
 			}
