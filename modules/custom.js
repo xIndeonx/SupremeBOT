@@ -46,7 +46,7 @@ customCommands = function () {
 			message.channel.send('Wüki?!?!?');
 		}
 		else if (message.content.toLowerCase() === `${constants.PREFIX}baumi`) { // baumi
-			message.channel.send('Try using `' + constants.PREFIX + 'baumi1`, `' + constants.PREFIX + 'baumi2`, `' + constants.PREFIX + 'baumi3`, or `' + constants.PREFIX + 'baumi4`!')
+			message.channel.send(`Try using \`${constants.PREFIX}baumi1\`, \`${constants.PREFIX}baumi2\`, \`${constants.PREFIX}baumi3\`, or \`${constants.PREFIX}baumi4\`!`)
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}baumi1`)) { // baumi1
