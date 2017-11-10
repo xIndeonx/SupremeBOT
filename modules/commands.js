@@ -193,7 +193,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.DELETE)) { // delete
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					if (message.channel.type == 'text') {
 						var input = args.slice(1).join(' ');
@@ -233,7 +233,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.PURGE)) { // purge
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					if (message.channel.type == 'text') {
 						message.channel.fetchMessages()
@@ -279,7 +279,7 @@ commands = function () {
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ban`)) { // ban
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				const member = message.mentions.members.first();
 				if (!member) {
 					return message.channel.send({
@@ -621,7 +621,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kick`)) { // kick
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				let member = message.mentions.members.first();
 				if (!member) {
 					return message.channel.send({
@@ -971,7 +971,7 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vckick`)) { // vckick
 
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.OWNERID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				var server = message.guild;
 				var user = message.mentions.members.first();
 				if (user.voiceChannel) {
