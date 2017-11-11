@@ -101,15 +101,15 @@ play = function (guild, song) {
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
 		})
-		.on('error', error => console.error(error));
+		.on('error', error => logToChannel('Error', error, constants.client.user.tag, constants.client.user.displayAvatarURL));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 	serverQueue.textChannel.send({
 		embed: {
 			description: `▶ Started playing: **${song.title}**`,
 			color: constants.blue
 		}
-	})
-		.then(sent => sent.delete(60000));
+	});
+	// .then(sent => sent.delete(60000));
 };
 
 // message on member join
