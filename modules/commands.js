@@ -23,7 +23,7 @@ commands = function () {
 						evaled = require('util').inspect(evaled);
 					}
 
-					message.channel.send({
+					return message.channel.send({
 						embed: {
 							color: constants.green,
 							title: 'Success',
@@ -32,7 +32,7 @@ commands = function () {
 					});
 				}
 				catch (err) {
-					message.channel.send({
+					return message.channel.send({
 						embed: {
 							color: constants.red,
 							title: 'Error',
@@ -56,7 +56,7 @@ commands = function () {
 						}
 					});
 					message.delete();
-					message.channel.send({
+					return message.channel.send({
 						embed: {
 							title: 'Success',
 							color: constants.green,
@@ -70,7 +70,7 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -86,7 +86,7 @@ commands = function () {
 					var urlString = args.slice(1).join(' ');
 					constants.client.user.setAvatar(urlString);
 					message.delete();
-					message.channel.send({
+					return message.channel.send({
 						embed: {
 							title: 'Success',
 							color: constants.green,
@@ -104,7 +104,7 @@ commands = function () {
 			}
 			else {
 				message.delete(5000);
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -121,7 +121,7 @@ commands = function () {
 					if (statusString === ('dnd') || statusString === ('online') || statusString === ('idle') || statusString === ('invisible')) {
 						constants.client.user.setStatus(statusString);
 						message.delete();
-						message.channel.send({
+						return message.channel.send({
 							embed: {
 								title: 'Success',
 								color: constants.green,
@@ -147,7 +147,7 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -164,6 +164,7 @@ commands = function () {
 					setTimeout(function () {
 						process.exit();
 					}, 1000);
+					return;
 				}
 				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -171,7 +172,7 @@ commands = function () {
 			}
 			else {
 				message.delete();
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -196,7 +197,7 @@ commands = function () {
 			}
 			else {
 				message.delete();
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -236,6 +237,7 @@ commands = function () {
 							})
 								.then(sent => sent.delete(5000));
 							logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL);
+							return;
 						}
 					}
 				}
@@ -244,7 +246,7 @@ commands = function () {
 				}
 			}
 			else {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -275,14 +277,16 @@ commands = function () {
 							.catch(err => {
 								logToChannel('Error', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nError:\n' + err, message.author.tag, message.author.displayAvatarURL);
 							});
+						return;
 					}
+					else return;
 				}
 				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
 			else {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -292,7 +296,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}8ball`)) { // 8ball
-			message.channel.send({
+			return message.channel.send({
 				embed: {
 					title: 'The magic 8ball says...',
 					description: eightball(),
@@ -349,7 +353,7 @@ commands = function () {
 							description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`
 						}
 					}));
-				message.react('✅');
+				return message.react('✅');
 			}
 			else {
 				return message.channel.send({
@@ -373,7 +377,7 @@ commands = function () {
 					.addField('Position', message.channel.position, true)
 					.addBlankField(true)
 					.setFooter('Channel created: ' + getDay(message.channel.createdAt.getDay()) + ' ' + message.channel.createdAt.getMonth() + '/' + message.channel.createdAt.getDate() + '/' + message.channel.createdAt.getFullYear() + ' at ' + message.channel.createdAt.getHours() + 'H ' + message.channel.createdAt.getMinutes() + 'M');
-				message.channel.send({
+				return message.channel.send({
 					embed
 				});
 			}
@@ -389,7 +393,7 @@ commands = function () {
 					.setTimestamp()
 					.setAuthor(message.guild.name, message.guild.iconURL)
 					.addField('List of Channels', '```\n' + channels.join('\n') + '```');
-				message.channel.send({
+				return message.channel.send({
 					embed
 				});
 			}
@@ -403,7 +407,7 @@ commands = function () {
 
 			var queryString = args.slice(1).join(' ');
 			message.channel.startTyping();
-			cleverbot.getReply({
+			return cleverbot.getReply({
 				input: queryString
 			}, (error, response) => {
 				if (error) {
@@ -430,45 +434,42 @@ commands = function () {
 			});
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}coinflip`)) { // coinflip
-			message.channel.send({
+			return message.channel.send({
 				embed: coinFlip(message.content)
 			})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}countdown`)) { // countdown
 			if (constants.isRunning === true) {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
 						description: 'Could not create countdown. A countdown is already running.'
 					}
 				});
-				return;
 			}
 			else {
 				try {
 					var countString = args.slice(1).join(' ');
 					let count = parseInt(countString);
 					if (isNaN(count)) {
-						message.channel.send({
+						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
 								description: 'Could not create countdown. Please enter a valid number.'
 							}
 						});
-						return;
 					}
 					else if (count > 86400) {
-						message.channel.send({
+						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
 								description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).'
 							}
 						});
-						return;
 					}
 					else {
 						constants.isRunning = true;
@@ -508,6 +509,7 @@ commands = function () {
 								}
 							}(countString));
 						});
+						return;
 					}
 				}
 				catch (err) {
@@ -529,7 +531,7 @@ commands = function () {
 					.addField('K-Z', `\`${constants.PREFIX}ksh\`\n\`${constants.PREFIX}lucas\`\n\`${constants.PREFIX}merci\`\n\`${constants.PREFIX}noah\`\n\`${constants.PREFIX}oli\`\n\`${constants.PREFIX}ppap\`\n\`${constants.PREFIX}praise\`\n\`${constants.PREFIX}pubg\`\n\`${constants.PREFIX}rip\`\n\`${constants.PREFIX}snus\`\n\`${constants.PREFIX}sorry\`\n\`${constants.PREFIX}stfu\`\n\`${constants.PREFIX}toubi\`\n\`${constants.PREFIX}velo\`\n\`${constants.PREFIX}vn\`\n\`${constants.PREFIX}weltbild\`\n\`${constants.PREFIX}zeit\`\n\`${constants.PREFIX}ziit\`\n\`${constants.PREFIX}zoel\`\n`, true);
 
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-					message.channel.send({
+					return message.channel.send({
 						embed
 					})
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
@@ -547,6 +549,7 @@ commands = function () {
 						}
 					})
 						.then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					return;
 				}
 			}
 			catch (err) {
@@ -561,6 +564,7 @@ commands = function () {
 					message.channel.send(string);
 				}, 300);
 				logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nEcho command has been used:\n"' + string + '"', message.author.tag, message.author.displayAvatarURL);
+				return;
 			}
 			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -624,7 +628,7 @@ commands = function () {
 					.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
 
 				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-					message.channel.send({
+					return message.channel.send({
 						embed
 					})
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
@@ -643,6 +647,7 @@ commands = function () {
 					})
 						.then(sent => sent.delete(10000))
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					return;
 				}
 			}
 			catch (err) {
@@ -650,7 +655,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}invite`)) { // invite
-			constants.client.generateInvite(['ADMINISTRATOR'])
+			return constants.client.generateInvite(['ADMINISTRATOR'])
 				.then(link => {
 					message.channel.send({
 						embed: {
@@ -666,10 +671,10 @@ commands = function () {
 			try {
 				if (message.member.voiceChannel) {
 					message.member.voiceChannel.join();
-					message.react('✅');
+					return message.react('✅');
 				}
 				else {
-					message.channel.send({
+					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
@@ -730,7 +735,7 @@ commands = function () {
 							description: `Sorry ${message.author}, I couldn't kick the user.\n **Error**: ${error}`
 						}
 					}));
-				message.react('✅');
+				return message.react('✅');
 			}
 			else {
 				return message.channel.send({
@@ -744,7 +749,7 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lotto`)) { // lotto
 			try {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Lotto',
 						color: constants.blue,
@@ -765,7 +770,7 @@ commands = function () {
 					var output = `${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`;
 					usage.push(output);
 				}
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Memory Usage',
 						color: constants.blue,
@@ -781,11 +786,11 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ping`)) { // ping
 			var string = args.slice(1).join(' ');
 			if (string === 'realtime' || string === 'rt') {
-				message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
+				return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
 			else {
-				message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
+				return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
 		}
@@ -797,7 +802,7 @@ commands = function () {
 					.setTimestamp()
 					.setAuthor(message.guild.name, message.guild.iconURL)
 					.addField('List of Roles', '```\n' + roles.join('\n') + '```');
-				message.channel.send({
+				return message.channel.send({
 					embed
 				});
 			}
@@ -808,7 +813,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}rps`)) { // rps
 			try {
 				var string = args.slice(1).join(' ');
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Result',
 						color: constants.blue,
@@ -835,7 +840,7 @@ commands = function () {
 					.addField('Roles', message.guild.roles.size, true)
 					.addField('Emojis', message.guild.emojis.size, true)
 					.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
-				message.channel.send({
+				return message.channel.send({
 					embed
 				});
 			}
@@ -854,13 +859,14 @@ commands = function () {
 						});
 					}, 300);
 					logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nTTS command has been used:\n**"**' + string + '**"**', message.author.tag, message.author.displayAvatarURL);
+					return;
 				}
 				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
 			else {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -873,7 +879,7 @@ commands = function () {
 			var type = args.slice(1).join(' ');
 
 			if (type === 'process') {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Uptime',
 						color: constants.blue,
@@ -883,7 +889,7 @@ commands = function () {
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
 			else if (type === 'os') {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Uptime',
 						color: constants.blue,
@@ -893,7 +899,7 @@ commands = function () {
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
 			else {
-				message.channel.send({
+				return message.channel.send({
 					embed: {
 						title: 'Uptime',
 						color: constants.blue,
@@ -916,6 +922,7 @@ commands = function () {
 							embed: errorEmbed
 						});
 						console.error(error.message);
+						return;
 					}
 					else {
 						var link = entry.permalink;
@@ -927,7 +934,7 @@ commands = function () {
 							.setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
 							.setColor(constants.blue)
 							.setThumbnail(pic);
-						message.channel.send({
+						return message.channel.send({
 							embed
 						});
 					}
@@ -951,6 +958,7 @@ commands = function () {
 							embed: errorEmbed
 						});
 						console.error(error.message);
+						return;
 					}
 					else {
 						var link = entries[0].permalink;
@@ -962,7 +970,7 @@ commands = function () {
 							.setFooter('Up: ' + entries[0].thumbs_up + ' | Down: ' + entries[0].thumbs_down)
 							.setColor(constants.blue)
 							.setThumbnail(pic);
-						message.channel.send({
+						return message.channel.send({
 							embed
 						});
 					}
@@ -983,7 +991,7 @@ commands = function () {
 						.addField('Discriminator', member.user.discriminator, true)
 						.addField('ID', member.user.id, true)
 						.setFooter('User created: ' + getDay(member.user.createdAt.getDay()) + ' ' + member.user.createdAt.getMonth() + '/' + member.user.createdAt.getDate() + '/' + member.user.createdAt.getFullYear() + ' at ' + member.user.createdAt.getHours() + 'H ' + member.user.createdAt.getMinutes() + 'M');
-					message.channel.send({
+					return message.channel.send({
 						embed
 					});
 				}
@@ -1007,12 +1015,12 @@ commands = function () {
 							.addField('Discriminator', user.discriminator, true)
 							.addField('ID', user.id, true)
 							.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
-						message.channel.send({
+						return message.channel.send({
 							embed
 						});
 					}
 					else {
-						message.channel.send({
+						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
@@ -1042,8 +1050,7 @@ commands = function () {
 						}
 						else {
 							vapeio.setVoiceChannel('340961232695853068');
-							message.react('✅');
-							return;
+							return message.react('✅');
 						}
 					}
 					else {
@@ -1091,10 +1098,9 @@ commands = function () {
 								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						}, 500);
 					});
-					message.react('✅');
-
+					return message.react('✅');
 				}
-				else message.channel.send({
+				else return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
@@ -1102,7 +1108,7 @@ commands = function () {
 					}
 				});
 			}
-			else message.channel.send({
+			else return message.channel.send({
 				embed: {
 					title: 'Error',
 					color: constants.red,
@@ -1116,9 +1122,10 @@ commands = function () {
 				if (message.member.voiceChannel) {
 					message.member.voiceChannel.leave();
 					message.react('✅');
+					return;
 				}
 				else {
-					message.channel.send({
+					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
@@ -1139,7 +1146,7 @@ commands = function () {
 
 					var queryString = args.slice(1).join(' ');
 
-					waClient.query(queryString)
+					return waClient.query(queryString)
 						.then(function (resp) {
 							message.channel.send({
 								embed: {
@@ -1167,5 +1174,6 @@ commands = function () {
 				}
 			}
 		}
+		return;
 	});
 };

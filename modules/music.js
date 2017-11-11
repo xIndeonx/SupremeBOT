@@ -21,24 +21,20 @@ musicCommands = function () {
 				}
 			});
 			const permissions = voiceChannel.permissionsFor(message.client.user);
-			if (!permissions.has('CONNECT')) {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						description: '‼ Cannot connect to your voice channel!',
-						color: constants.red
-					}
-				});
-			}
-			if (!permissions.has('SPEAK')) {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						description: '‼ Cannot speak in your voice channel!',
-						color: constants.red
-					}
-				});
-			}
+			if (!permissions.has('CONNECT')) return message.channel.send({
+				embed: {
+					title: 'Error',
+					description: '‼ Cannot connect to your voice channel!',
+					color: constants.red
+				}
+			});
+			if (!permissions.has('SPEAK')) return message.channel.send({
+				embed: {
+					title: 'Error',
+					description: '‼ Cannot speak in your voice channel!',
+					color: constants.red
+				}
+			});
 
 			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 				message.channel.startTyping();
@@ -93,7 +89,6 @@ musicCommands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.MUSIC_SEARCH)) {
-			console.log('test');
 			const voiceChannel = message.member.voiceChannel;
 			const authorid = message.author.id;
 			if (!voiceChannel) return message.channel.send({
@@ -104,24 +99,20 @@ musicCommands = function () {
 				}
 			});
 			const permissions = voiceChannel.permissionsFor(message.client.user);
-			if (!permissions.has('CONNECT')) {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						description: '‼ Cannot connect to your voice channel!',
-						color: constants.red
-					}
-				});
-			}
-			if (!permissions.has('SPEAK')) {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						description: '‼ Cannot speak in your voice channel!',
-						color: constants.red
-					}
-				});
-			}
+			if (!permissions.has('CONNECT')) return message.channel.send({
+				embed: {
+					title: 'Error',
+					description: '‼ Cannot connect to your voice channel!',
+					color: constants.red
+				}
+			});
+			if (!permissions.has('SPEAK')) return message.channel.send({
+				embed: {
+					title: 'Error',
+					description: '‼ Cannot speak in your voice channel!',
+					color: constants.red
+				}
+			});
 
 			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 				message.channel.startTyping();
@@ -214,13 +205,12 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			setTimeout(function () {
 				serverQueue.connection.dispatcher.end('Skip command has been used.');
 			}, 500);
-			message.channel.send({
+			return message.channel.send({
 				embed: {
 					description: '⏭ Skipping...',
 					color: constants.blue
 				}
 			});
-			return;
 		}
 		else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}LEAVE`))) {
 			if (!message.member.voiceChannel) return message.channel.send({
@@ -239,13 +229,12 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			});
 			serverQueue.songs = [];
 			serverQueue.connection.dispatcher.end('Stop command has been used.');
-			message.channel.send({
+			return message.channel.send({
 				embed: {
 					description: '⏹ Successfully stopped.',
 					color: constants.blue
 				}
 			});
-			return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.MUSIC_VOLUME)) {
 			if (!message.member.voiceChannel) return message.channel.send({
