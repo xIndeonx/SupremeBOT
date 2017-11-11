@@ -353,6 +353,7 @@ commands = function () {
 							description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`
 						}
 					}));
+				logToChannel('Warning', `**${member}** has been banned from **${message.guild.name}**.\nReason: ${reason}`, `Ban executed by ${message.author.tag}`, member.user.displayAvatarURL);
 				return message.react('✅');
 			}
 			else {
@@ -735,6 +736,7 @@ commands = function () {
 							description: `Sorry ${message.author}, I couldn't kick the user.\n **Error**: ${error}`
 						}
 					}));
+				logToChannel('Warning', `**${member}** has been kicked from **${message.guild.name}**.\nReason: ${reason}`, `Kick executed by ${message.author.tag}`, member.user.displayAvatarURL);
 				return message.react('✅');
 			}
 			else {
