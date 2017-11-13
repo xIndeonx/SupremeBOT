@@ -296,7 +296,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}8ball`)) { // 8ball
-			if (message.guild.id === constants.GUILD_ID) {
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
 				return message.channel.send({
 					embed: {
 						title: 'The magic 8ball says...',
@@ -522,7 +522,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}custom`)) { // custom
-			if (message.guild.id === constants.GUILD_ID) {
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
 				try {
 					message.delete();
 					const embed = new constants.Discord.RichEmbed()
@@ -620,7 +620,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}help`)) { // help
 			try {
 				message.delete();
-				if (message.guild.id === constants.GUILD_ID) {
+				if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
 					const embed = new constants.Discord.RichEmbed()
 						.setColor(constants.red)
 						.setTimestamp()
@@ -693,7 +693,6 @@ commands = function () {
 						return;
 					}
 				}
-				
 			}
 			catch (err) {
 				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -1080,7 +1079,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
-			if (message.guild.id === constants.GUILD_ID) {
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
 				if (message.author.id != constants.OWNERID) {
 					if (message.member.voiceChannel) {
 						var vapeio = message.guild.members.find('id', constants.OWNERID);
