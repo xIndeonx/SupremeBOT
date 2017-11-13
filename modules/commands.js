@@ -41,9 +41,7 @@ commands = function () {
 					});
 				}
 			}
-			else {
-				return;
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_GAME)) { // setgame
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -69,16 +67,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_AVATAR)) { // setavatar
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -102,17 +91,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				message.delete(5000);
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_STATUS)) { // setstatus
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -146,16 +125,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.RESTART)) { // restart
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -170,17 +140,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				message.delete();
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SHUTDOWN)) { // shutdown
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -195,20 +155,10 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				message.delete();
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.DELETE)) { // delete
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					if (message.channel.type == 'text') {
 						var input = args.slice(1).join(' ');
@@ -256,7 +206,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.PURGE)) { // purge
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					if (message.channel.type == 'text') {
 						message.channel.fetchMessages()
