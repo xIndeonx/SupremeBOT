@@ -1083,8 +1083,35 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vckick`)) { // vckick
 
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+				if(!message.guild.me.permissions.has('MOVE_MEMBERS')) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'I don\'t have the `Move Members` permission.'
+						}
+					});
+				}
+				if(!message.guild.me.permissions.has('MANAGE_CHANNELS')) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'I don\'t have the `Manage Channels` permission.'
+						}
+					});
+				}
 				var server = message.guild;
 				var user = message.mentions.members.first();
+				if (!user) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'User not found.'
+						}
+					});
+				}
 				if (user.voiceChannel) {
 					server.createChannel('kick', 'voice').then(function () {
 						const kickChannel = server.channels.find('name', 'kick');
@@ -1101,7 +1128,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'User not found.'
+						description: 'User is not in a voice channel.'
 					}
 				});
 			}
