@@ -11,6 +11,7 @@ const {
 	SECRET,
 	TOKEN,
 	PREFIX,
+	GUILD_ID,
 	CHANNEL,
 	BOT_CHANNEL,
 	OWNERID,
@@ -80,6 +81,7 @@ module.exports.client = client;
 module.exports.SECRET = SECRET;
 module.exports.TOKEN = TOKEN;
 module.exports.PREFIX = PREFIX;
+module.exports.GUILD_ID = GUILD_ID;
 module.exports.CHANNEL = CHANNEL;
 module.exports.BOT_CHANNEL = BOT_CHANNEL;
 module.exports.OWNERID = OWNERID;
