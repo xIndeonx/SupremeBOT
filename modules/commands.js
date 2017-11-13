@@ -314,7 +314,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Sorry, you don\'t have permission to use this command. You need the `Ban Members` permission.'
+						description: 'You are not authorized to use this command. You need the `Ban Members` permission.'
 					}
 				});
 			}
@@ -737,7 +737,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Sorry, you don\'t have permission to use this command. You need the `Kick Members` permission.'
+						description: 'You are not authorized to use this command. You need the `Kick Members` permission.'
 					}
 				});
 			}
@@ -864,7 +864,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You need the `Send TTS Messages` permission to use this command.'
+						description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.'
 					}
 				});
 			}
@@ -1082,7 +1082,7 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vckick`)) { // vckick
 
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				var server = message.guild;
 				var user = message.mentions.members.first();
 				if (user.voiceChannel) {
@@ -1109,7 +1109,7 @@ commands = function () {
 				embed: {
 					title: 'Error',
 					color: constants.red,
-					description: 'You do not have the permission to use this command.'
+					description: 'You are not authorized to use this command.'
 				}
 			});
 
