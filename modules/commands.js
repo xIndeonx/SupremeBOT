@@ -296,14 +296,17 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}8ball`)) { // 8ball
-			return message.channel.send({
-				embed: {
-					title: 'The magic 8ball says...',
-					description: eightball(),
-					color: eightballColorDecider()
-				}
-			})
-				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+			if (message.guild.id === constants.GUILD_ID) {
+				return message.channel.send({
+					embed: {
+						title: 'The magic 8ball says...',
+						description: eightball(),
+						color: eightballColorDecider()
+					}
+				})
+					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ban`)) { // ban
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -665,7 +668,7 @@ commands = function () {
 						.addBlankField(true)
 						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
 						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
-						.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true);
+						.addField('Miscellaneous', `\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true);
 
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 						return message.channel.send({
@@ -1077,22 +1080,33 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
-			if (message.author.id != constants.OWNERID) {
-				if (message.member.voiceChannel) {
-					var vapeio = message.guild.members.find('id', constants.OWNERID);
-					if (vapeio.voiceChannel) {
-						if (vapeio.voiceChannelID === '340961232695853068') {
+			if (message.guild.id === constants.GUILD_ID) {
+				if (message.author.id != constants.OWNERID) {
+					if (message.member.voiceChannel) {
+						var vapeio = message.guild.members.find('id', constants.OWNERID);
+						if (vapeio.voiceChannel) {
+							if (vapeio.voiceChannelID === '340961232695853068') {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'De Vapeio isch leider scho verschobe worde.'
+									}
+								});
+							}
+							else {
+								vapeio.setVoiceChannel('340961232695853068');
+								return message.react('✅');
+							}
+						}
+						else {
 							return message.channel.send({
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'De Vapeio isch leider scho verschobe worde.'
+									description: 'De Vapeio isch leider am vape und nöd da.'
 								}
 							});
-						}
-						else {
-							vapeio.setVoiceChannel('340961232695853068');
-							return message.react('✅');
 						}
 					}
 					else {
@@ -1100,7 +1114,7 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'De Vapeio isch leider am vape und nöd da.'
+								description: 'You need to be in a voice channel to use this command.'
 							}
 						});
 					}
@@ -1110,20 +1124,12 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'You need to be in a voice channel to use this command.'
+							description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.'
 						}
 					});
 				}
 			}
-			else {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.'
-					}
-				});
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vckick`)) { // vckick
 
