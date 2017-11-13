@@ -8,6 +8,16 @@ customCommands = function () {
 		if (message.author.bot) return;
 		if (!message.content.startsWith(constants.PREFIX)) return;
 		if (!message.guild) return;
+		if (message.content.toLowerCase().startsWith(`${constants.PREFIX}australia`)) { // australia
+			const embed = new constants.Discord.RichEmbed()
+				.setTitle('Australia in a nutshell')
+				.setColor(constants.black)
+				.setImage('https://cdn.discordapp.com/attachments/367644529773379586/370929924564975616/images.jpg');
+			return message.channel.send({
+				embed
+			})
+				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+		}
 		if (message.guild.id === constants.GUILD_ID) {
 			if (message.content.toLowerCase().startsWith(`${constants.PREFIX}1=0`)) { // 1=0
 				return message.channel.send('1=0');
@@ -29,16 +39,6 @@ customCommands = function () {
 			}
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}auä`)) { // auä
 				return message.channel.send('Auä!');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}australia`)) { // australia
-				const embed = new constants.Discord.RichEmbed()
-					.setTitle('Australia in a nutshell')
-					.setColor(constants.black)
-					.setImage('https://cdn.discordapp.com/attachments/367644529773379586/370929924564975616/images.jpg');
-				return message.channel.send({
-					embed
-				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}autismus`)) { // autismus
 				return message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
