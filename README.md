@@ -38,6 +38,9 @@ Can be changed in the config.js file:
 | VCKick | Kick user from voice channel | Admin |
 
 
+[All commands](https://github.com/Raytlye/discord-beta/wiki/Commands-Overview)
+
+
 ## Built With
 
 * JavaScript - The programming language used
