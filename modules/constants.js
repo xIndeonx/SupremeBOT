@@ -8,11 +8,9 @@ const client = new Discord.Client({
 	disableEveryone: true
 });
 const {
-	SECRET,
 	TOKEN,
 	PREFIX,
 	GUILD_ID,
-	CHANNEL,
 	BOT_CHANNEL,
 	OWNERID,
 	LUCASID,

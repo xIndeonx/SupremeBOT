@@ -5,9 +5,6 @@ Otherwise the bot will not work
 You can change the prefix to your liking
 */
 
-// secret of the client
-exports.SECRET = 'client secret here';
-
 // token of the client
 exports.TOKEN = 'client token here';
 
@@ -16,9 +13,6 @@ exports.PREFIX = '.';
 
 // your own guild
 exports.GUILD_ID = null;
-
-// unused constant
-exports.CHANNEL = null;
 
 // logging channel
 exports.BOT_CHANNEL = 'log channel id here';
