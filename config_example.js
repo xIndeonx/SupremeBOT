@@ -14,19 +14,19 @@ exports.TOKEN = 'client token here';
 // prefix of the client
 exports.PREFIX = '.';
 
-// guild id
+// your own guild
 exports.GUILD_ID = null;
 
-// testing channel
+// unused constant
 exports.CHANNEL = null;
 
-// bot-logs channel
-exports.BOT_CHANNEL = null;
+// logging channel
+exports.BOT_CHANNEL = 'log channel id here';
 
-// Fabio's ID
+// owner id
 exports.OWNERID = 'your user id here';
 
-// Lucas' ID
+// irrelevant constant
 exports.LUCASID = null;
 
 // YouTube API key
