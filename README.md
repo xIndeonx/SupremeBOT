@@ -1,10 +1,10 @@
 # Discord Alpha
 
-Alpha repository for the self-made JS Discord Bot
+Alpha repository for the self-made JavaScript Discord bot which uses the discord.js library
 
 ### Prerequisites
 
-For you to be able to use this Discord-Bot you need to have the following things:
+For you to be able to use this Discord bot you need to have the following things:
 
 
 1. Discord Account
@@ -31,16 +31,17 @@ Can be changed in the config.js file:
 | setGame | Change game with a string as parameter | Owner |
 | setStatus | Change status with parameters `idle`, `dnd`, `online` or `invisible`| Owner |
 | shutdown | Shut down the bot | Owner |
-| ban | Ban user permantely from server | Admin |
-| delete | Delete message with a number as paramter | Admin |
-| purge | Delete 50 messages at once | Admin |
+| ban | Ban user permanently from server | Ban Members |
+| delete | Delete message with a number as parameter | Manage Messages |
+| kick | Kick a user from the server | Kick Members |
+| purge | Delete 50 messages at once | Manage Messages |
 | vckick | Kick user from voice channel | Admin |
 
 
-[All commands](https://github.com/Raytlye/discord-beta/wiki/Commands-Overview)
+[All commands](https://github.com/JustFabiolous/discord-alpha/wiki/Commands)
 
 
-## Built With
+## Built with
 
 * JavaScript - The programming language used
 * [Node.js](https://nodejs.org/en/) - The server framework used
@@ -48,7 +49,7 @@ Can be changed in the config.js file:
 
 ## Versioning
 
-No offical version published yet
+No official version published yet
 
 ## Creators
 
@@ -60,7 +61,7 @@ No offical version published yet
 This project is not licensed.
 This project is closed-source and will remain so.
 
-## Acknowledgments
+## Acknowledgements
 
 * [York Grimes'](https://anidiotsguide.gitbooks.io/discord-js-bot-guide/getting-started/the-long-version.html) An Idiot's Guide tutorial on how to make a Discord-Bot from scratch
 * [Crawl's](https://www.youtube.com/playlist?list=PLVzaElkTvlQae8XJ0ujnEgz1GviufNx8h) tutorial for the music commands of our bot
