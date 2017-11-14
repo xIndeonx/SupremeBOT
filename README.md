@@ -25,17 +25,16 @@ Can be changed in the config.js file:
 
 | Commands | Description | Requirements |
 | ------------- |:-------------:| -----:|
-| Eval | Execute code in chat | Owner |
-| Restart | Restart the bot | Owner |
+| eval | Execute JavaScript code directly in Discord | Owner |
+| restart | Restart the bot | Owner |
 | setAvatar | Change avatar with link to picture | Owner |
 | setGame | Change game with a string as parameter | Owner |
-| setStatus | Change status with parameter `Idle, DND, Online or Invisible`| Owner |
-| Shutdown | Shutdown the bot | Owner |
-| Wolfram | Use the wolfram API with any given string as paramter | Owner |
-| Ban | Ban user permantely from server | Admin |
-| Delete | Delete message with a number as paramter | Admin |
-| Purge | Delete 50 messages at once | Admin |
-| VCKick | Kick user from voice channel | Admin |
+| setStatus | Change status with parameters `idle`, `dnd`, `online` or `invisible`| Owner |
+| shutdown | Shut down the bot | Owner |
+| ban | Ban user permantely from server | Admin |
+| delete | Delete message with a number as paramter | Admin |
+| purge | Delete 50 messages at once | Admin |
+| vckick | Kick user from voice channel | Admin |
 
 
 [All commands](https://github.com/Raytlye/discord-beta/wiki/Commands-Overview)
@@ -45,7 +44,7 @@ Can be changed in the config.js file:
 
 * JavaScript - The programming language used
 * [Node.js](https://nodejs.org/en/) - The server framework used
-* [Discord.js](https://discord.js.org/#/) - Node.js module used to interact with the Discord API
+* [Discord.js](https://discord.js.org/#/) - Discord.js library / Node.js module used to interact with the Discord API
 
 ## Versioning
 
@@ -58,13 +57,12 @@ No offical version published yet
 
 ## License
 
-This project is not licensed and can be used by anyone.
-
-Please mention this site if you use our project :-)
+This project is not licensed.
+This project is closed-source and will remain so.
 
 ## Acknowledgments
 
 * [York Grimes'](https://anidiotsguide.gitbooks.io/discord-js-bot-guide/getting-started/the-long-version.html) An Idiot's Guide tutorial on how to make a Discord-Bot from scratch
-* [Crawl's](https://www.youtube.com/playlist?list=PLVzaElkTvlQae8XJ0ujnEgz1GviufNx8h) tutorial for the music section of our bot
-* Hat tip to anyone else who's code was used for this project
+* [Crawl's](https://www.youtube.com/playlist?list=PLVzaElkTvlQae8XJ0ujnEgz1GviufNx8h) tutorial for the music commands of our bot
+* Hat tip to anyone else whose code was used for this project
 
