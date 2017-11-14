@@ -41,9 +41,7 @@ commands = function () {
 					});
 				}
 			}
-			else {
-				return;
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_GAME)) { // setgame
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -69,16 +67,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_AVATAR)) { // setavatar
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -102,17 +91,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				message.delete(5000);
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SET_STATUS)) { // setstatus
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -146,16 +125,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.RESTART)) { // restart
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -170,17 +140,7 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				message.delete();
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.SHUTDOWN)) { // shutdown
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -195,20 +155,10 @@ commands = function () {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			else {
-				message.delete();
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
-				})
-					.then(sent => sent.delete(5000));
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(constants.DELETE)) { // delete
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					if (message.channel.type == 'text') {
 						var input = args.slice(1).join(' ');
@@ -256,7 +206,7 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(constants.PURGE)) { // purge
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					if (message.channel.type == 'text') {
 						message.channel.fetchMessages()
@@ -296,14 +246,17 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}8ball`)) { // 8ball
-			return message.channel.send({
-				embed: {
-					title: 'The magic 8ball says...',
-					description: eightball(),
-					color: eightballColorDecider()
-				}
-			})
-				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+				return message.channel.send({
+					embed: {
+						title: 'The magic 8ball says...',
+						description: eightball(),
+						color: eightballColorDecider()
+					}
+				})
+					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ban`)) { // ban
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -361,7 +314,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Sorry, you don\'t have permission to use this command. You need the `Ban Members` permission.'
+						description: 'You are not authorized to use this command. You need the `Ban Members` permission.'
 					}
 				});
 			}
@@ -519,43 +472,46 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}custom`)) { // custom
-			try {
-				message.delete();
-				const embed = new constants.Discord.RichEmbed()
-					.setColor(constants.red)
-					.setTimestamp()
-					.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
-					.setTitle('Custom Commands')
-					.setDescription('This is a complete list of all custom commands.')
-					.addField('A-D', `\`${constants.PREFIX}1=0\`\n\`${constants.PREFIX}ademerci\`\n\`${constants.PREFIX}aha\`\n\`${constants.PREFIX}alina\`\n\`${constants.PREFIX}andreas\`\n\`${constants.PREFIX}andi\`\n\`${constants.PREFIX}andy\`\n\`${constants.PREFIX}auä\`\n\`${constants.PREFIX}australia\`\n\`${constants.PREFIX}autismus\`\n\`${constants.PREFIX}autist\`\n\`${constants.PREFIX}baumi\`\n\`${constants.PREFIX}bitte\`\n\`${constants.PREFIX}boogeyman\`\n\`${constants.PREFIX}bzz\`\n\`${constants.PREFIX}claudio\`\n\`${constants.PREFIX}claudiolino\`\n\`${constants.PREFIX}clö\`\n\`${constants.PREFIX}danke\`\n\`${constants.PREFIX}doni\`\n`, true)
-					.addField('E-K', `\`${constants.PREFIX}eis\`\n\`${constants.PREFIX}esgahtnöd\`\n\`${constants.PREFIX}fabio\`\n\`${constants.PREFIX}ffs\`\n\`${constants.PREFIX}fige\`\n\`${constants.PREFIX}filip\`\n\`${constants.PREFIX}gopfeteli\`\n\`${constants.PREFIX}gschicht\`\n\`${constants.PREFIX}hoi\`\n\`${constants.PREFIX}hm\`\n\`${constants.PREFIX}ich\`\n\`${constants.PREFIX}ichi\`\n\`${constants.PREFIX}interessiert\`\n\`${constants.PREFIX}ivan\`\n\`${constants.PREFIX}jacob\`\n\`${constants.PREFIX}jaoder\`\n\`${constants.PREFIX}joel\`\n\`${constants.PREFIX}kadder\`\n\`${constants.PREFIX}kadder2\`\n`, true)
-					.addField('K-Z', `\`${constants.PREFIX}ksh\`\n\`${constants.PREFIX}lucas\`\n\`${constants.PREFIX}merci\`\n\`${constants.PREFIX}noah\`\n\`${constants.PREFIX}oli\`\n\`${constants.PREFIX}ppap\`\n\`${constants.PREFIX}praise\`\n\`${constants.PREFIX}pubg\`\n\`${constants.PREFIX}rip\`\n\`${constants.PREFIX}snus\`\n\`${constants.PREFIX}sorry\`\n\`${constants.PREFIX}stfu\`\n\`${constants.PREFIX}toubi\`\n\`${constants.PREFIX}velo\`\n\`${constants.PREFIX}vn\`\n\`${constants.PREFIX}weltbild\`\n\`${constants.PREFIX}zeit\`\n\`${constants.PREFIX}ziit\`\n\`${constants.PREFIX}zoel\`\n`, true);
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+				try {
+					message.delete();
+					const embed = new constants.Discord.RichEmbed()
+						.setColor(constants.red)
+						.setTimestamp()
+						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
+						.setTitle('Custom Commands')
+						.setDescription('This is a complete list of all custom commands.')
+						.addField('A-D', `\`${constants.PREFIX}1=0\`\n\`${constants.PREFIX}ademerci\`\n\`${constants.PREFIX}aha\`\n\`${constants.PREFIX}alina\`\n\`${constants.PREFIX}andreas\`\n\`${constants.PREFIX}andi\`\n\`${constants.PREFIX}andy\`\n\`${constants.PREFIX}auä\`\n\`${constants.PREFIX}australia\`\n\`${constants.PREFIX}autismus\`\n\`${constants.PREFIX}autist\`\n\`${constants.PREFIX}baumi\`\n\`${constants.PREFIX}bitte\`\n\`${constants.PREFIX}boogeyman\`\n\`${constants.PREFIX}bzz\`\n\`${constants.PREFIX}claudio\`\n\`${constants.PREFIX}claudiolino\`\n\`${constants.PREFIX}clö\`\n\`${constants.PREFIX}danke\`\n\`${constants.PREFIX}doni\`\n`, true)
+						.addField('E-K', `\`${constants.PREFIX}eis\`\n\`${constants.PREFIX}esgahtnöd\`\n\`${constants.PREFIX}fabio\`\n\`${constants.PREFIX}ffs\`\n\`${constants.PREFIX}fige\`\n\`${constants.PREFIX}filip\`\n\`${constants.PREFIX}gopfeteli\`\n\`${constants.PREFIX}gschicht\`\n\`${constants.PREFIX}hoi\`\n\`${constants.PREFIX}hm\`\n\`${constants.PREFIX}ich\`\n\`${constants.PREFIX}ichi\`\n\`${constants.PREFIX}interessiert\`\n\`${constants.PREFIX}ivan\`\n\`${constants.PREFIX}jacob\`\n\`${constants.PREFIX}jaoder\`\n\`${constants.PREFIX}joel\`\n\`${constants.PREFIX}kadder\`\n\`${constants.PREFIX}kadder2\`\n`, true)
+						.addField('K-Z', `\`${constants.PREFIX}ksh\`\n\`${constants.PREFIX}lucas\`\n\`${constants.PREFIX}merci\`\n\`${constants.PREFIX}noah\`\n\`${constants.PREFIX}oli\`\n\`${constants.PREFIX}ppap\`\n\`${constants.PREFIX}praise\`\n\`${constants.PREFIX}pubg\`\n\`${constants.PREFIX}rip\`\n\`${constants.PREFIX}snus\`\n\`${constants.PREFIX}sorry\`\n\`${constants.PREFIX}stfu\`\n\`${constants.PREFIX}toubi\`\n\`${constants.PREFIX}velo\`\n\`${constants.PREFIX}vn\`\n\`${constants.PREFIX}weltbild\`\n\`${constants.PREFIX}zeit\`\n\`${constants.PREFIX}ziit\`\n\`${constants.PREFIX}zoel\`\n`, true);
 
-				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-					return message.channel.send({
-						embed
-					})
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+						return message.channel.send({
+							embed
+						})
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					}
+					else {
+						message.author.send({
+							embed
+						})
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						message.channel.send({
+							embed: {
+								title: 'Help',
+								color: constants.green,
+								description: `${message.author}, please check your Direct Messages!`
+							}
+						})
+							.then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						return;
+					}
 				}
-				else {
-					message.author.send({
-						embed
-					})
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-					message.channel.send({
-						embed: {
-							title: 'Help',
-							color: constants.green,
-							description: `${message.author}, please check your Direct Messages!`
-						}
-					})
-						.then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-					return;
+				catch (err) {
+					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 				}
 			}
-			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}echo`)) { // echo
 			try {
@@ -564,7 +520,6 @@ commands = function () {
 				setTimeout(function () {
 					message.channel.send(string);
 				}, 300);
-				logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nEcho command has been used:\n"' + string + '"', message.author.tag, message.author.displayAvatarURL);
 				return;
 			}
 			catch (err) {
@@ -615,40 +570,78 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}help`)) { // help
 			try {
 				message.delete();
-				const embed = new constants.Discord.RichEmbed()
-					.setColor(constants.red)
-					.setTimestamp()
-					.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
-					.setTitle('Commands')
-					.setDescription(`This is a complete list of commands currently available for the bot.\nFor a list of custom commands, use \`${constants.PREFIX}custom\``)
-					.addField('Owner', `\`${constants.PREFIX}eval\`\n\`${constants.PREFIX}restart\`\n\`${constants.PREFIX}setavatar\`\n\`${constants.PREFIX}setgame\`\n\`${constants.PREFIX}setstatus\`\n\`${constants.PREFIX}shutdown\`\n\`${constants.PREFIX}wolfram\`\n`, true)
-					.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
-					.addBlankField(true)
-					.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
-					.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
-					.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
+				if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+					const embed = new constants.Discord.RichEmbed()
+						.setColor(constants.red)
+						.setTimestamp()
+						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
+						.setTitle('Commands')
+						.setDescription(`This is a complete list of commands currently available for the bot.\nFor a list of custom commands, use \`${constants.PREFIX}custom\``)
+						.addField('Owner', `\`${constants.PREFIX}eval\`\n\`${constants.PREFIX}restart\`\n\`${constants.PREFIX}setavatar\`\n\`${constants.PREFIX}setgame\`\n\`${constants.PREFIX}setstatus\`\n\`${constants.PREFIX}shutdown\`\n`, true)
+						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
+						.addBlankField(true)
+						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
+						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
+						.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
 
-				if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-					return message.channel.send({
-						embed
-					})
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-				}
-				else {
-					message.author.send({
-						embed
-					})
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-					message.channel.send({
-						embed: {
-							title: 'Help',
-							color: constants.green,
-							description: `${message.author}, please check your Direct Messages!`
-						}
-					})
-						.then(sent => sent.delete(10000))
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-					return;
+					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+						return message.channel.send({
+							embed
+						})
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					}
+					else {
+						message.author.send({
+							embed
+						})
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						message.channel.send({
+							embed: {
+								title: 'Help',
+								color: constants.green,
+								description: `${message.author}, please check your Direct Messages!`
+							}
+						})
+							.then(sent => sent.delete(10000))
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						return;
+					}
+				} else {
+					const embed = new constants.Discord.RichEmbed()
+						.setColor(constants.red)
+						.setTimestamp()
+						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
+						.setTitle('Commands')
+						.setDescription('This is a complete list of commands currently available for the bot.')
+						.addField('Owner', `\`${constants.PREFIX}eval\`\n\`${constants.PREFIX}restart\`\n\`${constants.PREFIX}setavatar\`\n\`${constants.PREFIX}setgame\`\n\`${constants.PREFIX}setstatus\`\n\`${constants.PREFIX}shutdown\`\n`, true)
+						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
+						.addBlankField(true)
+						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
+						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
+						.addField('Miscellaneous', `\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true);
+
+					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+						return message.channel.send({
+							embed
+						})
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					}
+					else {
+						message.author.send({
+							embed
+						})
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						message.channel.send({
+							embed: {
+								title: 'Help',
+								color: constants.green,
+								description: `${message.author}, please check your Direct Messages!`
+							}
+						})
+							.then(sent => sent.delete(10000))
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+						return;
+					}
 				}
 			}
 			catch (err) {
@@ -744,7 +737,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Sorry, you don\'t have permission to use this command. You need the `Kick Members` permission.'
+						description: 'You are not authorized to use this command. You need the `Kick Members` permission.'
 					}
 				});
 			}
@@ -860,7 +853,6 @@ commands = function () {
 							tts: true
 						});
 					}, 300);
-					logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\n\nTTS command has been used:\n**"**' + string + '**"**', message.author.tag, message.author.displayAvatarURL);
 					return;
 				}
 				catch (err) {
@@ -872,7 +864,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You need the `Send TTS Messages` permission to use this command.'
+						description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.'
 					}
 				});
 			}
@@ -1037,22 +1029,33 @@ commands = function () {
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
-			if (message.author.id != constants.OWNERID) {
-				if (message.member.voiceChannel) {
-					var vapeio = message.guild.members.find('id', constants.OWNERID);
-					if (vapeio.voiceChannel) {
-						if (vapeio.voiceChannelID === '340961232695853068') {
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+				if (message.author.id != constants.OWNERID) {
+					if (message.member.voiceChannel) {
+						var vapeio = message.guild.members.find('id', constants.OWNERID);
+						if (vapeio.voiceChannel) {
+							if (vapeio.voiceChannelID === '340961232695853068') {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'De Vapeio isch leider scho verschobe worde.'
+									}
+								});
+							}
+							else {
+								vapeio.setVoiceChannel('340961232695853068');
+								return message.react('✅');
+							}
+						}
+						else {
 							return message.channel.send({
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'De Vapeio isch leider scho verschobe worde.'
+									description: 'De Vapeio isch leider am vape und nöd da.'
 								}
 							});
-						}
-						else {
-							vapeio.setVoiceChannel('340961232695853068');
-							return message.react('✅');
 						}
 					}
 					else {
@@ -1060,7 +1063,7 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'De Vapeio isch leider am vape und nöd da.'
+								description: 'You need to be in a voice channel to use this command.'
 							}
 						});
 					}
@@ -1070,26 +1073,45 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'You need to be in a voice channel to use this command.'
+							description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.'
 						}
 					});
 				}
 			}
-			else {
-				return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.'
-					}
-				});
-			}
+			else return;
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vckick`)) { // vckick
 
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+				if(!message.guild.me.permissions.has('MOVE_MEMBERS')) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'I don\'t have the `Move Members` permission.'
+						}
+					});
+				}
+				if(!message.guild.me.permissions.has('MANAGE_CHANNELS')) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'I don\'t have the `Manage Channels` permission.'
+						}
+					});
+				}
 				var server = message.guild;
 				var user = message.mentions.members.first();
+				if (!user) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'User not found.'
+						}
+					});
+				}
 				if (user.voiceChannel) {
 					server.createChannel('kick', 'voice').then(function () {
 						const kickChannel = server.channels.find('name', 'kick');
@@ -1106,7 +1128,7 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'User not found.'
+						description: 'User is not in a voice channel.'
 					}
 				});
 			}
@@ -1114,7 +1136,7 @@ commands = function () {
 				embed: {
 					title: 'Error',
 					color: constants.red,
-					description: 'You do not have the permission to use this command.'
+					description: 'You are not authorized to use this command.'
 				}
 			});
 
