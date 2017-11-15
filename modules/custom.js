@@ -140,6 +140,9 @@ customCommands = function () {
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ichi`)) { // ichi
 				return message.channel.send('Bruchsch hilf? **ICH** cha der helfe.');
 			}
+			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}iconic`)) { // iconic
+				return message.channel.send('Fabio and bottomfragging. Name a more iconic duo.');
+			}
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}interessiert`)) { // interessiert
 				return message.channel.send('Wie es Loch im Chopf.');
 			}
