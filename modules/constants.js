@@ -22,10 +22,10 @@ const {
 } = require('../config');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
-const embed = new Discord.RichEmbed();
+const embed = new Discord.MessageEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
-const GAME = '.help | Work in Progress';
+const GAME = 'you | .help';
 
 // const for admin commands
 const SET_GAME = `${PREFIX}setgame`;

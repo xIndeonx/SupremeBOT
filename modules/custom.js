@@ -9,7 +9,7 @@ customCommands = function () {
 		if (!message.content.startsWith(constants.PREFIX)) return;
 		if (!message.guild) return;
 		if (message.content.toLowerCase().startsWith(`${constants.PREFIX}australia`)) { // australia
-			const embed = new constants.Discord.RichEmbed()
+			const embed = new constants.Discord.MessageEmbed()
 				.setTitle('Australia in a nutshell')
 				.setColor(constants.black)
 				.setImage('https://cdn.discordapp.com/attachments/367644529773379586/370929924564975616/images.jpg');
@@ -82,7 +82,7 @@ customCommands = function () {
 				return message.channel.send('Ich ha gseit **NEI**.');
 			}
 			else if ((message.content.toLowerCase().startsWith(`${constants.PREFIX}danke`)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}merci`))) { // danke / merci
-				const embed = new constants.Discord.RichEmbed()
+				const embed = new constants.Discord.MessageEmbed()
 					.setTitle('Merci viu mol')
 					.setColor(constants.blue)
 					.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
@@ -207,7 +207,7 @@ customCommands = function () {
 				return message.channel.send('Rest In Peace.');
 			}
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}snus`)) { // snus
-				const embed = new constants.Discord.RichEmbed()
+				const embed = new constants.Discord.MessageEmbed()
 					.setTitle('Die Uhrzeit')
 					.setColor(constants.black)
 					.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
@@ -229,7 +229,7 @@ customCommands = function () {
 				return message.channel.send('黒人が自転車を盗んだ');
 			}
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vn`)) { // vn
-				const embed = new constants.Discord.RichEmbed()
+				const embed = new constants.Discord.MessageEmbed()
 					.setTitle('Vape Nation')
 					.setColor(constants.green)
 					.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
@@ -246,7 +246,7 @@ customCommands = function () {
 			}
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ziit`)) { // ziit
 				if (message.author.id === constants.OWNERID) {
-					const embed = new constants.Discord.RichEmbed()
+					const embed = new constants.Discord.MessageEmbed()
 						.setTitle('Vape Nation')
 						.setColor(constants.green)
 						.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
@@ -256,7 +256,7 @@ customCommands = function () {
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 				else {
-					const embed = new constants.Discord.RichEmbed()
+					const embed = new constants.Discord.MessageEmbed()
 						.setTitle('Die Uhrzeit')
 						.setColor(constants.black)
 						.setImage('http://www.odenssnus.eu/public/img/user/1026.png');

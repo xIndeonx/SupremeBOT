@@ -46,22 +46,23 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(constants.SET_GAME)) { // setgame
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
-					var gameString = args.slice(1).join(' ');
-					constants.client.user.setPresence({
-						game: {
-							name: gameString,
-							type: 0
-						}
+					var typeString = args.slice(1);
+					var type = parseInt(typeString);
+					var gameString = args.slice(2).join(' ');
+					constants.client.user.setActivity(gameString, {
+						type: type
 					});
 					message.delete();
 					return message.channel.send({
 						embed: {
 							title: 'Success',
 							color: constants.green,
-							description: `Successfully set game to \`${gameString}\`.`
+							description: `Successfully set game to \`${gameString}\` with type \`${type}\`.`
 						}
 					})
-						.then(sent => sent.delete(5000));
+						.then(sent => sent.delete({
+							timeout: 5000
+						}));
 				}
 				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -85,7 +86,9 @@ commands = function () {
 							}
 						}
 					})
-						.then(sent => sent.delete(5000));
+						.then(sent => sent.delete({
+							timeout: 5000
+						}));
 				}
 				catch (err) {
 					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
@@ -107,10 +110,14 @@ commands = function () {
 								description: `Successfully set status to \`${statusString}\`.`
 							}
 						})
-							.then(sent => sent.delete(5000));
+							.then(sent => sent.delete({
+								timeout: 5000
+							}));
 					}
 					else {
-						message.delete(5000);
+						message.delete({
+							timeout: 5000
+						});
 						return message.channel.send({
 							embed: {
 								title: 'Error',
@@ -118,7 +125,9 @@ commands = function () {
 								description: 'Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.'
 							}
 						})
-							.then(sent => sent.delete(5000));
+							.then(sent => sent.delete({
+								timeout: 5000
+							}));
 					}
 				}
 				catch (err) {
@@ -185,7 +194,9 @@ commands = function () {
 									description: 'You deleted: ' + (messagecount - 1) + ' message(s)'
 								}
 							})
-								.then(sent => sent.delete(5000));
+								.then(sent => sent.delete({
+									timeout: 5000
+								}));
 							logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL);
 							return;
 						}
@@ -221,7 +232,9 @@ commands = function () {
 										description: 'Purge successful: ' + messagesDeleted + ' message(s) fetched and deleted.'
 									}
 								})
-									.then(sent => sent.delete(5000));
+									.then(sent => sent.delete({
+										timeout: 5000
+									}));
 								logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nPurge successful: **' + messagesDeleted + '**', message.author.tag, message.author.displayAvatarURL);
 							})
 							.catch(err => {
@@ -321,7 +334,7 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channelinfo`)) { // channelinfo
 			try {
-				const embed = new constants.Discord.RichEmbed()
+				const embed = new constants.Discord.MessageEmbed()
 					.setColor(constants.blue)
 					.setAuthor(message.channel.name, message.guild.iconURL)
 					.addField('Name', message.channel.name, true)
@@ -342,7 +355,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channels`)) { // channels
 			try {
 				const channels = message.guild.channels.map(c => c.name);
-				const embed = new constants.Discord.RichEmbed()
+				const embed = new constants.Discord.MessageEmbed()
 					.setColor(constants.blue)
 					.setTimestamp()
 					.setAuthor(message.guild.name, message.guild.iconURL)
@@ -475,7 +488,7 @@ commands = function () {
 			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
 				try {
 					message.delete();
-					const embed = new constants.Discord.RichEmbed()
+					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.red)
 						.setTimestamp()
 						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
@@ -503,7 +516,10 @@ commands = function () {
 								description: `${message.author}, please check your Direct Messages!`
 							}
 						})
-							.then(sent => sent.delete(10000)).catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+							.then(sent => sent.delete({
+								timeout: 10000
+							}))
+							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						return;
 					}
 				}
@@ -516,7 +532,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}echo`)) { // echo
 			try {
 				var string = args.slice(1).join(' ');
-				message.delete(200);
+				message.delete();
 				setTimeout(function () {
 					message.channel.send(string);
 				}, 300);
@@ -571,7 +587,7 @@ commands = function () {
 			try {
 				message.delete();
 				if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
-					const embed = new constants.Discord.RichEmbed()
+					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.red)
 						.setTimestamp()
 						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
@@ -602,12 +618,15 @@ commands = function () {
 								description: `${message.author}, please check your Direct Messages!`
 							}
 						})
-							.then(sent => sent.delete(10000))
+							.then(sent => sent.delete({
+								timeout: 10000
+							}))
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						return;
 					}
-				} else {
-					const embed = new constants.Discord.RichEmbed()
+				}
+				else {
+					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.red)
 						.setTimestamp()
 						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL)
@@ -638,7 +657,9 @@ commands = function () {
 								description: `${message.author}, please check your Direct Messages!`
 							}
 						})
-							.then(sent => sent.delete(10000))
+							.then(sent => sent.delete({
+								timeout: 10000
+							}))
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 						return;
 					}
@@ -780,8 +801,13 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ping`)) { // ping
 			var string = args.slice(1).join(' ');
-			if (string === 'realtime' || string === 'rt') {
+			if (string === 'random') {
 				return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
+					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+			}
+			else if (string === 'actual' || string === 'real' || string === 'realtime' || string === 'rt') {
+				return message.channel.send('Processing...')
+					.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'))
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
 			else {
@@ -792,7 +818,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}roles`)) { // roles
 			try {
 				const roles = message.guild.roles.map(r => r.name);
-				const embed = new constants.Discord.RichEmbed()
+				const embed = new constants.Discord.MessageEmbed()
 					.setColor(constants.blue)
 					.setTimestamp()
 					.setAuthor(message.guild.name, message.guild.iconURL)
@@ -822,7 +848,7 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}serverinfo`)) { // serverinfo
 			try {
-				const embed = new constants.Discord.RichEmbed()
+				const embed = new constants.Discord.MessageEmbed()
 					.setColor(constants.blue)
 					.setAuthor(message.guild.name, message.guild.iconURL)
 					.addField('Name', message.guild.name, true)
@@ -847,7 +873,7 @@ commands = function () {
 			if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
 				try {
 					var string = args.slice(1).join(' ');
-					message.delete(200);
+					message.delete();
 					setTimeout(function () {
 						message.channel.send(string, {
 							tts: true
@@ -908,7 +934,7 @@ commands = function () {
 				var urban = require('urban-dictionary');
 				urban.random(function (error, entry) {
 					if (error) {
-						const errorEmbed = new constants.Discord.RichEmbed()
+						const errorEmbed = new constants.Discord.MessageEmbed()
 							.setTitle('Error')
 							.setDescription('`' + error.message + '`')
 							.setColor(constants.red);
@@ -921,7 +947,7 @@ commands = function () {
 					else {
 						var link = entry.permalink;
 						var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
-						const embed = new constants.Discord.RichEmbed()
+						const embed = new constants.Discord.MessageEmbed()
 							.setTitle(entry.word)
 							.addField('Definition', entry.definition)
 							.addField('Example', entry.example + `\n\n[Link to this word](${link})`)
@@ -944,7 +970,7 @@ commands = function () {
 				var string = args.slice(1).join(' ');
 				urban.term(string, function (error, entries, tags, sounds) {
 					if (error) {
-						const errorEmbed = new constants.Discord.RichEmbed()
+						const errorEmbed = new constants.Discord.MessageEmbed()
 							.setTitle('Error')
 							.setDescription('`' + error.message + '`')
 							.setColor(constants.red);
@@ -957,7 +983,7 @@ commands = function () {
 					else {
 						var link = entries[0].permalink;
 						var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
-						const embed = new constants.Discord.RichEmbed()
+						const embed = new constants.Discord.MessageEmbed()
 							.setTitle(entries[0].word)
 							.addField('Definition', entries[0].definition)
 							.addField('Example', entries[0].example + `\n\n[Link to this word](${link})`)
@@ -978,7 +1004,7 @@ commands = function () {
 			try {
 				var member = message.mentions.members.first();
 				if (member) {
-					const embed = new constants.Discord.RichEmbed()
+					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
 						.setAuthor(member.user.username, member.user.displayAvatarURL)
 						.addField('Username', member.user.username, true)
@@ -1002,7 +1028,7 @@ commands = function () {
 						user = message.author;
 					}
 					if (user) {
-						const embed = new constants.Discord.RichEmbed()
+						const embed = new constants.Discord.MessageEmbed()
 							.setColor(constants.blue)
 							.setAuthor(user.username, user.displayAvatarURL)
 							.addField('Username', user.username, true)
