@@ -212,7 +212,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 			});
 		}
-		else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}LEAVE`))) {
+		else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}leave`))) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					title: 'Error',
