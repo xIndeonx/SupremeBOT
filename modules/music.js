@@ -154,7 +154,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 
 						try {
 							var response = await message.channel.awaitMessages(msg2 => msg2.author.id === authorid && msg2.content > 0 && msg2.content < 6, {
-								maxMatches: 1,
+								max: 1,
 								time: 30000,
 								errors: ['time']
 							});

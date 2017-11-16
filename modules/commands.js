@@ -224,8 +224,7 @@ commands = function () {
 						message.channel.messages.fetch()
 							.then(messages => {
 								message.channel.bulkDelete(messages);
-								var messagesDeleted = messages.array().length; // number of messages deleted
-								// Logging the number of messages deleted on both the channel and console.
+								var messagesDeleted = messages.array().length;
 								message.channel.send({
 									embed: {
 										title: 'Success',
