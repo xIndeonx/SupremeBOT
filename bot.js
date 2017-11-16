@@ -11,8 +11,11 @@ constants.client.on('error', console.error);
 
 // ready
 constants.client.on('ready', () => {
-	constants.client.user.setActivity(constants.GAME, {
-		type: 3
+	constants.client.user.setPresence({
+		game: {
+			name: constants.GAME,
+			type: 0
+		}
 	});
 	logToChannel('Information', 'Bot successfully initialized.', constants.client.user.tag, constants.client.user.displayAvatarURL);
 });
@@ -165,7 +168,7 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 		color = constants.black;
 	}
 
-	const embed = new constants.Discord.MessageEmbed()
+	const embed = new constants.Discord.RichEmbed()
 		.setTitle(title)
 		.setAuthor(messageAuthor)
 		.setColor(color)
@@ -180,7 +183,7 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 
 // functions for coinflip
 coinFlip = function (coinFlipMessage) {
-	const coinFlipErrorEmbed = new constants.Discord.MessageEmbed()
+	const coinFlipErrorEmbed = new constants.Discord.RichEmbed()
 		.setTitle('Error')
 		.setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\` **OR** \`${constants.PREFIX}coinflip\``)
 		.setColor(constants.red);
@@ -207,7 +210,7 @@ coinFlip = function (coinFlipMessage) {
 
 coinFlipEmbedF = function (description) {
 
-	const coinFlipEmbed = new constants.Discord.MessageEmbed()
+	const coinFlipEmbed = new constants.Discord.RichEmbed()
 		.setTitle('Result')
 		.setDescription(description)
 		.setColor(constants.blue);
