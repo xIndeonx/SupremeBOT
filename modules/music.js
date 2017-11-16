@@ -48,7 +48,7 @@ musicCommands = function () {
 						await handleVideo(video2, message, voiceChannel, true);
 					}
 					catch (err) {
-						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+						logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						continue;
 					}
 					if (limit === 100) {
@@ -74,7 +74,7 @@ musicCommands = function () {
 						var video = await constants.youtube.getVideoByID(videos[0].id);
 					}
 					catch (err) {
-						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
+						logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						message.channel.stopTyping(true);
 						return message.channel.send({
 							embed: {
@@ -160,7 +160,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 							});
 						}
 						catch (err) {
-							logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
 							return message.channel.send({
 								embed: {
 									title: 'Error',
@@ -173,8 +172,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						var video = await constants.youtube.getVideoByID(videos[videoIndex - 1].id);
 					}
 					catch (err) {
-						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL);
-						message.channel.stopTyping(true);
+						logToChannel('Error', `Error with the \`${constants.PREFIX}search\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return message.channel.send({
 							embed: {
 								title: 'Error',

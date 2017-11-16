@@ -65,7 +65,7 @@ commands = function () {
 						}));
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}setgame\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else return;
@@ -91,7 +91,7 @@ commands = function () {
 						}));
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}setavatar\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else return;
@@ -131,7 +131,7 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}setstatus\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else return;
@@ -146,7 +146,7 @@ commands = function () {
 					return;
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}restart\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else return;
@@ -156,12 +156,12 @@ commands = function () {
 				try {
 					message.channel.send('Shutting down...');
 					constants.client.destroy((err) => {
-						logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+						logToChannel('Error', `Error while destroying the client:\n${err}`, message.author.tag, message.author.displayAvatarURL());
 					});
 					process.exitCode = 1;
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}shutdown\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else return;
@@ -197,14 +197,14 @@ commands = function () {
 								.then(sent => sent.delete({
 									timeout: 5000
 								}));
-							logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL());
+							logToChannel('Information', 'Guild Name: ' + message.guild.name + '\nChannel Name: ' + message.channel.name + '\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL());
 							return;
 						}
 						else return;
 					}
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}delete\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else {
@@ -235,17 +235,17 @@ commands = function () {
 									.then(sent => sent.delete({
 										timeout: 5000
 									}));
-								logToChannel('Information', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nPurge successful: **' + messagesDeleted + '**', message.author.tag, message.author.displayAvatarURL());
+								logToChannel('Information', 'Guild Name: ' + message.guild.name + '\nChannel Name: ' + message.channel.name + '\n\nPurge successful: **' + messagesDeleted + '**', message.author.tag, message.author.displayAvatarURL());
 							})
 							.catch(err => {
-								logToChannel('Error', 'Guild Name: *' + message.guild.name + '*\nGuild ID: *' + message.guild.id + '*\nChannel Name: *' + message.channel.name + '*\nChannel ID: *' + message.channel.id + '*\n\nError:\n' + err, message.author.tag, message.author.displayAvatarURL());
+								logToChannel('Error', `Error while purging messages:\n${err}`, message.author.tag, message.author.displayAvatarURL());
 							});
 						return;
 					}
 					else return;
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}purge\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else {
@@ -349,7 +349,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}channelinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}channels`)) { // channels
@@ -365,7 +365,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}channels\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}cleverbot`)) { // cleverbot
@@ -386,8 +386,8 @@ commands = function () {
 							description: error
 						}
 					})
-						.then(logToChannel('Error', error, message.author.tag, message.author.displayAvatarURL()))
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						.then(logToChannel('Error', `Error while executing the cleverbot command:\n${error}`, message.author.tag, message.author.displayAvatarURL()))
+						.catch(err => logToChannel('Error', `Error while logging the cleverbot error:\n${err}`, message.author.tag, message.author.displayAvatarURL()));
 				}
 				message.channel.stopTyping(true);
 				message.channel.send({
@@ -480,7 +480,7 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}countdown\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 		}
@@ -524,7 +524,7 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}custom\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else return;
@@ -539,7 +539,7 @@ commands = function () {
 				return;
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}echo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}hakai`)) { // hakai
@@ -580,7 +580,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}hakai\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}help`)) { // help
@@ -666,7 +666,7 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}help\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}invite`)) { // invite
@@ -680,7 +680,7 @@ commands = function () {
 						}
 					});
 				})
-				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+				.catch(err => logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL()));
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}join`)) { // join
 			try {
@@ -699,7 +699,7 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}join\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kick`)) { // kick
@@ -774,7 +774,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}lotto\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}memory`)) { // memory
@@ -796,29 +796,33 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}memory\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ping`)) { // ping
-			var string = args.slice(1).join(' ');
-			if (string === 'random') {
-				return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+			try {
+				var string = args.slice(1).join(' ');
+				if (string === 'random') {
+					return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+				}
+				else if (string === 'actual' || string === 'real' || string === 'realtime' || string === 'rt') {
+					return message.channel.send('Processing...')
+						.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'))
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+				}
+				else if (string === 'ws' || string === 'websocket') {
+					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+				}
+				else if (!string) {
+					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
+						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+				}
+				else return;
 			}
-			else if (string === 'actual' || string === 'real' || string === 'realtime' || string === 'rt') {
-				return message.channel.send('Processing...')
-					.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'))
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
-			}
-			else if (string === 'ws' || string === 'websocket' || !string) {
-				return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
-			}
-			else {
-				message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
-				logToChannel('Warning', message.content, message.author.tag, message.author.displayAvatarURL());
-				return;
+			catch (err) {
+				logToChannel('Error', `Error with the \`${constants.PREFIX}ping\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}roles`)) { // roles
@@ -834,7 +838,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}roles\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}rps`)) { // rps
@@ -849,7 +853,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}rps\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}serverinfo`)) { // serverinfo
@@ -872,7 +876,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}serverinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}tts`)) { // tts
@@ -888,7 +892,7 @@ commands = function () {
 					return;
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}tts\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 			else {
@@ -947,7 +951,7 @@ commands = function () {
 						message.channel.send({
 							embed: errorEmbed
 						});
-						console.error(error.message);
+						logToChannel('Error', `Error occurred at built-in error catching for the \`${constants.PREFIX}urbanrandom\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return;
 					}
 					else {
@@ -967,7 +971,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}urbanrandom\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}urban`)) { // urban
@@ -983,7 +987,7 @@ commands = function () {
 						message.channel.send({
 							embed: errorEmbed
 						});
-						console.error(error.message);
+						logToChannel('Error', `Error occurred at built-in error catching for the \`${constants.PREFIX}urban\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return;
 					}
 					else {
@@ -1003,7 +1007,7 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}urban\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if ((message.content.toLowerCase().startsWith(`${constants.PREFIX}userinfo`)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}whois`))) { // userinfo / whois
@@ -1057,7 +1061,7 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}userinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vapeio`)) { // vapeio
@@ -1151,7 +1155,7 @@ commands = function () {
 						setTimeout(function () {
 							kickChannel.delete()
 								.then()
-								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+								.catch(err => logToChannel('Error', `Error while deleting the vckick channel:\n${err}`, message.author.tag, message.author.displayAvatarURL()));
 						}, 500);
 					});
 					return message.react('✅');
@@ -1191,7 +1195,7 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${constants.PREFIX}vcleave\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}wolfram`)) { // wolfram
@@ -1226,7 +1230,7 @@ commands = function () {
 						});
 				}
 				catch (err) {
-					logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${constants.PREFIX}wolfram\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				}
 			}
 		}

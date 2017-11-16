@@ -14,7 +14,7 @@ constants.client.on('ready', () => {
 	constants.client.user.setActivity(constants.GAME, {
 		type: 3
 	});
-	logToChannel('Information', 'Bot successfully initialized.', constants.client.user.tag, constants.client.user.displayAvatarURL);
+	logToChannel('Information', 'Bot successfully initialized.', constants.client.user.tag, constants.client.user.displayAvatarURL());
 });
 
 // disconnect
@@ -98,7 +98,7 @@ play = function (guild, song) {
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
 		})
-		.on('error', error => logToChannel('Error', error, constants.client.user.tag, constants.client.user.displayAvatarURL));
+		.on('error', error => logToChannel('Error', `Music error:\n${error}`, constants.client.user.tag, constants.client.user.displayAvatarURL()));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 	serverQueue.textChannel.send({
 		embed: {
