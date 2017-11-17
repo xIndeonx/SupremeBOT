@@ -406,3 +406,23 @@ getDay = function (day) {
 		return '';
 	}
 };
+
+// function for client status
+getStatus = function () {
+	switch (constants.client.status) {
+	case 0:
+		return 'READY';
+	case 1:
+		return 'CONNECTING';
+	case 2:
+		return 'RECONNECTING';
+	case 3:
+		return 'IDLE';
+	case 4:
+		return 'NEARLY';
+	case 5:
+		return 'DISCONNECTED';
+	default:
+		return 'UNKNOWN';
+	}
+};

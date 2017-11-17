@@ -54,7 +54,7 @@ No official version published yet
 ## Creators
 
  - **Owner and Creator** - [Fabiolous](https://github.com/JustFabiolous)
- - **Co-programmer** - [Raytlye](https://github.com/Raytlye)
+ - **Co-owner** - [Raytlye](https://github.com/Raytlye)
 
 ## License
 

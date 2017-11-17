@@ -274,7 +274,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ban`)) { // ban
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				const member = message.mentions.members.first();
-				if(!message.guild.me.permissions.has('BAN_MEMBERS')) {
+				if (!message.guild.me.permissions.has('BAN_MEMBERS')) {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
@@ -588,7 +588,7 @@ commands = function () {
 				message.delete();
 				if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
 					const embed = new constants.Discord.MessageEmbed()
-						.setColor(constants.red)
+						.setColor(constants.blue)
 						.setTimestamp()
 						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL())
 						.setTitle('Commands')
@@ -597,7 +597,7 @@ commands = function () {
 						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
 						.addBlankField(true)
 						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
-						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
+						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
 						.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
 
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -627,7 +627,7 @@ commands = function () {
 				}
 				else {
 					const embed = new constants.Discord.MessageEmbed()
-						.setColor(constants.red)
+						.setColor(constants.blue)
 						.setTimestamp()
 						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL())
 						.setTitle('Commands')
@@ -636,7 +636,7 @@ commands = function () {
 						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
 						.addBlankField(true)
 						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
-						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
+						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
 						.addField('Miscellaneous', `\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true);
 
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
@@ -705,7 +705,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kick`)) { // kick
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				const member = message.mentions.members.first();
-				if(!message.guild.me.permissions.has('KICK_MEMBERS')) {
+				if (!message.guild.me.permissions.has('KICK_MEMBERS')) {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
@@ -879,6 +879,75 @@ commands = function () {
 				logToChannel('Error', `Error with the \`${constants.PREFIX}serverinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}stats`)) { // stats
+			try {
+				return message.channel.send('Processing...')
+					.then(sent => sent.edit({
+						embed: {
+							color: constants.blue,
+							author: {
+								name: constants.client.user.username,
+								iconURL: constants.client.user.displayAvatarURL()
+							},
+							fields: [{
+								name: 'Name',
+								value: constants.client.user.username,
+								inline: true
+							},
+							{
+								name: 'ID',
+								value: `\`${constants.client.user.id}\``,
+								inline: true
+							},
+							{
+								name: 'Owner',
+								value: 'Fabiolous#4960',
+								inline: true
+							},
+							{
+								name: 'Co-owner',
+								value: 'Raytlye#7182',
+								inline: true
+							},
+							{
+								name: 'Guilds',
+								value: constants.client.guilds.size,
+								inline: true
+							},
+							{
+								name: 'Users',
+								value: constants.client.users.size,
+								inline: true
+							},
+							{
+								name: 'Version',
+								value: 'Alpha 0.1',
+								inline: true
+							},
+							{
+								name: 'Connection',
+								value: getStatus(),
+								inline: true
+							},
+							{
+								name: 'Ping',
+								value: `\`${sent.createdTimestamp - message.createdTimestamp}ms\``,
+								inline: true
+							},
+							{
+								name: 'Uptime',
+								value: format(process.uptime()),
+								inline: true
+							}
+							],
+							timestamp: Date.now()
+						}
+					}));
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${constants.PREFIX}stats\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+			}
+		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}tts`)) { // tts
 			if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
 				try {
@@ -1014,12 +1083,20 @@ commands = function () {
 			try {
 				var member = message.mentions.members.first();
 				if (member) {
+					var nick = message.guild.members.get(member.id).nickname;
+					if (nick === undefined) {
+						nick = 'No nickname';
+					}
+					else {
+						nick = message.guild.members.get(member.id).nickname;
+					}
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
 						.setAuthor(member.user.username, member.user.displayAvatarURL())
 						.addField('Username', member.user.username, true)
 						.addField('Discriminator', member.user.discriminator, true)
 						.addField('ID', member.user.id, true)
+						.addField('Nickname', nick, true)
 						.setFooter('User created: ' + getDay(member.user.createdAt.getDay()) + ' ' + member.user.createdAt.getMonth() + '/' + member.user.createdAt.getDate() + '/' + member.user.createdAt.getFullYear() + ' at ' + member.user.createdAt.getHours() + 'H ' + member.user.createdAt.getMinutes() + 'M');
 					return message.channel.send({
 						embed
@@ -1038,12 +1115,20 @@ commands = function () {
 						user = message.author;
 					}
 					if (user) {
+						var nick = message.guild.members.get(user.id).nickname;
+						if (nick === undefined) {
+							nick = 'No nickname';
+						}
+						else {
+							nick = message.guild.members.get(user.id).nickname;
+						}
 						const embed = new constants.Discord.MessageEmbed()
 							.setColor(constants.blue)
 							.setAuthor(user.username, user.displayAvatarURL())
 							.addField('Username', user.username, true)
 							.addField('Discriminator', user.discriminator, true)
 							.addField('ID', user.id, true)
+							.addField('Nickname', nick, true)
 							.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
 						return message.channel.send({
 							embed
@@ -1119,7 +1204,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vckick`)) { // vckick
 
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-				if(!message.guild.me.permissions.has('MOVE_MEMBERS')) {
+				if (!message.guild.me.permissions.has('MOVE_MEMBERS')) {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
@@ -1128,7 +1213,7 @@ commands = function () {
 						}
 					});
 				}
-				if(!message.guild.me.permissions.has('MANAGE_CHANNELS')) {
+				if (!message.guild.me.permissions.has('MANAGE_CHANNELS')) {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
