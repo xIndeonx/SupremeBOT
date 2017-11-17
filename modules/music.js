@@ -125,8 +125,8 @@ musicCommands = function () {
 				message.channel.stopTyping(true);
 				return message.channel.send({
 					embed: {
-						title: 'Playlist',
-						description: `**${constants.playlist.title}** has been added to the queue!`,
+						title: 'Playlist added',
+						description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
 						color: constants.blue
 					}
 				});
@@ -296,7 +296,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			});
 			return message.channel.send({
 				embed: {
-					description: `🎶 Now playing: **${serverQueue.songs[0].title}**`,
+					description: `🎶 Now playing: **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`,
 					color: constants.blue
 				}
 			});
