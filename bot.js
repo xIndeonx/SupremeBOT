@@ -75,7 +75,7 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 		if (playlist) return;
 		else return message.channel.send({
 			embed: {
-				description: `🎶 **${song.title}** has been added to the queue!`,
+				description: `🎶 **[${song.title}](${song.url})** has been added to the queue!`,
 				color: constants.blue
 			}
 		});
@@ -102,7 +102,7 @@ play = function (guild, song) {
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 	serverQueue.textChannel.send({
 		embed: {
-			description: `▶ Started playing: **${song.title}**`,
+			description: `▶ Started playing: **[${song.title}](${song.url})**`,
 			color: constants.blue
 		}
 	});

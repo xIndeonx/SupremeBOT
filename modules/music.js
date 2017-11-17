@@ -58,8 +58,8 @@ musicCommands = function () {
 				message.channel.stopTyping(true);
 				return message.channel.send({
 					embed: {
-						title: 'Playlist',
-						description: `**${constants.playlist.title}** has been added to the queue!`,
+						title: 'Playlist added',
+						description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
 						color: constants.blue
 					}
 				});
