@@ -310,15 +310,13 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				}
 			});
 			let index = 0;
-			var queuelist = `\n${serverQueue.songs.map(song => `${++index} - ${song.title}`).join('\n')}`;
+			var queuelist = `\n${serverQueue.songs.map(song => `${++index} - [${song.title}](${song.url})`).join('\n')}`;
 			if (queuelist.length < 2000) {
 				return message.channel.send({
 					embed: {
 						title: 'Queue',
 						color: constants.blue,
-						description: `\`\`\`xl
-${queuelist}
-            \`\`\``,
+						description: queuelist,
 						footer: {
 							text: `Now playing: ${serverQueue.songs[0].title}`
 						}
