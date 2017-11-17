@@ -890,8 +890,8 @@ commands = function () {
 								iconURL: constants.client.user.displayAvatarURL()
 							},
 							fields: [{
-								name: 'Name',
-								value: constants.client.user.username,
+								name: 'Tag',
+								value: constants.client.user.tag,
 								inline: true
 							},
 							{
