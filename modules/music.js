@@ -17,23 +17,23 @@ musicCommands = function () {
 				embed: {
 					title: 'Error',
 					description: '‼ You need to be in a voice channel to play music!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			const permissions = voiceChannel.permissionsFor(message.client.user);
 			if (!permissions.has('CONNECT')) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ Cannot connect to your voice channel!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			if (!permissions.has('SPEAK')) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ Cannot speak in your voice channel!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 
 			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
@@ -60,8 +60,8 @@ musicCommands = function () {
 					embed: {
 						title: 'Playlist added',
 						description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
-						color: constants.blue
-					}
+						color: constants.blue,
+					},
 				});
 			}
 			else {
@@ -80,8 +80,8 @@ musicCommands = function () {
 							embed: {
 								title: 'Error',
 								description: '‼ Could not get search results.',
-								color: constants.red
-							}
+								color: constants.red,
+							},
 						});
 					}
 				}
@@ -95,23 +95,23 @@ musicCommands = function () {
 				embed: {
 					title: 'Error',
 					description: '‼ You need to be in a voice channel to play music!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			const permissions = voiceChannel.permissionsFor(message.client.user);
 			if (!permissions.has('CONNECT')) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ Cannot connect to your voice channel!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			if (!permissions.has('SPEAK')) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ Cannot speak in your voice channel!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 
 			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
@@ -127,8 +127,8 @@ musicCommands = function () {
 					embed: {
 						title: 'Playlist added',
 						description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
-						color: constants.blue
-					}
+						color: constants.blue,
+					},
 				});
 			}
 			else {
@@ -147,16 +147,16 @@ musicCommands = function () {
 ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
                         \`\`\``,
 								footer: {
-									text: 'Please input the number of the song you want to play (1-5). 30 seconds until cancellation.'
-								}
-							}
+									text: 'Please input the number of the song you want to play (1-5). 30 seconds until cancellation.',
+								},
+							},
 						});
 
 						try {
 							var response = await message.channel.awaitMessages(msg2 => msg2.author.id === authorid && msg2.content > 0 && msg2.content < 6, {
 								max: 1,
 								time: 30000,
-								errors: ['time']
+								errors: ['time'],
 							});
 						}
 						catch (err) {
@@ -164,8 +164,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 								embed: {
 									title: 'Error',
 									description: 'No or invalid input, cancelling video selection.',
-									color: constants.red
-								}
+									color: constants.red,
+								},
 							});
 						}
 						const videoIndex = parseInt(response.first().content);
@@ -177,8 +177,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 							embed: {
 								title: 'Error',
 								description: '‼ Could not get search results.',
-								color: constants.red
-							}
+								color: constants.red,
+							},
 						});
 					}
 				}
@@ -190,15 +190,15 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				embed: {
 					title: 'Error',
 					description: '‼ You are not in a voice channel!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			setTimeout(function () {
 				serverQueue.connection.dispatcher.end('Skip command has been used.');
@@ -206,8 +206,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			return message.channel.send({
 				embed: {
 					description: '⏭ Skipping...',
-					color: constants.blue
-				}
+					color: constants.blue,
+				},
 			});
 		}
 		else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}leave`))) {
@@ -215,23 +215,23 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				embed: {
 					title: 'Error',
 					description: '‼ You are not in a voice channel!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			serverQueue.songs = [];
 			serverQueue.connection.dispatcher.end('Stop command has been used.');
 			return message.channel.send({
 				embed: {
 					description: '⏹ Successfully stopped.',
-					color: constants.blue
-				}
+					color: constants.blue,
+				},
 			});
 		}
 		else if (message.content.toLowerCase().startsWith(constants.MUSIC_VOLUME)) {
@@ -239,29 +239,29 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				embed: {
 					title: 'Error',
 					description: '‼ You are not in a voice channel!',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			if (!args[1]) return message.channel.send({
 				embed: {
 					description: `🔊 The current volume is: **${serverQueue.volume}**.`,
-					color: constants.blue
-				}
+					color: constants.blue,
+				},
 			});
 			if (args[1]) {
 				if (serverQueue.volume === parseInt(args[1])) {
 					return message.channel.send({
 						embed: {
 							description: `🔊 The volume is already on **${args[1]}**.`,
-							color: constants.orange
-						}
+							color: constants.orange,
+						},
 					});
 				}
 				if (args[1] > 10) {
@@ -270,8 +270,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					return message.channel.send({
 						embed: {
 							description: '🔊 Set the volume to the maximum: **10**.',
-							color: constants.blue
-						}
+							color: constants.blue,
+						},
 					});
 				}
 				if (args[1] <= 10) {
@@ -280,8 +280,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					return message.channel.send({
 						embed: {
 							description: `🔊 Set the volume to: **${args[1]}**.`,
-							color: constants.blue
-						}
+							color: constants.blue,
+						},
 					});
 				}
 			}
@@ -291,14 +291,14 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			return message.channel.send({
 				embed: {
 					description: `🎶 Now playing: **[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})**`,
-					color: constants.blue
-				}
+					color: constants.blue,
+				},
 			});
 		}
 		else if (message.content.toLowerCase().startsWith(constants.MUSIC_QUEUE)) {
@@ -306,8 +306,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 			let index = 0;
 			var queuelist = `\n${serverQueue.songs.map(song => `${++index} - ${song.title}`).join('\n')}`;
@@ -318,9 +318,9 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						color: constants.blue,
 						description: queuelist,
 						footer: {
-							text: `Now playing: ${serverQueue.songs[0].title}`
-						}
-					}
+							text: `Now playing: ${serverQueue.songs[0].title}`,
+						},
+					},
 				});
 			}
 			else {
@@ -328,8 +328,8 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Queue is too long to show.'
-					}
+						description: 'Queue is too long to show.',
+					},
 				});
 			}
 		}
@@ -340,16 +340,16 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				return message.channel.send({
 					embed: {
 						description: '⏸ Successfully paused.',
-						color: constants.blue
-					}
+						color: constants.blue,
+					},
 				});
 			}
 			return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 		}
 		else if (message.content.toLowerCase().startsWith(constants.MUSIC_RESUME)) {
@@ -359,16 +359,16 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				return message.channel.send({
 					embed: {
 						description: '▶ Successfully resumed.',
-						color: constants.blue
-					}
+						color: constants.blue,
+					},
 				});
 			}
 			return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 		}
 		return;

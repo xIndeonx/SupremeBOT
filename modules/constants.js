@@ -2,10 +2,10 @@
 const Discord = require('discord.js');
 const {
 	Client,
-	Util
+	Util,
 } = require('discord.js');
 const client = new Discord.Client({
-	disableEveryone: true
+	disableEveryone: true,
 });
 const {
 	TOKEN,
@@ -18,14 +18,15 @@ const {
 	PROJECT_ID,
 	PROJECT_KEY,
 	WOLFRAM_APPID,
-	CLEVERBOT_KEY
+	CLEVERBOT_KEY,
 } = require('../config');
+const unhandledRejections = new Map();
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.MessageEmbed();
 const youtube = new YouTube(YT_API);
 const queue = new Map();
-const GAME = 'you | .help';
+const GAME = `you | ${PREFIX}help`;
 
 // const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -52,7 +53,7 @@ const MUSIC_SEARCH = `${PREFIX}search`;
 var airbrakeJs = require('airbrake-js');
 var airbrake = new airbrakeJs({
 	projectId: PROJECT_ID,
-	projectKey: PROJECT_KEY
+	projectKey: PROJECT_KEY,
 });
 airbrake.addFilter(function (notice) {
 	notice.context.environment = 'production';
@@ -87,6 +88,7 @@ module.exports.PROJECT_ID = PROJECT_ID;
 module.exports.PROJECT_KEY = PROJECT_KEY;
 module.exports.WOLFRAM_APPID = WOLFRAM_APPID;
 module.exports.CLEVERBOT_KEY = CLEVERBOT_KEY;
+module.exports.unhandledRejections = unhandledRejections;
 module.exports.YouTube = YouTube;
 module.exports.ytdl = ytdl;
 module.exports.embed = embed;

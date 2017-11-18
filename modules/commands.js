@@ -27,8 +27,8 @@ commands = function () {
 						embed: {
 							color: constants.green,
 							title: 'Success',
-							description: '```xl\n' + clean(evaled) + '```Took `' + (end - start).toFixed(3) + 'ms`'
-						}
+							description: '```xl\n' + clean(evaled) + '```Took `' + (end - start).toFixed(3) + 'ms`',
+						},
 					});
 				}
 				catch (err) {
@@ -36,8 +36,8 @@ commands = function () {
 						embed: {
 							color: constants.red,
 							title: 'Error',
-							description: `\`\`\`xl\n${clean(err)}\n\`\`\``
-						}
+							description: `\`\`\`xl\n${clean(err)}\n\`\`\``,
+						},
 					});
 				}
 			}
@@ -49,20 +49,35 @@ commands = function () {
 					var typeString = args.slice(1);
 					var type = parseInt(typeString);
 					var gameString = args.slice(2).join(' ');
-					constants.client.user.setActivity(gameString, {
-						type: type
-					});
-					message.delete();
-					return message.channel.send({
-						embed: {
-							title: 'Success',
-							color: constants.green,
-							description: `Successfully set game to \`${gameString}\` with type \`${type}\`.`
-						}
-					})
-						.then(sent => sent.delete({
-							timeout: 5000
-						}));
+					if (!args || !typeString || !gameString) {
+						message.delete();
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Could not set game. Make sure you used the correct parameters.',
+							},
+						})
+							.then(sent => sent.delete({
+								timeout: 5000,
+							}));
+					}
+					else {
+						constants.client.user.setActivity(gameString, {
+							type: type,
+						});
+						message.delete();
+						return message.channel.send({
+							embed: {
+								title: 'Success',
+								color: constants.green,
+								description: `Successfully set game to \`${gameString}\` with type \`${type}\`.`,
+							},
+						})
+							.then(sent => sent.delete({
+								timeout: 5000,
+							}));
+					}
 				}
 				catch (err) {
 					logToChannel('Error', `Error with the \`${constants.PREFIX}setgame\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -74,21 +89,50 @@ commands = function () {
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					var urlString = args.slice(1).join(' ');
-					constants.client.user.setAvatar(urlString);
-					message.delete();
-					return message.channel.send({
-						embed: {
-							title: 'Success',
-							color: constants.green,
-							description: 'Successfully set the avatar.',
-							thumbnail: {
-								url: urlString
-							}
-						}
-					})
-						.then(sent => sent.delete({
-							timeout: 5000
-						}));
+					if (!args || !urlString) {
+						message.delete();
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Could not set avatar. Make sure you used the correct parameters.',
+							},
+						})
+							.then(sent => sent.delete({
+								timeout: 5000,
+							}));
+					}
+					else if (urlString === 'reset') {
+						constants.client.user.setAvatar();
+						message.delete();
+						return message.channel.send({
+							embed: {
+								title: 'Success',
+								color: constants.green,
+								description: 'Successfully reset the avatar.',
+							},
+						})
+							.then(sent => sent.delete({
+								timeout: 5000,
+							}));
+					}
+					else {
+						constants.client.user.setAvatar(urlString);
+						message.delete();
+						return message.channel.send({
+							embed: {
+								title: 'Success',
+								color: constants.green,
+								description: 'Successfully set the avatar.',
+								thumbnail: {
+									url: urlString,
+								},
+							},
+						})
+							.then(sent => sent.delete({
+								timeout: 5000,
+							}));
+					}
 				}
 				catch (err) {
 					logToChannel('Error', `Error with the \`${constants.PREFIX}setavatar\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -100,33 +144,33 @@ commands = function () {
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					var statusString = args.slice(1).join(' ');
-					if (statusString === ('dnd') || statusString === ('online') || statusString === ('idle') || statusString === ('invisible')) {
+					if (statusString === 'dnd' || statusString === 'online' || statusString === 'idle' || statusString === 'invisible') {
 						constants.client.user.setStatus(statusString);
 						message.delete();
 						return message.channel.send({
 							embed: {
 								title: 'Success',
 								color: constants.green,
-								description: `Successfully set status to \`${statusString}\`.`
-							}
+								description: `Successfully set status to \`${statusString}\`.`,
+							},
 						})
 							.then(sent => sent.delete({
-								timeout: 5000
+								timeout: 5000,
 							}));
 					}
 					else {
 						message.delete({
-							timeout: 5000
+							timeout: 5000,
 						});
 						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.'
-							}
+								description: 'Wrong input. Please use `online`, `idle`, `dnd`, or `invisible`.',
+							},
 						})
 							.then(sent => sent.delete({
-								timeout: 5000
+								timeout: 5000,
 							}));
 					}
 				}
@@ -177,25 +221,25 @@ commands = function () {
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'Could not delete messages. Please enter a valid number.'
-								}
+									description: 'Could not delete messages. Please enter a valid number.',
+								},
 							});
 						}
 						else if (message.channel.type == 'text') {
 							messagecount = messagecount + 1;
 							message.channel.messages.fetch({
-								limit: messagecount
+								limit: messagecount,
 							})
 								.then(messages => message.channel.bulkDelete(messages));
 							message.channel.send({
 								embed: {
 									title: 'Success',
 									color: constants.green,
-									description: 'You deleted: ' + (messagecount - 1) + ' message(s)'
-								}
+									description: 'You deleted: ' + (messagecount - 1) + ' message(s)',
+								},
 							})
 								.then(sent => sent.delete({
-									timeout: 5000
+									timeout: 5000,
 								}));
 							logToChannel('Information', 'Guild Name: ' + message.guild.name + '\nChannel Name: ' + message.channel.name + '\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL());
 							return;
@@ -212,8 +256,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
+						description: 'You are not authorized to use this command.',
+					},
 				});
 			}
 		}
@@ -229,11 +273,11 @@ commands = function () {
 									embed: {
 										title: 'Success',
 										color: constants.green,
-										description: 'Purge successful: ' + messagesDeleted + ' message(s) fetched and deleted.'
-									}
+										description: 'Purge successful: ' + messagesDeleted + ' message(s) fetched and deleted.',
+									},
 								})
 									.then(sent => sent.delete({
-										timeout: 5000
+										timeout: 5000,
 									}));
 								logToChannel('Information', 'Guild Name: ' + message.guild.name + '\nChannel Name: ' + message.channel.name + '\n\nPurge successful: **' + messagesDeleted + '**', message.author.tag, message.author.displayAvatarURL());
 							})
@@ -253,8 +297,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command.'
-					}
+						description: 'You are not authorized to use this command.',
+					},
 				});
 			}
 		}
@@ -264,8 +308,8 @@ commands = function () {
 					embed: {
 						title: 'The magic 8ball says...',
 						description: eightball(),
-						color: eightballColorDecider()
-					}
+						color: eightballColorDecider(),
+					},
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 			}
@@ -279,8 +323,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I don\'t have the `Ban Members` permission.'
-						}
+							description: 'I don\'t have the `Ban Members` permission.',
+						},
 					});
 				}
 				if (!member) {
@@ -288,8 +332,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Please mention a valid member of this server.'
-						}
+							description: 'Please mention a valid member of this server.',
+						},
 					});
 				}
 				if (!member.bannable) {
@@ -297,8 +341,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I cannot ban this user. Do they have a higher role?'
-						}
+							description: 'I cannot ban this user. Do they have a higher role?',
+						},
 					});
 				}
 				const reason = args.slice(2).join(' ');
@@ -307,8 +351,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Please indicate a reason for the ban.'
-						}
+							description: 'Please indicate a reason for the ban.',
+						},
 					});
 				}
 				member.ban(reason)
@@ -316,8 +360,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`
-						}
+							description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`,
+						},
 					}));
 				logToChannel('Warning', `**${member}** has been banned from **${message.guild.name}**.\nReason: ${reason}`, `Ban executed by ${message.author.tag}`, member.user.displayAvatarURL());
 				return message.react('✅');
@@ -327,8 +371,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command. You need the `Ban Members` permission.'
-					}
+						description: 'You are not authorized to use this command. You need the `Ban Members` permission.',
+					},
 				});
 			}
 		}
@@ -345,7 +389,7 @@ commands = function () {
 					.addBlankField(true)
 					.setFooter('Channel created: ' + getDay(message.channel.createdAt.getDay()) + ' ' + message.channel.createdAt.getMonth() + '/' + message.channel.createdAt.getDate() + '/' + message.channel.createdAt.getFullYear() + ' at ' + message.channel.createdAt.getHours() + 'H ' + message.channel.createdAt.getMinutes() + 'M');
 				return message.channel.send({
-					embed
+					embed,
 				});
 			}
 			catch (err) {
@@ -361,7 +405,7 @@ commands = function () {
 					.setAuthor(message.guild.name, message.guild.iconURL())
 					.addField('List of Channels', '```\n' + channels.join('\n') + '```');
 				return message.channel.send({
-					embed
+					embed,
 				});
 			}
 			catch (err) {
@@ -375,7 +419,7 @@ commands = function () {
 			var queryString = args.slice(1).join(' ');
 			message.channel.startTyping();
 			return cleverbot.getReply({
-				input: queryString
+				input: queryString,
 			}, (error, response) => {
 				if (error) {
 					message.channel.stopTyping(true);
@@ -383,8 +427,8 @@ commands = function () {
 						embed: {
 							color: constants.red,
 							title: 'Error',
-							description: error
-						}
+							description: error,
+						},
 					})
 						.then(logToChannel('Error', `Error while executing the cleverbot command:\n${error}`, message.author.tag, message.author.displayAvatarURL()))
 						.catch(err => logToChannel('Error', `Error while logging the cleverbot error:\n${err}`, message.author.tag, message.author.displayAvatarURL()));
@@ -395,14 +439,14 @@ commands = function () {
 						color: constants.blue,
 						title: 'Cleverbot says...',
 						description: response.output,
-					}
+					},
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 			});
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}coinflip`)) { // coinflip
 			return message.channel.send({
-				embed: coinFlip(message.content)
+				embed: coinFlip(message.content),
 			})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 		}
@@ -412,8 +456,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Could not create countdown. A countdown is already running.'
-					}
+						description: 'Could not create countdown. A countdown is already running.',
+					},
 				});
 			}
 			else {
@@ -425,8 +469,8 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Could not create countdown. Please enter a valid number.'
-							}
+								description: 'Could not create countdown. Please enter a valid number.',
+							},
 						});
 					}
 					else if (count > 86400) {
@@ -434,8 +478,8 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).'
-							}
+								description: 'Could not create countdown. The maximum is 24 hours (86400 seconds).',
+							},
 						});
 					}
 					else {
@@ -444,8 +488,8 @@ commands = function () {
 							embed: {
 								color: constants.blue,
 								title: 'Countdown',
-								description: 'Countdown started. This will take approximately **' + format(countString) + '**'
-							}
+								description: 'Countdown started. This will take approximately **' + format(countString) + '**',
+							},
 						}).then(sentmsg => {
 							var i = countString;
 							var interval = setInterval(function () {
@@ -453,8 +497,8 @@ commands = function () {
 									embed: {
 										color: constants.blue,
 										title: 'Countdown',
-										description: '```' + format(i) + '```'
-									}
+										description: '```' + format(i) + '```',
+									},
 								});
 							}, 3000);
 							(function fn() {
@@ -468,8 +512,8 @@ commands = function () {
 										embed: {
 											color: constants.blue,
 											title: 'Countdown',
-											description: 'Countdown ended. Total time wasted: **' + format(countString) + '**'
-										}
+											description: 'Countdown ended. Total time wasted: **' + format(countString) + '**',
+										},
 									});
 									clearInterval(interval);
 									constants.isRunning = false;
@@ -500,24 +544,24 @@ commands = function () {
 
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 						return message.channel.send({
-							embed
+							embed,
 						})
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 					}
 					else {
 						message.author.send({
-							embed
+							embed,
 						})
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						message.channel.send({
 							embed: {
 								title: 'Help',
 								color: constants.green,
-								description: `${message.author}, please check your Direct Messages!`
-							}
+								description: `${message.author}, please check your Direct Messages!`,
+							},
 						})
 							.then(sent => sent.delete({
-								timeout: 10000
+								timeout: 10000,
 							}))
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						return;
@@ -548,8 +592,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Did not specify a user.'
-					}
+						description: 'Did not specify a user.',
+					},
 				});
 				if (message.mentions.users.size == 1) {
 					if (message.mentions.users.first() != message.author.toString()) {
@@ -557,8 +601,8 @@ commands = function () {
 							embed: {
 								title: 'Hakai',
 								color: constants.blue,
-								description: `${message.mentions.users.first()} has been destroyed by ${message.author}`
-							}
+								description: `${message.mentions.users.first()} has been destroyed by ${message.author}`,
+							},
 						});
 					}
 					else {
@@ -566,8 +610,8 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: `You cannot destroy yourself, ${message.author}`
-							}
+								description: `You cannot destroy yourself, ${message.author}`,
+							},
 						});
 					}
 				}
@@ -575,8 +619,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Specified too many users.'
-					}
+						description: 'Specified too many users.',
+					},
 				});
 			}
 			catch (err) {
@@ -602,24 +646,24 @@ commands = function () {
 
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 						return message.channel.send({
-							embed
+							embed,
 						})
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 					}
 					else {
 						message.author.send({
-							embed
+							embed,
 						})
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						message.channel.send({
 							embed: {
 								title: 'Help',
 								color: constants.green,
-								description: `${message.author}, please check your Direct Messages!`
-							}
+								description: `${message.author}, please check your Direct Messages!`,
+							},
 						})
 							.then(sent => sent.delete({
-								timeout: 10000
+								timeout: 10000,
 							}))
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						return;
@@ -641,24 +685,24 @@ commands = function () {
 
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 						return message.channel.send({
-							embed
+							embed,
 						})
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 					}
 					else {
 						message.author.send({
-							embed
+							embed,
 						})
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						message.channel.send({
 							embed: {
 								title: 'Help',
 								color: constants.green,
-								description: `${message.author}, please check your Direct Messages!`
-							}
+								description: `${message.author}, please check your Direct Messages!`,
+							},
 						})
 							.then(sent => sent.delete({
-								timeout: 10000
+								timeout: 10000,
 							}))
 							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						return;
@@ -676,8 +720,8 @@ commands = function () {
 						embed: {
 							color: constants.blue,
 							title: 'Invite',
-							description: `[Click here to invite me](${link})`
-						}
+							description: `[Click here to invite me](${link})`,
+						},
 					});
 				})
 				.catch(err => logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL()));
@@ -693,8 +737,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: '‼ You need to join a voice channel first!'
-						}
+							description: '‼ You need to join a voice channel first!',
+						},
 					});
 				}
 			}
@@ -710,8 +754,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I don\'t have the `Kick Members` permission.'
-						}
+							description: 'I don\'t have the `Kick Members` permission.',
+						},
 					});
 				}
 				if (!member) {
@@ -719,8 +763,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Please mention a valid member of this server.'
-						}
+							description: 'Please mention a valid member of this server.',
+						},
 					});
 				}
 				if (!member.kickable) {
@@ -728,8 +772,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I cannot kick this user. Do they have a higher role?'
-						}
+							description: 'I cannot kick this user. Do they have a higher role?',
+						},
 					});
 				}
 				const reason = args.slice(2).join(' ');
@@ -738,8 +782,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Please indicate a reason for the kick.'
-						}
+							description: 'Please indicate a reason for the kick.',
+						},
 					});
 				}
 				member.kick(reason)
@@ -747,8 +791,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: `Sorry ${message.author}, I couldn't kick the user.\n **Error**: ${error}`
-						}
+							description: `Sorry ${message.author}, I couldn't kick the user.\n **Error**: ${error}`,
+						},
 					}));
 				logToChannel('Warning', `**${member}** has been kicked from **${message.guild.name}**.\nReason: ${reason}`, `Kick executed by ${message.author.tag}`, member.user.displayAvatarURL());
 				return message.react('✅');
@@ -758,8 +802,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command. You need the `Kick Members` permission.'
-					}
+						description: 'You are not authorized to use this command. You need the `Kick Members` permission.',
+					},
 				});
 			}
 		}
@@ -769,8 +813,8 @@ commands = function () {
 					embed: {
 						title: 'Lotto',
 						color: constants.blue,
-						description: lotto(args[1])
-					}
+						description: lotto(args[1]),
+					},
 				});
 			}
 			catch (err) {
@@ -791,8 +835,8 @@ commands = function () {
 						title: 'Memory Usage',
 						color: constants.blue,
 						description: usage.toString(),
-						description: usage.join('\n')
-					}
+						description: usage.join('\n'),
+					},
 				});
 			}
 			catch (err) {
@@ -834,7 +878,7 @@ commands = function () {
 					.setAuthor(message.guild.name, message.guild.iconURL())
 					.addField('List of Roles', '```\n' + roles.join('\n') + '```');
 				return message.channel.send({
-					embed
+					embed,
 				});
 			}
 			catch (err) {
@@ -848,8 +892,8 @@ commands = function () {
 					embed: {
 						title: 'Result',
 						color: constants.blue,
-						description: rpsPrint(string, message.author.toString())
-					}
+						description: rpsPrint(string, message.author.toString()),
+					},
 				});
 			}
 			catch (err) {
@@ -872,7 +916,7 @@ commands = function () {
 					.addField('Emojis', message.guild.emojis.size, true)
 					.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
 				return message.channel.send({
-					embed
+					embed,
 				});
 			}
 			catch (err) {
@@ -887,61 +931,61 @@ commands = function () {
 							color: constants.blue,
 							author: {
 								name: constants.client.user.username,
-								iconURL: constants.client.user.displayAvatarURL()
+								iconURL: constants.client.user.displayAvatarURL(),
 							},
 							fields: [{
 								name: 'Tag',
 								value: constants.client.user.tag,
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'ID',
 								value: `\`${constants.client.user.id}\``,
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Owner',
 								value: 'Fabiolous#4960',
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Co-owner',
 								value: 'Raytlye#7182',
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Guilds',
 								value: constants.client.guilds.size,
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Users',
 								value: constants.client.users.size,
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Version',
 								value: 'Alpha 0.1',
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Connection',
 								value: getStatus(),
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Ping',
 								value: `\`${sent.createdTimestamp - message.createdTimestamp}ms\``,
-								inline: true
+								inline: true,
 							},
 							{
 								name: 'Uptime',
 								value: format(process.uptime()),
-								inline: true
-							}
+								inline: true,
+							},
 							],
-							timestamp: Date.now()
-						}
+							timestamp: Date.now(),
+						},
 					}));
 			}
 			catch (err) {
@@ -955,7 +999,7 @@ commands = function () {
 					message.delete();
 					setTimeout(function () {
 						message.channel.send(string, {
-							tts: true
+							tts: true,
 						});
 					}, 300);
 					return;
@@ -969,8 +1013,8 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.'
-					}
+						description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
+					},
 				});
 			}
 		}
@@ -982,8 +1026,8 @@ commands = function () {
 					embed: {
 						title: 'Uptime',
 						color: constants.blue,
-						description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**'
-					}
+						description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**',
+					},
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 			}
@@ -992,8 +1036,8 @@ commands = function () {
 					embed: {
 						title: 'Uptime',
 						color: constants.blue,
-						description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**'
-					}
+						description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**',
+					},
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 			}
@@ -1002,8 +1046,8 @@ commands = function () {
 					embed: {
 						title: 'Uptime',
 						color: constants.blue,
-						description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**'
-					}
+						description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**',
+					},
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 			}
@@ -1018,7 +1062,7 @@ commands = function () {
 							.setDescription('`' + error.message + '`')
 							.setColor(constants.red);
 						message.channel.send({
-							embed: errorEmbed
+							embed: errorEmbed,
 						});
 						logToChannel('Error', `Error occurred at built-in error catching for the \`${constants.PREFIX}urbanrandom\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return;
@@ -1034,7 +1078,7 @@ commands = function () {
 							.setColor(constants.blue)
 							.setThumbnail(pic);
 						return message.channel.send({
-							embed
+							embed,
 						});
 					}
 				});
@@ -1054,7 +1098,7 @@ commands = function () {
 							.setDescription('`' + error.message + '`')
 							.setColor(constants.red);
 						message.channel.send({
-							embed: errorEmbed
+							embed: errorEmbed,
 						});
 						logToChannel('Error', `Error occurred at built-in error catching for the \`${constants.PREFIX}urban\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return;
@@ -1070,7 +1114,7 @@ commands = function () {
 							.setColor(constants.blue)
 							.setThumbnail(pic);
 						return message.channel.send({
-							embed
+							embed,
 						});
 					}
 				});
@@ -1099,7 +1143,7 @@ commands = function () {
 						.addField('Nickname', nick, true)
 						.setFooter('User created: ' + getDay(member.user.createdAt.getDay()) + ' ' + member.user.createdAt.getMonth() + '/' + member.user.createdAt.getDate() + '/' + member.user.createdAt.getFullYear() + ' at ' + member.user.createdAt.getHours() + 'H ' + member.user.createdAt.getMinutes() + 'M');
 					return message.channel.send({
-						embed
+						embed,
 					});
 				}
 				else {
@@ -1131,7 +1175,7 @@ commands = function () {
 							.addField('Nickname', nick, true)
 							.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
 						return message.channel.send({
-							embed
+							embed,
 						});
 					}
 					else {
@@ -1139,8 +1183,8 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: `User not found. Try \`${constants.PREFIX}userinfo [mention]\` **OR** \`${constants.PREFIX}whois user_id\``
-							}
+								description: `User not found. Try \`${constants.PREFIX}userinfo [mention]\` **OR** \`${constants.PREFIX}whois user_id\``,
+							},
 						});
 					}
 				}
@@ -1160,8 +1204,8 @@ commands = function () {
 									embed: {
 										title: 'Error',
 										color: constants.red,
-										description: 'De Vapeio isch leider scho verschobe worde.'
-									}
+										description: 'De Vapeio isch leider scho verschobe worde.',
+									},
 								});
 							}
 							else {
@@ -1174,8 +1218,8 @@ commands = function () {
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'De Vapeio isch leider am vape und nöd da.'
-								}
+									description: 'De Vapeio isch leider am vape und nöd da.',
+								},
 							});
 						}
 					}
@@ -1184,8 +1228,8 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'You need to be in a voice channel to use this command.'
-							}
+								description: 'You need to be in a voice channel to use this command.',
+							},
 						});
 					}
 				}
@@ -1194,8 +1238,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.'
-						}
+							description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.',
+						},
 					});
 				}
 			}
@@ -1209,8 +1253,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I don\'t have the `Move Members` permission.'
-						}
+							description: 'I don\'t have the `Move Members` permission.',
+						},
 					});
 				}
 				if (!message.guild.me.permissions.has('MANAGE_CHANNELS')) {
@@ -1218,8 +1262,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I don\'t have the `Manage Channels` permission.'
-						}
+							description: 'I don\'t have the `Manage Channels` permission.',
+						},
 					});
 				}
 				var server = message.guild;
@@ -1229,8 +1273,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'User not found.'
-						}
+							description: 'User not found.',
+						},
 					});
 				}
 				if (user.voiceChannel) {
@@ -1249,16 +1293,16 @@ commands = function () {
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'User is not in a voice channel.'
-					}
+						description: 'User is not in a voice channel.',
+					},
 				});
 			}
 			else return message.channel.send({
 				embed: {
 					title: 'Error',
 					color: constants.red,
-					description: 'You are not authorized to use this command.'
-				}
+					description: 'You are not authorized to use this command.',
+				},
 			});
 
 		}
@@ -1274,8 +1318,8 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: '‼ You are not in a voice channel!'
-						}
+							description: '‼ You are not in a voice channel!',
+						},
 					});
 				}
 			}
@@ -1297,8 +1341,8 @@ commands = function () {
 								embed: {
 									color: constants.blue,
 									title: queryString,
-									description: resp
-								}
+									description: resp,
+								},
 							})
 								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						})
@@ -1308,8 +1352,8 @@ commands = function () {
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'An error has occured.\n\nError:\n' + err
-								}
+									description: 'An error has occured.\n\nError:\n' + err,
+								},
 							})
 								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 						});

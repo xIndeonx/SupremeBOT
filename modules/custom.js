@@ -14,7 +14,7 @@ customCommands = function () {
 				.setColor(constants.black)
 				.setImage('https://cdn.discordapp.com/attachments/367644529773379586/370929924564975616/images.jpg');
 			return message.channel.send({
-				embed
+				embed,
 			})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
@@ -87,7 +87,7 @@ customCommands = function () {
 					.setColor(constants.blue)
 					.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
 				return message.channel.send({
-					embed
+					embed,
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
@@ -212,7 +212,7 @@ customCommands = function () {
 					.setColor(constants.black)
 					.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
 				return message.channel.send({
-					embed
+					embed,
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
@@ -234,7 +234,7 @@ customCommands = function () {
 					.setColor(constants.green)
 					.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
 				return message.channel.send({
-					embed
+					embed,
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
@@ -251,7 +251,7 @@ customCommands = function () {
 						.setColor(constants.green)
 						.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
 					return message.channel.send({
-						embed
+						embed,
 					})
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
@@ -261,7 +261,7 @@ customCommands = function () {
 						.setColor(constants.black)
 						.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
 					return message.channel.send({
-						embed
+						embed,
 					})
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}

@@ -5,14 +5,14 @@ require('./modules/music');
 require('./modules/custom');
 
 // warn
-constants.client.on('warn', console.warn);
+constants.client.on('warn', (warning) => logToChannel('Warning', `Name: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`, 'Client warning', constants.client.user.displayAvatarURL()));
 // error
-constants.client.on('error', console.error);
+constants.client.on('error', (error) => logToChannel('Error', `Name: ${error.name}\nMessage: ${error.message}\nStack: ${error.stack}`, 'Client error', constants.client.user.displayAvatarURL()));
 
 // ready
 constants.client.on('ready', () => {
 	constants.client.user.setActivity(constants.GAME, {
-		type: 3
+		type: 3,
 	});
 	logToChannel('Information', 'Bot successfully initialized.', constants.client.user.tag, constants.client.user.displayAvatarURL());
 });
@@ -26,7 +26,19 @@ constants.client.on('reconnecting', () => console.log('Bot is reconnecting...'))
 // bot token login
 constants.client.login(constants.TOKEN);
 
-process.on('unhandledRejection', console.error);
+process.on('unhandledRejection', (reason, p) => {
+	constants.unhandledRejections.set(p, reason);
+	logToChannel('Error', `Unhandled Rejection at: ${p}.\nReason: ${reason}`, 'unhandledRejection', constants.client.user.displayAvatarURL());
+});
+
+process.on('rejectionHandled', (p) => {
+	constants.unhandledRejections.delete(p);
+	logToChannel('Warning', p, 'rejectionHandled', constants.client.user.displayAvatarURL());
+});
+
+process.on('exit', (code) => console.log(`Process about to exit with code: ${code}`));
+
+process.on('warning', (warning) => logToChannel('Warning', `Process warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`, 'Process warning triggered'));
 
 commands();
 customCommands();
@@ -38,7 +50,7 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 	const song = {
 		id: video.id,
 		title: constants.Util.escapeMarkdown(video.title),
-		url: `https://www.youtube.com/watch?v=${video.id}`
+		url: `https://www.youtube.com/watch?v=${video.id}`,
 	};
 	if (!serverQueue) {
 		const queueConstruct = {
@@ -47,7 +59,7 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 			connection: null,
 			songs: [],
 			volume: 5,
-			playing: true
+			playing: true,
 		};
 		constants.queue.set(message.guild.id, queueConstruct);
 		queueConstruct.songs.push(song);
@@ -64,8 +76,8 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 				embed: {
 					title: 'Error',
 					description: `‼ Could not join the voice channel: ${error}`,
-					color: constants.red
-				}
+					color: constants.red,
+				},
 			});
 		}
 	}
@@ -76,8 +88,8 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 		else return message.channel.send({
 			embed: {
 				description: `🎶 **[${song.title}](${song.url})** has been added to the queue!`,
-				color: constants.blue
-			}
+				color: constants.blue,
+			},
 		});
 	}
 	return;
@@ -103,8 +115,8 @@ play = function (guild, song) {
 	serverQueue.textChannel.send({
 		embed: {
 			description: `▶ Started playing: **[${song.title}](${song.url})**`,
-			color: constants.blue
-		}
+			color: constants.blue,
+		},
 	});
 	// .then(sent => sent.delete(60000));
 };
@@ -163,6 +175,8 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 		break;
 	default:
 		color = constants.black;
+		console.log(logMessage);
+		constants.airbrake.notify(logMessage);
 	}
 
 	const embed = new constants.Discord.MessageEmbed()
@@ -173,7 +187,7 @@ logToChannel = function (title, logMessage, messageAuthor, picture) {
 		.setThumbnail(picture)
 		.setTimestamp();
 	constants.client.channels.get(constants.BOT_CHANNEL).send({
-		embed
+		embed,
 	});
 
 };
