@@ -180,6 +180,29 @@ commands = function () {
 			}
 			else return;
 		}
+		/* else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}setprefix`)) {
+			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+				try {
+					var input = args.slice(1).join(' ');
+					constants.PREFIX = input;
+					message.delete();
+					return message.channel.send({
+						embed: {
+							title: 'Success',
+							color: constants.green,
+							description: `Successfully set prefix to \`${input}\`.`,
+						},
+					})
+						.then(sent => sent.delete({
+							timeout: 5000,
+						}));
+				}
+				catch (err) {
+					logToChannel('Error', `Error with the \`${constants.PREFIX}setprefix\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				}
+			}
+			else return;
+		}*/
 		else if (message.content.toLowerCase().startsWith(constants.RESTART)) { // restart
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
