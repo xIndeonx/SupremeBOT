@@ -931,7 +931,7 @@ commands = function () {
 					.addField('Name', message.guild.name, true)
 					.addField('ID', message.guild.id, true)
 					.addField('Owner', message.guild.owner.user.tag, true)
-					.addField('Member Count', message.guild.memberCount, true)
+					.addField('Member Count', `${message.guild.memberCount} (${message.guild.members.filter(m => m.user.bot).size} bots)`, true)
 					.addField('Region', message.guild.region, true)
 					.addField('Verification Level', message.guild.verificationLevel, true)
 					.addField('Channels', message.guild.channels.size, true)
