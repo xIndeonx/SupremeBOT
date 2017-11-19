@@ -264,7 +264,7 @@ commands = function () {
 								.then(sent => sent.delete({
 									timeout: 5000,
 								}));
-							logToChannel('Information', 'Guild Name: ' + message.guild.name + '\nChannel Name: ' + message.channel.name + '\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL());
+							logToChannel('Information', 'Guild: ' + message.guild.name + '\nChannel: ' + message.channel.name + '\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL());
 							return;
 						}
 						else return;
@@ -302,7 +302,7 @@ commands = function () {
 									.then(sent => sent.delete({
 										timeout: 5000,
 									}));
-								logToChannel('Information', 'Guild Name: ' + message.guild.name + '\nChannel Name: ' + message.channel.name + '\n\nPurge successful: **' + messagesDeleted + '**', message.author.tag, message.author.displayAvatarURL());
+								logToChannel('Information', 'Guild: ' + message.guild.name + '\nChannel: ' + message.channel.name + '\n\nPurge successful: **' + messagesDeleted + '**', message.author.tag, message.author.displayAvatarURL());
 							})
 							.catch(err => {
 								logToChannel('Error', `Error while purging messages:\n${err}`, message.author.tag, message.author.displayAvatarURL());
