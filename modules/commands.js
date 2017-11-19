@@ -609,6 +609,20 @@ commands = function () {
 				logToChannel('Error', `Error with the \`${constants.PREFIX}echo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 			}
 		}
+		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}google`)) { // google
+			const googleImages = require('node-google-image-search');
+			var search = args.slice(1).join(' ');
+			googleImages(search, callback, 0, 1);
+
+			function callback(results) {
+				const embed = new constants.Discord.MessageEmbed()
+					.setImage(results[0].link);
+				message.channel.send({
+					embed
+				});
+			}
+			return;
+		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}hakai`)) { // hakai
 			try {
 				if (message.mentions.users.size == 0) return message.channel.send({
@@ -948,68 +962,67 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}stats`)) { // stats
 			try {
-				return message.channel.send('Processing...')
-					.then(sent => sent.edit({
-						embed: {
-							color: constants.blue,
-							author: {
-								name: constants.client.user.username,
-								iconURL: constants.client.user.displayAvatarURL(),
-							},
-							fields: [{
-								name: 'Tag',
-								value: constants.client.user.tag,
-								inline: true,
-							},
-							{
-								name: 'ID',
-								value: `\`${constants.client.user.id}\``,
-								inline: true,
-							},
-							{
-								name: 'Owner',
-								value: 'Fabiolous#4960',
-								inline: true,
-							},
-							{
-								name: 'Co-owner',
-								value: 'Raytlye#7182',
-								inline: true,
-							},
-							{
-								name: 'Guilds',
-								value: constants.client.guilds.size,
-								inline: true,
-							},
-							{
-								name: 'Users',
-								value: constants.client.users.size,
-								inline: true,
-							},
-							{
-								name: 'Version',
-								value: 'Alpha 0.1',
-								inline: true,
-							},
-							{
-								name: 'Connection',
-								value: getStatus(),
-								inline: true,
-							},
-							{
-								name: 'Ping',
-								value: `\`${sent.createdTimestamp - message.createdTimestamp}ms\``,
-								inline: true,
-							},
-							{
-								name: 'Uptime',
-								value: format(process.uptime()),
-								inline: true,
-							},
-							],
-							timestamp: Date.now(),
+				return message.channel.send({
+					embed: {
+						color: constants.blue,
+						author: {
+							name: constants.client.user.username,
+							iconURL: constants.client.user.displayAvatarURL(),
 						},
-					}));
+						fields: [{
+							name: 'Tag',
+							value: constants.client.user.tag,
+							inline: true,
+						},
+						{
+							name: 'ID',
+							value: `\`${constants.client.user.id}\``,
+							inline: true,
+						},
+						{
+							name: 'Owner',
+							value: 'Fabiolous#4960',
+							inline: true,
+						},
+						{
+							name: 'Co-owner',
+							value: 'Raytlye#7182',
+							inline: true,
+						},
+						{
+							name: 'Guilds',
+							value: constants.client.guilds.size,
+							inline: true,
+						},
+						{
+							name: 'Users',
+							value: constants.client.users.size,
+							inline: true,
+						},
+						{
+							name: 'Version',
+							value: 'Alpha 0.1',
+							inline: true,
+						},
+						{
+							name: 'Connection',
+							value: getStatus(),
+							inline: true,
+						},
+						{
+							name: 'Ping',
+							value: `\`${constants.client.ping.toString()}ms\``,
+							inline: true,
+						},
+						{
+							name: 'Uptime',
+							value: format(process.uptime()),
+							inline: true,
+						},
+						],
+						timestamp: Date.now(),
+					},
+				});
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${constants.PREFIX}stats\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());

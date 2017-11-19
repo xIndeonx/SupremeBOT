@@ -14,7 +14,7 @@ const {
 	BOT_CHANNEL,
 	OWNERID,
 	LUCASID,
-	YT_API,
+	GOOGLE_APIKEY,
 	PROJECT_ID,
 	PROJECT_KEY,
 	WOLFRAM_APPID,
@@ -24,7 +24,7 @@ const unhandledRejections = new Map();
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const embed = new Discord.MessageEmbed();
-const youtube = new YouTube(YT_API);
+const youtube = new YouTube(GOOGLE_APIKEY);
 const queue = new Map();
 const GAME = `you | ${PREFIX}help`;
 
@@ -83,7 +83,7 @@ module.exports.GUILD_ID = GUILD_ID;
 module.exports.BOT_CHANNEL = BOT_CHANNEL;
 module.exports.OWNERID = OWNERID;
 module.exports.LUCASID = LUCASID;
-module.exports.YT_API = YT_API;
+module.exports.GOOGLE_APIKEY = GOOGLE_APIKEY;
 module.exports.PROJECT_ID = PROJECT_ID;
 module.exports.PROJECT_KEY = PROJECT_KEY;
 module.exports.WOLFRAM_APPID = WOLFRAM_APPID;
