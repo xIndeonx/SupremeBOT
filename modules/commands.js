@@ -1019,6 +1019,16 @@ commands = function () {
 							value: format(process.uptime()),
 							inline: true,
 						},
+						{
+							name: 'Last updated',
+							value: constants.update,
+							inline: true,
+						},
+						{
+							name: '\u200b',
+							value: '\u200b',
+							inline: true,
+						},
 						],
 						timestamp: Date.now(),
 					},

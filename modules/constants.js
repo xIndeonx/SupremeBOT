@@ -27,6 +27,7 @@ const embed = new Discord.MessageEmbed();
 const youtube = new YouTube(GOOGLE_APIKEY);
 const queue = new Map();
 const GAME = `you | ${PREFIX}help`;
+const update = 'November 20th, 2017';
 
 // const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -95,6 +96,7 @@ module.exports.embed = embed;
 module.exports.youtube = youtube;
 module.exports.queue = queue;
 module.exports.GAME = GAME;
+module.exports.update = update;
 module.exports.SET_GAME = SET_GAME;
 module.exports.SET_AVATAR = SET_AVATAR;
 module.exports.SET_STATUS = SET_STATUS;
