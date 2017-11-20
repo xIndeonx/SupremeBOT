@@ -1,5 +1,5 @@
 require('dotenv').config({
-	path: '.env',
+	path: 'gimg.env',
 });
 
 // requirements
