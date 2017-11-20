@@ -6,6 +6,7 @@ require('./modules/custom');
 
 // warn
 constants.client.on('warn', (warning) => logToChannel('Warning', `Name: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`, 'Client warning', constants.client.user.displayAvatarURL()));
+
 // error
 constants.client.on('error', (error) => logToChannel('Error', `Name: ${error.name}\nMessage: ${error.message}\nStack: ${error.stack}`, 'Client error', constants.client.user.displayAvatarURL()));
 
@@ -26,6 +27,7 @@ constants.client.on('reconnecting', () => console.log('Bot is reconnecting...'))
 // bot token login
 constants.client.login(constants.TOKEN);
 
+// process listeners
 process.on('unhandledRejection', (reason, p) => {
 	constants.unhandledRejections.set(p, reason);
 	logToChannel('Error', `Unhandled Rejection at: ${p}.\nReason: ${reason}`, 'unhandledRejection', constants.client.user.displayAvatarURL());
@@ -38,12 +40,14 @@ process.on('rejectionHandled', (p) => {
 
 process.on('exit', (code) => console.log(`Process about to exit with code: ${code}`));
 
-process.on('warning', (warning) => logToChannel('Warning', `Process warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`, 'Process warning triggered'));
+process.on('warning', (warning) => logToChannel('Warning', `Process warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`, 'Process warning triggered', constants.client.user.displayAvatarURL()));
 
+// get other files' content
 commands();
 customCommands();
 musicCommands();
 
+// music functions
 handleVideo = async function (video, message, voiceChannel, playlist = false) {
 	const serverQueue = constants.queue.get(message.guild.id);
 	console.log(video);
@@ -69,8 +73,7 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 			play(message.guild, queueConstruct.songs[0]);
 		}
 		catch (error) {
-			console.error(`Could not join the voice channel: ${error}`);
-			constants.airbrake.notify(error);
+			logToChannel('Error', error, 'Could not join the voice channel', constants.client.user.displayAvatarURL());
 			constants.queue.delete(message.guild.id);
 			return message.channel.send({
 				embed: {
@@ -110,7 +113,7 @@ play = function (guild, song) {
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
 		})
-		.on('error', error => logToChannel('Error', `Music error:\n${error}`, constants.client.user.tag, constants.client.user.displayAvatarURL()));
+		.on('error', error => logToChannel('Error', error, 'Music error', constants.client.user.displayAvatarURL()));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 	serverQueue.textChannel.send({
 		embed: {
@@ -158,7 +161,6 @@ msToTime = function (duration) {
 
 // function for logging
 logToChannel = function (title, logMessage, messageAuthor, picture) {
-
 	switch (title) {
 	case 'Information':
 		color = constants.blue;
@@ -220,19 +222,16 @@ coinFlip = function (coinFlipMessage) {
 };
 
 coinFlipEmbedF = function (description) {
-
 	const coinFlipEmbed = new constants.Discord.MessageEmbed()
 		.setTitle('Result')
 		.setDescription(description)
 		.setColor(constants.blue);
 
 	return coinFlipEmbed;
-
 };
 
 // functions for RPS
 rpsGenerator = function () {
-
 	var rps = Math.floor((Math.random() * 3) + 1);
 	if (rps === 1) {
 		return 'Rock';
@@ -246,7 +245,6 @@ rpsGenerator = function () {
 };
 
 rpsBattle = function (botRPS, userRPS) {
-
 	if (botRPS === 'Rock') {
 
 		if (userRPS === 'ROCK') {
@@ -287,7 +285,6 @@ rpsBattle = function (botRPS, userRPS) {
 };
 
 rpsPrint = function (userRPS, usertag) {
-
 	var botRPS = rpsGenerator();
 	if (userRPS.toUpperCase() === 'ROCK' || userRPS.toUpperCase() === 'SCISSOR' || userRPS.toUpperCase() === 'PAPER' && userRPS) {
 		var rpsMessage = rpsBattle(botRPS, userRPS);
@@ -303,7 +300,6 @@ rpsPrint = function (userRPS, usertag) {
 	else {
 		return 'Please enter a valid message! (Rock, Paper or Scissor)';
 	}
-
 };
 
 // functions for 8ball
