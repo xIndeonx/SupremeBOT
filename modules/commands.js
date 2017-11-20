@@ -1137,7 +1137,7 @@ commands = function () {
 			try {
 				var urban = require('urban-dictionary');
 				var string = args.slice(1).join(' ');
-				urban.term(string, function (error, entries, tags, sounds) {
+				urban.term(string, function (error, entries) {
 					if (error) {
 						const errorEmbed = new constants.Discord.MessageEmbed()
 							.setTitle('Error')
@@ -1146,7 +1146,7 @@ commands = function () {
 						message.channel.send({
 							embed: errorEmbed,
 						});
-						logToChannel('Error', `Error occurred at built-in error catching for the \`${constants.PREFIX}urban\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						console.log(`${message.author.tag} typed: "${message.content}"\nError occurred at built-in error catching for the \`${constants.PREFIX}urban\` command:\n${error.message}`);
 						return;
 					}
 					else {
