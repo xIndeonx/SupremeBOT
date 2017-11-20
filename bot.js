@@ -1,3 +1,7 @@
+require('dotenv').config({
+	path: '.env',
+});
+
 // requirements
 let constants = require('./modules/constants');
 require('./modules/commands');
