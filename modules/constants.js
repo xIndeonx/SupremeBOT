@@ -21,11 +21,11 @@ const {
 	CLEVERBOT_KEY,
 } = require('../config');
 const unhandledRejections = new Map();
-const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
-const embed = new Discord.MessageEmbed();
+const YouTube = require('simple-youtube-api');
 const youtube = new YouTube(GOOGLE_APIKEY);
 const queue = new Map();
+const embed = new Discord.MessageEmbed();
 const type = 3;
 const GAME = `you | ${PREFIX}help`;
 const update = 'November 21st, 2017';
