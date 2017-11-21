@@ -8,7 +8,9 @@ customCommands = function () {
 		if (message.author.bot) return;
 		if (!message.content.startsWith(constants.PREFIX)) return;
 		if (!message.guild) return;
-		if (message.content.toLowerCase().startsWith(`${constants.PREFIX}australia`)) { // australia
+		const args = message.content.slice(constants.PREFIX.length).trim().split(/ +/g);
+		const command = args.shift().toLowerCase();
+		if (command.startsWith('australia')) {
 			const embed = new constants.Discord.MessageEmbed()
 				.setTitle('Australia in a nutshell')
 				.setColor(constants.black)
@@ -19,69 +21,61 @@ customCommands = function () {
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
 		if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
-			if (message.content.toLowerCase().startsWith(`${constants.PREFIX}1=0`)) { // 1=0
+			if (command.startsWith('1=0')) {
 				return message.channel.send('1=0');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ademerci`)) { // ademerci
+			else if (command.startsWith('ademerci')) {
 				return message.channel.send('Ademerci');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}aha`)) { // aha
+			else if (command.startsWith('aha')) {
 				return message.channel.send('Aha');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}alina`)) { // alina
+			else if (command.startsWith('alina')) {
 				return message.channel.send('Daddy?');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}andreas`)) { // andreas
+			else if (command.startsWith('andreas')) {
 				return message.channel.send('I heisse Andreas, nöd Oliver.');
 			}
-			else if ((message.content.toLowerCase().startsWith(`${constants.PREFIX}andy`)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}andi`))) { // andy / andi
+			else if (command.startsWith('andy') || command.startsWith('andi')) {
 				return message.channel.send('De Andi füut sech elei in Bärn.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}auä`)) { // auä
+			else if (command.startsWith('auä')) {
 				return message.channel.send('Auä!');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}autismus`)) { // autismus
+			else if (command.startsWith('autismus')) {
 				return message.channel.send('Autismus ist eine weitverbreitete Krankheit, vor allem im schweizerischen Bubikon.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}autist`)) { // autist
+			else if (command.startsWith('autist')) {
 				return message.channel.send('Wüki?!?!?');
 			}
-			else if (message.content.toLowerCase() === `${constants.PREFIX}baumi`) { // baumi
-				return message.channel.send(`Try using \`${constants.PREFIX}baumi1\`, \`${constants.PREFIX}baumi2\`, \`${constants.PREFIX}baumi3\`, or \`${constants.PREFIX}baumi4\`!`)
+			else if (command.startsWith('baumi')) {
+				if (args[0] === '1') return message.channel.send('Cha de Alain scho d\'Uhr lese?');
+				else if (args[0] === '2') return message.channel.send('Wetsch es Zäpfli?');
+				else if (args[0] === '3') return message.channel.send('<@' + constants.LUCASID + '>, ab id Duschi')
+					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				else if (args[0] === '4') return message.channel.send('Chopf im Sofa.');
+				return message.channel.send(`Try using parameters from \`1-4\`. Example: \`${constants.PREFIX + command} 1\``)
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}baumi1`)) { // baumi1
-				return message.channel.send('Cha de Alain scho d\'Uhr lese?');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}baumi2`)) { // baumi2
-				return message.channel.send('Wetsch es Zäpfli?');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}baumi3`)) { // baumi3
-				return message.channel.send('<@' + constants.LUCASID + '>, ab id Duschi')
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}baumi4`)) { // baumi4
-				return message.channel.send('Chopf im Sofa.');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}bitte`)) { // bitte
+			else if (command.startsWith('bitte')) {
 				return message.channel.send('Bitte gerngscheh.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}boogeyman`)) { // boogeyman
+			else if (command.startsWith('boogeyman')) {
 				return message.channel.send('Kuka pelkää musta miestä?');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}bzz`)) { // bzz
+			else if (command.startsWith('bzz')) { // bzz
 				return message.channel.send('Bescht Schuel vom Kanton Horge.');
 			}
-			else if (message.content.toLowerCase() === `${constants.PREFIX}claudio`) { // claudio
+			else if (command === 'claudio') {
 				return message.channel.send('De Clö isch immer am schaffe.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}claudiolino`)) { // claudiolino
+			else if (command.startsWith('claudiolino')) {
 				return message.channel.send('Clö, bitte, stfu.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}clö`)) { // clö
+			else if (command.startsWith('clö')) {
 				return message.channel.send('Ich ha gseit **NEI**.');
 			}
-			else if ((message.content.toLowerCase().startsWith(`${constants.PREFIX}danke`)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}merci`))) { // danke / merci
+			else if ((command.startsWith('danke')) || (command.startsWith('merci'))) {
 				const embed = new constants.Discord.MessageEmbed()
 					.setTitle('Merci viu mol')
 					.setColor(constants.blue)
@@ -91,122 +85,104 @@ customCommands = function () {
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}doni`)) { // doni
+			else if (command.startsWith('doni')) {
 				return message.channel.send('Heb fressi oder ich küss dich.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}eis`)) { // eis
+			else if (command.startsWith('eis')) {
 				return message.channel.send('isch keis.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}esgahtnöd`)) { // esgahtnöd
+			else if (command.startsWith('esgahtnöd')) {
 				return message.channel.send('Es gaaaaaaaht nöööd.');
 			}
-			else if (message.content.toLowerCase() === `${constants.PREFIX}fabio`) { // fabio
-				return message.channel.send(`Try using \`${constants.PREFIX}fabio1\`, \`${constants.PREFIX}fabio2\`, \`${constants.PREFIX}fabiocsgo\`, or \`${constants.PREFIX}fabiocsgo2\`!`)
+			else if (command.startsWith('fabio')) {
+				if (args[0] === '1') return message.channel.send('De Vabio isch en chline Memer.');
+				else if (args[0] === '2') return message.channel.send('Wie isch d\'Matur? - Mis Lebe isch erfüllt.');
+				else if (args[0] === '3' || args[0] === 'csgo') return message.channel.send('High risk - no reward.');
+				else if (args[0] === '4' || args[0] === 'csgo2') return message.channel.send('AWP Chlauer EFZ');
+				return message.channel.send(`Try using parameters from \`1-4\`. Example: \`${constants.PREFIX + command} 1\``)
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}fabio1`)) { // fabio1
-				return message.channel.send('De Vabio isch en chline Memer.');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}fabio2`)) { // fabio2
-				return message.channel.send('Wie isch d\'Matur? - Mis Lebe isch erfüllt.');
-			}
-			else if (message.content.toLowerCase() === `${constants.PREFIX}fabiocsgo`) { // fabiocsgo
-				return message.channel.send('High risk - no reward.');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}fabiocsgo2`)) { // fabiocsgo2
-				return message.channel.send('AWP Chlauer EFZ');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}fige`)) { // fige
+			else if (command.startsWith('fige')) {
 				return message.channel.send('De Feliks het en usprägte Orientierigssinn.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}filip`)) { // filip
+			else if (command.startsWith('filip')) {
 				return message.channel.send('Uf de Chopf gheit.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}gopfeteli`)) { // gopfeteli
+			else if (command.startsWith('gopfeteli')) {
 				return message.channel.send('Gopfeteli');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}gschicht`)) { // gschicht
+			else if (command.startsWith('gschicht')) {
 				return message.channel.send('*glernt*');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}hoi`)) { // hoi
+			else if (command.startsWith('hoi')) {
 				return message.channel.send('Sali.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}hm`)) { // hm
+			else if (command.startsWith('hm')) {
 				return message.channel.send('Hm?');
 			}
-			else if (message.content.toLowerCase() === `${constants.PREFIX}ich`) { // ich
+			else if (command === 'ich') {
 				return message.channel.send('***ICH*** stahn im __Mittelpunkt!!!111!!1!!1__');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ichi`)) { // ichi
+			else if (command.startsWith('ichi')) {
 				return message.channel.send('Bruchsch hilf? **ICH** cha der helfe.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}iconic`)) { // iconic
+			else if (command.startsWith('iconic')) {
 				return message.channel.send('Fabio and bottomfragging. Name a more iconic duo.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}interessiert`)) { // interessiert
+			else if (command.startsWith('interessiert')) {
 				return message.channel.send('Wie es Loch im Chopf.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ivan`)) { // ivan
+			else if (command.startsWith('ivan')) {
 				return message.channel.send('Hoi zämä, i bims, dr Ivam. I bi ä waschächtä Schwiizer wiä mr gseht. Wohne duän i ~~IM REICH~~ in Öschtriich, und cha ou nid Schwiizertüütsch. Ademerci.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}jacob`)) { // jacob
+			else if (command.startsWith('jacob')) {
 				return message.channel.send('Jeg elsker dig ligesom du elsker min fugtig migmig.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}jaoder`)) { // jaoder
+			else if (command.startsWith('jaoder')) {
 				return message.channel.send('Ja oder.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}joel`)) { // joel
+			else if (command.startsWith('joel')) {
 				return message.channel.send('IcH bI dE jOeL uNd IcH gLaUb AlLeS wO mEr MiR sEiT.');
 			}
-			else if (message.content === `${constants.PREFIX}kadder`) { // kadder
-				return message.channel.send('Ich ha gern Klobürschtene.');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}kadder2`)) { // kadder2
-				return message.channel.send('Tüend sie Wasser löse?');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ksh`)) { // ksh
-				return message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
-			}
-			else if (message.content.toLowerCase() === `${constants.PREFIX}lucas`) { // lucas
-				return message.channel.send(`Try using \`${constants.PREFIX}lucas1\`, \`${constants.PREFIX}lucas2\`, \`${constants.PREFIX}lucas3\`, \`${constants.PREFIX}lucas4\`, or \`${constants.PREFIX}lucascsgo\`!`)
+			else if (command.startsWith('kadder')) {
+				if (args[0] === '1') return message.channel.send('Ich ha gern Klobürschtene.');
+				else if (args[0] === '2') return message.channel.send('Tüend sie Wasser löse?');
+				return message.channel.send(`Try using parameters from \`1-2\`. Example: \`${constants.PREFIX + command} 1\``)
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas1`)) { // lucas1
-				return message.channel.send('Dr Luckckas verdient viu a dr HSR.');
+			else if (command.startsWith('ksh')) {
+				return message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas2`)) { // lucas2
-				return message.channel.send('exit');
+			else if (command.startsWith('lucas')) {
+				if (args[0] === '1') return message.channel.send('Dr Luckckas verdient viu a dr HSR.');
+				else if (args[0] === '2') return message.channel.send('exit');
+				else if (args[0] === '3') return message.channel.send('ICH chan auto fahre');
+				else if (args[0] === '4') return message.channel.send('Aber kei Angst!');
+				else if (args[0] === '5' || args[0] === 'csgo') return message.channel.send('Regt sich nöd uf wemmer ihm d\'AWP chlaut.');
+				return message.channel.send(`Try using parameters from \`1-5\`. Example: \`${constants.PREFIX + command} 1\``)
+					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas3`)) { // lucas3
-				return message.channel.send('ICH chan auto fahre');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucas4`)) { // lucas4
-				return message.channel.send('Aber kei Angst!');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}lucascsgo`)) { // lucascsgo
-				return message.channel.send('Regt sich nöd uf wemmer ihm d\'AWP chlaut.');
-			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}noah`)) { // noah
+			else if (command.startsWith('noah')) {
 				return message.channel.send('Wo isch de Noah?');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}oli`)) { // oli
+			else if (command.startsWith('oli')) {
 				return message.channel.send('Ich bi sozial.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ppap`)) { // ppap
+			else if (command.startsWith('ppap')) {
 				return message.channel.send(':pen_fountain: :pineapple: :apple: :pen_fountain:');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}praise`)) { // praise
+			else if (command.startsWith('praise')) {
 				const praise = constants.client.emojis.find('name', 'praise');
 				return message.channel.send(`Praise the Sun! ${praise}`)
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}pubg`)) { // pubg
+			else if (command.startsWith('pubg')) {
 				return message.channel.send('1=0');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}rip`)) { // rip
+			else if (command.startsWith('rip')) {
 				return message.channel.send('Rest In Peace.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}snus`)) { // snus
+			else if (command.startsWith('snus')) {
 				const embed = new constants.Discord.MessageEmbed()
 					.setTitle('Die Uhrzeit')
 					.setColor(constants.black)
@@ -216,19 +192,19 @@ customCommands = function () {
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}sorry`)) { // sorry
+			else if (command.startsWith('sorry')) {
 				return message.channel.send('Sorry?');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}stfu`)) { // stfu
+			else if (command.startsWith('stfu')) {
 				return message.channel.send('Bitte, stfu.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}toubi`)) { // toubi
+			else if (command.startsWith('toubi')) {
 				return message.channel.send('Hallo, ich heisse Toubi.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}velo`)) { // velo
+			else if (command.startsWith('velo')) {
 				return message.channel.send('黒人が自転車を盗んだ');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}vn`)) { // vn
+			else if (command.startsWith('vn')) {
 				const embed = new constants.Discord.MessageEmbed()
 					.setTitle('Vape Nation')
 					.setColor(constants.green)
@@ -238,13 +214,13 @@ customCommands = function () {
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}weltbild`)) { // weltbild
+			else if (command.startsWith('weltbild')) {
 				return message.channel.send('"Du hesch es falsches Weltbild."');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}zeit`)) { // zeit
+			else if (command.startsWith('zeit')) {
 				return message.channel.send('Neun Uhr Achtzig.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ziit`)) { // ziit
+			else if (command.startsWith('ziit')) {
 				if (message.author.id === constants.OWNERID) {
 					const embed = new constants.Discord.MessageEmbed()
 						.setTitle('Vape Nation')
@@ -266,10 +242,10 @@ customCommands = function () {
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 				}
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}zoel`)) { // zoel
+			else if (command.startsWith('zoel')) {
 				return message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
 			}
-			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}zollike`)) { // zollike
+			else if (command.startsWith('zollike')) {
 				return message.channel.send('Wo träum wahr werdet');
 			}
 			return;

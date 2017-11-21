@@ -7,11 +7,12 @@ musicCommands = function () {
 	constants.client.on('message', async message => {
 		if (message.author.bot) return;
 		if (!message.content.startsWith(constants.PREFIX)) return;
-		const args = message.content.split(' ');
-		const searchString = args.slice(1).join(' ');
-		const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
+		const args = message.content.slice(constants.PREFIX.length).trim().split(/ +/g);
+		const command = args.shift().toLowerCase();
+		const searchString = args.join(' ');
+		const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
 		const serverQueue = constants.queue.get(message.guild.id);
-		if (message.content.toLowerCase().startsWith(constants.MUSIC_PLAY)) {
+		if (command.startsWith('play')) {
 			const voiceChannel = message.member.voiceChannel;
 			if (!voiceChannel) return message.channel.send({
 				embed: {
@@ -83,7 +84,7 @@ musicCommands = function () {
 				return handleVideo(video, message, voiceChannel);
 			}
 		}
-		else if (message.content.toLowerCase().startsWith(constants.MUSIC_SEARCH)) {
+		else if (command.startsWith('search')) {
 			const voiceChannel = message.member.voiceChannel;
 			const authorid = message.author.id;
 			if (!voiceChannel) return message.channel.send({
@@ -180,7 +181,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				return handleVideo(video, message, voiceChannel);
 			}
 		}
-		else if (message.content.toLowerCase().startsWith(constants.MUSIC_SKIP)) {
+		else if (command.startsWith('skip')) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					title: 'Error',
@@ -205,7 +206,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				},
 			});
 		}
-		else if ((message.content.toLowerCase().startsWith(constants.MUSIC_STOP)) || (message.content.toLowerCase().startsWith(`${constants.PREFIX}leave`))) {
+		else if (command.startsWith('stop') || command.startsWith('leave')) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					title: 'Error',
@@ -229,7 +230,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				},
 			});
 		}
-		else if (message.content.toLowerCase().startsWith(constants.MUSIC_VOLUME)) {
+		else if (command.startsWith('volume')) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
 					title: 'Error',
@@ -244,22 +245,22 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					color: constants.red,
 				},
 			});
-			else if (!args[1]) return message.channel.send({
+			else if (!args[0]) return message.channel.send({
 				embed: {
 					description: `🔊 The current volume is: **${serverQueue.volume}**.`,
 					color: constants.blue,
 				},
 			});
-			else if (args[1]) {
-				if (parseInt(serverQueue.volume) === parseInt(args[1])) {
+			else if (args[0]) {
+				if (parseInt(serverQueue.volume) === parseInt(args[0])) {
 					return message.channel.send({
 						embed: {
-							description: `🔊 The volume is already on **${args[1]}**.`,
+							description: `🔊 The volume is already on **${args[0]}**.`,
 							color: constants.orange,
 						},
 					});
 				}
-				else if (args[1] > 10) {
+				else if (args[0] > 10) {
 					serverQueue.volume = 10;
 					serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
 					return message.channel.send({
@@ -269,19 +270,19 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						},
 					});
 				}
-				else if (args[1] <= 10) {
-					serverQueue.volume = args[1];
-					serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
+				else if (args[0] <= 10) {
+					serverQueue.volume = args[0];
+					serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
 					return message.channel.send({
 						embed: {
-							description: `🔊 Set the volume to: **${args[1]}**.`,
+							description: `🔊 Set the volume to: **${args[0]}**.`,
 							color: constants.blue,
 						},
 					});
 				}
 			}
 		}
-		else if (message.content.toLowerCase().startsWith(constants.MUSIC_NP)) {
+		else if (command.startsWith('np')) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					title: 'Error',
@@ -296,7 +297,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				},
 			});
 		}
-		else if (message.content.toLowerCase().startsWith(constants.MUSIC_QUEUE)) {
+		else if (command.startsWith('queue')) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
 					title: 'Error',
@@ -308,14 +309,14 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			const queuelist = `\n${serverQueue.songs.map(song => `${++index} - [${song.title}](${song.url})`).join('\n')}`;
 			const res = queuelist.split('\n');
 			let output;
-			if(!args[1] || args[1] === 1) {
+			if(!args[0] || args[0] === 1) {
 				output = res.slice(1, 7);
-				args[1] = 1;
+				args[0] = 1;
 			}
-			else if(res.length > args[1] * 6 - 6) {
-				output = res.slice((args[1] * 6 - 5), (args[1] * 6 + 1));
+			else if(res.length > args[0] * 6 - 6) {
+				output = res.slice((args[0] * 6 - 5), (args[0] * 6 + 1));
 			}
-			else if(isNaN(args[1])) {
+			else if(isNaN(args[0])) {
 				return message.channel.send({
 					embed: {
 						title: 'Error',
@@ -327,7 +328,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			else {
 				const page = Math.ceil(res.length / 6);
 				output = res.slice((page * 6 - 5), (page * 6 + 1));
-				args[1] = page;
+				args[0] = page;
 			}
 			if (output.length < 2000) {
 				return message.channel.send({
@@ -351,7 +352,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				});
 			}
 		}
-		else if (message.content.toLowerCase().startsWith(constants.MUSIC_PAUSE)) {
+		else if (command.startsWith('pause')) {
 			if (serverQueue && serverQueue.playing) {
 				serverQueue.playing = false;
 				serverQueue.connection.dispatcher.pause();
@@ -370,7 +371,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				},
 			});
 		}
-		else if (message.content.toLowerCase().startsWith(constants.MUSIC_RESUME)) {
+		else if (command.startsWith('resume')) {
 			if (serverQueue && !serverQueue.playing) {
 				serverQueue.playing = true;
 				serverQueue.connection.dispatcher.resume();

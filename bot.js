@@ -248,7 +248,6 @@ rpsGenerator = function () {
 
 rpsBattle = function (botRPS, userRPS) {
 	if (botRPS === 'Rock') {
-
 		if (userRPS === 'ROCK') {
 			return 'DRAW';
 		}
@@ -258,7 +257,6 @@ rpsBattle = function (botRPS, userRPS) {
 		else {
 			return 'USER';
 		}
-
 	}
 	else if (botRPS === 'Paper') {
 		if (userRPS === 'ROCK') {
@@ -270,7 +268,6 @@ rpsBattle = function (botRPS, userRPS) {
 		else {
 			return 'DRAW';
 		}
-
 	}
 	else if (botRPS === 'Scissor') {
 		if (userRPS === 'ROCK') {
@@ -282,7 +279,6 @@ rpsBattle = function (botRPS, userRPS) {
 		else {
 			return 'BOT';
 		}
-
 	}
 };
 
@@ -354,7 +350,6 @@ eightball = function () {
 		constants.isYes = 'VAPEIO';
 		return 'Ich bin de Vapeio und ich han kei Entscheidigsfähigkeit.';
 	}
-
 };
 
 eightballColorDecider = function () {
@@ -385,7 +380,6 @@ lotto = function (userGuess) {
 	else {
 		return 'You guessed wrong :pensive: Maybe next time...';
 	}
-
 };
 
 // function for eval command
