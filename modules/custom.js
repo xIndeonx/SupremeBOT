@@ -269,6 +269,9 @@ customCommands = function () {
 			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}zoel`)) { // zoel
 				return message.channel.send('Hoi zäme, ich bi de Zoel, freut mi.');
 			}
+			else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}zollike`)) { // zollike
+				return message.channel.send('Wo träum wahr werdet');
+			}
 			return;
 		}
 		else return;
