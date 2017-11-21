@@ -40,9 +40,7 @@ musicCommands = function () {
 				message.channel.startTyping();
 				const playlist = await constants.youtube.getPlaylist(url);
 				const videos = await playlist.getVideos();
-				limit = 0;
 				for (const video of Object.values(videos)) {
-					limit += 1;
 					try {
 						const video2 = await constants.youtube.getVideoByID(video.id);
 						await handleVideo(video2, message, voiceChannel, true);
@@ -50,9 +48,6 @@ musicCommands = function () {
 					catch (err) {
 						logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						continue;
-					}
-					if (limit === 100) {
-						break;
 					}
 				}
 				message.channel.stopTyping(true);
@@ -310,13 +305,36 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				},
 			});
 			let index = 0;
-			var queuelist = `\n${serverQueue.songs.map(song => `${++index} - [${song.title}](${song.url})`).join('\n')}`;
-			if (queuelist.length < 2000) {
+			const queuelist = `\n${serverQueue.songs.map(song => `${++index} - [${song.title}](${song.url})`).join('\n')}`;
+			const res = queuelist.split('\n');
+			let output;
+			if(!args[1] || args[1] === 1) {
+				output = res.slice(1, 7);
+				args[1] = 1;
+			}
+			else if(res.length > args[1] * 6 - 6) {
+				output = res.slice((args[1] * 6 - 5), (args[1] * 6 + 1));
+			}
+			else if(isNaN(args[1])) {
 				return message.channel.send({
 					embed: {
-						title: 'Queue',
+						title: 'Error',
+						color: constants.red,
+						description: 'A numeric input is required!',
+					}
+				});
+			}
+			else {
+				const page = Math.ceil(res.length / 6);
+				output = res.slice((page * 6 - 5), (page * 6 + 1));
+				args[1] = page;
+			}
+			if (output.length < 2000) {
+				return message.channel.send({
+					embed: {
+						title: 'Queue ' + `Page: ${args[1]}/${Math.ceil(res.length / 6)}`,
 						color: constants.blue,
-						description: queuelist,
+						description: output.join('\n'),
 						footer: {
 							text: `Now playing: ${serverQueue.songs[0].title}`,
 						},
