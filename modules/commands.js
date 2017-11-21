@@ -861,16 +861,16 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}ping`)) { // ping
 			try {
 				var string = args.slice(1).join(' ');
-				if (string === 'random') {
+				if (string.toLowerCase() === 'ws' || string.toLowerCase() === 'websocket') {
 					return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 				}
-				else if (string === 'actual' || string === 'real' || string === 'realtime' || string === 'rt') {
+				else if (string.toLowerCase() === 'actual' || string.toLowerCase() === 'real' || string.toLowerCase() === 'realtime' || string.toLowerCase() === 'rt') {
 					return message.channel.send('Processing...')
 						.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'))
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 				}
-				else if (string === 'ws' || string === 'websocket' || !string) {
+				else if (string.toLowerCase() === 'api' || !string) {
 					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`')
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 				}
@@ -1042,7 +1042,7 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}uptime`)) { // uptime
 			var type = args.slice(1).join(' ');
 
-			if (type === 'process') {
+			if (type.toLowerCase() === 'process') {
 				return message.channel.send({
 					embed: {
 						title: 'Uptime',
@@ -1052,7 +1052,7 @@ commands = function () {
 				})
 					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 			}
-			else if (type === 'os') {
+			else if (type.toLowerCase() === 'os') {
 				return message.channel.send({
 					embed: {
 						title: 'Uptime',
