@@ -209,19 +209,17 @@ coinFlip = function (coinFlipMessage) {
 	if (clientInput.length !== 3 && clientInput.length !== 1) {
 		return coinFlipErrorEmbed;
 	}
+	else if (clientInput.length === 3) {
+		var firstCondition = clientInput[1];
+		var secondCondition = clientInput[2];
+		var coin = Math.floor((Math.random() * 10) + 1);
+		if (coin <= 5) return coinFlipEmbedF(firstCondition);
+		else return coinFlipEmbedF(secondCondition);
+	}
 	else {
-		if (clientInput.length === 3) {
-			var firstCondition = clientInput[1];
-			var secondCondition = clientInput[2];
-			var coin = Math.floor((Math.random() * 10) + 1);
-			if (coin <= 5) return coinFlipEmbedF(firstCondition);
-			else return coinFlipEmbedF(secondCondition);
-		}
-		else {
-			var coin2 = Math.floor((Math.random() * 10) + 1);
-			if (coin2 <= 5) return coinFlipEmbedF('Head');
-			else return coinFlipEmbedF('Tails');
-		}
+		var coin2 = Math.floor((Math.random() * 10) + 1);
+		if (coin2 <= 5) return coinFlipEmbedF('Head');
+		else return coinFlipEmbedF('Tails');
 	}
 };
 
@@ -372,6 +370,7 @@ eightballColorDecider = function () {
 };
 
 // function for lotto
+let lottoNumber = Math.floor((Math.random() * 50) + 1);
 lotto = function (userGuess) {
 	if (!userGuess || isNaN(userGuess)) {
 		return `Please use the command like this: \`${constants.PREFIX}lotto number\``;
@@ -379,14 +378,12 @@ lotto = function (userGuess) {
 	else if (userGuess < 1 || userGuess > 50) {
 		return 'Please enter a valid number between 1 and 50!';
 	}
+	else if (parseInt(userGuess) === lottoNumber) {
+		lottoNumber = Math.floor((Math.random() * 50) + 1);
+		return 'Congratulations, you guessed right! Here\'s a kiss from Doni! :kissing_closed_eyes:';
+	}
 	else {
-		var lottoNumber = Math.floor((Math.random() * 50) + 1);
-		if (userGuess === lottoNumber) {
-			return 'Congratulations, you guessed right! Here\'s a kiss from Doni! :kissing_closed_eyes:';
-		}
-		else {
-			return 'You guessed wrong :pensive: Maybe next time...';
-		}
+		return 'You guessed wrong :pensive: Maybe next time...';
 	}
 
 };
