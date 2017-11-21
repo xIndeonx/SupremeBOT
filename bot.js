@@ -205,7 +205,6 @@ coinFlip = function (coinFlipMessage) {
 		.setDescription(`\`${constants.PREFIX}coinflip firstCondition secondCondition\` **OR** \`${constants.PREFIX}coinflip\``)
 		.setColor(constants.red);
 	var clientInput = coinFlipMessage.split(' ');
-	console.log(clientInput);
 	if (clientInput.length !== 3 && clientInput.length !== 1) {
 		return coinFlipErrorEmbed;
 	}
@@ -248,10 +247,10 @@ rpsGenerator = function () {
 
 rpsBattle = function (botRPS, userRPS) {
 	if (botRPS === 'Rock') {
-		if (userRPS === 'ROCK') {
+		if (userRPS === 'rock') {
 			return 'DRAW';
 		}
-		else if (userRPS === 'SCISSOR') {
+		else if (userRPS === 'scissor') {
 			return 'BOT';
 		}
 		else {
@@ -259,10 +258,10 @@ rpsBattle = function (botRPS, userRPS) {
 		}
 	}
 	else if (botRPS === 'Paper') {
-		if (userRPS === 'ROCK') {
+		if (userRPS === 'rock') {
 			return 'BOT';
 		}
-		else if (userRPS === 'SCISSOR') {
+		else if (userRPS === 'scissor') {
 			return 'USER';
 		}
 		else {
@@ -270,10 +269,10 @@ rpsBattle = function (botRPS, userRPS) {
 		}
 	}
 	else if (botRPS === 'Scissor') {
-		if (userRPS === 'ROCK') {
+		if (userRPS === 'rock') {
 			return 'USER';
 		}
-		else if (userRPS === 'SCISSOR') {
+		else if (userRPS === 'scissor') {
 			return 'DRAW';
 		}
 		else {
@@ -284,7 +283,8 @@ rpsBattle = function (botRPS, userRPS) {
 
 rpsPrint = function (userRPS, usertag) {
 	var botRPS = rpsGenerator();
-	if (userRPS.toUpperCase() === 'ROCK' || userRPS.toUpperCase() === 'SCISSOR' || userRPS.toUpperCase() === 'PAPER' && userRPS) {
+	if (!userRPS) return 'Please enter a valid message! (Rock, Paper or Scissor)';
+	else if (userRPS.toLowerCase() === 'rock' || userRPS.toLowerCase() === 'scissor' || userRPS.toLowerCase() === 'paper') {
 		var rpsMessage = rpsBattle(botRPS, userRPS);
 		switch (rpsMessage) {
 		case 'USER':
@@ -295,9 +295,7 @@ rpsPrint = function (userRPS, usertag) {
 			return rpsMessage;
 		}
 	}
-	else {
-		return 'Please enter a valid message! (Rock, Paper or Scissor)';
-	}
+	else return 'Please enter a valid message! (Rock, Paper or Scissor)';
 };
 
 // functions for 8ball

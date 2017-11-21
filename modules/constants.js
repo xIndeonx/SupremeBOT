@@ -29,27 +29,7 @@ const embed = new Discord.MessageEmbed();
 const type = 3;
 const GAME = `you | ${PREFIX}help`;
 const update = 'November 21st, 2017';
-
-// const for admin commands
-const SET_GAME = `${PREFIX}setgame`;
-const SET_AVATAR = `${PREFIX}setavatar`;
-const SET_STATUS = `${PREFIX}setstatus`;
-const RESTART = `${PREFIX}restart`;
-const SHUTDOWN = `${PREFIX}shutdown`;
-const DELETE = `${PREFIX}delete`;
-const PURGE = `${PREFIX}purge`;
-const EVAL = `${PREFIX}eval`;
-
-// const for music commands
-const MUSIC_PLAY = `${PREFIX}play`;
-const MUSIC_STOP = `${PREFIX}stop`;
-const MUSIC_SKIP = `${PREFIX}skip`;
-const MUSIC_PAUSE = `${PREFIX}pause`;
-const MUSIC_RESUME = `${PREFIX}resume`;
-const MUSIC_VOLUME = `${PREFIX}volume`;
-const MUSIC_NP = `${PREFIX}np`;
-const MUSIC_QUEUE = `${PREFIX}queue`;
-const MUSIC_SEARCH = `${PREFIX}search`;
+const version = 'Alpha 0.2';
 
 // airbrake
 const airbrakeJs = require('airbrake-js');
@@ -99,23 +79,7 @@ module.exports.queue = queue;
 module.exports.type = type;
 module.exports.GAME = GAME;
 module.exports.update = update;
-module.exports.SET_GAME = SET_GAME;
-module.exports.SET_AVATAR = SET_AVATAR;
-module.exports.SET_STATUS = SET_STATUS;
-module.exports.RESTART = RESTART;
-module.exports.SHUTDOWN = SHUTDOWN;
-module.exports.DELETE = DELETE;
-module.exports.PURGE = PURGE;
-module.exports.EVAL = EVAL;
-module.exports.MUSIC_PLAY = MUSIC_PLAY;
-module.exports.MUSIC_STOP = MUSIC_STOP;
-module.exports.MUSIC_SKIP = MUSIC_SKIP;
-module.exports.MUSIC_PAUSE = MUSIC_PAUSE;
-module.exports.MUSIC_RESUME = MUSIC_RESUME;
-module.exports.MUSIC_VOLUME = MUSIC_VOLUME;
-module.exports.MUSIC_NP = MUSIC_NP;
-module.exports.MUSIC_QUEUE = MUSIC_QUEUE;
-module.exports.MUSIC_SEARCH = MUSIC_SEARCH;
+module.exports.version = version;
 module.exports.airbrakeJs = airbrakeJs;
 module.exports.airbrake = airbrake;
 module.exports.blue = blue;

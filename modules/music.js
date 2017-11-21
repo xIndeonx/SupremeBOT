@@ -333,7 +333,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			if (output.length < 2000) {
 				return message.channel.send({
 					embed: {
-						title: 'Queue ' + `Page: ${args[1]}/${Math.ceil(res.length / 6)}`,
+						title: 'Queue ' + `Page: ${args[0]}/${Math.ceil(res.length / 6)}`,
 						color: constants.blue,
 						description: output.join('\n'),
 						footer: {
