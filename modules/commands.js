@@ -8,7 +8,7 @@ commands = function () {
 		if (message.author.bot) return;
 		if (!message.content.startsWith(constants.PREFIX)) return;
 		if (!message.guild) return;
-		const args = message.content.split(' ');
+		const args = message.content.split(/ +/g);
 		if (message.content.toLowerCase().startsWith(constants.EVAL)) { // eval
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				const args = message.content.split(' ').slice(1);
@@ -180,29 +180,6 @@ commands = function () {
 			}
 			else return;
 		}
-		/* else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}setprefix`)) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-				try {
-					var input = args.slice(1).join(' ');
-					constants.PREFIX = input;
-					message.delete();
-					return message.channel.send({
-						embed: {
-							title: 'Success',
-							color: constants.green,
-							description: `Successfully set prefix to \`${input}\`.`,
-						},
-					})
-						.then(sent => sent.delete({
-							timeout: 5000,
-						}));
-				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}setprefix\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-				}
-			}
-			else return;
-		}*/
 		else if (message.content.toLowerCase().startsWith(constants.RESTART)) { // restart
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
@@ -598,7 +575,8 @@ commands = function () {
 		}
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}echo`)) { // echo
 			try {
-				var string = args.slice(1).join(' ');
+				const input = message.content.split(' ');
+				var string = input.slice(1).join(' ');
 				message.delete();
 				setTimeout(function () {
 					message.channel.send(string);
@@ -892,12 +870,8 @@ commands = function () {
 						.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'))
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 				}
-				else if (string === 'ws' || string === 'websocket') {
-					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
-				}
-				else if (!string) {
-					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping.toString()) + 'ms`')
+				else if (string === 'ws' || string === 'websocket' || !string) {
+					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`')
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 				}
 				else return;
@@ -1011,7 +985,7 @@ commands = function () {
 						},
 						{
 							name: 'Ping',
-							value: `\`${constants.client.ping.toString()}ms\``,
+							value: `\`${constants.client.ping}ms\``,
 							inline: true,
 						},
 						{
@@ -1041,7 +1015,8 @@ commands = function () {
 		else if (message.content.toLowerCase().startsWith(`${constants.PREFIX}tts`)) { // tts
 			if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
 				try {
-					var string = args.slice(1).join(' ');
+					const input = message.content.split(' ');
+					var string = input.slice(1).join(' ');
 					message.delete();
 					setTimeout(function () {
 						message.channel.send(string, {

@@ -26,8 +26,9 @@ const ytdl = require('ytdl-core');
 const embed = new Discord.MessageEmbed();
 const youtube = new YouTube(GOOGLE_APIKEY);
 const queue = new Map();
+const type = 3;
 const GAME = `you | ${PREFIX}help`;
-const update = 'November 20th, 2017';
+const update = 'November 21st, 2017';
 
 // const for admin commands
 const SET_GAME = `${PREFIX}setgame`;
@@ -95,6 +96,7 @@ module.exports.ytdl = ytdl;
 module.exports.embed = embed;
 module.exports.youtube = youtube;
 module.exports.queue = queue;
+module.exports.type = type;
 module.exports.GAME = GAME;
 module.exports.update = update;
 module.exports.SET_GAME = SET_GAME;

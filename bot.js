@@ -17,7 +17,7 @@ constants.client.on('error', (error) => logToChannel('Error', `Name: ${error.nam
 // ready
 constants.client.on('ready', () => {
 	constants.client.user.setActivity(constants.GAME, {
-		type: 3,
+		type: constants.type,
 	});
 	logToChannel('Information', 'Bot successfully initialized.', constants.client.user.tag, constants.client.user.displayAvatarURL());
 });
