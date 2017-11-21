@@ -237,21 +237,21 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					color: constants.red,
 				},
 			});
-			if (!serverQueue) return message.channel.send({
+			else if (!serverQueue) return message.channel.send({
 				embed: {
 					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},
 			});
-			if (!args[1]) return message.channel.send({
+			else if (!args[1]) return message.channel.send({
 				embed: {
 					description: `🔊 The current volume is: **${serverQueue.volume}**.`,
 					color: constants.blue,
 				},
 			});
-			if (args[1]) {
-				if (serverQueue.volume === parseInt(args[1])) {
+			else if (args[1]) {
+				if (parseInt(serverQueue.volume) === parseInt(args[1])) {
 					return message.channel.send({
 						embed: {
 							description: `🔊 The volume is already on **${args[1]}**.`,
@@ -259,7 +259,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						},
 					});
 				}
-				if (args[1] > 10) {
+				else if (args[1] > 10) {
 					serverQueue.volume = 10;
 					serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
 					return message.channel.send({
@@ -269,7 +269,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						},
 					});
 				}
-				if (args[1] <= 10) {
+				else if (args[1] <= 10) {
 					serverQueue.volume = args[1];
 					serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
 					return message.channel.send({
