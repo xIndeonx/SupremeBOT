@@ -40,9 +40,7 @@ musicCommands = function () {
 				message.channel.startTyping();
 				const playlist = await constants.youtube.getPlaylist(url);
 				const videos = await playlist.getVideos();
-				limit = 0;
 				for (const video of Object.values(videos)) {
-					limit += 1;
 					try {
 						const video2 = await constants.youtube.getVideoByID(video.id);
 						await handleVideo(video2, message, voiceChannel, true);
@@ -50,9 +48,6 @@ musicCommands = function () {
 					catch (err) {
 						logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						continue;
-					}
-					if (limit === 100) {
-						break;
 					}
 				}
 				message.channel.stopTyping(true);
