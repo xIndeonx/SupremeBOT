@@ -320,6 +320,15 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			else if(res.length > args[1] * 6 - 6) {
 				output = res.slice((args[1] * 6 - 5), (args[1] * 6 + 1));
 			}
+			else if(isNaN(args[1])) {
+				return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'A numeric input is required!',
+					}
+				});
+			}
 			else {
 				const page = Math.ceil(res.length / 6);
 				output = res.slice((page * 6 - 5), (page * 6 + 1));
