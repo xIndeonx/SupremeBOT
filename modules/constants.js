@@ -52,8 +52,8 @@ const MUSIC_QUEUE = `${PREFIX}queue`;
 const MUSIC_SEARCH = `${PREFIX}search`;
 
 // airbrake
-var airbrakeJs = require('airbrake-js');
-var airbrake = new airbrakeJs({
+const airbrakeJs = require('airbrake-js');
+const airbrake = new airbrakeJs({
 	projectId: PROJECT_ID,
 	projectKey: PROJECT_KEY,
 });
@@ -71,8 +71,8 @@ const green = 0x00ff00;
 const yellow = 0xffff00;
 
 // attributes for commands
-var isYes;
-var isRunning = false;
+let isYes;
+let isRunning = false;
 
 // module exports
 module.exports.Discord = Discord;
