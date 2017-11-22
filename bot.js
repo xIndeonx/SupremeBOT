@@ -9,10 +9,10 @@ require('./modules/music');
 require('./modules/custom');
 
 // warn
-constants.client.on('warn', (warning) => logToChannel('Warning', `Name: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`, 'Client warning', constants.client.user.displayAvatarURL()));
+constants.client.on('warn', (warning) => console.warn(`Client warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`));
 
 // error
-constants.client.on('error', (error) => logToChannel('Error', `Name: ${error.name}\nMessage: ${error.message}\nStack: ${error.stack}`, 'Client error', constants.client.user.displayAvatarURL()));
+constants.client.on('error', (error) => console.error(`Client error occurred.\nName: ${error.name}\nMessage: ${error.message}\nStack: ${error.stack}`));
 
 // ready
 constants.client.on('ready', () => {
@@ -44,7 +44,7 @@ process.on('rejectionHandled', (p) => {
 
 process.on('exit', (code) => console.log(`Process about to exit with code: ${code}`));
 
-process.on('warning', (warning) => logToChannel('Warning', `Process warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`, 'Process warning triggered', constants.client.user.displayAvatarURL()));
+process.on('warning', (warning) => console.warn(`Process warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`));
 
 // get other files' content
 commands();
