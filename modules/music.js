@@ -47,7 +47,8 @@ musicCommands = function () {
 						await handleVideo(video2, message, voiceChannel, true);
 					}
 					catch (err) {
-						logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						if (err instanceof TypeError) console.error(err);
+						else logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						continue;
 					}
 				}
