@@ -310,7 +310,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			const res = queuelist.split('\n');
 			let output;
 			if(!args[0] || args[0] === 1) {
-				output = res.slice(1, 7);
+				output = res.slice(0, 7);
 				args[0] = 1;
 			}
 			else if(res.length > args[0] * 6 - 6) {
