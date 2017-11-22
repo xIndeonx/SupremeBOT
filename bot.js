@@ -429,3 +429,33 @@ getStatus = function () {
 		return 'UNKNOWN';
 	}
 };
+
+// function for region rename
+getRegion = function (region) {
+	switch (region) {
+	case 'brazil':
+		return 'Brazil';
+	case 'eu-central':
+		return 'Central Europe';
+	case 'hongkong':
+		return 'Hong Kong';
+	case 'russia':
+		return 'Russia';
+	case 'singapore':
+		return 'Singapore';
+	case 'sydney':
+		return 'Sydney';
+	case 'us-central':
+		return 'US Central';
+	case 'us-east':
+		return 'US East';
+	case 'us-south':
+		return 'US South';
+	case 'us-west':
+		return 'US West';
+	case 'eu-west':
+		return 'Western Europe';
+	default:
+		return region;
+	}
+};
