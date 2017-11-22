@@ -1210,6 +1210,7 @@ commands = function () {
 				if (message.author.id != constants.OWNERID) {
 					if (message.member.voiceChannel) {
 						var vapeio = message.guild.members.get(constants.OWNERID);
+						var previousChannel = vapeio.voiceChannelID;
 						if (vapeio.voiceChannel) {
 							if (vapeio.voiceChannelID === '340961232695853068') {
 								return message.channel.send({
@@ -1222,7 +1223,11 @@ commands = function () {
 							}
 							else {
 								vapeio.setVoiceChannel('340961232695853068');
-								return message.react('✅');
+								message.react('✅');
+								setTimeout(function () {
+									vapeio.setVoiceChannel(previousChannel);
+								}, 5000);
+								return;
 							}
 						}
 						else {
