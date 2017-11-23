@@ -291,11 +291,11 @@ rpsPrint = function (userRPS, usertag) {
 		var rpsMessage = rpsBattle(botRPS, userRPS);
 		switch (rpsMessage) {
 		case 'USER':
-			return usertag + ' Won!';
+			return usertag + ' won!';
 		case 'BOT':
-			return constants.client.user.toString() + ' Won!';
+			return constants.client.user.toString() + ' won!';
 		case 'DRAW':
-			return rpsMessage;
+			return 'Draw!';
 		}
 	}
 	else return 'Please enter a valid message! (Rock, Paper or Scissor)';
