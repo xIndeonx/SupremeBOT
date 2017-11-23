@@ -16,7 +16,6 @@ musicCommands = function () {
 			const voiceChannel = message.member.voiceChannel;
 			if (!voiceChannel) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ You need to be in a voice channel to play music!',
 					color: constants.red,
 				},
@@ -24,14 +23,12 @@ musicCommands = function () {
 			const permissions = voiceChannel.permissionsFor(message.client.user);
 			if (!permissions.has('CONNECT')) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ Cannot connect to your voice channel!',
 					color: constants.red,
 				},
 			});
 			if (!permissions.has('SPEAK')) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ Cannot speak in your voice channel!',
 					color: constants.red,
 				},
@@ -75,7 +72,6 @@ musicCommands = function () {
 						message.channel.stopTyping(true);
 						return message.channel.send({
 							embed: {
-								title: 'Error',
 								description: '‼ Could not get search results.',
 								color: constants.red,
 							},
@@ -90,7 +86,6 @@ musicCommands = function () {
 			const authorid = message.author.id;
 			if (!voiceChannel) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ You need to be in a voice channel to play music!',
 					color: constants.red,
 				},
@@ -98,14 +93,12 @@ musicCommands = function () {
 			const permissions = voiceChannel.permissionsFor(message.client.user);
 			if (!permissions.has('CONNECT')) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ Cannot connect to your voice channel!',
 					color: constants.red,
 				},
 			});
 			if (!permissions.has('SPEAK')) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ Cannot speak in your voice channel!',
 					color: constants.red,
 				},
@@ -147,9 +140,7 @@ musicCommands = function () {
 							embed: {
 								title: 'Search results',
 								color: constants.blue,
-								description: `\`\`\`
-${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
-                        \`\`\``,
+								description: `${videos.map(video2 => `${++index} - [${video2.title}](${video2.url})`).join('\n')}`,
 								footer: {
 									text: 'Please input the number of the song you want to play (1-5). 30 seconds until cancellation.',
 								},
@@ -166,7 +157,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						catch (err) {
 							return message.channel.send({
 								embed: {
-									title: 'Error',
 									description: 'No or invalid input, cancelling video selection.',
 									color: constants.red,
 								},
@@ -179,7 +169,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 						logToChannel('Error', `Error with the \`${constants.PREFIX}search\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return message.channel.send({
 							embed: {
-								title: 'Error',
 								description: '‼ Could not get search results.',
 								color: constants.red,
 							},
@@ -192,14 +181,12 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 		else if (command.startsWith('skip')) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ You are not in a voice channel!',
 					color: constants.red,
 				},
 			});
 			if (!serverQueue) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},
@@ -217,14 +204,12 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 		else if (command.startsWith('stop') || command.startsWith('leave')) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ You are not in a voice channel!',
 					color: constants.red,
 				},
 			});
 			if (!serverQueue) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},
@@ -241,14 +226,12 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 		else if (command.startsWith('volume')) {
 			if (!message.member.voiceChannel) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ You are not in a voice channel!',
 					color: constants.red,
 				},
 			});
 			else if (!serverQueue) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},
@@ -303,7 +286,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 		else if (command.startsWith('np')) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},
@@ -318,7 +300,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 		else if (command.startsWith('queue')) {
 			if (!serverQueue) return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},
@@ -337,7 +318,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			else if(isNaN(args[0])) {
 				return message.channel.send({
 					embed: {
-						title: 'Error',
 						color: constants.red,
 						description: 'A numeric input is required!',
 					}
@@ -363,7 +343,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			else {
 				return message.channel.send({
 					embed: {
-						title: 'Error',
 						color: constants.red,
 						description: 'Queue is too long to show.',
 					},
@@ -383,7 +362,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			}
 			return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},
@@ -402,7 +380,6 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			}
 			return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: '‼ There is nothing playing.',
 					color: constants.red,
 				},

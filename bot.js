@@ -81,7 +81,6 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 			constants.queue.delete(message.guild.id);
 			return message.channel.send({
 				embed: {
-					title: 'Error',
 					description: `‼ Could not join the voice channel: ${error}`,
 					color: constants.red,
 				},
