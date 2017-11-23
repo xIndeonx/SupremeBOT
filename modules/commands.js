@@ -381,7 +381,7 @@ commands = function () {
 					.setColor(constants.blue)
 					.setAuthor(message.channel.name, message.guild.iconURL())
 					.addField('Name', message.channel.name, true)
-					.addField('ID', message.channel.id, true)
+					.addField('ID', `\`${message.channel.id}\``, true)
 					.addField('Topic', topic, true)
 					.setFooter('Channel created: ' + getDay(message.channel.createdAt.getDay()) + ' ' + message.channel.createdAt.getMonth() + '/' + message.channel.createdAt.getDate() + '/' + message.channel.createdAt.getFullYear() + ' at ' + message.channel.createdAt.getHours() + ':' + message.channel.createdAt.getMinutes());
 				return message.channel.send({
@@ -912,7 +912,7 @@ commands = function () {
 					.setColor(constants.blue)
 					.setAuthor(message.guild.name, message.guild.iconURL())
 					.addField('Name', message.guild.name, true)
-					.addField('ID', message.guild.id, true)
+					.addField('ID', `\`${message.guild.id}\``, true)
 					.addField('Owner', message.guild.owner.user.tag, true)
 					.addField('Member Count', `${message.guild.memberCount} (${message.guild.members.filter(m => m.user.bot).size} bots)`, true)
 					.addField('Region', getRegion(message.guild.region), true)
@@ -1155,7 +1155,7 @@ commands = function () {
 						.setAuthor(member.user.username, member.user.displayAvatarURL())
 						.addField('Username', member.user.username, true)
 						.addField('Discriminator', member.user.discriminator, true)
-						.addField('ID', member.user.id, true)
+						.addField('ID', `\`${member.user.id}\``, true)
 						.addField('Nickname', nick, true)
 						.setFooter('User created: ' + getDay(member.user.createdAt.getDay()) + ' ' + member.user.createdAt.getMonth() + '/' + member.user.createdAt.getDate() + '/' + member.user.createdAt.getFullYear() + ' at ' + member.user.createdAt.getHours() + ':' + member.user.createdAt.getMinutes());
 					return message.channel.send({
