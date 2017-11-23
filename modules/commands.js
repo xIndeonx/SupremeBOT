@@ -298,7 +298,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('8ball')) {
-			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				return message.channel.send({
 					embed: {
 						title: 'The magic 8ball says...',
@@ -1206,7 +1206,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('vapeio')) {
-			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				if (message.author.id != constants.OWNERID) {
 					if (message.member.voiceChannel) {
 						var vapeio = message.guild.members.get(constants.OWNERID);

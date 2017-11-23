@@ -20,7 +20,7 @@ customCommands = function () {
 			})
 				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
 		}
-		if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+		if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 			if (command.startsWith('1=0')) {
 				return message.channel.send('1=0');
 			}
