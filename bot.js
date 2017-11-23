@@ -116,11 +116,11 @@ play = function (guild, song) {
 			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended!');
 			else console.log(reason);
 			serverQueue.songs.shift();
-			if (messageID !== null) serverQueue.textChannel.messages.fetch(messageID).then(msg => msg.delete());
 			play(guild, serverQueue.songs[0]);
 		})
 		.on('error', error => logToChannel('Error', error, 'Music error', constants.client.user.displayAvatarURL()));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+	if (messageID !== null) serverQueue.textChannel.messages.fetch(messageID).then(msg => msg.delete());
 	serverQueue.textChannel.send({
 		embed: {
 			description: `▶ Started playing: **[${song.title}](${song.url})**`,
