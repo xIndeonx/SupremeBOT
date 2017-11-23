@@ -92,7 +92,12 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return;
-		else return message.react('✅');
+		else return message.channel.send({
+			embed: {
+				description: `🎶 **[${song.title}](${song.url})** has been added to the queue!`,
+				color: constants.blue,
+			},
+		});
 	}
 	return;
 };
