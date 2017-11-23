@@ -1187,7 +1187,7 @@ commands = function () {
 							.setAuthor(user.username, user.displayAvatarURL())
 							.addField('Username', user.username, true)
 							.addField('Discriminator', user.discriminator, true)
-							.addField('ID', user.id, true)
+							.addField('ID', `\`${user.id}\``, true)
 							.addField('Nickname', nick, true)
 							.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + ':' + user.createdAt.getMinutes());
 						return message.channel.send({
