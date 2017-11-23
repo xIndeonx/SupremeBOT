@@ -47,7 +47,8 @@ musicCommands = function () {
 						await handleVideo(video2, message, voiceChannel, true);
 					}
 					catch (err) {
-						logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						if (err instanceof TypeError) console.error(err);
+						else logToChannel('Error', `Error with the \`${constants.PREFIX}play\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						continue;
 					}
 				}
@@ -115,8 +116,15 @@ musicCommands = function () {
 				const playlist = await constants.youtube.getPlaylist(url);
 				const videos = await playlist.getVideos();
 				for (const video of Object.values(videos)) {
-					const video2 = await constants.youtube.getVideoByID(video.id);
-					await handleVideo(video2, message, voiceChannel, true);
+					try {
+						const video2 = await constants.youtube.getVideoByID(video.id);
+						await handleVideo(video2, message, voiceChannel, true);
+					}
+					catch (err) {
+						if (err instanceof TypeError) console.error(err);
+						else logToChannel('Error', `Error with the \`${constants.PREFIX}search\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						continue;
+					}
 				}
 				message.channel.stopTyping(true);
 				return message.channel.send({
@@ -261,14 +269,24 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 					});
 				}
 				else if (args[0] > 10) {
-					serverQueue.volume = 10;
-					serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
-					return message.channel.send({
-						embed: {
-							description: '🔊 Set the volume to the maximum: **10**.',
-							color: constants.blue,
-						},
-					});
+					if (serverQueue.volume >= 10) {
+						return message.channel.send({
+							embed: {
+								description: `🔊 The volume is already on **${serverQueue.volume}** (maximum).`,
+								color: constants.orange,
+							},
+						});
+					}
+					else {
+						serverQueue.volume = 10;
+						serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
+						return message.channel.send({
+							embed: {
+								description: '🔊 Set the volume to the maximum: **10**.',
+								color: constants.orange,
+							},
+						});
+					}
 				}
 				else if (args[0] <= 10) {
 					serverQueue.volume = args[0];
