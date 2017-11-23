@@ -373,12 +373,16 @@ commands = function () {
 		}
 		else if (command.startsWith('channelinfo')) {
 			try {
+				let topic = message.channel.topic;
+				if (message.channel.topic === null) {
+					topic = 'None';
+				}
 				const embed = new constants.Discord.MessageEmbed()
 					.setColor(constants.blue)
 					.setAuthor(message.channel.name, message.guild.iconURL())
 					.addField('Name', message.channel.name, true)
 					.addField('ID', message.channel.id, true)
-					.addField('Topic', message.channel.topic, true)
+					.addField('Topic', topic, true)
 					.setFooter('Channel created: ' + getDay(message.channel.createdAt.getDay()) + ' ' + message.channel.createdAt.getMonth() + '/' + message.channel.createdAt.getDate() + '/' + message.channel.createdAt.getFullYear() + ' at ' + message.channel.createdAt.getHours() + ':' + message.channel.createdAt.getMinutes());
 				return message.channel.send({
 					embed,
