@@ -520,7 +520,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('custom')) {
-			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					message.delete();
 					const embed = new constants.Discord.MessageEmbed()
@@ -638,7 +638,7 @@ commands = function () {
 		else if (command.startsWith('help')) {
 			try {
 				message.delete();
-				if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362')) {
+				if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
 						.setTimestamp()
