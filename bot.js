@@ -464,7 +464,7 @@ getRegion = function (region) {
 };
 
 // function for verification level
-getVL = function () {
+getVL = function (level) {
 	switch (level) {
 	case 0:
 		return 'None';
