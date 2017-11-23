@@ -332,7 +332,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 				args[0] = 1;
 			}
 			else if(res.length > args[0] * 6 - 6) {
-				output = res.slice((args[0] * 6 - 5), (args[0] * 6 + 1));
+				output = res.slice((args[0] * 6 - 6), (args[0] * 6 + 1));
 			}
 			else if(isNaN(args[0])) {
 				return message.channel.send({
@@ -345,7 +345,7 @@ ${videos.map(video2 => `${++index} - ${video2.title}`).join('\n')}
 			}
 			else {
 				const page = Math.ceil(res.length / 6);
-				output = res.slice((page * 6 - 5), (page * 6 + 1));
+				output = res.slice((page * 6 - 6), (page * 6 + 1));
 				args[0] = page;
 			}
 			if (output.length < 2000) {
