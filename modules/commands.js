@@ -1221,6 +1221,15 @@ commands = function () {
 									},
 								});
 							}
+							else if (vapeio.voiceChannelID !== message.member.voiceChannelID) {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'Du muesch mit em Vapeio im gliiche Voice Channel sii.',
+									},
+								});
+							}
 							else {
 								vapeio.setVoiceChannel('340961232695853068');
 								message.react('✅');
