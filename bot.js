@@ -92,16 +92,12 @@ handleVideo = async function (video, message, voiceChannel, playlist = false) {
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return;
-		else return message.channel.send({
-			embed: {
-				description: `🎶 **[${song.title}](${song.url})** has been added to the queue!`,
-				color: constants.blue,
-			},
-		});
+		else return message.react('✅');
 	}
 	return;
 };
 
+let messageID = null;
 play = function (guild, song) {
 	const serverQueue = constants.queue.get(guild.id);
 	if (!song) {
@@ -115,6 +111,7 @@ play = function (guild, song) {
 			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended!');
 			else console.log(reason);
 			serverQueue.songs.shift();
+			if (messageID !== null) serverQueue.textChannel.messages.fetch(messageID).then(msg => msg.delete());
 			play(guild, serverQueue.songs[0]);
 		})
 		.on('error', error => logToChannel('Error', error, 'Music error', constants.client.user.displayAvatarURL()));
@@ -124,8 +121,10 @@ play = function (guild, song) {
 			description: `▶ Started playing: **[${song.title}](${song.url})**`,
 			color: constants.blue,
 		},
-	});
-	// .then(sent => sent.delete(60000));
+	})
+		.then(sent => {
+			messageID = sent.id;
+		});
 };
 
 // message on member join
