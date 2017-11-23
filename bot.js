@@ -462,3 +462,21 @@ getRegion = function (region) {
 		return region;
 	}
 };
+
+// function for verification level
+getVL = function () {
+	switch (level) {
+	case 0:
+		return 'None';
+	case 1:
+		return 'Low';
+	case 2:
+		return 'Medium';
+	case 3:
+		return '(╯°□°）╯︵ ┻━┻';
+	case 4:
+		return '┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻';
+	default:
+		return 'Unknown';
+	}
+};

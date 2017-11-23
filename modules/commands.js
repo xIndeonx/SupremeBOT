@@ -912,7 +912,7 @@ commands = function () {
 					.addField('Owner', message.guild.owner.user.tag, true)
 					.addField('Member Count', `${message.guild.memberCount} (${message.guild.members.filter(m => m.user.bot).size} bots)`, true)
 					.addField('Region', getRegion(message.guild.region), true)
-					.addField('Verification Level', message.guild.verificationLevel, true)
+					.addField('Verification Level', getVL(message.guild.verificationLevel), true)
 					.addField('Channels', message.guild.channels.size, true)
 					.addField('Roles', message.guild.roles.size, true)
 					.addField('Emojis', message.guild.emojis.size, true)
