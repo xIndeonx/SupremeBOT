@@ -877,6 +877,24 @@ commands = function () {
 					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`')
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 				}
+				else if (args[0] <= 100 && args[0] > 0 && args[1] <= 10 && args[1] > 0) {
+					const member = message.mentions.members.first();
+					console.log(`${message.author.tag}: ${constants.PREFIX}${command} ${args[0]} ${args[1]} ${member.user.tag}`);
+					if ((message.author.id === '224757429076754432') || (message.author.id === '357475594327293953') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+						const seconds = args[1] * 1000;
+						message.delete();
+						for (i = args[0]; i > 0; i--) {
+							(function (ind) {
+								setTimeout(function () {
+									message.channel.send(`${member}, ping.`)
+										.then(msg => msg.delete());
+								}, 1000 + (seconds * ind));
+							})(i);
+						}
+						return;
+					}
+					else return;
+				}
 				else return;
 			}
 			catch (err) {
@@ -915,23 +933,43 @@ commands = function () {
 		}
 		else if (command.startsWith('serverinfo')) { // serverinfo
 			try {
-				const embed = new constants.Discord.MessageEmbed()
-					.setColor(constants.blue)
-					.setAuthor(message.guild.name, message.guild.iconURL())
-					.addField('Name', message.guild.name, true)
-					.addField('ID', `\`${message.guild.id}\``, true)
-					.addField('Owner', message.guild.owner.user.tag, true)
-					.addField('Member Count', `${message.guild.memberCount} (${message.guild.members.filter(m => m.user.bot).size} bots)`, true)
-					.addField('Region', getRegion(message.guild.region), true)
-					.addField('Verification Level', getVL(message.guild.verificationLevel), true)
-					.addField('Channels', message.guild.channels.size, true)
-					.addField('Roles', message.guild.roles.size, true)
-					.addField('Emojis', message.guild.emojis.size, true)
-					.addField('Explicit Content Filter', getECF(message.guild.explicitContentFilter), true)
-					.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
-				return message.channel.send({
-					embed,
-				});
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+					const embed = new constants.Discord.MessageEmbed()
+						.setColor(constants.blue)
+						.setAuthor(message.guild.name, message.guild.iconURL())
+						.addField('Name', message.guild.name, true)
+						.addField('ID', `\`${message.guild.id}\``, true)
+						.addField('Owner', message.guild.owner.user.tag, true)
+						.addField('Member Count', `${message.guild.memberCount} (${message.guild.members.filter(m => m.user.bot).size} bots)`, true)
+						.addField('Region', getRegion(message.guild.region), true)
+						.addField('Verification Level', getVL(message.guild.verificationLevel), true)
+						.addField('Channels', message.guild.channels.size, true)
+						.addField('Roles', message.guild.roles.size, true)
+						.addField('Emojis', message.guild.emojis.size, true)
+						.addField('Explicit Content Filter', getECF(message.guild.explicitContentFilter), true)
+						.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
+					return message.channel.send({
+						embed,
+					});
+				}
+				else {
+					const embed = new constants.Discord.MessageEmbed()
+						.setColor(constants.blue)
+						.setAuthor(message.guild.name, message.guild.iconURL())
+						.addField('Name', message.guild.name, true)
+						.addField('ID', `\`${message.guild.id}\``, true)
+						.addField('Owner', message.guild.owner.user.tag, true)
+						.addField('Member Count', `${message.guild.memberCount} (${message.guild.members.filter(m => m.user.bot).size} bots)`, true)
+						.addField('Region', getRegion(message.guild.region), true)
+						.addField('Channels', message.guild.channels.size, true)
+						.addField('Roles', message.guild.roles.size, true)
+						.addField('Emojis', message.guild.emojis.size, true)
+						.addBlankField(true)
+						.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
+					return message.channel.send({
+						embed,
+					});
+				}
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${constants.PREFIX}serverinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -1016,7 +1054,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('tts')) {
-			if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
+			if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					if (!args[0]) return;
 					else {

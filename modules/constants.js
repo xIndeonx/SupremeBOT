@@ -29,7 +29,7 @@ const embed = new Discord.MessageEmbed();
 const type = 3;
 const GAME = `you | ${PREFIX}help`;
 const update = 'November 24th, 2017';
-const version = 'Alpha 0.2.1.4';
+const version = 'Alpha 0.2.1.5';
 
 // airbrake
 const airbrakeJs = require('airbrake-js');
