@@ -877,7 +877,7 @@ commands = function () {
 					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`')
 						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
 				}
-				else if (args[0] <= 100 && args[0] > 0 && args[1] <= 10 && args[1] > 0) {
+				else if (args[0] > 0 && args[1] > 0) {
 					const member = message.mentions.members.first();
 					console.log(`${message.author.tag}: ${constants.PREFIX}${command} ${args[0]} ${args[1]} ${member.user.tag}`);
 					if ((message.author.id === '224757429076754432') || (message.author.id === '357475594327293953') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
