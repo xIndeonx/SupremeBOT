@@ -480,3 +480,17 @@ getVL = function (level) {
 		return 'Unknown';
 	}
 };
+
+// function for explicit content filter
+getECF = function (filter) {
+	switch (filter) {
+	case 0:
+		return 'Doesn\'t scan any messages';
+	case 1:
+		return 'Scans messages from members without a role';
+	case 2:
+		return 'Scans messages sent by all members';
+	default:
+		return 'Unknown';
+	}
+};

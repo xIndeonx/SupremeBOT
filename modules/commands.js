@@ -22,7 +22,14 @@ commands = function () {
 					if (typeof evaled !== 'string') {
 						evaled = require('util').inspect(evaled);
 					}
-
+					console.log(clean(evaled));
+					if (clean(evaled).length > 2000) return message.channel.send({
+						embed: {
+							color: constants.red,
+							title: 'Error',
+							description: 'Evaluated code too long to display. Please check the console for the full evaluated code.',
+						},
+					});
 					return message.channel.send({
 						embed: {
 							color: constants.green,
@@ -920,6 +927,7 @@ commands = function () {
 					.addField('Channels', message.guild.channels.size, true)
 					.addField('Roles', message.guild.roles.size, true)
 					.addField('Emojis', message.guild.emojis.size, true)
+					.addField('Explicit Content Filter', getECF(message.guild.explicitContentFilter), true)
 					.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
 				return message.channel.send({
 					embed,
