@@ -383,7 +383,7 @@ commands = function () {
 					.addField('Name', message.channel.name, true)
 					.addField('ID', `\`${message.channel.id}\``, true)
 					.addField('Topic', topic, true)
-					.setFooter('Channel created: ' + getDay(message.channel.createdAt.getDay()) + ' ' + message.channel.createdAt.getMonth() + '/' + message.channel.createdAt.getDate() + '/' + message.channel.createdAt.getFullYear() + ' at ' + message.channel.createdAt.getHours() + ':' + message.channel.createdAt.getMinutes());
+					.setFooter('Channel created: ' + getDay(message.channel.createdAt.getDay()) + ' ' + message.channel.createdAt.getMonth() + '/' + message.channel.createdAt.getDate() + '/' + message.channel.createdAt.getFullYear() + ' at ' + message.channel.createdAt.getHours() + 'H ' + message.channel.createdAt.getMinutes() + 'M');
 				return message.channel.send({
 					embed,
 				});
@@ -920,7 +920,7 @@ commands = function () {
 					.addField('Channels', message.guild.channels.size, true)
 					.addField('Roles', message.guild.roles.size, true)
 					.addField('Emojis', message.guild.emojis.size, true)
-					.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + ':' + message.guild.createdAt.getMinutes());
+					.setFooter('Guild created: ' + getDay(message.guild.createdAt.getDay()) + ' ' + message.guild.createdAt.getMonth() + '/' + message.guild.createdAt.getDate() + '/' + message.guild.createdAt.getFullYear() + ' at ' + message.guild.createdAt.getHours() + 'H ' + message.guild.createdAt.getMinutes() + 'M');
 				return message.channel.send({
 					embed,
 				});
@@ -1157,7 +1157,7 @@ commands = function () {
 						.addField('Discriminator', member.user.discriminator, true)
 						.addField('ID', `\`${member.user.id}\``, true)
 						.addField('Nickname', nick, true)
-						.setFooter('User created: ' + getDay(member.user.createdAt.getDay()) + ' ' + member.user.createdAt.getMonth() + '/' + member.user.createdAt.getDate() + '/' + member.user.createdAt.getFullYear() + ' at ' + member.user.createdAt.getHours() + ':' + member.user.createdAt.getMinutes());
+						.setFooter('User created: ' + getDay(member.user.createdAt.getDay()) + ' ' + member.user.createdAt.getMonth() + '/' + member.user.createdAt.getDate() + '/' + member.user.createdAt.getFullYear() + ' at ' + member.user.createdAt.getHours() + 'H ' + member.user.createdAt.getMinutes() + 'M');
 					return message.channel.send({
 						embed,
 					});
@@ -1189,7 +1189,7 @@ commands = function () {
 							.addField('Discriminator', user.discriminator, true)
 							.addField('ID', `\`${user.id}\``, true)
 							.addField('Nickname', nick, true)
-							.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + ':' + user.createdAt.getMinutes());
+							.setFooter('User created: ' + getDay(user.createdAt.getDay()) + ' ' + user.createdAt.getMonth() + '/' + user.createdAt.getDate() + '/' + user.createdAt.getFullYear() + ' at ' + user.createdAt.getHours() + 'H ' + user.createdAt.getMinutes() + 'M');
 						return message.channel.send({
 							embed,
 						});
