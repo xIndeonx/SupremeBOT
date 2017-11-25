@@ -421,6 +421,7 @@ commands = function () {
 
 			var queryString = args.join(' ');
 			message.channel.startTyping();
+
 			return cleverbot.getReply({
 				input: queryString,
 			}, (error, response) => {
@@ -1035,13 +1036,13 @@ commands = function () {
 							inline: true,
 						},
 						{
-							name: 'Last updated',
-							value: constants.update,
+							name: 'Voice Connections',
+							value: constants.client.voiceConnections.size,
 							inline: true,
 						},
 						{
-							name: '\u200b',
-							value: '\u200b',
+							name: 'Last updated',
+							value: constants.update,
 							inline: true,
 						},
 						],
