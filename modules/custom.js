@@ -217,6 +217,9 @@ customCommands = function () {
 			else if (command.startsWith('weltbild')) {
 				return message.channel.send('"Du hesch es falsches Weltbild."');
 			}
+			else if (command.startsWith('wiebitte')) {
+				return message.channel.send('Wie bitte?');
+			}
 			else if (command.startsWith('zeit')) {
 				return message.channel.send('Neun Uhr Achtzig.');
 			}
