@@ -347,7 +347,8 @@ commands = function () {
 						},
 					});
 				}
-				const reason = args.slice(1).join(' ');
+				const days = parseInt(args[1]);
+				const reason = args.slice(2).join(' ');
 				if (!reason) {
 					return message.channel.send({
 						embed: {
@@ -357,7 +358,25 @@ commands = function () {
 						},
 					});
 				}
-				member.ban(reason)
+				if (isNaN(days)) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Please provide a valid day count for the ban.',
+						},
+					});
+				}
+				if (!days) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Please indicate a number of days for the ban.',
+						},
+					});
+				}
+				member.ban(days, reason)
 					.catch(error => message.channel.send({
 						embed: {
 							title: 'Error',
@@ -365,7 +384,7 @@ commands = function () {
 							description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`,
 						},
 					}));
-				logToChannel('Warning', `**${member}** has been banned from **${message.guild.name}**.\nReason: ${reason}`, `Ban executed by ${message.author.tag}`, member.user.displayAvatarURL());
+				logToChannel('Warning', `**${member}** has been banned from **${message.guild.name}**.\nDays: ${days}\nReason: ${reason}`, `Ban executed by ${message.author.tag}`, member.user.displayAvatarURL());
 				return message.react('✅');
 			}
 			else {
