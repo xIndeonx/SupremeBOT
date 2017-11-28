@@ -246,7 +246,7 @@ musicCommands = function () {
 				if (parseInt(serverQueue.volume) === parseInt(args[0])) {
 					return message.channel.send({
 						embed: {
-							description: `🔊 The volume is already on **${args[0]}**.`,
+							description: `🔊 The volume is already on **${serverQueue.volume}**.`,
 							color: constants.orange,
 						},
 					});
@@ -265,7 +265,7 @@ musicCommands = function () {
 						serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
 						return message.channel.send({
 							embed: {
-								description: '🔊 Set the volume to the maximum: **10**.',
+								description: `🔊 Set the volume to the maximum: **${serverQueue.volume}**.`,
 								color: constants.orange,
 							},
 						});
@@ -276,7 +276,7 @@ musicCommands = function () {
 					serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
 					return message.channel.send({
 						embed: {
-							description: `🔊 Set the volume to: **${args[0]}**.`,
+							description: `🔊 Set the volume to: **${serverQueue.volume}**.`,
 							color: constants.blue,
 						},
 					});
