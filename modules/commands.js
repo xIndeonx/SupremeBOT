@@ -1210,7 +1210,7 @@ commands = function () {
 				var member = message.mentions.members.first();
 				if (member) {
 					var nick = message.guild.members.get(member.id).nickname;
-					if (nick === undefined) {
+					if (nick === undefined || nick === null) {
 						nick = 'No nickname';
 					}
 					else {
@@ -1242,7 +1242,7 @@ commands = function () {
 					}
 					if (user) {
 						var nick = message.guild.members.get(user.id).nickname;
-						if (nick === undefined) {
+						if (nick === undefined || nick === null) {
 							nick = 'No nickname';
 						}
 						else {
