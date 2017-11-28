@@ -953,7 +953,7 @@ commands = function () {
 		}
 		else if (command.startsWith('serverinfo')) { // serverinfo
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+				if ((message.author.id === message.guild.owner.id) || (message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
 						.setAuthor(message.guild.name, message.guild.iconURL())
