@@ -7,6 +7,7 @@ let constants = require('./modules/constants');
 require('./modules/commands');
 require('./modules/music');
 require('./modules/custom');
+require('./modules/help');
 
 // warn
 constants.client.on('warn', (warning) => console.warn(`Client warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`));
@@ -50,6 +51,7 @@ process.on('warning', (warning) => console.warn(`Process warning occurred.\nName
 commands();
 customCommands();
 musicCommands();
+helpCommands();
 
 // music functions
 handleVideo = async function (video, message, voiceChannel, playlist = false) {

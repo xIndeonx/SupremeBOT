@@ -10,6 +10,7 @@ customCommands = function () {
 		if (!message.guild) return;
 		const args = message.content.slice(constants.PREFIX.length).trim().split(/ +/g);
 		const command = args.shift().toLowerCase();
+
 		if (command.startsWith('australia')) {
 			const embed = new constants.Discord.MessageEmbed()
 				.setTitle('Australia in a nutshell')

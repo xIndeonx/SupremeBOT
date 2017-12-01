@@ -12,6 +12,7 @@ musicCommands = function () {
 		const searchString = args.join(' ');
 		const url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
 		const serverQueue = constants.queue.get(message.guild.id);
+
 		if (command.startsWith('play')) {
 			const voiceChannel = message.member.voiceChannel;
 			if (!voiceChannel) return message.channel.send({

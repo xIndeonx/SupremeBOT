@@ -10,6 +10,7 @@ commands = function () {
 		if (!message.guild) return;
 		const args = message.content.slice(constants.PREFIX.length).trim().split(/ +/g);
 		const command = args.shift().toLowerCase();
+
 		if (command.startsWith('eval')) {
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
@@ -50,18 +51,18 @@ commands = function () {
 			}
 			else return;
 		}
-		else if (command.startsWith('setgame')) {
+		else if (command.startsWith('setactivity')) {
 			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 				try {
 					var type = parseInt(args[0]);
-					var gameString = args.slice(1).join(' ');
+					var activityString = args.slice(1).join(' ');
 					if (!args[0]) {
 						message.delete();
 						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Could not set game. Make sure you used the correct parameters.',
+								description: 'Could not set activity. Make sure you used the correct parameters.',
 							},
 						})
 							.then(sent => sent.delete({
@@ -69,7 +70,7 @@ commands = function () {
 							}));
 					}
 					else {
-						constants.client.user.setActivity(gameString, {
+						constants.client.user.setActivity(activityString, {
 							type: type,
 						});
 						message.delete();
@@ -77,7 +78,7 @@ commands = function () {
 							embed: {
 								title: 'Success',
 								color: constants.green,
-								description: `Successfully set game to \`${gameString}\` with type \`${type}\`.`,
+								description: `Successfully set activity to \`${activityString}\` with type \`${type}\`.`,
 							},
 						})
 							.then(sent => sent.delete({
@@ -568,7 +569,9 @@ commands = function () {
 									description: `An error occured with the \`${command}\` command.`,
 								},
 							});
-				});
+							return;
+						});
+				}
 				message.channel.stopTyping(true);
 				message.channel.send({
 					embed: {
@@ -588,6 +591,7 @@ commands = function () {
 						});
 						return;
 					});
+			});
 		}
 		else if (command.startsWith('coinflip')) {
 			return message.channel.send({
@@ -690,67 +694,6 @@ commands = function () {
 				}
 			}
 		}
-		else if (command.startsWith('custom')) {
-			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-				try {
-					message.delete();
-					const embed = new constants.Discord.MessageEmbed()
-						.setColor(constants.blue)
-						.setTimestamp()
-						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL())
-						.setTitle('Custom Commands')
-						.setDescription('This is a complete list of all custom commands.')
-						.addField('A-E', `\`${constants.PREFIX}1=0\`\n\`${constants.PREFIX}ademerci\`\n\`${constants.PREFIX}aha\`\n\`${constants.PREFIX}alina\`\n\`${constants.PREFIX}andreas\`\n\`${constants.PREFIX}andi\`\n\`${constants.PREFIX}andy\`\n\`${constants.PREFIX}auä\`\n\`${constants.PREFIX}australia\`\n\`${constants.PREFIX}autismus\`\n\`${constants.PREFIX}autist\`\n\`${constants.PREFIX}baumi\`\n\`${constants.PREFIX}bitte\`\n\`${constants.PREFIX}boogeyman\`\n\`${constants.PREFIX}bzz\`\n\`${constants.PREFIX}claudio\`\n\`${constants.PREFIX}claudiolino\`\n\`${constants.PREFIX}clö\`\n\`${constants.PREFIX}danke\`\n\`${constants.PREFIX}doni\`\n\`${constants.PREFIX}eis\`\n`, true)
-						.addField('E-K', `\`${constants.PREFIX}esgahtnöd\`\n\`${constants.PREFIX}fabio\`\n\`${constants.PREFIX}ffs\`\n\`${constants.PREFIX}fige\`\n\`${constants.PREFIX}filip\`\n\`${constants.PREFIX}gopfeteli\`\n\`${constants.PREFIX}gschicht\`\n\`${constants.PREFIX}hauptstadt\`\n\`${constants.PREFIX}hoi\`\n\`${constants.PREFIX}hm\`\n\`${constants.PREFIX}ich\`\n\`${constants.PREFIX}ichi\`\n\`${constants.PREFIX}iconic\`\n\`${constants.PREFIX}interessiert\`\n\`${constants.PREFIX}ivan\`\n\`${constants.PREFIX}jacob\`\n\`${constants.PREFIX}jaoder\`\n\`${constants.PREFIX}joel\`\n\`${constants.PREFIX}kadder\`\n\`${constants.PREFIX}ksh\`\n`, true)
-						.addField('L-Z', `\`${constants.PREFIX}lucas\`\n\`${constants.PREFIX}merci\`\n\`${constants.PREFIX}noah\`\n\`${constants.PREFIX}oli\`\n\`${constants.PREFIX}ppap\`\n\`${constants.PREFIX}praise\`\n\`${constants.PREFIX}pubg\`\n\`${constants.PREFIX}rip\`\n\`${constants.PREFIX}snus\`\n\`${constants.PREFIX}sorry\`\n\`${constants.PREFIX}stfu\`\n\`${constants.PREFIX}toubi\`\n\`${constants.PREFIX}velo\`\n\`${constants.PREFIX}vn\`\n\`${constants.PREFIX}weltbild\`\n\`${constants.PREFIX}wiebitte\`\n\`${constants.PREFIX}zeit\`\n\`${constants.PREFIX}ziit\`\n\`${constants.PREFIX}zoel\`\n\`${constants.PREFIX}zollike\`\n`, true);
-
-					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-						return message.channel.send({
-							embed,
-						});
-					}
-					else {
-						message.author.send({
-							embed,
-						});
-						message.channel.send({
-							embed: {
-								title: 'Help',
-								color: constants.green,
-								description: `${message.author}, please check your Direct Messages!`,
-							},
-						})
-							.then(sent => sent.delete({
-								timeout: 10000,
-							}))
-							.catch(err => {
-								logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-								message.channel.send({
-									embed: {
-										title: 'Error',
-										color: constants.red,
-										description: `An error occured with the \`${command}\` command.`,
-									},
-								});
-								return;
-							});
-						return;
-					}
-				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					});
-					return;
-				}
-			}
-			else return;
-		}
 		else if (command.startsWith('echo')) {
 			try {
 				if (!args[0]) return;
@@ -825,116 +768,6 @@ commands = function () {
 						description: 'Specified too many users.',
 					},
 				});
-			}
-			catch (err) {
-				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-				message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: `An error occured with the \`${command}\` command.`,
-					},
-				});
-				return;
-			}
-		}
-		else if (command.startsWith('help')) {
-			try {
-				message.delete();
-				if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-					const embed = new constants.Discord.MessageEmbed()
-						.setColor(constants.blue)
-						.setTimestamp()
-						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL())
-						.setTitle('Commands')
-						.setDescription(`This is a complete list of commands currently available for the bot.\nFor a list of custom commands, use \`${constants.PREFIX}custom\``)
-						.addField('Owner', `\`${constants.PREFIX}eval\`\n\`${constants.PREFIX}restart\`\n\`${constants.PREFIX}setavatar\`\n\`${constants.PREFIX}setgame\`\n\`${constants.PREFIX}setstatus\`\n\`${constants.PREFIX}shutdown\`\n`, true)
-						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
-						.addBlankField(true)
-						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
-						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
-						.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
-
-					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-						return message.channel.send({
-							embed,
-						});
-					}
-					else {
-						message.author.send({
-							embed,
-						});
-						message.channel.send({
-							embed: {
-								title: 'Help',
-								color: constants.green,
-								description: `${message.author}, please check your Direct Messages!`,
-							},
-						})
-							.then(sent => sent.delete({
-								timeout: 10000,
-							}))
-							.catch(err => {
-								logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-								message.channel.send({
-									embed: {
-										title: 'Error',
-										color: constants.red,
-										description: `An error occured with the \`${command}\` command.`,
-									},
-								});
-								return;
-							});
-						return;
-					}
-				}
-				else {
-					const embed = new constants.Discord.MessageEmbed()
-						.setColor(constants.blue)
-						.setTimestamp()
-						.setAuthor(constants.client.user.username, constants.client.user.displayAvatarURL())
-						.setTitle('Commands')
-						.setDescription('This is a complete list of commands currently available for the bot.')
-						.addField('Owner', `\`${constants.PREFIX}eval\`\n\`${constants.PREFIX}restart\`\n\`${constants.PREFIX}setavatar\`\n\`${constants.PREFIX}setgame\`\n\`${constants.PREFIX}setstatus\`\n\`${constants.PREFIX}shutdown\`\n`, true)
-						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
-						.addBlankField(true)
-						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
-						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
-						.addField('Miscellaneous', `\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n`, true);
-
-					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-						return message.channel.send({
-							embed,
-						});
-					}
-					else {
-						message.author.send({
-							embed,
-						});
-						message.channel.send({
-							embed: {
-								title: 'Help',
-								color: constants.green,
-								description: `${message.author}, please check your Direct Messages!`,
-							},
-						})
-							.then(sent => sent.delete({
-								timeout: 10000,
-							}))
-							.catch(err => {
-								logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-								message.channel.send({
-									embed: {
-										title: 'Error',
-										color: constants.red,
-										description: `An error occured with the \`${command}\` command.`,
-									},
-								});
-								return;
-							});
-						return;
-					}
-				}
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -1338,7 +1171,7 @@ commands = function () {
 						},
 						{
 							name: 'Ping',
-							value: `\`${constants.client.ping}ms\``,
+							value: `\`${Math.floor(constants.client.ping)}ms\``,
 							inline: true,
 						},
 						{
