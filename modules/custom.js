@@ -17,8 +17,7 @@ customCommands = function () {
 				.setImage('https://cdn.discordapp.com/attachments/367644529773379586/370929924564975616/images.jpg');
 			return message.channel.send({
 				embed,
-			})
-				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+			});
 		}
 		if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 			if (command.startsWith('1=0')) {
@@ -51,11 +50,9 @@ customCommands = function () {
 			else if (command.startsWith('baumi')) {
 				if (args[0] === '1') return message.channel.send('Cha de Alain scho d\'Uhr lese?');
 				else if (args[0] === '2') return message.channel.send('Wetsch es Zäpfli?');
-				else if (args[0] === '3') return message.channel.send('<@' + constants.LUCASID + '>, ab id Duschi')
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				else if (args[0] === '3') return message.channel.send('<@' + constants.LUCASID + '>, ab id Duschi');
 				else if (args[0] === '4') return message.channel.send('Chopf im Sofa.');
-				return message.channel.send(`Try using parameters from \`1-4\`. Example: \`${constants.PREFIX + command} 1\``)
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				return message.channel.send(`Try using parameters from \`1-4\`. Example: \`${constants.PREFIX + command} 1\``);
 			}
 			else if (command.startsWith('bitte')) {
 				return message.channel.send('Bitte gerngscheh.');
@@ -82,8 +79,7 @@ customCommands = function () {
 					.setImage('https://t3.ftcdn.net/jpg/00/88/04/32/240_F_88043202_HGdQvy3vJoSYVznZXBx1n2JNvDhSk8Ss.jpg');
 				return message.channel.send({
 					embed,
-				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				});
 			}
 			else if (command.startsWith('doni')) {
 				return message.channel.send('Heb fressi oder ich küss dich.');
@@ -99,8 +95,7 @@ customCommands = function () {
 				else if (args[0] === '2') return message.channel.send('Wie isch d\'Matur? - Mis Lebe isch erfüllt.');
 				else if (args[0] === '3' || args[0] === 'csgo') return message.channel.send('High risk - no reward.');
 				else if (args[0] === '4' || args[0] === 'csgo2') return message.channel.send('AWP Chlauer EFZ');
-				return message.channel.send(`Try using parameters from \`1-4\`. Example: \`${constants.PREFIX + command} 1\``)
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				return message.channel.send(`Try using parameters from \`1-4\`. Example: \`${constants.PREFIX + command} 1\``);
 			}
 			else if (command.startsWith('fige')) {
 				return message.channel.send('De Feliks het en usprägte Orientierigssinn.');
@@ -117,8 +112,7 @@ customCommands = function () {
 			else if (command.startsWith('hauptstadt')) {
 				if (args[0] === '1') return message.channel.send('D\' Hauptstadt, wie du sicherlich scho ghört und glernt hesch, isch **Männedorf**.');
 				else if (args[0] === '2') return message.channel.send('Auso **ICH** ha ghört **Walliselle** seg bekanntlich d\'Hauptstadt.');
-				return message.channel.send(`Try using parameters from \`1-2\`. Example: \`${constants.PREFIX + command} 1\``)
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				return message.channel.send(`Try using parameters from \`1-2\`. Example: \`${constants.PREFIX + command} 1\``);
 			}
 			else if (command.startsWith('hoi')) {
 				return message.channel.send('Sali.');
@@ -153,8 +147,7 @@ customCommands = function () {
 			else if (command.startsWith('kadder')) {
 				if (args[0] === '1') return message.channel.send('Ich ha gern Klobürschtene.');
 				else if (args[0] === '2') return message.channel.send('Tüend sie Wasser löse?');
-				return message.channel.send(`Try using parameters from \`1-2\`. Example: \`${constants.PREFIX + command} 1\``)
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				return message.channel.send(`Try using parameters from \`1-2\`. Example: \`${constants.PREFIX + command} 1\``);
 			}
 			else if (command.startsWith('ksh')) {
 				return message.channel.send('Da lernsch vil, und Matur beschtahsch grad.');
@@ -165,8 +158,7 @@ customCommands = function () {
 				else if (args[0] === '3') return message.channel.send('ICH chan auto fahre');
 				else if (args[0] === '4') return message.channel.send('Aber kei Angst!');
 				else if (args[0] === '5' || args[0] === 'csgo') return message.channel.send('Regt sich nöd uf wemmer ihm d\'AWP chlaut.');
-				return message.channel.send(`Try using parameters from \`1-5\`. Example: \`${constants.PREFIX + command} 1\``)
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				return message.channel.send(`Try using parameters from \`1-5\`. Example: \`${constants.PREFIX + command} 1\``);
 			}
 			else if (command.startsWith('noah')) {
 				return message.channel.send('Wo isch de Noah?');
@@ -195,8 +187,7 @@ customCommands = function () {
 					.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
 				return message.channel.send({
 					embed,
-				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				});
 			}
 			else if (command.startsWith('sorry')) {
 				return message.channel.send('Sorry?');
@@ -217,8 +208,7 @@ customCommands = function () {
 					.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
 				return message.channel.send({
 					embed,
-				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+				});
 			}
 			else if (command.startsWith('weltbild')) {
 				return message.channel.send('"Du hesch es falsches Weltbild."');
@@ -237,8 +227,7 @@ customCommands = function () {
 						.setImage('https://carboncostume.com/wordpress/wp-content/uploads/2016/04/vapenation.jpg');
 					return message.channel.send({
 						embed,
-					})
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					});
 				}
 				else {
 					const embed = new constants.Discord.MessageEmbed()
@@ -247,8 +236,7 @@ customCommands = function () {
 						.setImage('http://www.odenssnus.eu/public/img/user/1026.png');
 					return message.channel.send({
 						embed,
-					})
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL));
+					});
 				}
 			}
 			else if (command.startsWith('zoel')) {

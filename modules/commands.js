@@ -86,7 +86,18 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}setgame\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					})
+						.then(sent => sent.delete({
+							timeout: 5000,
+						}));
+					return;
 				}
 			}
 			else return;
@@ -141,7 +152,18 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}setavatar\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					})
+						.then(sent => sent.delete({
+							timeout: 5000,
+						}));
+					return;
 				}
 			}
 			else return;
@@ -180,7 +202,18 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}setstatus\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					})
+						.then(sent => sent.delete({
+							timeout: 5000,
+						}));
+					return;
 				}
 			}
 			else return;
@@ -195,7 +228,18 @@ commands = function () {
 					return;
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}restart\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					})
+						.then(sent => sent.delete({
+							timeout: 5000,
+						}));
+					return;
 				}
 			}
 			else return;
@@ -210,7 +254,18 @@ commands = function () {
 					process.exitCode = 1;
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}shutdown\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					})
+						.then(sent => sent.delete({
+							timeout: 5000,
+						}));
+					return;
 				}
 			}
 			else return;
@@ -250,7 +305,15 @@ commands = function () {
 					else return;
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}delete\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
 				}
 			}
 			else {
@@ -285,13 +348,29 @@ commands = function () {
 							})
 							.catch(err => {
 								logToChannel('Error', `Error while purging messages:\n${err}`, message.author.tag, message.author.displayAvatarURL());
+								message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: `An error occured with the \`${command}\` command.`,
+									},
+								});
+								return;
 							});
 						return;
 					}
 					else return;
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}purge\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
 				}
 			}
 			else {
@@ -313,7 +392,17 @@ commands = function () {
 						color: eightballColorDecider(),
 					},
 				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+					.catch(err => {
+						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `An error occured with the \`${command}\` command.`,
+							},
+						});
+						return;
+					});
 			}
 			else return;
 		}
@@ -415,7 +504,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}channelinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('channels')) {
@@ -431,7 +528,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}channels\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('cleverbot')) {
@@ -454,8 +559,16 @@ commands = function () {
 						},
 					})
 						.then(logToChannel('Error', `Error while executing the cleverbot command:\n${error}`, message.author.tag, message.author.displayAvatarURL()))
-						.catch(err => logToChannel('Error', `Error while logging the cleverbot error:\n${err}`, message.author.tag, message.author.displayAvatarURL()));
-				}
+						.catch(err => {
+							logToChannel('Error', `Error while logging the cleverbot error:\n${err}`, message.author.tag, message.author.displayAvatarURL());
+							message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `An error occured with the \`${command}\` command.`,
+								},
+							});
+				});
 				message.channel.stopTyping(true);
 				message.channel.send({
 					embed: {
@@ -464,14 +577,33 @@ commands = function () {
 						description: response.output,
 					},
 				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
-			});
+					.catch(err => {
+						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `An error occured with the \`${command}\` command.`,
+							},
+						});
+						return;
+					});
 		}
 		else if (command.startsWith('coinflip')) {
 			return message.channel.send({
 				embed: coinFlip(message.content),
 			})
-				.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+				.catch(err => {
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
+				});
 		}
 		else if (command.startsWith('countdown')) {
 			if (constants.isRunning === true) {
@@ -546,7 +678,15 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}countdown\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
 				}
 			}
 		}
@@ -567,14 +707,12 @@ commands = function () {
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 						return message.channel.send({
 							embed,
-						})
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						});
 					}
 					else {
 						message.author.send({
 							embed,
-						})
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						});
 						message.channel.send({
 							embed: {
 								title: 'Help',
@@ -585,12 +723,30 @@ commands = function () {
 							.then(sent => sent.delete({
 								timeout: 10000,
 							}))
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+							.catch(err => {
+								logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+								message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: `An error occured with the \`${command}\` command.`,
+									},
+								});
+								return;
+							});
 						return;
 					}
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}custom\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
 				}
 			}
 			else return;
@@ -608,7 +764,15 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}echo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('google')) {
@@ -663,7 +827,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}hakai\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('help')) {
@@ -686,14 +858,12 @@ commands = function () {
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 						return message.channel.send({
 							embed,
-						})
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						});
 					}
 					else {
 						message.author.send({
 							embed,
-						})
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						});
 						message.channel.send({
 							embed: {
 								title: 'Help',
@@ -704,7 +874,17 @@ commands = function () {
 							.then(sent => sent.delete({
 								timeout: 10000,
 							}))
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+							.catch(err => {
+								logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+								message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: `An error occured with the \`${command}\` command.`,
+									},
+								});
+								return;
+							});
 						return;
 					}
 				}
@@ -725,14 +905,12 @@ commands = function () {
 					if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
 						return message.channel.send({
 							embed,
-						})
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						});
 					}
 					else {
 						message.author.send({
 							embed,
-						})
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						});
 						message.channel.send({
 							embed: {
 								title: 'Help',
@@ -743,13 +921,31 @@ commands = function () {
 							.then(sent => sent.delete({
 								timeout: 10000,
 							}))
-							.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+							.catch(err => {
+								logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+								message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: `An error occured with the \`${command}\` command.`,
+									},
+								});
+								return;
+							});
 						return;
 					}
 				}
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}help\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('invite')) {
@@ -763,7 +959,17 @@ commands = function () {
 						},
 					});
 				})
-				.catch(err => logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL()));
+				.catch(err => {
+					logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL())
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
+				});
 		}
 		else if (command.startsWith('join')) {
 			try {
@@ -782,7 +988,15 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}join\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('kick')) {
@@ -857,7 +1071,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}lotto\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('memory')) {
@@ -879,23 +1101,61 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}memory\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('ping')) { // ping
 			try {
 				if (args[0] === 'ws' || args[0] === 'websocket') {
 					return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						.catch(err => {
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+							message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `An error occured with the \`${command}\` command.`,
+								},
+							});
+							return;
+						});
 				}
 				else if (args[0] === 'actual' || args[0] === 'real' || args[0] === 'realtime' || args[0] === 'rt') {
 					return message.channel.send('Processing...')
 						.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'))
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						.catch(err => {
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+							message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `An error occured with the \`${command}\` command.`,
+								},
+							});
+							return;
+						});
 				}
 				else if (args[0] === 'api' || !args[0]) {
 					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`')
-						.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+						.catch(err => {
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+							message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `An error occured with the \`${command}\` command.`,
+								},
+							});
+							return;
+						});
 				}
 				else if (args[0] > 0 && args[1] > 0) {
 					const member = message.mentions.members.first();
@@ -918,7 +1178,15 @@ commands = function () {
 				else return;
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}ping\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('roles')) { // roles
@@ -934,7 +1202,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}roles\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('rps')) { // rps
@@ -948,7 +1224,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}rps\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('serverinfo')) { // serverinfo
@@ -992,7 +1276,15 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}serverinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('stats')) { // stats
@@ -1070,7 +1362,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}stats\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('tts')) {
@@ -1089,7 +1389,15 @@ commands = function () {
 					}
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}tts\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
 				}
 			}
 			else {
@@ -1111,7 +1419,17 @@ commands = function () {
 						description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**',
 					},
 				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+					.catch(err => {
+						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `An error occured with the \`${command}\` command.`,
+							},
+						});
+						return;
+					});
 			}
 			else if (args[0] === 'os') {
 				return message.channel.send({
@@ -1121,7 +1439,17 @@ commands = function () {
 						description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**',
 					},
 				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+					.catch(err => {
+						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `An error occured with the \`${command}\` command.`,
+							},
+						});
+						return;
+					});
 			}
 			else {
 				return message.channel.send({
@@ -1131,7 +1459,17 @@ commands = function () {
 						description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**',
 					},
 				})
-					.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+					.catch(err => {
+						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `An error occured with the \`${command}\` command.`,
+							},
+						});
+						return;
+					});
 			}
 		}
 		else if (command.startsWith('urbanrandom')) {
@@ -1166,7 +1504,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}urbanrandom\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('urban')) {
@@ -1182,7 +1528,7 @@ commands = function () {
 						message.channel.send({
 							embed: errorEmbed,
 						});
-						console.log(`${message.author.tag} typed: "${message.content}"\nError occurred at built-in error catching for the \`${constants.PREFIX}urban\` command:\n${error.message}`);
+						logToChannel(`${message.author.tag} typed: "${message.content}"\nError occurred at built-in error catching for the \`${constants.PREFIX}urban\` command:\n${error.message}`);
 						return;
 					}
 					else {
@@ -1202,7 +1548,15 @@ commands = function () {
 				});
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}urban\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('userinfo') || command.startsWith('whois')) {
@@ -1272,7 +1626,15 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}userinfo\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('vapeio')) {
@@ -1379,7 +1741,17 @@ commands = function () {
 						setTimeout(function () {
 							kickChannel.delete()
 								.then()
-								.catch(err => logToChannel('Error', `Error while deleting the vckick channel:\n${err}`, message.author.tag, message.author.displayAvatarURL()));
+								.catch(err => {
+									logToChannel('Error', `Error while deleting the vckick channel:\n${err}`, message.author.tag, message.author.displayAvatarURL());
+									message.channel.send({
+										embed: {
+											title: 'Error',
+											color: constants.red,
+											description: `An error occured with the \`${command}\` command.`,
+										},
+									});
+									return;
+								});
 						}, 500);
 					});
 					return message.react('✅');
@@ -1419,7 +1791,15 @@ commands = function () {
 				}
 			}
 			catch (err) {
-				logToChannel('Error', `Error with the \`${constants.PREFIX}vcleave\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('wolfram')) {
@@ -1439,22 +1819,40 @@ commands = function () {
 									description: resp,
 								},
 							})
-								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+								.catch(err => {
+									logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+									message.channel.send({
+										embed: {
+											title: 'Error',
+											color: constants.red,
+											description: `An error occured with the \`${command}\` command.`,
+										},
+									});
+									return;
+								});
 						})
 						.catch(function (err) {
-							logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL());
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 							message.channel.send({
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'An error has occured.\n\nError:\n' + err,
+									description: `An error occured with the \`${command}\` command.`,
 								},
-							})
-								.catch(err => logToChannel('Error', err, message.author.tag, message.author.displayAvatarURL()));
+							});
+							return;
 						});
 				}
 				catch (err) {
-					logToChannel('Error', `Error with the \`${constants.PREFIX}wolfram\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
+					});
+					return;
 				}
 			}
 		}
