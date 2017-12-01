@@ -114,6 +114,9 @@ customCommands = function () {
 			else if (command.startsWith('gschicht')) {
 				return message.channel.send('*glernt*');
 			}
+			else if (command.startsWith('hauptstadt')) {
+				return message.channel.send('d\' hauptstadt, wie du sicherlich scho ghört und glernt hesch, isch **Männedorf** ');
+			}
 			else if (command.startsWith('hoi')) {
 				return message.channel.send('Sali.');
 			}
