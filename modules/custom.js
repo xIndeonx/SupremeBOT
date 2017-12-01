@@ -111,7 +111,7 @@ customCommands = function () {
 				return message.channel.send('*glernt*');
 			}
 			else if (command.startsWith('hauptstadt')) {
-				if (args[0] === '1') return message.channel.send('D\' Hauptstadt, wie du sicherlich scho ghört und glernt hesch, isch **Männedorf**.');
+				if (args[0] === '1') return message.channel.send('D\'Hauptstadt, wie du sicherlich scho ghört und glernt hesch, isch **Männedorf**.');
 				else if (args[0] === '2') return message.channel.send('Auso **ICH** ha ghört **Walliselle** seg bekanntlich d\'Hauptstadt.');
 				return message.channel.send(`Try using parameters from \`1-2\`. Example: \`${constants.PREFIX + command} 1\``);
 			}
