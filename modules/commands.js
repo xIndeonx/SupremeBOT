@@ -793,7 +793,7 @@ commands = function () {
 					});
 				})
 				.catch(err => {
-					logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL())
+					logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL());
 					message.channel.send({
 						embed: {
 							title: 'Error',
