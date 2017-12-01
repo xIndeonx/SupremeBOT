@@ -1326,7 +1326,7 @@ commands = function () {
 						const embed = new constants.Discord.MessageEmbed()
 							.setTitle(entry.word)
 							.addField('Definition', entry.definition)
-							.addField('Example', entry.example + `\n\n[Click here for more info on ${entry.word}](${link})`)
+							.addField('Example', entry.example + `\n\n[Click here for more info on **${entry.word}**](${link})`)
 							.setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
 							.setColor(constants.blue)
 							.setThumbnail(pic);
@@ -1370,7 +1370,7 @@ commands = function () {
 						const embed = new constants.Discord.MessageEmbed()
 							.setTitle(entries[0].word)
 							.addField('Definition', entries[0].definition)
-							.addField('Example', entries[0].example + `\n\n[Click here for more info on ${entries[0].word}](${link})`)
+							.addField('Example', entries[0].example + `\n\n[Click here for more info on **${entries[0].word}**](${link})`)
 							.setFooter('Up: ' + entries[0].thumbs_up + ' | Down: ' + entries[0].thumbs_down)
 							.setColor(constants.blue)
 							.setThumbnail(pic);
