@@ -886,7 +886,7 @@ helpCommands = function () {
 							title: `${args[0]} command`,
 							color: constants.blue,
 							timestamp: Date.now(),
-							description: 'Displays information about a user on the server.',
+							description: 'Displays information about a user on the server. Also works with the ID of a user.',
 							fields: [{
 								name: 'Usage',
 								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <mention>\``,
@@ -899,7 +899,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
+								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
 								inline: true,
 							},
 							],
