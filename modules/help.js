@@ -707,7 +707,7 @@ helpCommands = function () {
 							description: 'Displays a complete list of all commands or details to a single command.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]}\` <command>`,
+								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <command>\``,
 								inline: true,
 							},
 							{
@@ -717,7 +717,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]}\` play`,
+								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} play\``,
 								inline: true,
 							},
 							],
