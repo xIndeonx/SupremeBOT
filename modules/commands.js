@@ -718,6 +718,57 @@ commands = function () {
 				return;
 			}
 		}
+		else if (command.startsWith('gay')) {
+			try {
+				if (message.mentions.users.size === 0) return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'Did not specify a user.',
+					},
+				});
+				if (message.mentions.users.size === 1) {
+					if (message.mentions.users.first() != message.author) {
+						return message.channel.send({
+							embed: {
+								description: `**${message.mentions.users.first()}, HA! GAYYYYYYYYYYY!**`,
+								color: constants.blue,
+								image: {
+									url: 'https://media.giphy.com/media/26xBI0mwTQj8IL6so/giphy.gif',
+								},
+							},
+						});
+					}
+					else {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `Are you really gay yourself, ${message.author}?`,
+							},
+						});
+					}
+				}
+				if (message.mentions.users.size > 1) return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'Specified too many users.',
+					},
+				});
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
+			}
+		}
 		else if (command.startsWith('google')) {
 			const googleImages = require('node-google-image-search');
 			var search = args.join(' ');
@@ -734,15 +785,15 @@ commands = function () {
 		}
 		else if (command.startsWith('hakai')) {
 			try {
-				if (message.mentions.users.size == 0) return message.channel.send({
+				if (message.mentions.users.size === 0) return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
 						description: 'Did not specify a user.',
 					},
 				});
-				if (message.mentions.users.size == 1) {
-					if (message.mentions.users.first() != message.author.toString()) {
+				if (message.mentions.users.size === 1) {
+					if (message.mentions.users.first() != message.author) {
 						return message.channel.send({
 							embed: {
 								title: 'Hakai',
