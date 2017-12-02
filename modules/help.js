@@ -1036,6 +1036,32 @@ helpCommands = function () {
 						},
 					});
 				}
+				else if (args[0] === 'gay') {
+					return message.channel.send({
+						embed: {
+							title: `${args[0]} command`,
+							color: constants.blue,
+							timestamp: Date.now(),
+							description: 'Returns a GIF and the mentioned person.',
+							fields: [{
+								name: 'Usage',
+								value: `\`${constants.PREFIX}${args[0]} <mention>\``,
+								inline: true,
+							},
+							{
+								name: '\u200b',
+								value: '\u200b',
+								inline: true,
+							},
+							{
+								name: 'Example',
+								value: `\`${constants.PREFIX}${args[0]} @Raytlye#7182\``,
+								inline: true,
+							},
+							],
+						},
+					});
+				}
 				else if (args[0] === 'hakai') {
 					return message.channel.send({
 						embed: {
