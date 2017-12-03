@@ -12,7 +12,7 @@ commands = function () {
 		const command = args.shift().toLowerCase();
 
 		if (command.startsWith('eval')) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					const code = args.join(' ');
 					var now = require('performance-now');
@@ -52,7 +52,7 @@ commands = function () {
 			else return;
 		}
 		else if (command.startsWith('setactivity')) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					var type = parseInt(args[0]);
 					var activityString = args.slice(1).join(' ');
@@ -104,7 +104,7 @@ commands = function () {
 			else return;
 		}
 		else if (command.startsWith('setavatar')) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					var urlString = args.join(' ');
 					if (!args[0]) {
@@ -170,7 +170,7 @@ commands = function () {
 			else return;
 		}
 		else if (command.startsWith('setstatus')) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					if (args[0].toLowerCase() === 'dnd' || args[0].toLowerCase() === 'online' || args[0].toLowerCase() === 'idle' || args[0].toLowerCase() === 'invisible') {
 						constants.client.user.setStatus(args[0].toLowerCase());
@@ -220,7 +220,7 @@ commands = function () {
 			else return;
 		}
 		else if (command.startsWith('restart')) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					message.channel.send('Restarting...');
 					setTimeout(function () {
@@ -246,7 +246,7 @@ commands = function () {
 			else return;
 		}
 		else if (command.startsWith('shutdown')) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					message.channel.send('Shutting down...');
 					constants.client.destroy((err) => {
@@ -272,7 +272,7 @@ commands = function () {
 			else return;
 		}
 		else if (command.startsWith('delete')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					if (message.channel.type === 'text') {
 						let messagecount = parseInt(args[0]);
@@ -328,7 +328,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('purge')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					if (message.channel.type === 'text') {
 						message.channel.messages.fetch()
@@ -385,30 +385,27 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('8ball')) {
-			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-				return message.channel.send({
-					embed: {
-						title: 'The magic 8ball says...',
-						description: eightball(),
-						color: eightballColorDecider(),
-					},
-				})
-					.catch(err => {
-						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-						message.channel.send({
-							embed: {
-								title: 'Error',
-								color: constants.red,
-								description: `An error occured with the \`${command}\` command.`,
-							},
-						});
-						return;
+			return message.channel.send({
+				embed: {
+					title: 'The magic 8ball says...',
+					description: eightball(),
+					color: eightballColorDecider(),
+				},
+			})
+				.catch(err => {
+					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+					message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `An error occured with the \`${command}\` command.`,
+						},
 					});
-			}
-			else return;
+					return;
+				});
 		}
 		else if (command.startsWith('ban')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				const member = message.mentions.members.first();
 				if (!message.guild.me.permissions.has('BAN_MEMBERS')) {
 					return message.channel.send({
@@ -884,7 +881,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('kick')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				const member = message.mentions.members.first();
 				if (!message.guild.me.permissions.has('KICK_MEMBERS')) {
 					return message.channel.send({
@@ -1044,7 +1041,7 @@ commands = function () {
 				else if (args[0] > 0 && args[1] > 0) {
 					const member = message.mentions.members.first();
 					console.log(`${message.author.tag}: ${constants.PREFIX}${command} ${args[0]} ${args[1]} ${member.user.tag}`);
-					if ((message.author.id === '224757429076754432') || (message.author.id === '357475594327293953') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+					if ((message.author.id === '224757429076754432') || (message.author.id === '357475594327293953') || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 						const seconds = args[1] * 1000;
 						message.delete();
 						for (i = args[0]; i > 0; i--) {
@@ -1121,7 +1118,7 @@ commands = function () {
 		}
 		else if (command.startsWith('serverinfo')) { // serverinfo
 			try {
-				if ((message.author.id === message.guild.owner.id) || (message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+				if ((message.author.id === message.guild.owner.id) || (message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
 						.setAuthor(message.guild.name, message.guild.iconURL())
@@ -1258,7 +1255,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('tts')) {
-			if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					if (!args[0]) return;
 					else {
@@ -1522,47 +1519,36 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('vapeio')) {
-			if ((message.guild.id === constants.GUILD_ID) || (message.guild.id === '377743832449679362') || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
-				if (message.author.id != constants.OWNERID) {
-					if (message.member.voiceChannel) {
-						var vapeio = message.guild.members.get(constants.OWNERID);
-						var previousChannel = vapeio.voiceChannelID;
-						if (vapeio.voiceChannel) {
-							if (vapeio.voiceChannelID === '340961232695853068') {
-								return message.channel.send({
-									embed: {
-										title: 'Error',
-										color: constants.red,
-										description: 'De Vapeio isch leider scho verschobe worde.',
-									},
-								});
-							}
-							else if (vapeio.voiceChannelID !== message.member.voiceChannelID) {
-								return message.channel.send({
-									embed: {
-										title: 'Error',
-										color: constants.red,
-										description: 'Du muesch mit em Vapeio im gliiche Voice Channel sii.',
-									},
-								});
-							}
-							else {
-								vapeio.setVoiceChannel('340961232695853068');
-								message.react('✅');
-								setTimeout(function () {
-									vapeio.setVoiceChannel(previousChannel);
-								}, 5000);
-								return;
-							}
-						}
-						else {
+			if (message.author.id != constants.OWNER_ID) {
+				if (message.member.voiceChannel) {
+					var vapeio = message.guild.members.get(constants.OWNER_ID);
+					var previousChannel = vapeio.voiceChannelID;
+					if (vapeio.voiceChannel) {
+						if (vapeio.voiceChannelID === '340961232695853068') {
 							return message.channel.send({
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'De Vapeio isch leider am vape und nöd da.',
+									description: 'De Vapeio isch leider scho verschobe worde.',
 								},
 							});
+						}
+						else if (vapeio.voiceChannelID !== message.member.voiceChannelID) {
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'Du muesch mit em Vapeio im gliiche Voice Channel sii.',
+								},
+							});
+						}
+						else {
+							vapeio.setVoiceChannel('340961232695853068');
+							message.react('✅');
+							setTimeout(function () {
+								vapeio.setVoiceChannel(previousChannel);
+							}, 5000);
+							return;
 						}
 					}
 					else {
@@ -1570,7 +1556,7 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'You need to be in a voice channel to use this command.',
+								description: 'De Vapeio isch leider am vape und nöd da.',
 							},
 						});
 					}
@@ -1580,15 +1566,23 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.',
+							description: 'You need to be in a voice channel to use this command.',
 						},
 					});
 				}
 			}
-			else return;
+			else {
+				return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.',
+					},
+				});
+			}
 		}
 		else if (command.startsWith('vckick')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				if (!message.guild.me.permissions.has('MOVE_MEMBERS')) {
 					return message.channel.send({
 						embed: {
@@ -1687,7 +1681,7 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('wolfram')) {
-			if ((message.author.id === constants.OWNERID) || (message.author.id === constants.LUCASID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
 					var wajs = require('wajs');
 					var waClient = new wajs(constants.WOLFRAM_APPID);

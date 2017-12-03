@@ -10,10 +10,9 @@ const client = new Discord.Client({
 const {
 	TOKEN,
 	PREFIX,
-	GUILD_ID,
 	BOT_CHANNEL,
-	OWNERID,
-	LUCASID,
+	OWNER_ID,
+	LUCAS_ID,
 	GOOGLE_APIKEY,
 	PROJECT_ID,
 	PROJECT_KEY,
@@ -61,10 +60,9 @@ module.exports.Util = Util;
 module.exports.client = client;
 module.exports.TOKEN = TOKEN;
 module.exports.PREFIX = PREFIX;
-module.exports.GUILD_ID = GUILD_ID;
 module.exports.BOT_CHANNEL = BOT_CHANNEL;
-module.exports.OWNERID = OWNERID;
-module.exports.LUCASID = LUCASID;
+module.exports.OWNER_ID = OWNER_ID;
+module.exports.LUCAS_ID = LUCAS_ID;
 module.exports.GOOGLE_APIKEY = GOOGLE_APIKEY;
 module.exports.PROJECT_ID = PROJECT_ID;
 module.exports.PROJECT_KEY = PROJECT_KEY;
