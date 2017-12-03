@@ -13,7 +13,7 @@ For you to be able to use this Discord bot you need to have the following things
 
 ## Commands
 
-The bot uses `**.**` as prefix for every command.
+The bot uses `.` as prefix for every command.
 
 
 Can be changed in the config.js file:
