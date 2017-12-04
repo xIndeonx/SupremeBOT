@@ -877,7 +877,7 @@ helpCommands = function () {
 						},
 					});
 				}
-				else if (args[0] === 'userinfo' || args[0] === 'whois') {
+				else if (args[0] === 'userinfo') {
 					return message.channel.send({
 						embed: {
 							title: `${args[0]} command`,
@@ -897,6 +897,42 @@ helpCommands = function () {
 							{
 								name: 'Example',
 								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
+								inline: true,
+							},
+							{
+								name: 'Aliases',
+								value: `\`${constants.PREFIX}whois\``,
+								inline: true,
+							},
+							],
+						},
+					});
+				}
+				else if (args[0] === 'whois') {
+					return message.channel.send({
+						embed: {
+							title: `${args[0]} command`,
+							color: constants.blue,
+							timestamp: Date.now(),
+							description: 'Displays information about a user on the server. Also works with the ID of a user.',
+							fields: [{
+								name: 'Usage',
+								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <mention>\``,
+								inline: true,
+							},
+							{
+								name: '\u200b',
+								value: '\u200b',
+								inline: true,
+							},
+							{
+								name: 'Example',
+								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
+								inline: true,
+							},
+							{
+								name: 'Aliases',
+								value: `\`${constants.PREFIX}userinfo\``,
 								inline: true,
 							},
 							],
@@ -1279,7 +1315,7 @@ helpCommands = function () {
 						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
 						.addBlankField(true)
 						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
-						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n\`${constants.PREFIX}whois\`\n`, true)
+						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n`, true)
 						.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}gay\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
 
 					if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
