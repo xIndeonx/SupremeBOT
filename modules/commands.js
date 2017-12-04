@@ -405,9 +405,13 @@ commands = function () {
 				});
 		}
 		else if (command.startsWith('airhorn')) {
-			if (constants.queue.get(message.guild.id)) {
-				message.channel.send('Can\'t play the airhorn right now...');
-			}
+			if (constants.queue.get(message.guild.id)) return message.channel.send({
+				embed: {
+					title: 'Error',
+					description: 'Can\'t play the airhorn right now...',
+					color: constants.red,
+				},
+			});
 			else {
 				const voiceChannel = message.member.voiceChannel;
 				if (!voiceChannel) return message.channel.send({
@@ -426,6 +430,7 @@ commands = function () {
 							}, 3500);
 							return;
 						});
+					return message.react('✅');
 				}
 			}
 		}

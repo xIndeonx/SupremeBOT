@@ -305,8 +305,8 @@ musicCommands = function () {
 							},
 						});
 					}
-					else if (args[0] > 10) {
-						if (serverQueue.volume >= 10) {
+					else if (args[0] > 5) {
+						if (serverQueue.volume >= 5) {
 							return message.channel.send({
 								embed: {
 									description: `🔊 The volume is already on **${serverQueue.volume}** (maximum).`,
@@ -315,8 +315,8 @@ musicCommands = function () {
 							});
 						}
 						else {
-							serverQueue.volume = 10;
-							serverQueue.connection.dispatcher.setVolumeLogarithmic(10 / 5);
+							serverQueue.volume = 5;
+							serverQueue.connection.dispatcher.setVolumeLogarithmic(5 / 5);
 							return message.channel.send({
 								embed: {
 									description: `🔊 Set the volume to the maximum: **${serverQueue.volume}**.`,
@@ -325,7 +325,7 @@ musicCommands = function () {
 							});
 						}
 					}
-					else if (args[0] <= 10) {
+					else if (args[0] <= 5) {
 						serverQueue.volume = args[0];
 						serverQueue.connection.dispatcher.setVolumeLogarithmic(args[0] / 5);
 						return message.channel.send({
