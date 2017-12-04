@@ -3,7 +3,7 @@ require('dotenv').config({
 });
 
 // requirements
-let constants = require('./modules/constants');
+const constants = require('./modules/constants');
 require('./modules/commands');
 require('./modules/music');
 require('./modules/custom');

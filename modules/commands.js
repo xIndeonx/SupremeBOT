@@ -1,5 +1,5 @@
 // requirements
-let constants = require('./constants');
+const constants = require('./constants');
 require('../bot');
 
 // commands
