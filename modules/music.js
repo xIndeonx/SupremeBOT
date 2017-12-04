@@ -14,195 +14,169 @@ musicCommands = function () {
 		const serverQueue = constants.queue.get(message.guild.id);
 
 		if (command.startsWith('play')) {
-			try {
-				const voiceChannel = message.member.voiceChannel;
-				if (!voiceChannel) return message.channel.send({
-					embed: {
-						description: '‼ You need to be in a voice channel to play music!',
-						color: constants.red,
-					},
-				});
-				const permissions = voiceChannel.permissionsFor(message.client.user);
-				if (!permissions.has('CONNECT')) return message.channel.send({
-					embed: {
-						description: '‼ Cannot connect to your voice channel!',
-						color: constants.red,
-					},
-				});
-				if (!permissions.has('SPEAK')) return message.channel.send({
-					embed: {
-						description: '‼ Cannot speak in your voice channel!',
-						color: constants.red,
-					},
-				});
+			const voiceChannel = message.member.voiceChannel;
+			if (!voiceChannel) return message.channel.send({
+				embed: {
+					description: '‼ You need to be in a voice channel to play music!',
+					color: constants.red,
+				},
+			});
+			const permissions = voiceChannel.permissionsFor(message.client.user);
+			if (!permissions.has('CONNECT')) return message.channel.send({
+				embed: {
+					description: '‼ Cannot connect to your voice channel!',
+					color: constants.red,
+				},
+			});
+			if (!permissions.has('SPEAK')) return message.channel.send({
+				embed: {
+					description: '‼ Cannot speak in your voice channel!',
+					color: constants.red,
+				},
+			});
 
-				if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-					message.channel.startTyping();
-					const playlist = await constants.youtube.getPlaylist(url);
-					const videos = await playlist.getVideos();
-					for (const video of Object.values(videos)) {
-						try {
-							const video2 = await constants.youtube.getVideoByID(video.id);
-							await handleVideo(video2, message, voiceChannel, true);
-						}
-						catch (err) {
-							if (err instanceof TypeError) console.error(err);
-							else logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							continue;
-						}
-					}
-					message.channel.stopTyping(true);
-					return message.channel.send({
-						embed: {
-							title: 'Playlist added',
-							description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
-							color: constants.blue,
-						},
-					});
-				}
-				else {
+			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+				message.channel.startTyping();
+				const playlist = await constants.youtube.getPlaylist(url);
+				const videos = await playlist.getVideos();
+				for (const video of Object.values(videos)) {
 					try {
-						var video = await constants.youtube.getVideo(url);
+						const video2 = await constants.youtube.getVideoByID(video.id);
+						await handleVideo(video2, message, voiceChannel, true);
 					}
-					catch (error) {
-						try {
-							var videos = await constants.youtube.searchVideos(searchString, 1);
-							var video = await constants.youtube.getVideoByID(videos[0].id);
-						}
-						catch (err) {
-							logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.stopTyping(true);
-							return message.channel.send({
-								embed: {
-									description: '‼ Could not get search results.',
-									color: constants.red,
-								},
-							});
-						}
+					catch (err) {
+						if (err instanceof TypeError) console.error(err);
+						else logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						continue;
 					}
-					return handleVideo(video, message, voiceChannel);
 				}
-			}
-			catch (err) {
-				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-				message.channel.send({
+				message.channel.stopTyping(true);
+				return message.channel.send({
 					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: `An error occured with the \`${command}\` command.`,
+						title: 'Playlist added',
+						description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
+						color: constants.blue,
 					},
 				});
-				return;
+			}
+			else {
+				try {
+					var video = await constants.youtube.getVideo(url);
+				}
+				catch (error) {
+					try {
+						var videos = await constants.youtube.searchVideos(searchString, 1);
+						var video = await constants.youtube.getVideoByID(videos[0].id);
+					}
+					catch (err) {
+						logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						message.channel.stopTyping(true);
+						return message.channel.send({
+							embed: {
+								description: '‼ Could not get search results.',
+								color: constants.red,
+							},
+						});
+					}
+				}
+				return handleVideo(video, message, voiceChannel);
 			}
 		}
 		else if (command.startsWith('search')) {
-			try {
-				const voiceChannel = message.member.voiceChannel;
-				const authorid = message.author.id;
-				if (!voiceChannel) return message.channel.send({
-					embed: {
-						description: '‼ You need to be in a voice channel to play music!',
-						color: constants.red,
-					},
-				});
-				const permissions = voiceChannel.permissionsFor(message.client.user);
-				if (!permissions.has('CONNECT')) return message.channel.send({
-					embed: {
-						description: '‼ Cannot connect to your voice channel!',
-						color: constants.red,
-					},
-				});
-				if (!permissions.has('SPEAK')) return message.channel.send({
-					embed: {
-						description: '‼ Cannot speak in your voice channel!',
-						color: constants.red,
-					},
-				});
+			const voiceChannel = message.member.voiceChannel;
+			const authorid = message.author.id;
+			if (!voiceChannel) return message.channel.send({
+				embed: {
+					description: '‼ You need to be in a voice channel to play music!',
+					color: constants.red,
+				},
+			});
+			const permissions = voiceChannel.permissionsFor(message.client.user);
+			if (!permissions.has('CONNECT')) return message.channel.send({
+				embed: {
+					description: '‼ Cannot connect to your voice channel!',
+					color: constants.red,
+				},
+			});
+			if (!permissions.has('SPEAK')) return message.channel.send({
+				embed: {
+					description: '‼ Cannot speak in your voice channel!',
+					color: constants.red,
+				},
+			});
 
-				if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-					message.channel.startTyping();
-					const playlist = await constants.youtube.getPlaylist(url);
-					const videos = await playlist.getVideos();
-					for (const video of Object.values(videos)) {
-						try {
-							const video2 = await constants.youtube.getVideoByID(video.id);
-							await handleVideo(video2, message, voiceChannel, true);
-						}
-						catch (err) {
-							if (err instanceof TypeError) console.error(err);
-							else logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							continue;
-						}
-					}
-					message.channel.stopTyping(true);
-					return message.channel.send({
-						embed: {
-							title: 'Playlist added',
-							description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
-							color: constants.blue,
-						},
-					});
-				}
-				else {
+			if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+				message.channel.startTyping();
+				const playlist = await constants.youtube.getPlaylist(url);
+				const videos = await playlist.getVideos();
+				for (const video of Object.values(videos)) {
 					try {
-						var video = await constants.youtube.getVideo(url);
+						const video2 = await constants.youtube.getVideoByID(video.id);
+						await handleVideo(video2, message, voiceChannel, true);
 					}
-					catch (error) {
-						try {
-							var videos = await constants.youtube.searchVideos(searchString, 5);
-							let index = 0;
-							message.channel.send({
-								embed: {
-									title: 'Search results',
-									color: constants.blue,
-									description: `${videos.map(video2 => `${++index} - [${video2.title}](${video2.url})`).join('\n')}`,
-									footer: {
-										text: 'Please input the number of the song you want to play (1-5). 30 seconds until cancellation.',
-									},
+					catch (err) {
+						if (err instanceof TypeError) console.error(err);
+						else logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						continue;
+					}
+				}
+				message.channel.stopTyping(true);
+				return message.channel.send({
+					embed: {
+						title: 'Playlist added',
+						description: `**[${playlist.title}](${playlist.url})** has been added to the queue!`,
+						color: constants.blue,
+					},
+				});
+			}
+			else {
+				try {
+					var video = await constants.youtube.getVideo(url);
+				}
+				catch (error) {
+					try {
+						var videos = await constants.youtube.searchVideos(searchString, 5);
+						let index = 0;
+						message.channel.send({
+							embed: {
+								title: 'Search results',
+								color: constants.blue,
+								description: `${videos.map(video2 => `${++index} - [${video2.title}](${video2.url})`).join('\n')}`,
+								footer: {
+									text: 'Please input the number of the song you want to play (1-5). 30 seconds until cancellation.',
 								},
-							});
+							},
+						});
 
-							try {
-								var response = await message.channel.awaitMessages(msg2 => msg2.author.id === authorid && msg2.content > 0 && msg2.content < 6, {
-									max: 1,
-									time: 30000,
-									errors: ['time'],
-								});
-							}
-							catch (err) {
-								return message.channel.send({
-									embed: {
-										description: 'No or invalid input, cancelling video selection.',
-										color: constants.red,
-									},
-								});
-							}
-							const videoIndex = parseInt(response.first().content);
-							var video = await constants.youtube.getVideoByID(videos[videoIndex - 1].id);
+						try {
+							var response = await message.channel.awaitMessages(msg2 => msg2.author.id === authorid && msg2.content > 0 && msg2.content < 6, {
+								max: 1,
+								time: 30000,
+								errors: ['time'],
+							});
 						}
 						catch (err) {
-							logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 							return message.channel.send({
 								embed: {
-									description: '‼ Could not get search results.',
+									description: 'No or invalid input, cancelling video selection.',
 									color: constants.red,
 								},
 							});
 						}
+						const videoIndex = parseInt(response.first().content);
+						var video = await constants.youtube.getVideoByID(videos[videoIndex - 1].id);
 					}
-					return handleVideo(video, message, voiceChannel);
+					catch (err) {
+						logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						return message.channel.send({
+							embed: {
+								description: '‼ Could not get search results.',
+								color: constants.red,
+							},
+						});
+					}
 				}
-			}
-			catch (err) {
-				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-				message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: `An error occured with the \`${command}\` command.`,
-					},
-				});
-				return;
+				return handleVideo(video, message, voiceChannel);
 			}
 		}
 		else if (command.startsWith('skip')) {
