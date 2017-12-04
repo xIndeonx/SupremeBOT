@@ -438,6 +438,7 @@ commands = function () {
 					});
 				}
 				else {
+					console.log(__dirname);
 					voiceChannel.join()
 						.then(connection => {
 							const dispatcher = connection.playFile('/root/Discord/discord-alpha/files/airhorn.mp3');
