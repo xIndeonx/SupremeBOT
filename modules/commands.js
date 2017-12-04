@@ -441,10 +441,12 @@ commands = function () {
 					voiceChannel.join()
 						.then(connection => {
 							const dispatcher = connection.playFile('./files/airhorn.mp3');
-							dispatcher.on('error', console.error);
-							setTimeout(function() {
+							dispatcher.on('end', () => {
 								voiceChannel.leave();
-							}, 3500);
+							});
+							dispatcher.on('error', e => {
+								console.log(e);
+							});
 							return;
 						});
 					return message.react('✅');
