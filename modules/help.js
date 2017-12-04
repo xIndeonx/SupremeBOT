@@ -201,6 +201,32 @@ helpCommands = function () {
 						},
 					});
 				}
+				else if (args[0] === 'airhorn') {
+					return message.channel.send({
+						embed: {
+							title: `${args[0]} command`,
+							color: constants.blue,
+							timestamp: Date.now(),
+							description: 'Plays a loud airhorn sound.',
+							fields: [{
+								name: 'Usage',
+								value: `\`${constants.PREFIX}${args[0]}\``,
+								inline: true,
+							},
+							{
+								name: '\u200b',
+								value: '\u200b',
+								inline: true,
+							},
+							{
+								name: 'Example',
+								value: `\`${constants.PREFIX}${args[0]}\``,
+								inline: true,
+							},
+							],
+						},
+					});
+				}
 				else if (args[0] === 'ban') {
 					return message.channel.send({
 						embed: {
@@ -1316,7 +1342,7 @@ helpCommands = function () {
 						.addBlankField(true)
 						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
 						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n`, true)
-						.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}gay\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
+						.addField('Miscellaneous', `\`${constants.PREFIX}8ball\`\n\`${constants.PREFIX}airhorn\`\n\`${constants.PREFIX}cleverbot\`\n\`${constants.PREFIX}coinflip\`\n\`${constants.PREFIX}countdown\`\n\`${constants.PREFIX}echo\`\n\`${constants.PREFIX}gay\`\n\`${constants.PREFIX}hakai\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}lotto\`\n\`${constants.PREFIX}rps\`\n\`${constants.PREFIX}tts\`\n\`${constants.PREFIX}urban\`\n\`${constants.PREFIX}urbanrandom\`\n\`${constants.PREFIX}vapeio\`\n`, true);
 
 					if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 						return message.channel.send({
