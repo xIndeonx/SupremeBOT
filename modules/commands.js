@@ -440,7 +440,7 @@ commands = function () {
 				else {
 					voiceChannel.join()
 						.then(connection => {
-							const dispatcher = connection.playFile('./files/feather.mp3');
+							const dispatcher = connection.playFile('./files/airhorn.mp3');
 							dispatcher.on('end', () => {
 								voiceChannel.leave();
 							});
