@@ -405,27 +405,29 @@ commands = function () {
 				});
 		}
 		else if (command.startsWith('airhorn')) {
-			if (constants.queue.get(message.guild.id)) { message.channel.send('Can\'t play the airhorn right now...') } 
+			if (constants.queue.get(message.guild.id)) {
+				message.channel.send('Can\'t play the airhorn right now...');
+			}
 			else {
-				message.channel.send('test');
 				const voiceChannel = message.member.voiceChannel;
 				if (!voiceChannel) return message.channel.send({
 					embed: {
-						description: '‼ You need to be in a voice channel to play music!',
+						description: '‼ You need to be in a voice channel!',
 						color: constants.red,
 					},
 				});
 				else {
-				voiceChannel.join()
-					.then(connection => {
-				  const dispatcher = connection.playFile('C:/Users/lvonnied/Music/airhorn.mp3');
-				  setTimeout(function(){ voiceChannel.leave(); }, 4000);
-				  return;
-				 })
-				  dispatcher.on('error', console.error)
-					.catch(console.error);
+					voiceChannel.join()
+						.then(connection => {
+							const dispatcher = connection.playFile('./files/airhorn.mp3');
+							dispatcher.on('error', console.error);
+							setTimeout(function() {
+								voiceChannel.leave();
+							}, 3500);
+							return;
+						});
 				}
-		}
+			}
 		}
 		else if (command.startsWith('ban')) {
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
