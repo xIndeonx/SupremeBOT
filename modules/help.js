@@ -1225,6 +1225,32 @@ helpCommands = function () {
 						},
 					});
 				}
+				else if (args[0] === 'say') {
+					return message.channel.send({
+						embed: {
+							title: `${args[0]} command`,
+							color: constants.blue,
+							timestamp: Date.now(),
+							description: 'Input will be repeated by the bot in a specific channel. Can be used for announcements.',
+							fields: [{
+								name: 'Usage',
+								value: `\`${constants.PREFIX}${args[0]} <channel> <message>\``,
+								inline: true,
+							},
+							{
+								name: '\u200b',
+								value: '\u200b',
+								inline: true,
+							},
+							{
+								name: 'Example',
+								value: `\`${constants.PREFIX}${args[0]} general Hello there.\``,
+								inline: true,
+							},
+							],
+						},
+					});
+				}
 				else if (args[0] === 'tts') {
 					return message.channel.send({
 						embed: {
@@ -1338,7 +1364,7 @@ helpCommands = function () {
 						.setTitle('Commands')
 						.setDescription(`This is a complete list of commands currently available for the bot.\nFor a list of custom commands, use \`${constants.PREFIX}custom\``)
 						.addField('Owner', `\`${constants.PREFIX}eval\`\n\`${constants.PREFIX}restart\`\n\`${constants.PREFIX}setavatar\`\n\`${constants.PREFIX}setactivity\`\n\`${constants.PREFIX}setstatus\`\n\`${constants.PREFIX}shutdown\`\n`, true)
-						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}vckick\`\n`, true)
+						.addField('Admin', `\`${constants.PREFIX}ban\`\n\`${constants.PREFIX}delete\`\n\`${constants.PREFIX}kick\`\n\`${constants.PREFIX}purge\`\n\`${constants.PREFIX}say\`\n\`${constants.PREFIX}vckick\`\n`, true)
 						.addBlankField(true)
 						.addField('Music', `\`${constants.PREFIX}join\`\n\`${constants.PREFIX}leave\`\n\`${constants.PREFIX}np\`\n\`${constants.PREFIX}pause\`\n\`${constants.PREFIX}play\`\n\`${constants.PREFIX}queue\`\n\`${constants.PREFIX}resume\`\n\`${constants.PREFIX}search\`\n\`${constants.PREFIX}skip\`\n\`${constants.PREFIX}stop\`\n\`${constants.PREFIX}vcleave\`\n\`${constants.PREFIX}volume\`\n`, true)
 						.addField('Info', `\`${constants.PREFIX}channelinfo\`\n\`${constants.PREFIX}channels\`\n\`${constants.PREFIX}custom\`\n\`${constants.PREFIX}help\`\n\`${constants.PREFIX}invite\`\n\`${constants.PREFIX}memory\`\n\`${constants.PREFIX}ping\`\n\`${constants.PREFIX}roles\`\n\`${constants.PREFIX}serverinfo\`\n\`${constants.PREFIX}stats\`\n\`${constants.PREFIX}uptime\`\n\`${constants.PREFIX}userinfo\`\n`, true)

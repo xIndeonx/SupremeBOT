@@ -1146,6 +1146,52 @@ commands = function () {
 				return;
 			}
 		}
+		else if (command.startsWith('say')) {
+			try {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+					if (!args[0]) return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Did not specify a channel.',
+						},
+					});
+					if (!args[1]) return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Did not specify a message.',
+						},
+					});
+
+					const string = args.slice(1).join(' ');
+					const channel = message.guild.channels.find('name', args[0]);
+
+					if (!channel) return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: `${args[0]} is not a channel.`,
+						},
+					});
+
+					channel.send(string);
+					return;
+				}
+				else return;
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
+			}
+		}
 		else if (command.startsWith('serverinfo')) { // serverinfo
 			try {
 				if ((message.author.id === message.guild.owner.id) || (message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
