@@ -24,13 +24,15 @@ commands = function () {
 						evaled = require('util').inspect(evaled);
 					}
 					console.log(clean(evaled));
-					if (clean(evaled).length > 2000) return message.channel.send({
-						embed: {
-							color: constants.red,
-							title: 'Error',
-							description: 'Evaluated code too long to display. Please check the console for the full evaluated code.',
-						},
-					});
+					if (clean(evaled).length > 2000) {
+						return message.channel.send({
+							embed: {
+								color: constants.red,
+								title: 'Error',
+								description: 'Evaluated code too long to display. Please check the console for the full evaluated code.',
+							},
+						});
+					}
 					return message.channel.send({
 						embed: {
 							color: constants.green,
@@ -49,7 +51,7 @@ commands = function () {
 					});
 				}
 			}
-			else return;
+			else {return;}
 		}
 		else if (command.startsWith('setactivity')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -101,7 +103,7 @@ commands = function () {
 					return;
 				}
 			}
-			else return;
+			else {return;}
 		}
 		else if (command.startsWith('setavatar')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -167,7 +169,7 @@ commands = function () {
 					return;
 				}
 			}
-			else return;
+			else {return;}
 		}
 		else if (command.startsWith('setstatus')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -217,7 +219,7 @@ commands = function () {
 					return;
 				}
 			}
-			else return;
+			else {return;}
 		}
 		else if (command.startsWith('restart')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -243,7 +245,7 @@ commands = function () {
 					return;
 				}
 			}
-			else return;
+			else {return;}
 		}
 		else if (command.startsWith('shutdown')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -269,7 +271,7 @@ commands = function () {
 					return;
 				}
 			}
-			else return;
+			else {return;}
 		}
 		else if (command.startsWith('delete')) {
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -303,7 +305,7 @@ commands = function () {
 						logToChannel('Information', 'Guild: ' + message.guild.name + '\nChannel: ' + message.channel.name + '\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL());
 						return;
 					}
-					else return;
+					else {return;}
 				}
 				catch (err) {
 					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -360,7 +362,7 @@ commands = function () {
 							});
 						return;
 					}
-					else return;
+					else {return;}
 				}
 				catch (err) {
 					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -405,21 +407,36 @@ commands = function () {
 				});
 		}
 		else if (command.startsWith('airhorn')) {
-			if (constants.queue.get(message.guild.id)) return message.channel.send({
-				embed: {
-					title: 'Error',
-					description: 'Can\'t play the airhorn right now...',
-					color: constants.red,
-				},
-			});
-			else {
-				const voiceChannel = message.member.voiceChannel;
-				if (!voiceChannel) return message.channel.send({
+			const role = message.guild.roles.find('name', 'airhorn');
+			if (!role) {
+				message.guild.createRole({
+					data: {
+						name: 'airhorn',
+						hoist: false,
+					},
+					reason: 'Airhorn role for the airhorn command.',
+				});
+				return message.channel.send('Created role `airhorn` for the airhorn command.');
+			}
+			else if (constants.queue.get(message.guild.id)) {
+				return message.channel.send({
 					embed: {
-						description: '‼ You need to be in a voice channel!',
+						title: 'Error',
+						description: 'Can\'t play the airhorn right now...',
 						color: constants.red,
 					},
 				});
+			}
+			else if (message.member.roles.exists('name', 'airhorn')) {
+				const voiceChannel = message.member.voiceChannel;
+				if (!voiceChannel) {
+					return message.channel.send({
+						embed: {
+							description: '‼ You need to be in a voice channel!',
+							color: constants.red,
+						},
+					});
+				}
 				else {
 					voiceChannel.join()
 						.then(connection => {
@@ -433,6 +450,13 @@ commands = function () {
 					return message.react('✅');
 				}
 			}
+			else return message.channel.send({
+				embed: {
+					title: 'Error',
+					color: constants.red,
+					description: 'You need the `airhorn` role to use this command.',
+				},
+			});
 		}
 		else if (command.startsWith('ban')) {
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -723,7 +747,7 @@ commands = function () {
 		}
 		else if (command.startsWith('echo')) {
 			try {
-				if (!args[0]) return;
+				if (!args[0]) {return;}
 				else {
 					var string = args.join(' ');
 					message.delete();
@@ -747,13 +771,15 @@ commands = function () {
 		}
 		else if (command.startsWith('gay')) {
 			try {
-				if (message.mentions.users.size === 0) return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'Did not specify a user.',
-					},
-				});
+				if (message.mentions.users.size === 0) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Did not specify a user.',
+						},
+					});
+				}
 				if (message.mentions.users.size === 1) {
 					if (message.mentions.users.first() != message.author) {
 						return message.channel.send({
@@ -776,13 +802,15 @@ commands = function () {
 						});
 					}
 				}
-				if (message.mentions.users.size > 1) return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'Specified too many users.',
-					},
-				});
+				if (message.mentions.users.size > 1) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Specified too many users.',
+						},
+					});
+				}
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -812,13 +840,15 @@ commands = function () {
 		}
 		else if (command.startsWith('hakai')) {
 			try {
-				if (message.mentions.users.size === 0) return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'Did not specify a user.',
-					},
-				});
+				if (message.mentions.users.size === 0) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Did not specify a user.',
+						},
+					});
+				}
 				if (message.mentions.users.size === 1) {
 					if (message.mentions.users.first() != message.author) {
 						return message.channel.send({
@@ -839,13 +869,15 @@ commands = function () {
 						});
 					}
 				}
-				if (message.mentions.users.size > 1) return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'Specified too many users.',
-					},
-				});
+				if (message.mentions.users.size > 1) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Specified too many users.',
+						},
+					});
+				}
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -1084,9 +1116,9 @@ commands = function () {
 						}
 						return;
 					}
-					else return;
+					else {return;}
 				}
-				else return;
+				else {return;}
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -1149,36 +1181,42 @@ commands = function () {
 		else if (command.startsWith('say')) {
 			try {
 				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-					if (!args[0]) return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Did not specify a channel.',
-						},
-					});
-					if (!args[1]) return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Did not specify a message.',
-						},
-					});
+					if (!args[0]) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Did not specify a channel.',
+							},
+						});
+					}
+					if (!args[1]) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Did not specify a message.',
+							},
+						});
+					}
 
 					const string = args.slice(1).join(' ');
 					const channel = message.guild.channels.find('name', args[0]);
 
-					if (!channel) return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `${args[0]} is not a channel.`,
-						},
-					});
+					if (!channel) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `${args[0]} is not a channel.`,
+							},
+						});
+					}
 
 					channel.send(string);
 					return;
 				}
-				else return;
+				else {return;}
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -1333,7 +1371,7 @@ commands = function () {
 		else if (command.startsWith('tts')) {
 			if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 				try {
-					if (!args[0]) return;
+					if (!args[0]) {return;}
 					else {
 						var string = args.join(' ');
 						message.delete();
@@ -1710,21 +1748,25 @@ commands = function () {
 					});
 					return message.react('✅');
 				}
-				else return message.channel.send({
+				else {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'User is not in a voice channel.',
+						},
+					});
+				}
+			}
+			else {
+				return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'User is not in a voice channel.',
+						description: 'You are not authorized to use this command.',
 					},
 				});
 			}
-			else return message.channel.send({
-				embed: {
-					title: 'Error',
-					color: constants.red,
-					description: 'You are not authorized to use this command.',
-				},
-			});
 
 		}
 		else if (command.startsWith('vcleave')) {
