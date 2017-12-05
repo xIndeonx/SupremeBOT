@@ -461,6 +461,20 @@ commands = function () {
 					});
 				}
 				else {
+					if (args[0] === 'mlg') {
+						voiceChannel.join()
+							.then(connection => {
+								const dispatcher = connection.playFile(constants.MLGAIRHORN_PATH);
+								dispatcher.on('end', () => {
+									voiceChannel.leave();
+								});
+								dispatcher.on('error', e => {
+									console.log(e);
+								});
+								return;
+							});
+						return message.react('✅');
+					}
 					voiceChannel.join()
 						.then(connection => {
 							const dispatcher = connection.playFile(constants.AIRHORN_PATH);

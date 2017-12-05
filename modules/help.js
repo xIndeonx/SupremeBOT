@@ -974,7 +974,7 @@ helpCommands = function () {
 							description: 'Plays a loud airhorn sound.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]}\``,
 								inline: true,
 							},
 							{
@@ -984,7 +984,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} mlg\``,
 								inline: true,
 							},
 							],

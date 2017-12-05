@@ -19,6 +19,7 @@ const {
 	WOLFRAM_APPID,
 	CLEVERBOT_KEY,
 	AIRHORN_PATH,
+	MLGAIRHORN_PATH,
 } = require('../config');
 const unhandledRejections = new Map();
 const ytdl = require('ytdl-core');
@@ -70,6 +71,7 @@ module.exports.PROJECT_KEY = PROJECT_KEY;
 module.exports.WOLFRAM_APPID = WOLFRAM_APPID;
 module.exports.CLEVERBOT_KEY = CLEVERBOT_KEY;
 module.exports.AIRHORN_PATH = AIRHORN_PATH;
+module.exports.MLGAIRHORN_PATH = MLGAIRHORN_PATH;
 module.exports.unhandledRejections = unhandledRejections;
 module.exports.YouTube = YouTube;
 module.exports.ytdl = ytdl;
