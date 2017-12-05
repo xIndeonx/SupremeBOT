@@ -285,7 +285,7 @@ helpCommands = function () {
 							title: `${args[0]} command`,
 							color: constants.blue,
 							timestamp: Date.now(),
-							description: 'Deletes 50 messages from the channel.',
+							description: 'Deletes fetched messages from the channel.',
 							fields: [{
 								name: 'Usage',
 								value: `\`${constants.PREFIX}${args[0]}\``,
@@ -444,7 +444,7 @@ helpCommands = function () {
 							description: 'Adds music to the queue or starts playing music.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]} <url>\` or \`${constants.PREFIX}${args[0]} <song>\``,
+								value: `\`${constants.PREFIX}${args[0]} <url>\`\n\`${constants.PREFIX}${args[0]} <song>\``,
 								inline: true,
 							},
 							{
@@ -454,7 +454,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]} https://www.youtube.com/watch?v=3M_5oYU-IsU\` or \`${constants.PREFIX}${args[0]} Big Shaq - Mans Not Hot\``,
+								value: `\`${constants.PREFIX}${args[0]} https://www.youtube.com/watch?v=3M_5oYU-IsU\`\n\`${constants.PREFIX}${args[0]} Big Shaq - Mans Not Hot\``,
 								inline: true,
 							},
 							],
@@ -470,7 +470,7 @@ helpCommands = function () {
 							description: 'Displays the current queue. Works with queue pages.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <page>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <page>\``,
 								inline: true,
 							},
 							{
@@ -480,7 +480,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} 5\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} 5\``,
 								inline: true,
 							},
 							],
@@ -600,7 +600,7 @@ helpCommands = function () {
 							description: 'Controls the volume of the music.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <amount>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <amount>\``,
 								inline: true,
 							},
 							{
@@ -610,7 +610,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} 3\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} 3\``,
 								inline: true,
 							},
 							],
@@ -704,7 +704,7 @@ helpCommands = function () {
 							description: 'Displays a complete list of all commands or details to a single command.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <command>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <command>\``,
 								inline: true,
 							},
 							{
@@ -714,7 +714,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} play\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} play\``,
 								inline: true,
 							},
 							],
@@ -756,7 +756,7 @@ helpCommands = function () {
 							description: 'Displays the connection/speed of the bot.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <type>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <type>\``,
 								inline: true,
 							},
 							{
@@ -766,7 +766,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} actual\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} actual\``,
 								inline: true,
 							},
 							],
@@ -860,7 +860,7 @@ helpCommands = function () {
 							description: 'Shows the uptime of the bot or operating system.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <type>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <type>\``,
 								inline: true,
 							},
 							{
@@ -870,7 +870,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} os\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} os\``,
 								inline: true,
 							},
 							],
@@ -886,7 +886,7 @@ helpCommands = function () {
 							description: 'Displays information about a user on the server. Also works with the ID of a user.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <mention>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <mention>\``,
 								inline: true,
 							},
 							{
@@ -896,7 +896,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
 								inline: true,
 							},
 							{
@@ -917,7 +917,7 @@ helpCommands = function () {
 							description: 'Displays information about a user on the server. Also works with the ID of a user.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <mention>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <mention>\``,
 								inline: true,
 							},
 							{
@@ -927,7 +927,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} @Fabiolous#4960\``,
 								inline: true,
 							},
 							{
@@ -1000,7 +1000,7 @@ helpCommands = function () {
 							description: 'Talk to Cleverbot!',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]} <text>\``,
+								value: `\`${constants.PREFIX}${args[0]} <message>\``,
 								inline: true,
 							},
 							{
@@ -1026,7 +1026,7 @@ helpCommands = function () {
 							description: 'Flip a coin or choose between two things.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} <arg1> <arg2>\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} <arg1> <arg2>\``,
 								inline: true,
 							},
 							{
@@ -1036,7 +1036,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]}\` or \`${constants.PREFIX}${args[0]} StayHome GoOutside\``,
+								value: `\`${constants.PREFIX}${args[0]}\`\n\`${constants.PREFIX}${args[0]} StayHome GoOutside\``,
 								inline: true,
 							},
 							],
@@ -1078,7 +1078,7 @@ helpCommands = function () {
 							description: 'Input will be repeated by the bot.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]} <text>\``,
+								value: `\`${constants.PREFIX}${args[0]} <message>\``,
 								inline: true,
 							},
 							{
@@ -1104,7 +1104,7 @@ helpCommands = function () {
 							description: 'Returns a GIF and the mentioned person.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]} <mention>\``,
+								value: `\`${constants.PREFIX}${args[0]} <mention>/<message>\``,
 								inline: true,
 							},
 							{
@@ -1234,7 +1234,7 @@ helpCommands = function () {
 							description: 'Input will be repeated by the bot in a specific channel. Can be used for announcements.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]} <channel> <message>\``,
+								value: `\`${constants.PREFIX}${args[0]} <tts> (<channel>) <message>\``,
 								inline: true,
 							},
 							{
@@ -1244,7 +1244,7 @@ helpCommands = function () {
 							},
 							{
 								name: 'Example',
-								value: `\`${constants.PREFIX}${args[0]} general Hello there.\``,
+								value: `\`${constants.PREFIX}${args[0]} true general Hello there.\`\n\`${constants.PREFIX}${args[0]} false Hello there.\``,
 								inline: true,
 							},
 							],
@@ -1260,7 +1260,7 @@ helpCommands = function () {
 							description: 'Input will be repeated by the bot with text-to-speech.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]} <text>\``,
+								value: `\`${constants.PREFIX}${args[0]} <message>\``,
 								inline: true,
 							},
 							{
@@ -1286,7 +1286,7 @@ helpCommands = function () {
 							description: 'Searches the Urban Dictionary for a definition.',
 							fields: [{
 								name: 'Usage',
-								value: `\`${constants.PREFIX}${args[0]} <word(s)>\``,
+								value: `\`${constants.PREFIX}${args[0]} <term>\``,
 								inline: true,
 							},
 							{

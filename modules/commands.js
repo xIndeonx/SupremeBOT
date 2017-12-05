@@ -51,7 +51,7 @@ commands = function () {
 					});
 				}
 			}
-			else {return;}
+			else return;
 		}
 		else if (command.startsWith('setactivity')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -103,7 +103,7 @@ commands = function () {
 					return;
 				}
 			}
-			else {return;}
+			else return;
 		}
 		else if (command.startsWith('setavatar')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -169,7 +169,7 @@ commands = function () {
 					return;
 				}
 			}
-			else {return;}
+			else return;
 		}
 		else if (command.startsWith('setstatus')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -219,7 +219,7 @@ commands = function () {
 					return;
 				}
 			}
-			else {return;}
+			else return;
 		}
 		else if (command.startsWith('restart')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -245,7 +245,7 @@ commands = function () {
 					return;
 				}
 			}
-			else {return;}
+			else return;
 		}
 		else if (command.startsWith('shutdown')) {
 			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -271,7 +271,7 @@ commands = function () {
 					return;
 				}
 			}
-			else {return;}
+			else return;
 		}
 		else if (command.startsWith('delete')) {
 			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
@@ -284,6 +284,15 @@ commands = function () {
 									title: 'Error',
 									color: constants.red,
 									description: 'Could not delete messages. Please enter a valid number.',
+								},
+							});
+						}
+						if (messagecount > 99) {
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'Could not delete messages. Please enter a number lower than or equal to 99.',
 								},
 							});
 						}
@@ -305,7 +314,7 @@ commands = function () {
 						logToChannel('Information', 'Guild: ' + message.guild.name + '\nChannel: ' + message.channel.name + '\n\nDeleted Messages.\nCount: **' + (messagecount - 1) + '**', message.author.tag, message.author.displayAvatarURL());
 						return;
 					}
-					else {return;}
+					else return;
 				}
 				catch (err) {
 					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -362,7 +371,7 @@ commands = function () {
 							});
 						return;
 					}
-					else {return;}
+					else return;
 				}
 				catch (err) {
 					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -409,14 +418,28 @@ commands = function () {
 		else if (command.startsWith('airhorn')) {
 			const role = message.guild.roles.find('name', 'airhorn');
 			if (!role) {
-				message.guild.createRole({
-					data: {
-						name: 'airhorn',
-						hoist: false,
+				if (message.member.permissions.has('MANAGE_ROLES')) {
+					message.guild.createRole({
+						data: {
+							name: 'airhorn',
+							hoist: false,
+						},
+						reason: 'Airhorn role for the airhorn command.',
+					});
+					return message.channel.send({
+						embed: {
+							description: 'Created role `airhorn` for the airhorn command.',
+							color: constants.orange,
+						},
+					});
+				}
+				else return message.channel.send({
+					embed: {
+						title: 'Error',
+						description: 'Could not create the role `airhorn`. You need the `Manage Roles` permission.',
+						color: constants.red,
 					},
-					reason: 'Airhorn role for the airhorn command.',
 				});
-				return message.channel.send('Created role `airhorn` for the airhorn command.');
 			}
 			else if (constants.queue.get(message.guild.id)) {
 				return message.channel.send({
@@ -773,45 +796,50 @@ commands = function () {
 		}
 		else if (command.startsWith('gay')) {
 			try {
-				if (message.mentions.users.size === 0) {
+				if (!message.mentions.users.first()) {
+					var string = args.join(' ');
 					return message.channel.send({
 						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Did not specify a user.',
+							description: `**${string}, HA! GAYYYYYYYYYYY!**`,
+							color: constants.blue,
+							image: {
+								url: 'https://media.giphy.com/media/26xBI0mwTQj8IL6so/giphy.gif',
+							},
 						},
 					});
 				}
-				if (message.mentions.users.size === 1) {
-					if (message.mentions.users.first() != message.author) {
-						return message.channel.send({
-							embed: {
-								description: `**${message.mentions.users.first()}, HA! GAYYYYYYYYYYY!**`,
-								color: constants.blue,
-								image: {
-									url: 'https://media.giphy.com/media/26xBI0mwTQj8IL6so/giphy.gif',
+				else {
+					if (message.mentions.users.size === 1) {
+						if (message.mentions.users.first() != message.author) {
+							return message.channel.send({
+								embed: {
+									description: `**${args.join(' ')}, HA! GAYYYYYYYYYYY!**`,
+									color: constants.blue,
+									image: {
+										url: 'https://media.giphy.com/media/26xBI0mwTQj8IL6so/giphy.gif',
+									},
 								},
-							},
-						});
+							});
+						}
+						else {
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `Are you really gay yourself, ${message.author}?`,
+								},
+							});
+						}
 					}
-					else {
+					if (message.mentions.users.size > 1) {
 						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: `Are you really gay yourself, ${message.author}?`,
+								description: 'Specified too many users.',
 							},
 						});
 					}
-				}
-				if (message.mentions.users.size > 1) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Specified too many users.',
-						},
-					});
 				}
 			}
 			catch (err) {
@@ -827,18 +855,31 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('google')) {
-			const googleImages = require('node-google-image-search');
-			var search = args.join(' ');
-			googleImages(search, callback, 0, 1);
+			try {
+				const googleImages = require('node-google-image-search');
+				var search = args.join(' ');
+				googleImages(search, callback, 0, 1);
 
-			function callback(results) {
-				const embed = new constants.Discord.MessageEmbed()
-					.setImage(results[0].link);
-				message.channel.send({
-					embed
-				});
+				function callback(results) {
+					const embed = new constants.Discord.MessageEmbed()
+						.setImage(results[0].link);
+					message.channel.send({
+						embed
+					});
+				}
+				return;
 			}
-			return;
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
+			}
 		}
 		else if (command.startsWith('hakai')) {
 			try {
@@ -1118,9 +1159,9 @@ commands = function () {
 						}
 						return;
 					}
-					else {return;}
+					else return;
 				}
-				else {return;}
+				else return;
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -1188,11 +1229,20 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Did not specify a channel.',
+								description: 'Did not specify if text-to-speech should be enabled or not.',
 							},
 						});
 					}
 					if (!args[1]) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Did not specify a channel.',
+							},
+						});
+					}
+					if (!args[2]) {
 						return message.channel.send({
 							embed: {
 								title: 'Error',
@@ -1202,23 +1252,66 @@ commands = function () {
 						});
 					}
 
-					const string = args.slice(1).join(' ');
-					const channel = message.guild.channels.find('name', args[0]);
+					const isTTS = args[0];
+					const channel = message.guild.channels.find('name', args[1]);
+					const string = args.slice(2).join(' ');
 
 					if (!channel) {
-						return message.channel.send({
+						message.delete();
+						if (isTTS === 'true') {
+							if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
+								return message.channel.send(args.slice(1).join(' '), {
+									tts: true,
+								});
+							}
+							else return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
+								},
+							});
+						}
+						else if (isTTS === 'false') {
+							return message.channel.send(args.slice(1).join(' '));
+						}
+					}
+					else if (message.channel.id === channel.id) {
+						if (isTTS === 'true') {
+							if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
+								message.delete();
+								return channel.send(string, {
+									tts: true,
+								});
+							}
+							else return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
+								},
+							});
+						}
+						else if (isTTS === 'false') {
+							message.delete();
+							return channel.send(string);
+						}
+						else return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: `${args[0]} is not a channel.`,
+								description: 'Invalid argument for text-to-speech. Please use `true` or `false`.',
 							},
 						});
 					}
-
-					channel.send(string);
-					return;
 				}
-				else {return;}
+				else return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'You are not authorized to use this command.',
+					},
+				});
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
