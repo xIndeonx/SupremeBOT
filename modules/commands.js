@@ -1243,20 +1243,23 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Did not specify if text-to-speech should be enabled or not.',
+								description: `Please enter valid arguments. See \`${constants.PREFIX}help ${command}\` for more info.`,
 							},
 						});
 					}
-					if (!args[1]) {
+					if (args[0].toLowerCase() !== 'true' && args[0].toLowerCase() !== 'false') {
 						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Did not specify a channel.',
+								description: 'Invalid argument for text-to-speech. Please use `true` or `false`.',
 							},
 						});
 					}
-					if (!args[2]) {
+
+					const channel = message.guild.channels.find('name', args[1].toLowerCase());
+
+					if (channel && !args[2]) {
 						return message.channel.send({
 							embed: {
 								title: 'Error',
@@ -1265,67 +1268,138 @@ commands = function () {
 							},
 						});
 					}
-
-					const isTTS = args[0];
-					const channel = message.guild.channels.find('name', args[1]);
+					if (!args[1]) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Did not specify a channel or message.',
+							},
+						});
+					}
 					const string = args.slice(2).join(' ');
 
 					if (!channel) {
 						message.delete();
-						if (isTTS === 'true') {
+						if (args[0] === 'true') {
 							if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
 								return message.channel.send(args.slice(1).join(' '), {
 									tts: true,
 								});
 							}
-							else return message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
-								},
-							});
+							else {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
+									},
+								});
+							}
 						}
-						else if (isTTS === 'false') {
+						else if (args[0] === 'false') {
 							return message.channel.send(args.slice(1).join(' '));
 						}
 					}
-					else if (message.channel.id === channel.id) {
-						if (isTTS === 'true') {
+					if (channel.type !== 'text') {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Must use a text channel.',
+							},
+						});
+					}
+					if (!message.guild.channels.get(channel.id).permissionsFor(constants.client.user.id).has('VIEW_CHANNEL')) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I do not have access to this channel.',
+							},
+						});
+					}
+					if (!message.guild.channels.get(channel.id).permissionsFor(constants.client.user.id).has('SEND_MESSAGES')) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I cannot send messages to this channel. I need the `Send Messages` permission.',
+							},
+						});
+					}
+					if (message.channel.id === channel.id) {
+						if (args[0] === 'true') {
 							if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
 								message.delete();
 								return channel.send(string, {
 									tts: true,
 								});
 							}
-							else return message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
-								},
-							});
+							else {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
+									},
+								});
+							}
 						}
-						else if (isTTS === 'false') {
+						else if (args[0] === 'false') {
 							message.delete();
 							return channel.send(string);
 						}
-						else return message.channel.send({
-							embed: {
-								title: 'Error',
-								color: constants.red,
-								description: 'Invalid argument for text-to-speech. Please use `true` or `false`.',
-							},
-						});
+						else {
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'An error occured with the command.',
+								},
+							});
+						}
+					}
+					else {
+						if (args[0] === 'true') {
+							if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
+								return channel.send(string, {
+									tts: true,
+								});
+							}
+							else {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
+									},
+								});
+							}
+						}
+						else if (args[0] === 'false') {
+							return channel.send(string);
+						}
+						else {
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'An error occured with the command.',
+								},
+							});
+						}
 					}
 				}
-				else return message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: 'You are not authorized to use this command.',
-					},
-				});
+				else {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'You are not authorized to use this command.',
+						},
+					});
+				}
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
