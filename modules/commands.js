@@ -1167,9 +1167,18 @@ commands = function () {
 					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`');
 				}
 				else if (args[0] > 0 && args[1] > 0) {
-					const member = message.mentions.members.first();
 					console.log(`${message.author.tag}: ${constants.PREFIX}${command} ${args[0]} ${args[1]} ${member.user.tag}`);
-					if ((message.author.id === '224757429076754432') || (message.author.id === '357475594327293953') || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+					if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+						const member = message.mentions.members.first();
+						if (!member) {
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'Not a valid mention.',
+								},
+							});
+						}
 						const seconds = args[1] * 1000;
 						message.delete();
 						for (i = args[0]; i > 0; i--) {
