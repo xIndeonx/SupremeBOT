@@ -1360,35 +1360,35 @@ commands = function () {
 							});
 						}
 					}
-					else {
-						if (args[0] === 'true') {
-							if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
-								return channel.send(string, {
-									tts: true,
-								});
-							}
-							else {
-								return message.channel.send({
-									embed: {
-										title: 'Error',
-										color: constants.red,
-										description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
-									},
-								});
-							}
-						}
-						else if (args[0] === 'false') {
-							return channel.send(string);
+					else if (args[0] === 'true') {
+						if (message.member.permissions.has('SEND_TTS_MESSAGES')) {
+							channel.send(string, {
+								tts: true,
+							});
+							return message.react('✅');
 						}
 						else {
 							return message.channel.send({
 								embed: {
 									title: 'Error',
 									color: constants.red,
-									description: 'An error occured with the command.',
+									description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
 								},
 							});
 						}
+					}
+					else if (args[0] === 'false') {
+						channel.send(string);
+						return message.react('✅');
+					}
+					else {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'An error occured with the command.',
+							},
+						});
 					}
 				}
 				else {
