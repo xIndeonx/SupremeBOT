@@ -734,18 +734,7 @@ commands = function () {
 			try {
 				return message.channel.send({
 					embed: coinFlip(message.content),
-				})
-					.catch(err => {
-						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-						message.channel.send({
-							embed: {
-								title: 'Error',
-								color: constants.red,
-								description: `An error occured with the \`${command}\` command.`,
-							},
-						});
-						return;
-					});
+				});
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
