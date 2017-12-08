@@ -396,75 +396,91 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('8ball')) {
-			return message.channel.send({
-				embed: {
-					title: 'The magic 8ball says...',
-					description: eightball(),
-					color: eightballColorDecider(),
-				},
-			})
-				.catch(err => {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					});
-					return;
-				});
-		}
-		else if (command.startsWith('airhorn')) {
-			const role = message.guild.roles.find('name', 'airhorn');
-			if (!role) {
-				if (message.member.permissions.has('MANAGE_ROLES')) {
-					message.guild.createRole({
-						data: {
-							name: 'airhorn',
-							hoist: false,
-						},
-						reason: 'Airhorn role for the airhorn command.',
-					});
-					return message.channel.send({
-						embed: {
-							description: 'Created role `airhorn` for the airhorn command.',
-							color: constants.orange,
-						},
-					});
-				}
-				else return message.channel.send({
-					embed: {
-						title: 'Error',
-						description: 'Could not create the role `airhorn`. You need the `Manage Roles` permission.',
-						color: constants.red,
-					},
-				});
-			}
-			else if (constants.queue.get(message.guild.id)) {
+			try {
 				return message.channel.send({
 					embed: {
-						title: 'Error',
-						description: 'Can\'t play the airhorn right now...',
-						color: constants.red,
+						title: 'The magic 8ball says...',
+						description: eightball(),
+						color: eightballColorDecider(),
 					},
 				});
 			}
-			else if (message.member.roles.exists('name', 'airhorn')) {
-				const voiceChannel = message.member.voiceChannel;
-				if (!voiceChannel) {
-					return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
+			}
+		}
+		else if (command.startsWith('airhorn')) {
+			try {
+				const role = message.guild.roles.find('name', 'airhorn');
+				if (!role) {
+					if (message.member.permissions.has('MANAGE_ROLES')) {
+						message.guild.createRole({
+							data: {
+								name: 'airhorn',
+								hoist: false,
+							},
+							reason: 'Airhorn role for the airhorn command.',
+						});
+						return message.channel.send({
+							embed: {
+								description: 'Created role `airhorn` for the airhorn command.',
+								color: constants.orange,
+							},
+						});
+					}
+					else return message.channel.send({
 						embed: {
-							description: '‼ You need to be in a voice channel!',
+							title: 'Error',
+							description: 'Could not create the role `airhorn`. You need the `Manage Roles` permission.',
 							color: constants.red,
 						},
 					});
 				}
-				else {
-					if (args[0] === 'mlg') {
+				else if (constants.queue.get(message.guild.id)) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							description: 'Can\'t play the airhorn right now...',
+							color: constants.red,
+						},
+					});
+				}
+				else if (message.member.roles.exists('name', 'airhorn')) {
+					const voiceChannel = message.member.voiceChannel;
+					if (!voiceChannel) {
+						return message.channel.send({
+							embed: {
+								description: '‼ You need to be in a voice channel!',
+								color: constants.red,
+							},
+						});
+					}
+					else {
+						if (args[0] === 'mlg') {
+							voiceChannel.join()
+								.then(connection => {
+									const dispatcher = connection.playFile(constants.MLGAIRHORN_PATH);
+									dispatcher.on('end', () => {
+										voiceChannel.leave();
+									});
+									dispatcher.on('error', e => {
+										console.log(e);
+									});
+									return;
+								});
+							return message.react('✅');
+						}
 						voiceChannel.join()
 							.then(connection => {
-								const dispatcher = connection.playFile(constants.MLGAIRHORN_PATH);
+								const dispatcher = connection.playFile(constants.AIRHORN_PATH);
 								dispatcher.on('end', () => {
 									voiceChannel.leave();
 								});
@@ -475,106 +491,118 @@ commands = function () {
 							});
 						return message.react('✅');
 					}
-					voiceChannel.join()
-						.then(connection => {
-							const dispatcher = connection.playFile(constants.AIRHORN_PATH);
-							dispatcher.on('end', () => {
-								voiceChannel.leave();
-							});
-							dispatcher.on('error', e => {
-								console.log(e);
-							});
-							return;
-						});
-					return message.react('✅');
 				}
-			}
-			else return message.channel.send({
-				embed: {
-					title: 'Error',
-					color: constants.red,
-					description: 'You need the `airhorn` role to use this command.',
-				},
-			});
-		}
-		else if (command.startsWith('ban')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				const member = message.mentions.members.first();
-				if (!message.guild.me.permissions.has('BAN_MEMBERS')) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'I don\'t have the `Ban Members` permission.',
-						},
-					});
-				}
-				if (!member) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Please mention a valid member of this server.',
-						},
-					});
-				}
-				if (!member.bannable) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'I cannot ban this user. Do they have a higher role?',
-						},
-					});
-				}
-				const days = parseInt(args[1]);
-				const reason = args.slice(2).join(' ');
-				if (!reason) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Please indicate a reason for the ban.',
-						},
-					});
-				}
-				if (isNaN(days)) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Please provide a valid day count for the ban.',
-						},
-					});
-				}
-				if (!days) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Please indicate a number of days for the ban.',
-						},
-					});
-				}
-				member.ban(days, reason)
-					.catch(error => message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`,
-						},
-					}));
-				logToChannel('Warning', `**${member}** has been banned from **${message.guild.name}**.\nDays: ${days}\nReason: ${reason}`, `Ban executed by ${message.author.tag}`, member.user.displayAvatarURL());
-				return message.react('✅');
-			}
-			else {
-				return message.channel.send({
+				else return message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command. You need the `Ban Members` permission.',
+						description: 'You need the `airhorn` role to use this command.',
 					},
 				});
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
+			}
+		}
+		else if (command.startsWith('ban')) {
+			try {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+					const member = message.mentions.members.first();
+					if (!message.guild.me.permissions.has('BAN_MEMBERS')) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I don\'t have the `Ban Members` permission.',
+							},
+						});
+					}
+					if (!member) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Please mention a valid member of this server.',
+							},
+						});
+					}
+					if (!member.bannable) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I cannot ban this user. Do they have a higher role?',
+							},
+						});
+					}
+					const days = parseInt(args[1]);
+					const reason = args.slice(2).join(' ');
+					if (!reason) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Please indicate a reason for the ban.',
+							},
+						});
+					}
+					if (isNaN(days)) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Please provide a valid day count for the ban.',
+							},
+						});
+					}
+					if (!days) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Please indicate a number of days for the ban.',
+							},
+						});
+					}
+					member.ban(days, reason)
+						.catch(error => message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `Sorry ${message.author}, I couldn't ban the user.\n **Error**: ${error}`,
+							},
+						}));
+					logToChannel('Warning', `**${member}** has been banned from **${message.guild.name}**.\nDays: ${days}\nReason: ${reason}`, `Ban executed by ${message.author.tag}`, member.user.displayAvatarURL());
+					return message.react('✅');
+				}
+				else {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'You are not authorized to use this command. You need the `Ban Members` permission.',
+						},
+					});
+				}
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('channelinfo')) {
@@ -631,27 +659,48 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('cleverbot')) {
-			const CleverbotAPI = require('cleverbot-api');
-			const cleverbot = new CleverbotAPI(constants.CLEVERBOT_KEY);
+			try {
+				const CleverbotAPI = require('cleverbot-api');
+				const cleverbot = new CleverbotAPI(constants.CLEVERBOT_KEY);
 
-			var queryString = args.join(' ');
-			message.channel.startTyping();
+				var queryString = args.join(' ');
+				message.channel.startTyping();
 
-			return cleverbot.getReply({
-				input: queryString,
-			}, (error, response) => {
-				if (error) {
+				return cleverbot.getReply({
+					input: queryString,
+				}, (error, response) => {
+					if (error) {
+						message.channel.stopTyping(true);
+						throw error + message.channel.send({
+							embed: {
+								color: constants.red,
+								title: 'Error',
+								description: error,
+							},
+						})
+							.then(logToChannel('Error', `Error while executing the cleverbot command:\n${error}`, message.author.tag, message.author.displayAvatarURL()))
+							.catch(err => {
+								logToChannel('Error', `Error while logging the cleverbot error:\n${err}`, message.author.tag, message.author.displayAvatarURL());
+								message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: `An error occured with the \`${command}\` command.`,
+									},
+								});
+								return;
+							});
+					}
 					message.channel.stopTyping(true);
-					throw error + message.channel.send({
+					message.channel.send({
 						embed: {
-							color: constants.red,
-							title: 'Error',
-							description: error,
+							color: constants.blue,
+							title: 'Cleverbot says...',
+							description: response.output,
 						},
 					})
-						.then(logToChannel('Error', `Error while executing the cleverbot command:\n${error}`, message.author.tag, message.author.displayAvatarURL()))
 						.catch(err => {
-							logToChannel('Error', `Error while logging the cleverbot error:\n${err}`, message.author.tag, message.author.displayAvatarURL());
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 							message.channel.send({
 								embed: {
 									title: 'Error',
@@ -661,14 +710,24 @@ commands = function () {
 							});
 							return;
 						});
-				}
-				message.channel.stopTyping(true);
+				});
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 				message.channel.send({
 					embed: {
-						color: constants.blue,
-						title: 'Cleverbot says...',
-						description: response.output,
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
 					},
+				});
+				return;
+			}
+		}
+		else if (command.startsWith('coinflip')) {
+			try {
+				return message.channel.send({
+					embed: coinFlip(message.content),
 				})
 					.catch(err => {
 						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
@@ -681,36 +740,31 @@ commands = function () {
 						});
 						return;
 					});
-			});
-		}
-		else if (command.startsWith('coinflip')) {
-			return message.channel.send({
-				embed: coinFlip(message.content),
-			})
-				.catch(err => {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					});
-					return;
-				});
-		}
-		else if (command.startsWith('countdown')) {
-			if (constants.isRunning === true) {
-				return message.channel.send({
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Could not create countdown. A countdown is already running.',
+						description: `An error occured with the \`${command}\` command.`,
 					},
 				});
+				return;
 			}
-			else {
-				try {
+		}
+		else if (command.startsWith('countdown')) {
+			try {
+				if (constants.isRunning === true) {
+					return message.channel.send({
+						embed: {
+							title: 'Error',
+							color: constants.red,
+							description: 'Could not create countdown. A countdown is already running.',
+						},
+					});
+				}
+				else {
 					let count = parseInt(args[0]);
 					if (isNaN(count)) {
 						return message.channel.send({
@@ -771,17 +825,17 @@ commands = function () {
 						return;
 					}
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					});
-					return;
-				}
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('echo')) {
@@ -949,27 +1003,40 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('invite')) {
-			return constants.client.generateInvite(['ADMINISTRATOR'])
-				.then(link => {
-					message.channel.send({
-						embed: {
-							color: constants.blue,
-							title: 'Invite',
-							description: `[Click here to invite me](${link})`,
-						},
+			try {
+				return constants.client.generateInvite(['ADMINISTRATOR'])
+					.then(link => {
+						message.channel.send({
+							embed: {
+								color: constants.blue,
+								title: 'Invite',
+								description: `[Click here to invite me](${link})`,
+							},
+						});
+					})
+					.catch(err => {
+						logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL());
+						message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `An error occured with the \`${command}\` command.`,
+							},
+						});
+						return;
 					});
-				})
-				.catch(err => {
-					logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					});
-					return;
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
 				});
+				return;
+			}
 		}
 		else if (command.startsWith('join')) {
 			try {
@@ -1000,64 +1067,77 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('kick')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				const member = message.mentions.members.first();
-				if (!message.guild.me.permissions.has('KICK_MEMBERS')) {
+			try {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+					const member = message.mentions.members.first();
+					if (!message.guild.me.permissions.has('KICK_MEMBERS')) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I don\'t have the `Kick Members` permission.',
+							},
+						});
+					}
+					if (!member) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Please mention a valid member of this server.',
+							},
+						});
+					}
+					if (!member.kickable) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I cannot kick this user. Do they have a higher role?',
+							},
+						});
+					}
+					const reason = args.slice(1).join(' ');
+					if (!reason) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'Please indicate a reason for the kick.',
+							},
+						});
+					}
+					member.kick(reason)
+						.catch(error => message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `Sorry ${message.author}, I couldn't kick the user.\n **Error**: ${error}`,
+							},
+						}));
+					logToChannel('Warning', `**${member}** has been kicked from **${message.guild.name}**.\nReason: ${reason}`, `Kick executed by ${message.author.tag}`, member.user.displayAvatarURL());
+					return message.react('✅');
+				}
+				else {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'I don\'t have the `Kick Members` permission.',
+							description: 'You are not authorized to use this command. You need the `Kick Members` permission.',
 						},
 					});
 				}
-				if (!member) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Please mention a valid member of this server.',
-						},
-					});
-				}
-				if (!member.kickable) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'I cannot kick this user. Do they have a higher role?',
-						},
-					});
-				}
-				const reason = args.slice(1).join(' ');
-				if (!reason) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'Please indicate a reason for the kick.',
-						},
-					});
-				}
-				member.kick(reason)
-					.catch(error => message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `Sorry ${message.author}, I couldn't kick the user.\n **Error**: ${error}`,
-						},
-					}));
-				logToChannel('Warning', `**${member}** has been kicked from **${message.guild.name}**.\nReason: ${reason}`, `Kick executed by ${message.author.tag}`, member.user.displayAvatarURL());
-				return message.react('✅');
 			}
-			else {
-				return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command. You need the `Kick Members` permission.',
+						description: `An error occured with the \`${command}\` command.`,
 					},
 				});
+				return;
 			}
 		}
 		else if (command.startsWith('lotto')) {
@@ -1415,7 +1495,7 @@ commands = function () {
 		}
 		else if (command.startsWith('serverinfo')) { // serverinfo
 			try {
-				if ((message.author.id === message.guild.owner.id) || (message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.author.id === message.guild.owner.id) || (message.member.permissions.has('ADMINISTRATOR'))) {
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
 						.setAuthor(message.guild.name, message.guild.iconURL())
@@ -1552,8 +1632,8 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('tts')) {
-			if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					if (!args[0]) {return;}
 					else {
 						var string = args.join(' ');
@@ -1566,88 +1646,101 @@ commands = function () {
 						return;
 					}
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
+				else {
+					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
+							description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
 						},
 					});
-					return;
 				}
 			}
-			else {
-				return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command. You need the `Send TTS Messages` permission.',
+						description: `An error occured with the \`${command}\` command.`,
 					},
 				});
+				return;
 			}
 		}
 		else if (command.startsWith('uptime')) {
-			if (args[0] === 'process') {
-				return message.channel.send({
-					embed: {
-						title: 'Uptime',
-						color: constants.blue,
-						description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**',
-					},
-				})
-					.catch(err => {
-						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-						message.channel.send({
-							embed: {
-								title: 'Error',
-								color: constants.red,
-								description: `An error occured with the \`${command}\` command.`,
-							},
+			try {
+				if (args[0] === 'process') {
+					return message.channel.send({
+						embed: {
+							title: 'Uptime',
+							color: constants.blue,
+							description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**',
+						},
+					})
+						.catch(err => {
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+							message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `An error occured with the \`${command}\` command.`,
+								},
+							});
+							return;
 						});
-						return;
-					});
+				}
+				else if (args[0] === 'os') {
+					return message.channel.send({
+						embed: {
+							title: 'Uptime',
+							color: constants.blue,
+							description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**',
+						},
+					})
+						.catch(err => {
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+							message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `An error occured with the \`${command}\` command.`,
+								},
+							});
+							return;
+						});
+				}
+				else {
+					return message.channel.send({
+						embed: {
+							title: 'Uptime',
+							color: constants.blue,
+							description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**',
+						},
+					})
+						.catch(err => {
+							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+							message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: `An error occured with the \`${command}\` command.`,
+								},
+							});
+							return;
+						});
+				}
 			}
-			else if (args[0] === 'os') {
-				return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
-						title: 'Uptime',
-						color: constants.blue,
-						description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**',
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
 					},
-				})
-					.catch(err => {
-						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-						message.channel.send({
-							embed: {
-								title: 'Error',
-								color: constants.red,
-								description: `An error occured with the \`${command}\` command.`,
-							},
-						});
-						return;
-					});
-			}
-			else {
-				return message.channel.send({
-					embed: {
-						title: 'Uptime',
-						color: constants.blue,
-						description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**',
-					},
-				})
-					.catch(err => {
-						logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-						message.channel.send({
-							embed: {
-								title: 'Error',
-								color: constants.red,
-								description: `An error occured with the \`${command}\` command.`,
-							},
-						});
-						return;
-					});
+				});
+				return;
 			}
 		}
 		else if (command.startsWith('urbanrandom')) {
@@ -1816,36 +1909,47 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('vapeio')) {
-			if (message.author.id != constants.OWNER_ID) {
-				if (message.member.voiceChannel) {
-					var vapeio = message.guild.members.get(constants.OWNER_ID);
-					var previousChannel = vapeio.voiceChannelID;
-					if (vapeio.voiceChannel) {
-						if (vapeio.voiceChannelID === '340961232695853068') {
-							return message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: 'De Vapeio isch leider scho verschobe worde.',
-								},
-							});
-						}
-						else if (vapeio.voiceChannelID !== message.member.voiceChannelID) {
-							return message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: 'Du muesch mit em Vapeio im gliiche Voice Channel sii.',
-								},
-							});
+			try {
+				if (message.author.id != constants.OWNER_ID) {
+					if (message.member.voiceChannel) {
+						var vapeio = message.guild.members.get(constants.OWNER_ID);
+						var previousChannel = vapeio.voiceChannelID;
+						if (vapeio.voiceChannel) {
+							if (vapeio.voiceChannelID === '340961232695853068') {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'De Vapeio isch leider scho verschobe worde.',
+									},
+								});
+							}
+							else if (vapeio.voiceChannelID !== message.member.voiceChannelID) {
+								return message.channel.send({
+									embed: {
+										title: 'Error',
+										color: constants.red,
+										description: 'Du muesch mit em Vapeio im gliiche Voice Channel sii.',
+									},
+								});
+							}
+							else {
+								vapeio.setVoiceChannel('340961232695853068');
+								message.react('✅');
+								setTimeout(function () {
+									vapeio.setVoiceChannel(previousChannel);
+								}, 5000);
+								return;
+							}
 						}
 						else {
-							vapeio.setVoiceChannel('340961232695853068');
-							message.react('✅');
-							setTimeout(function () {
-								vapeio.setVoiceChannel(previousChannel);
-							}, 5000);
-							return;
+							return message.channel.send({
+								embed: {
+									title: 'Error',
+									color: constants.red,
+									description: 'De Vapeio isch leider am vape und nöd da.',
+								},
+							});
 						}
 					}
 					else {
@@ -1853,7 +1957,7 @@ commands = function () {
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'De Vapeio isch leider am vape und nöd da.',
+								description: 'You need to be in a voice channel to use this command.',
 							},
 						});
 					}
@@ -1863,94 +1967,108 @@ commands = function () {
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'You need to be in a voice channel to use this command.',
+							description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.',
 						},
 					});
 				}
 			}
-			else {
-				return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'Nei Vapeio, du chasch dich nöd selber verschiebe.',
+						description: `An error occured with the \`${command}\` command.`,
 					},
 				});
+				return;
 			}
 		}
 		else if (command.startsWith('vckick')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				if (!message.guild.me.permissions.has('MOVE_MEMBERS')) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'I don\'t have the `Move Members` permission.',
-						},
-					});
-				}
-				if (!message.guild.me.permissions.has('MANAGE_CHANNELS')) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'I don\'t have the `Manage Channels` permission.',
-						},
-					});
-				}
-				var server = message.guild;
-				var user = message.mentions.members.first();
-				if (!user) {
-					return message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: 'User not found.',
-						},
-					});
-				}
-				if (user.voiceChannel) {
-					server.createChannel('kick', 'voice').then(function () {
-						const kickChannel = server.channels.find('name', 'kick');
-						user.setVoiceChannel(kickChannel);
-						setTimeout(function () {
-							kickChannel.delete()
-								.then()
-								.catch(err => {
-									logToChannel('Error', `Error while deleting the vckick channel:\n${err}`, message.author.tag, message.author.displayAvatarURL());
-									message.channel.send({
-										embed: {
-											title: 'Error',
-											color: constants.red,
-											description: `An error occured with the \`${command}\` command.`,
-										},
+			try {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+					if (!message.guild.me.permissions.has('MOVE_MEMBERS')) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I don\'t have the `Move Members` permission.',
+							},
+						});
+					}
+					if (!message.guild.me.permissions.has('MANAGE_CHANNELS')) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'I don\'t have the `Manage Channels` permission.',
+							},
+						});
+					}
+					var server = message.guild;
+					var user = message.mentions.members.first();
+					if (!user) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'User not found.',
+							},
+						});
+					}
+					if (user.voiceChannel) {
+						server.createChannel('kick', 'voice').then(function () {
+							const kickChannel = server.channels.find('name', 'kick');
+							user.setVoiceChannel(kickChannel);
+							setTimeout(function () {
+								kickChannel.delete()
+									.then()
+									.catch(err => {
+										logToChannel('Error', `Error while deleting the vckick channel:\n${err}`, message.author.tag, message.author.displayAvatarURL());
+										message.channel.send({
+											embed: {
+												title: 'Error',
+												color: constants.red,
+												description: `An error occured with the \`${command}\` command.`,
+											},
+										});
+										return;
 									});
-									return;
-								});
-						}, 500);
-					});
-					return message.react('✅');
+							}, 500);
+						});
+						return message.react('✅');
+					}
+					else {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: 'User is not in a voice channel.',
+							},
+						});
+					}
 				}
 				else {
 					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: 'User is not in a voice channel.',
+							description: 'You are not authorized to use this command.',
 						},
 					});
 				}
 			}
-			else {
-				return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command.',
+						description: `An error occured with the \`${command}\` command.`,
 					},
 				});
+				return;
 			}
-
 		}
 		else if (command.startsWith('vcleave')) {
 			try {
@@ -1982,8 +2100,8 @@ commands = function () {
 			}
 		}
 		else if (command.startsWith('wolfram')) {
-			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					var wajs = require('wajs');
 					var waClient = new wajs(constants.WOLFRAM_APPID);
 
@@ -2022,17 +2140,17 @@ commands = function () {
 							return;
 						});
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					});
-					return;
-				}
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
 			}
 		}
 		return;
