@@ -54,8 +54,8 @@ commands = function () {
 			else return;
 		}
 		else if (command.startsWith('setactivity')) {
-			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					var type = parseInt(args[0]);
 					var activityString = args.slice(1).join(' ');
 					if (!args[0]) {
@@ -88,26 +88,26 @@ commands = function () {
 							}));
 					}
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					})
-						.then(sent => sent.delete({
-							timeout: 5000,
-						}));
-					return;
-				}
+				else return;
 			}
-			else return;
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				})
+					.then(sent => sent.delete({
+						timeout: 5000,
+					}));
+				return;
+			}
 		}
 		else if (command.startsWith('setavatar')) {
-			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					var urlString = args.join(' ');
 					if (!args[0]) {
 						message.delete();
@@ -154,26 +154,26 @@ commands = function () {
 							}));
 					}
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					})
-						.then(sent => sent.delete({
-							timeout: 5000,
-						}));
-					return;
-				}
+				else return;
 			}
-			else return;
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				})
+					.then(sent => sent.delete({
+						timeout: 5000,
+					}));
+				return;
+			}
 		}
 		else if (command.startsWith('setstatus')) {
-			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					if (args[0].toLowerCase() === 'dnd' || args[0].toLowerCase() === 'online' || args[0].toLowerCase() === 'idle' || args[0].toLowerCase() === 'invisible') {
 						constants.client.user.setStatus(args[0].toLowerCase());
 						message.delete();
@@ -204,78 +204,78 @@ commands = function () {
 							}));
 					}
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					})
-						.then(sent => sent.delete({
-							timeout: 5000,
-						}));
-					return;
-				}
+				else return;
 			}
-			else return;
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				})
+					.then(sent => sent.delete({
+						timeout: 5000,
+					}));
+				return;
+			}
 		}
 		else if (command.startsWith('restart')) {
-			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					message.channel.send('Restarting...');
 					setTimeout(function () {
 						process.exit();
 					}, 1000);
 					return;
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					})
-						.then(sent => sent.delete({
-							timeout: 5000,
-						}));
-					return;
-				}
+				else return;
 			}
-			else return;
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				})
+					.then(sent => sent.delete({
+						timeout: 5000,
+					}));
+				return;
+			}
 		}
 		else if (command.startsWith('shutdown')) {
-			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					message.channel.send('Shutting down...');
 					constants.client.destroy((err) => {
 						logToChannel('Error', `Error while destroying the client:\n${err}`, message.author.tag, message.author.displayAvatarURL());
 					});
 					process.exitCode = 1;
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
-						embed: {
-							title: 'Error',
-							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
-						},
-					})
-						.then(sent => sent.delete({
-							timeout: 5000,
-						}));
-					return;
-				}
+				else return;
 			}
-			else return;
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				})
+					.then(sent => sent.delete({
+						timeout: 5000,
+					}));
+				return;
+			}
 		}
 		else if (command.startsWith('delete')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					if (message.channel.type === 'text') {
 						let messagecount = parseInt(args[0]);
 						if (isNaN(messagecount)) {
@@ -316,31 +316,34 @@ commands = function () {
 					}
 					else return;
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
+				else {
+					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
+							description: 'You are not authorized to use this command.',
 						},
 					});
-					return;
 				}
 			}
-			else {
-				return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command.',
+						description: `An error occured with the \`${command}\` command.`,
 					},
-				});
+				})
+					.then(sent => sent.delete({
+						timeout: 5000,
+					}));
+				return;
 			}
 		}
 		else if (command.startsWith('purge')) {
-			if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-				try {
+			try {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					if (message.channel.type === 'text') {
 						message.channel.messages.fetch()
 							.then(messages => {
@@ -373,26 +376,29 @@ commands = function () {
 					}
 					else return;
 				}
-				catch (err) {
-					logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-					message.channel.send({
+				else {
+					return message.channel.send({
 						embed: {
 							title: 'Error',
 							color: constants.red,
-							description: `An error occured with the \`${command}\` command.`,
+							description: 'You are not authorized to use this command.',
 						},
 					});
-					return;
 				}
 			}
-			else {
-				return message.channel.send({
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
 					embed: {
 						title: 'Error',
 						color: constants.red,
-						description: 'You are not authorized to use this command.',
+						description: `An error occured with the \`${command}\` command.`,
 					},
-				});
+				})
+					.then(sent => sent.delete({
+						timeout: 5000,
+					}));
+				return;
 			}
 		}
 		else if (command.startsWith('8ball')) {
@@ -700,7 +706,7 @@ commands = function () {
 						},
 					})
 						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+							logToChannel('Error', `Error with the \`${command}\` command (send-catch):\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 							message.channel.send({
 								embed: {
 									title: 'Error',
