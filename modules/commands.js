@@ -684,18 +684,7 @@ commands = function () {
 								description: error,
 							},
 						})
-							.then(logToChannel('Error', `Error while executing the cleverbot command:\n${error}`, message.author.tag, message.author.displayAvatarURL()))
-							.catch(err => {
-								logToChannel('Error', `Error while logging the cleverbot error:\n${err}`, message.author.tag, message.author.displayAvatarURL());
-								message.channel.send({
-									embed: {
-										title: 'Error',
-										color: constants.red,
-										description: `An error occured with the \`${command}\` command.`,
-									},
-								});
-								return;
-							});
+							.then(logToChannel('Error', `Error while executing the cleverbot command:\n${error}`, message.author.tag, message.author.displayAvatarURL()));
 					}
 					message.channel.stopTyping(true);
 					message.channel.send({
@@ -704,18 +693,7 @@ commands = function () {
 							title: 'Cleverbot says...',
 							description: response.output,
 						},
-					})
-						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command (send-catch):\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
-							});
-							return;
-						});
+					});
 				});
 			}
 			catch (err) {
@@ -1008,17 +986,6 @@ commands = function () {
 								description: `[Click here to invite me](${link})`,
 							},
 						});
-					})
-					.catch(err => {
-						logToChannel('Error', `Error while generating/sending the invite link:\n ${err}`, message.author.tag, message.author.displayAvatarURL());
-						message.channel.send({
-							embed: {
-								title: 'Error',
-								color: constants.red,
-								description: `An error occured with the \`${command}\` command.`,
-							},
-						});
-						return;
 					});
 			}
 			catch (err) {
@@ -1190,47 +1157,14 @@ commands = function () {
 		else if (command.startsWith('ping')) { // ping
 			try {
 				if (args[0] === 'ws' || args[0] === 'websocket') {
-					return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`')
-						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
-							});
-							return;
-						});
+					return message.channel.send('**PONG**' + ' `' + (Date.now() - message.createdTimestamp) + 'ms`');
 				}
 				else if (args[0] === 'actual' || args[0] === 'real' || args[0] === 'realtime' || args[0] === 'rt') {
 					return message.channel.send('Processing...')
-						.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'))
-						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
-							});
-							return;
-						});
+						.then(sent => sent.edit('**PONG**' + ' `' + (sent.createdTimestamp - message.createdTimestamp) + 'ms`'));
 				}
 				else if (args[0] === 'api' || !args[0]) {
-					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`')
-						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
-							});
-							return;
-						});
+					return message.channel.send('**PONG**' + ' `' + Math.floor(constants.client.ping) + 'ms`');
 				}
 				else if (args[0] > 0 && args[1] > 0) {
 					const member = message.mentions.members.first();
@@ -1672,18 +1606,7 @@ commands = function () {
 							color: constants.blue,
 							description: 'Uptime of the bot process:\n**' + format(process.uptime()) + '**',
 						},
-					})
-						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
-							});
-							return;
-						});
+					});
 				}
 				else if (args[0] === 'os') {
 					return message.channel.send({
@@ -1692,18 +1615,7 @@ commands = function () {
 							color: constants.blue,
 							description: 'Uptime of the operating system:\n**' + format(require('os').uptime()) + '**',
 						},
-					})
-						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
-							});
-							return;
-						});
+					});
 				}
 				else {
 					return message.channel.send({
@@ -1712,18 +1624,7 @@ commands = function () {
 							color: constants.blue,
 							description: 'Uptime:\n**' + msToTime(constants.client.uptime) + '**',
 						},
-					})
-						.catch(err => {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
-							});
-							return;
-						});
+					});
 				}
 			}
 			catch (err) {
@@ -2110,29 +2011,7 @@ commands = function () {
 									title: queryString,
 									description: resp,
 								},
-							})
-								.catch(err => {
-									logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-									message.channel.send({
-										embed: {
-											title: 'Error',
-											color: constants.red,
-											description: `An error occured with the \`${command}\` command.`,
-										},
-									});
-									return;
-								});
-						})
-						.catch(function (err) {
-							logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-							message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `An error occured with the \`${command}\` command.`,
-								},
 							});
-							return;
 						});
 				}
 			}
