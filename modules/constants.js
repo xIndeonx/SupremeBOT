@@ -29,8 +29,8 @@ const queue = new Map();
 const embed = new Discord.MessageEmbed();
 const type = 3;
 const GAME = `you | ${PREFIX}help`;
-const update = 'December 8th, 2017';
-const version = 'Alpha 0.3.0.6';
+const update = 'December 10th, 2017';
+const version = 'Alpha 0.3.0.7';
 
 // airbrake
 const airbrakeJs = require('airbrake-js');
