@@ -496,3 +496,20 @@ getECF = function (filter) {
 		return 'Unknown';
 	}
 };
+
+wolframAlpha = async function (query) {
+	const DomParser = require('dom-parser');
+	const parser = new DomParser();
+	const fetch = require('node-fetch');
+
+	return (fetch('https://api.wolframalpha.com/v2/query?input='
+			+ encodeURIComponent(query) 
+			+ '&appid='
+			+ encodeURIComponent(constants.WOLFRAM_APPID))
+		.then(response => response.text())
+		.then(html => {
+			const parsed = parser.parseFromString(html);
+			return parsed.getElementsByTagName('plaintext')
+				.map(e => e.innerHTML);
+		}));
+};

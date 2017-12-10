@@ -642,14 +642,23 @@ commands = function () {
 		}
 		else if (command.startsWith('channels')) {
 			try {
-				const channels = message.guild.channels.map(c => c.name);
-				const embed = new constants.Discord.MessageEmbed()
-					.setColor(constants.blue)
-					.setTimestamp()
-					.setAuthor(message.guild.name, message.guild.iconURL())
-					.addField('List of Channels', '```\n' + channels.join('\n') + '```');
-				return message.channel.send({
-					embed,
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_CHANNELS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {					
+					const channels = message.guild.channels.map(c => c.name);
+					const embed = new constants.Discord.MessageEmbed()
+						.setColor(constants.blue)
+						.setTimestamp()
+						.setAuthor(message.guild.name, message.guild.iconURL())
+						.addField('List of Channels', '```\n' + channels.join('\n') + '```');
+					return message.channel.send({
+						embed,
+					});
+				}
+				else return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'You need the `Manage Channels` permission to use this command.',
+					},
 				});
 			}
 			catch (err) {
@@ -1209,14 +1218,23 @@ commands = function () {
 		}
 		else if (command.startsWith('roles')) { // roles
 			try {
-				const roles = message.guild.roles.map(r => r.name);
-				const embed = new constants.Discord.MessageEmbed()
-					.setColor(constants.blue)
-					.setTimestamp()
-					.setAuthor(message.guild.name, message.guild.iconURL())
-					.addField('List of Roles', '```\n' + roles.join('\n') + '```');
-				return message.channel.send({
-					embed,
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_ROLES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+					const roles = message.guild.roles.filter(r => r.sort).map(r => r.name);
+					const embed = new constants.Discord.MessageEmbed()
+						.setColor(constants.blue)
+						.setTimestamp()
+						.setAuthor(message.guild.name, message.guild.iconURL())
+						.addField('List of Roles', '```\n' + roles.join('\n') + '```');
+					return message.channel.send({
+						embed,
+					});
+				}
+				else return message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: 'You need the `Manage Roles` permission to use this command.',
+					},
 				});
 			}
 			catch (err) {
@@ -2007,21 +2025,10 @@ commands = function () {
 		else if (command.startsWith('wolfram')) {
 			try {
 				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
-					var wajs = require('wajs');
-					var waClient = new wajs(constants.WOLFRAM_APPID);
-
 					var queryString = args.join(' ');
 
-					return waClient.query(queryString)
-						.then(function (resp) {
-							message.channel.send({
-								embed: {
-									color: constants.blue,
-									title: queryString,
-									description: resp,
-								},
-							});
-						});
+					const result = wolframAlpha(queryString);
+					return message.channel.send(result);
 				}
 			}
 			catch (err) {
