@@ -642,7 +642,7 @@ commands = function () {
 		}
 		else if (command.startsWith('channels')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_CHANNELS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {					
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_CHANNELS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
 					const channels = message.guild.channels.map(c => c.name);
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)

@@ -503,7 +503,7 @@ wolframAlpha = async function (query) {
 	const fetch = require('node-fetch');
 
 	return (fetch('https://api.wolframalpha.com/v2/query?input='
-			+ encodeURIComponent(query) 
+			+ encodeURIComponent(query)
 			+ '&appid='
 			+ encodeURIComponent(constants.WOLFRAM_APPID))
 		.then(response => response.text())
