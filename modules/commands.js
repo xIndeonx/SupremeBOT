@@ -428,7 +428,7 @@ commands = function () {
 				const role = message.guild.roles.find('name', 'airhorn');
 				if (!role) {
 					if (message.member.permissions.has('MANAGE_ROLES')) {
-						airhorn(message, command);
+						airhornCreate(message, command);
 					}
 					else return message.channel.send({
 						embed: {
@@ -485,6 +485,9 @@ commands = function () {
 							});
 						return message.react('✅');
 					}
+				}
+				else if (message.member.permissions.has('ADMINISTRATOR')) {
+					airhornAssign(message, command);
 				}
 				else return message.channel.send({
 					embed: {
