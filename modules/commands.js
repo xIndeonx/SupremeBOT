@@ -1678,7 +1678,7 @@ commands = function () {
 						message.channel.send({
 							embed: errorEmbed,
 						});
-						logToChannel('Error', `Error occurred at built-in error catching for the \`${constants.PREFIX}urbanrandom\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						logToChannel('Error', `Error at the built-in error catching in the \`${command}\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return;
 					}
 					else {
@@ -1722,7 +1722,7 @@ commands = function () {
 						message.channel.send({
 							embed: errorEmbed,
 						});
-						logToChannel(`${message.author.tag} typed: "${message.content}"\nError occurred at built-in error catching for the \`${constants.PREFIX}urban\` command:\n${error.message}`);
+						logToChannel('Error', `Error at the built-in error catching in the \`${command}\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return;
 					}
 					else {
