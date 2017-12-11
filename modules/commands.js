@@ -428,19 +428,7 @@ commands = function () {
 				const role = message.guild.roles.find('name', 'airhorn');
 				if (!role) {
 					if (message.member.permissions.has('MANAGE_ROLES')) {
-						message.guild.createRole({
-							data: {
-								name: 'airhorn',
-								hoist: false,
-							},
-							reason: 'Airhorn role for the airhorn command.',
-						});
-						return message.channel.send({
-							embed: {
-								description: 'Created role `airhorn` for the airhorn command.',
-								color: constants.orange,
-							},
-						});
+						airhorn(message, command);
 					}
 					else return message.channel.send({
 						embed: {
