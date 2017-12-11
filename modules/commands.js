@@ -1670,7 +1670,6 @@ commands = function () {
 						message.channel.send({
 							embed: errorEmbed,
 						});
-						logToChannel('Error', `Error at the built-in error catching in the \`${command}\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
 						return;
 					}
 					else {
