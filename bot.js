@@ -558,6 +558,7 @@ airhorn = async function (message, command) {
 		});
 	}
 };
+
 wolframAlpha = async function (query) {
 	const DomParser = require('dom-parser');
 	const parser = new DomParser();
