@@ -1666,49 +1666,6 @@ commands = function () {
 				return;
 			}
 		}
-		else if (command.startsWith('urbanrandom')) {
-			try {
-				var urban = require('urban-dictionary');
-				urban.random(function (error, entry) {
-					if (error) {
-						const errorEmbed = new constants.Discord.MessageEmbed()
-							.setTitle('Error')
-							.setDescription('`' + error.message + '`')
-							.setColor(constants.red);
-						message.channel.send({
-							embed: errorEmbed,
-						});
-						logToChannel('Error', `Error at the built-in error catching in the \`${command}\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-						return;
-					}
-					else {
-						var link = entry.permalink;
-						var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
-						const embed = new constants.Discord.MessageEmbed()
-							.setTitle(entry.word)
-							.addField('Definition', entry.definition)
-							.addField('Example', entry.example + `\n\n[Click here for more info on **${entry.word}**](${link})`)
-							.setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
-							.setColor(constants.blue)
-							.setThumbnail(pic);
-						return message.channel.send({
-							embed,
-						});
-					}
-				});
-			}
-			catch (err) {
-				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
-				message.channel.send({
-					embed: {
-						title: 'Error',
-						color: constants.red,
-						description: `An error occured with the \`${command}\` command.`,
-					},
-				});
-				return;
-			}
-		}
 		else if (command.startsWith('urban')) {
 			try {
 				var urban = require('urban-dictionary');
@@ -1733,6 +1690,49 @@ commands = function () {
 							.addField('Definition', entries[0].definition)
 							.addField('Example', entries[0].example + `\n\n[Click here for more info on **${entries[0].word}**](${link})`)
 							.setFooter('Up: ' + entries[0].thumbs_up + ' | Down: ' + entries[0].thumbs_down)
+							.setColor(constants.blue)
+							.setThumbnail(pic);
+						return message.channel.send({
+							embed,
+						});
+					}
+				});
+			}
+			catch (err) {
+				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+				message.channel.send({
+					embed: {
+						title: 'Error',
+						color: constants.red,
+						description: `An error occured with the \`${command}\` command.`,
+					},
+				});
+				return;
+			}
+		}
+		else if (command.startsWith('urbanrandom')) {
+			try {
+				var urban = require('urban-dictionary');
+				urban.random(function (error, entry) {
+					if (error) {
+						const errorEmbed = new constants.Discord.MessageEmbed()
+							.setTitle('Error')
+							.setDescription('`' + error.message + '`')
+							.setColor(constants.red);
+						message.channel.send({
+							embed: errorEmbed,
+						});
+						logToChannel('Error', `Error at the built-in error catching in the \`${command}\` command:\n${error.message}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+						return;
+					}
+					else {
+						var link = entry.permalink;
+						var pic = 'https://pbs.twimg.com/profile_images/838627383057920000/m5vutv9g_400x400.jpg';
+						const embed = new constants.Discord.MessageEmbed()
+							.setTitle(entry.word)
+							.addField('Definition', entry.definition)
+							.addField('Example', entry.example + `\n\n[Click here for more info on **${entry.word}**](${link})`)
+							.setFooter('Up: ' + entry.thumbs_up + ' | Down: ' + entry.thumbs_down)
 							.setColor(constants.blue)
 							.setThumbnail(pic);
 						return message.channel.send({
