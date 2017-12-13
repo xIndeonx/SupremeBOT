@@ -839,6 +839,15 @@ commands = function () {
 			try {
 				if (!message.mentions.users.first()) {
 					var string = args.join(' ');
+					if (!string || !args) return message.channel.send({
+						embed: {
+							description: '**HA! GAYYYYYYYYYYY!**',
+							color: constants.blue,
+							image: {
+								url: 'https://media.giphy.com/media/26xBI0mwTQj8IL6so/giphy.gif',
+							},
+						},
+					});
 					return message.channel.send({
 						embed: {
 							description: `**${string}, HA! GAYYYYYYYYYYY!**`,
@@ -849,39 +858,29 @@ commands = function () {
 						},
 					});
 				}
-				else {
-					if (message.mentions.users.size === 1) {
-						if (message.mentions.users.first() != message.author) {
-							return message.channel.send({
-								embed: {
-									description: `**${args.join(' ')}, HA! GAYYYYYYYYYYY!**`,
-									color: constants.blue,
-									image: {
-										url: 'https://media.giphy.com/media/26xBI0mwTQj8IL6so/giphy.gif',
-									},
+				else if (message.mentions.users.size >= 1) {
+					if (message.mentions.users.first() != message.author) {
+						return message.channel.send({
+							embed: {
+								description: `**${args.join(' ')}, HA! GAYYYYYYYYYYY!**`,
+								color: constants.blue,
+								image: {
+									url: 'https://media.giphy.com/media/26xBI0mwTQj8IL6so/giphy.gif',
 								},
-							});
-						}
-						else {
-							return message.channel.send({
-								embed: {
-									title: 'Error',
-									color: constants.red,
-									description: `Are you really gay yourself, ${message.author}?`,
-								},
-							});
-						}
+							},
+						});
 					}
-					if (message.mentions.users.size > 1) {
+					else {
 						return message.channel.send({
 							embed: {
 								title: 'Error',
 								color: constants.red,
-								description: 'Specified too many users.',
+								description: `Are you really gay yourself, ${message.author}?`,
 							},
 						});
 					}
 				}
+				else throw new Error('An unexpected error occured.');
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
