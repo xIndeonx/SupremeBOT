@@ -901,13 +901,23 @@ commands = function () {
 				googleImages(search, callback, 0, 1);
 
 				function callback(results) {
+					if (!results[0]) {
+						return message.channel.send({
+							embed: {
+								title: 'Error',
+								color: constants.red,
+								description: `There are no search results for the query \`${search}\`.`,
+							},
+						});
+					}
+
 					const embed = new constants.Discord.MessageEmbed()
 						.setImage(results[0].link);
-					message.channel.send({
+
+					return message.channel.send({
 						embed
 					});
 				}
-				return;
 			}
 			catch (err) {
 				logToChannel('Error', `Error with the \`${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
