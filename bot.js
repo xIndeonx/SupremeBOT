@@ -8,6 +8,7 @@ require('./modules/commands');
 require('./modules/music');
 require('./modules/custom');
 require('./modules/help');
+require('./modules/events');
 
 // warn
 constants.client.on('warn', (warning) => console.warn(`Client warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`));
@@ -52,6 +53,7 @@ commands();
 customCommands();
 musicCommands();
 helpCommands();
+events();
 
 // music functions
 handleVideo = async function (video, message, voiceChannel, playlist = false) {

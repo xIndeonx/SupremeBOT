@@ -915,7 +915,7 @@ commands = function () {
 						.setImage(results[0].link);
 
 					return message.channel.send({
-						embed
+						embed,
 					});
 				}
 			}
