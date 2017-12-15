@@ -61,7 +61,7 @@ customCommands = function () {
 			else if (command.startsWith('boogeyman')) {
 				return message.channel.send('Kuka pelkää musta miestä?');
 			}
-			else if (command.startsWith('bzz')) { // bzz
+			else if (command.startsWith('bzz')) {
 				return message.channel.send('Bescht Schuel vom Kanton Horge.');
 			}
 			else if (command === 'claudio') {
