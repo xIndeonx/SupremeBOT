@@ -13,6 +13,7 @@ const {
 	BOT_CHANNEL,
 	OWNER_ID,
 	LUCAS_ID,
+	FILIP_ID,
 	GOOGLE_APIKEY,
 	PROJECT_ID,
 	PROJECT_KEY,
@@ -29,8 +30,8 @@ const queue = new Map();
 const embed = new Discord.MessageEmbed();
 const type = 3;
 const GAME = `you | ${PREFIX}help`;
-const update = 'December 14th, 2017';
-const version = 'Alpha 0.3.1.0';
+const update = 'December 15th, 2017';
+const version = 'Alpha 0.3.1.1';
 
 // airbrake
 const airbrakeJs = require('airbrake-js');
@@ -65,6 +66,7 @@ module.exports.PREFIX = PREFIX;
 module.exports.BOT_CHANNEL = BOT_CHANNEL;
 module.exports.OWNER_ID = OWNER_ID;
 module.exports.LUCAS_ID = LUCAS_ID;
+module.exports.FILIP_ID = FILIP_ID;
 module.exports.GOOGLE_APIKEY = GOOGLE_APIKEY;
 module.exports.PROJECT_ID = PROJECT_ID;
 module.exports.PROJECT_KEY = PROJECT_KEY;

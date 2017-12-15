@@ -12,7 +12,7 @@ commands = function () {
 		const command = args.shift().toLowerCase();
 
 		if (command.startsWith('eval')) {
-			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+			if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 				try {
 					const code = args.join(' ');
 					var now = require('performance-now');
@@ -55,7 +55,7 @@ commands = function () {
 		}
 		else if (command.startsWith('setactivity')) {
 			try {
-				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					var type = parseInt(args[0]);
 					var activityString = args.slice(1).join(' ');
 					if (!args[0]) {
@@ -107,7 +107,7 @@ commands = function () {
 		}
 		else if (command.startsWith('setavatar')) {
 			try {
-				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					var urlString = args.join(' ');
 					if (!args[0]) {
 						message.delete();
@@ -173,7 +173,7 @@ commands = function () {
 		}
 		else if (command.startsWith('setstatus')) {
 			try {
-				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					if (args[0].toLowerCase() === 'dnd' || args[0].toLowerCase() === 'online' || args[0].toLowerCase() === 'idle' || args[0].toLowerCase() === 'invisible') {
 						constants.client.user.setStatus(args[0].toLowerCase());
 						message.delete();
@@ -223,7 +223,7 @@ commands = function () {
 		}
 		else if (command.startsWith('restart')) {
 			try {
-				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					message.channel.send('Restarting...');
 					setTimeout(function () {
 						process.exit();
@@ -249,7 +249,7 @@ commands = function () {
 		}
 		else if (command.startsWith('shutdown')) {
 			try {
-				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					message.channel.send('Shutting down...');
 					constants.client.destroy((err) => {
 						logToChannel('Error', `Error while destroying the client:\n${err}`, message.author.tag, message.author.displayAvatarURL());
@@ -275,7 +275,7 @@ commands = function () {
 		}
 		else if (command.startsWith('delete')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					if (message.channel.type === 'text') {
 						let messagecount = parseInt(args[0]);
 						if (isNaN(messagecount)) {
@@ -343,7 +343,7 @@ commands = function () {
 		}
 		else if (command.startsWith('purge')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					if (message.channel.type === 'text') {
 						message.channel.messages.fetch()
 							.then(messages => {
@@ -511,7 +511,7 @@ commands = function () {
 		}
 		else if (command.startsWith('ban')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('BAN_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					const member = message.mentions.members.first();
 					if (!message.guild.me.permissions.has('BAN_MEMBERS')) {
 						return message.channel.send({
@@ -633,7 +633,7 @@ commands = function () {
 		}
 		else if (command.startsWith('channels')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_CHANNELS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_CHANNELS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					const channels = message.guild.channels.map(c => c.name);
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
@@ -1039,7 +1039,7 @@ commands = function () {
 		}
 		else if (command.startsWith('kick')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('KICK_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					const member = message.mentions.members.first();
 					if (!message.guild.me.permissions.has('KICK_MEMBERS')) {
 						return message.channel.send({
@@ -1177,7 +1177,7 @@ commands = function () {
 				}
 				else if (args[0] > 0 && args[1] > 0) {
 					const member = message.mentions.members.first();
-					if (!member && (message.author.id === constants.OWNER_ID) || !member && (message.author.id === constants.LUCAS_ID)) {
+					if (!member && (message.author.id === constants.OWNER_ID) || !member && (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 						return message.channel.send({
 							embed: {
 								title: 'Error',
@@ -1187,7 +1187,7 @@ commands = function () {
 						});
 					}
 					console.log(`${message.author.tag}: ${constants.PREFIX}${command} ${args[0]} ${args[1]} ${member.user.tag}`);
-					if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+					if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 						const seconds = args[1] * 1000;
 						message.delete();
 						for (i = args[0]; i > 0; i--) {
@@ -1218,7 +1218,7 @@ commands = function () {
 		}
 		else if (command.startsWith('roles')) { // roles
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_ROLES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MANAGE_ROLES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					const roles = message.guild.roles.filter(r => r.sort).map(r => r.name);
 					const embed = new constants.Discord.MessageEmbed()
 						.setColor(constants.blue)
@@ -1273,7 +1273,7 @@ commands = function () {
 		}
 		else if (command.startsWith('say')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					if (!args[0]) {
 						return message.channel.send({
 							embed: {
@@ -1526,8 +1526,8 @@ commands = function () {
 							inline: true,
 						},
 						{
-							name: 'Co-owner',
-							value: 'Raytlye#7182',
+							name: 'Co-owners',
+							value: 'Raytlye#7182, Indeon#1103',
 							inline: true,
 						},
 						{
@@ -1589,7 +1589,7 @@ commands = function () {
 		}
 		else if (command.startsWith('tts')) {
 			try {
-				if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('SEND_TTS_MESSAGES')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					if (!args[0]) {return;}
 					else {
 						var string = args.join(' ');
@@ -1908,7 +1908,7 @@ commands = function () {
 		}
 		else if (command.startsWith('vckick')) {
 			try {
-				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.member.permissions.has('ADMINISTRATOR')) || (message.member.permissions.has('MOVE_MEMBERS')) || (message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					if (!message.guild.me.permissions.has('MOVE_MEMBERS')) {
 						return message.channel.send({
 							embed: {
@@ -2023,7 +2023,7 @@ commands = function () {
 		}
 		else if (command.startsWith('wolfram')) {
 			try {
-				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID)) {
+				if ((message.author.id === constants.OWNER_ID) || (message.author.id === constants.LUCAS_ID) || (message.author.id === constants.FILIP_ID)) {
 					var queryString = args.join(' ');
 
 					const result = wolframAlpha(queryString);
