@@ -139,6 +139,9 @@ customCommands = function () {
 			else if (command.startsWith('jacob')) {
 				return message.channel.send('Jeg elsker dig ligesom du elsker min fugtig migmig.');
 			}
+			else if (command.startsWith('jagenau')) {
+				return message.channel.send('Ja. Genau. Mongo.');
+			}
 			else if (command.startsWith('jaoder')) {
 				return message.channel.send('Ja oder.');
 			}
