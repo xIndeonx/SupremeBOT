@@ -8,6 +8,7 @@ require('./modules/commands');
 require('./modules/music');
 require('./modules/custom');
 require('./modules/help');
+require('./modules/events');
 
 // warn
 constants.client.on('warn', (warning) => console.warn(`Client warning occurred.\nName: ${warning.name}\nMessage: ${warning.message}\nStack: ${warning.stack}`));
@@ -52,6 +53,7 @@ commands();
 customCommands();
 musicCommands();
 helpCommands();
+events();
 
 // music functions
 handleVideo = async function (video, message, voiceChannel, playlist = false) {
@@ -494,6 +496,124 @@ getECF = function (filter) {
 		return 'Scans messages sent by all members';
 	default:
 		return 'Unknown';
+	}
+};
+
+airhornCreate = async function (message, command) {
+	try {
+		message.channel.send({
+			embed: {
+				title: 'Information',
+				color: constants.blue,
+				description: 'There is no `airhorn` role. Do you want to create it now?',
+				footer: {
+					text: 'Please input yes or no.',
+				},
+			},
+		});
+		try {
+			const authorid = message.author.id;
+			const response = await message.channel.awaitMessages(msg2 => msg2.author.id === authorid && msg2.content.toLowerCase() === 'yes' || msg2.content.toLowerCase() === 'no', {
+				max: 1,
+				time: 30000,
+				errors: ['time'],
+			});
+			const answer = response.first().content;
+			if (answer === 'yes') {
+				message.guild.createRole({
+					data: {
+						name: 'airhorn',
+						hoist: false,
+					},
+					reason: 'Airhorn role for the airhorn command.',
+				});
+				return message.channel.send({
+					embed: {
+						description: 'Created role `airhorn` for the airhorn command.',
+						color: constants.orange,
+					},
+				});
+			}
+			else return message.channel.send({
+				embed: {
+					description: 'Cancelled the command.',
+					color: constants.orange,
+				},
+			});
+		}
+		catch (err) {
+			return message.channel.send({
+				embed: {
+					description: 'No or invalid input.',
+					color: constants.red,
+				},
+			});
+		}
+	}
+	catch (err) {
+		logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+		return message.channel.send({
+			embed: {
+				description: 'An error occured.',
+				color: constants.red,
+			},
+		});
+	}
+};
+
+airhornAssign = async function (message, command) {
+	try {
+		message.channel.send({
+			embed: {
+				title: 'Information',
+				color: constants.blue,
+				description: 'You do not have the role `airhorn`. Do you want to assign it to yourself now?',
+				footer: {
+					text: 'Please input yes or no.',
+				},
+			},
+		});
+		try {
+			const authorid = message.author.id;
+			const response = await message.channel.awaitMessages(msg2 => msg2.author.id === authorid && msg2.content.toLowerCase() === 'yes' || msg2.content.toLowerCase() === 'no', {
+				max: 1,
+				time: 30000,
+				errors: ['time'],
+			});
+			const answer = response.first().content;
+			if (answer === 'yes') {
+				message.member.addRole(message.guild.roles.find('name', 'airhorn').id, 'Assigned airhorn role.');
+				return message.channel.send({
+					embed: {
+						description: 'Assigned the role `airhorn` to you.',
+						color: constants.orange,
+					},
+				});
+			}
+			else return message.channel.send({
+				embed: {
+					description: 'Cancelled the command.',
+					color: constants.orange,
+				},
+			});
+		}
+		catch (err) {
+			return message.channel.send({
+				embed: {
+					description: 'No or invalid input.',
+					color: constants.red,
+				},
+			});
+		}
+	}
+	catch (err) {
+		logToChannel('Error', `Error with the \`${constants.PREFIX}${command}\` command:\n${err}`, `${message.author.tag} typed: "${message.content}"`, message.author.displayAvatarURL());
+		return message.channel.send({
+			embed: {
+				description: 'An error occured.',
+				color: constants.red,
+			},
+		});
 	}
 };
 
